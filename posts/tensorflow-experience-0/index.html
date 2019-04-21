@@ -79,26 +79,34 @@
                         
                         
                         
+                        <div class="clear">
+                            <div class="toc-article">
+                                <div class="toc-title">文章目录</div>
+                                <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#综述">综述</a></li>
+<li><a href="#安装tensorflow">安装tensorflow</a></li>
+<li><a href="#使用jupyter可视化编程">使用jupyter可视化编程</a></li>
+</ul></li>
+</ul>
+</nav>
+                            </div>
+                        </div>
+                        
                         <div class="post-content">
                             
 
-<h1 id="综述">综述</h1>
+<h2 id="综述">综述</h2>
 
-<p>当下机器学习火热，作为4年前也算是学过一些的研究生（半路出家），
-也很好奇现在的主流工业界对ML已经发展到什么程度了。
-在看了《精通数据科学：从线性回归到深度学习》<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>]，
-以及简单的翻阅了几页的《TensorFlow for Deep Learning》<sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup>]，
-我觉得现代深度学习的应用还算简单，比我们读书的时候新思路是很多，但是鉴于工业界的发展，
-实践也容易多了。</p>
+<p>当下机器学习火热，作为4年前也算是学过一些的研究生（半路出家），也很好奇现在的主流工业界对ML已经发展到什么程度了。在看了《精通数据科学：从线性回归到深度学习》<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>，以及简单的翻阅了几页的《TensorFlow for Deep Learning》<sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup>，我觉得现代深度学习的应用还算简单，比我们读书的时候新思路是很多，但是鉴于工业界的发展，实践也容易多了。</p>
 
-<p>鉴于以上理由，我打算开始本次tensorflow的上手实验。
-本体验的最终目标是实现一套以基本算法实现的图像分类或者物体检测或者GAN。</p>
+<p>鉴于以上理由，我打算开始本次tensorflow的上手实验。本体验的最终目标是实现一套以基本算法实现的图像分类或者物体检测或者GAN。</p>
 
-<h1 id="安装tensorflow">安装tensorflow</h1>
+<h2 id="安装tensorflow">安装tensorflow</h2>
 
-<p>就数据研究而言，数据可视化是重要的工具。
-在python界，这个工具链做的最好的应该是 iPython / jupyter-notebook 系列。
-于是我们安装 tensorflow + iPython 的组合。</p>
+<p>就数据研究而言，数据可视化是重要的工具。在python界，这个工具链做的最好的应该是 iPython / jupyter-notebook 系列。于是我们安装 tensorflow + iPython 的组合。</p>
 
 <p>所有网上的教程都是使用 anacoda 作为包管理器，可能是因为 R 语言的原因？</p>
 
@@ -127,16 +135,14 @@ python
 &gt;&gt;&gt; print(sess.run(hello))
 </code></pre>
 
-<h1 id="使用jupyter可视化编程">使用jupyter可视化编程</h1>
+<h2 id="使用jupyter可视化编程">使用jupyter可视化编程</h2>
 
-<h2 id="安装jupyter">安装jupyter</h2>
+<p>jupyter 是使用可视化方式进行 python 编程的解释器，可以方便的进行操作回溯，文档生成，数据可视化和任务追踪。另外还可以对接远程云服务器，如 AWS 的计算资源，很方便的就可以进行重资源的计算任务。</p>
 
-<pre><code class="language-sh">pipenv install jupyter
-</code></pre>
-
-<h2 id="启动jupyter">启动jupyter</h2>
-
-<pre><code class="language-sh">jupyter notebook
+<pre><code class="language-sh"># 安装jupyter
+pipenv install jupyter
+# 启动jupyter
+jupyter notebook
 </code></pre>
 
 <p>然后就可以看到 jupyter 的交互式编程界面了。
