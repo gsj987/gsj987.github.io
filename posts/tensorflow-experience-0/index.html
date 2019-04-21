@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.55.3" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Tensorflow 体验篇-0 | gsj987的博客</title>
+    <meta property="og:title" content="Tensorflow 体验篇-0 - gsj987的博客">
+    <meta property="og:type" content="article">
+        
+        
+    <meta name="Keywords" content="架构,python,前端,xamarin,软件工程,机器学习,机器视觉,c#,angular">
+    <meta name="description" content="Tensorflow 体验篇-0">
+        
+    <meta name="author" content="gsj987">
+    <meta property="og:url" content="https://gsj987.github.io/posts/tensorflow-experience-0/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://gsj987.github.io/">
+                        gsj987的博客
+                    </a>
+                
+                <p class="description">技术学习和创业思考</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://gsj987.github.io/">首页</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">Tensorflow 体验篇-0</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            1年1月1日
+                        </date>
+                        
+                        <div class="post-meta">
+                            <span>|</span>
+                            
+                                <span class="meta-category"><a href="https://gsj987.github.io/categories/machine-learning">machine-learning</a></span>
+                            
+                        </div>
+                        
+                        
+                        
+                        <div class="post-content">
+                            
+
+<h1 id="综述">综述</h1>
+
+<p>当下机器学习火热，作为4年前也算是学过一些的研究生（半路出家），
+也很好奇现在的主流工业界对ML已经发展到什么程度了。
+在看了《精通数据科学：从线性回归到深度学习》<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>]，
+以及简单的翻阅了几页的《TensorFlow for Deep Learning》<sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup>]，
+我觉得现代深度学习的应用还算简单，比我们读书的时候新思路是很多，但是鉴于工业界的发展，
+实践也容易多了。</p>
+
+<p>鉴于以上理由，我打算开始本次tensorflow的上手实验。
+本体验的最终目标是实现一套以基本算法实现的图像分类或者物体检测或者GAN。</p>
+
+<h1 id="安装tensorflow">安装tensorflow</h1>
+
+<p>就数据研究而言，数据可视化是重要的工具。
+在python界，这个工具链做的最好的应该是 iPython / jupyter-notebook 系列。
+于是我们安装 tensorflow + iPython 的组合。</p>
+
+<p>所有网上的教程都是使用 anacoda 作为包管理器，可能是因为 R 语言的原因？</p>
+
+<p>我个人因为做python开发习惯用 pipenv ，直接就不做改动的也作为安装工具好了。</p>
+
+<pre><code class="language-sh"># 新建项目目录
+mkdir tensorflow-tutorial
+# 进入项目目录
+cd tensorflow-tutorial
+# 建设环境(使用pytho3)
+pipenv shell --three
+# 安装numpy
+pipenv install numpy --pypi-mirror https://pypi.douban.com/simple
+# 安装tensorflow
+pipenv install tensorflow --pypi-mirror https://pypi.douban.com/simple
+</code></pre>
+
+<p>现在检验安装成果</p>
+
+<pre><code class="language-sh"># 启动python 
+python
+# 创建一个简单的 TensorFlow 程序在 python 命令行
+&gt;&gt;&gt; import tensorflow as tf
+&gt;&gt;&gt; hello = tf.constant('Hello, TensorFlow!')
+&gt;&gt;&gt; sess = tf.Session()
+&gt;&gt;&gt; print(sess.run(hello))
+</code></pre>
+
+<h1 id="使用jupyter可视化编程">使用jupyter可视化编程</h1>
+
+<h2 id="安装jupyter">安装jupyter</h2>
+
+<pre><code class="language-sh">pipenv install jupyter
+</code></pre>
+
+<h2 id="启动jupyter">启动jupyter</h2>
+
+<pre><code class="language-sh">jupyter notebook
+</code></pre>
+
+<p>然后就可以看到 jupyter 的交互式编程界面了。
+<img src="/posts/images/jupyter-running.png" alt="jupyter-running" /></p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:1">豆瓣地址 <a href="https://book.douban.com/subject/30217266/">https://book.douban.com/subject/30217266/</a>
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+<li id="fn:2">豆瓣地址 <a href="https://book.douban.com/subject/30144021/">https://book.douban.com/subject/30144021/</a>
+ <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+                        </div>
+
+                        
+
+
+                        
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://gsj987.github.io/tags/tensorflow">tensorflow</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
+                    
+    
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://gsj987.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://gsj987.github.io/posts/tensorflow-experience-0/" title="Tensorflow 体验篇-0">Tensorflow 体验篇-0</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://gsj987.github.io/categories/machine-learning/">machine-learning(1)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://gsj987.github.io/tags/tensorflow/">tensorflow</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://gsj987.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2019 <a href="https://gsj987.github.io/">gsj987的博客 By gsj987</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    <script type="text/javascript">
+    
+    (function(){
+        $("pre code").parent().addClass("line-numbers")
+    }())
+
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+
+
+
+
+
+</body>
+</html>

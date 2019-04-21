@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>machine-learning on gsj987的博客</title>
+    <link>https://gsj987.github.io/categories/machine-learning/</link>
+    <description>Recent content in machine-learning on gsj987的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    
+	<atom:link href="https://gsj987.github.io/categories/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Tensorflow 体验篇-0</title>
+      <link>https://gsj987.github.io/posts/tensorflow-experience-0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://gsj987.github.io/posts/tensorflow-experience-0/</guid>
+      <description>综述 当下机器学习火热，作为4年前也算是学过一些的研究生（半路出家）， 也很好奇现在的主流工业界对ML已经发展到什么程度了。 在看了《精通数据科学：从线性回归到深度学习》1]， 以及简单的翻阅了几页的《TensorFlow for Deep Learning》2]， 我觉得现代深度学习的应用还算简单，比我们读书的时候新思路是很多，但是鉴于工业界的发展， 实践也容易多了。
+鉴于以上理由，我打算开始本次tensorflow的上手实验。 本体验的最终目标是实现一套以基本算法实现的图像分类或者物体检测或者GAN。
+安装tensorflow 就数据研究而言，数据可视化是重要的工具。 在python界，这个工具链做的最好的应该是 iPython / jupyter-notebook 系列。 于是我们安装 tensorflow + iPython 的组合。
+所有网上的教程都是使用 anacoda 作为包管理器，可能是因为 R 语言的原因？
+我个人因为做python开发习惯用 pipenv ，直接就不做改动的也作为安装工具好了。
+# 新建项目目录 mkdir tensorflow-tutorial # 进入项目目录 cd tensorflow-tutorial # 建设环境(使用pytho3) pipenv shell --three # 安装numpy pipenv install numpy --pypi-mirror https://pypi.douban.com/simple # 安装tensorflow pipenv install tensorflow --pypi-mirror https://pypi.douban.com/simple  现在检验安装成果
+# 启动python python # 创建一个简单的 TensorFlow 程序在 python 命令行 &amp;gt;&amp;gt;&amp;gt; import tensorflow as tf &amp;gt;&amp;gt;&amp;gt; hello = tf.</description>
+    </item>
+    
+  </channel>
+</rss>
