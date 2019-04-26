@@ -11,6 +11,10 @@
     <meta property="og:title" content="Tensorflow 体验篇-1 使用 Tensorflow 做线性回归 - gsj987的博客">
     <meta property="og:type" content="article">
         
+    <meta property="article:published_time" content="2019-04-26T00:00:00&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-04-26T00:00:00&#43;08:00">
         
     <meta name="Keywords" content="架构,python,前端,xamarin,软件工程,机器学习,机器视觉,c#,angular">
     <meta name="description" content="Tensorflow 体验篇-1 使用 Tensorflow 做线性回归">
@@ -67,7 +71,7 @@
                             <h1 class="post-title">Tensorflow 体验篇-1 使用 Tensorflow 做线性回归</h1>
                         </header>
                         <date class="post-meta meta-date">
-                            1年1月1日
+                            2019年4月26日
                         </date>
                         
                         <div class="post-meta">
@@ -153,9 +157,10 @@ line,=plt.plot(x_np,y_np,'bo')
 
 <p>本次案例中，我们用最简单的方式来定义我们的训练网络。损失函数就直接使用预测值与真实值之间的空间距离：
 $$
-loss = (y<em>{pred} - y</em>{true})^2
-$$
-而优化算法直接使用梯度下降算法：
+loss = ( y_{pred} - y )^2
+$$</p>
+
+<p>而优化算法直接使用梯度下降算法：
 $$
 W_{next} = W - \alpha\Delta W
 $$
@@ -237,15 +242,16 @@ with tf.Session() as sess:
 
 <h2 id="验证训练结果">验证训练结果</h2>
 
-<p>现在我们已经得到了一个训练好的网络，这个预测网络的两个参数 $W<em>{final}$ 和 $b</em>{final}$ ，也就得到了最终的线性方程的公式:
+<p>现在我们已经得到了一个训练好的网络，这个预测网络的两个参数 $W_{final}$ 和 $b_{final}$，也就得到了最终的线性方程的公式:
 $$
-y<em>{pred} = W</em>{final}x + b_{final}
-$$
-现在我们用两种不同的指标来验证我们训练的这个模型： $R^2$ 和 RMSE (root-mean-squared error，均方根差).  $R^2$ 是用于表示两个变量之间的相关性，用0~1之间的值表示，0表示不相关，1表示非常相关。对于数据集合 X 和 Y ，我们定义其 $R^2$ 如下
+y_{pred}=W_{final}x+b_{final}
+$$</p>
+
+<p>现在我们用两种不同的指标来验证我们训练的这个模型： $R^2$ 和 RMSE (root-mean-squared error，均方根差).  $R^2$ 是用于表示两个变量之间的相关性，用0~1之间的值表示，0表示不相关，1表示非常相关。对于数据集合 X 和 Y ，我们定义其 $R^2$ 如下
 $$
 R^2 = \frac{cov(X,Y)^2}{\sigma^2_X\sigma^2_Y}
 $$
-其中 $cov(X, Y)$ 是 X和Y的协方差，表示这两个数据集之间的相似情况，而 $\sigma_X$ 和 $\sigma<em>Y$ 是标准差，记录数据集各自内部数据的独立性。所以 $R^2$表示在两个数据集内，有多少个独立变量可以解释数据集的相关性。我们用如下代码计算 $y$和$y</em>{pred}$的$R^2$：</p>
+其中 $cov(X, Y)$ 是 X和Y的协方差，表示这两个数据集之间的相似情况，而 $\sigma_X$ 和 $\sigma_Y$ 是标准差，记录数据集各自内部数据的独立性。所以 $R^2$表示在两个数据集内，有多少个独立变量可以解释数据集的相关性。我们用如下代码计算 $y$和$y_{pred}$的$R^2$：</p>
 
 <pre><code class="language-python">from scipy.stats import pearsonr
 
@@ -291,16 +297,16 @@ plt.plot([x_left, x_right], [y_left, y_right], color='k')
 <h2 id="构建的时候遇到的问题">构建的时候遇到的问题</h2>
 
 <ul>
-<li>运行时报错: FailedPreconditionError
+<li>运行时报错: <strong>FailedPreconditionError
 (see above for traceback): Attempting to use uninitialized value
-weights_2/Variable</li>
+weights_2/Variable</strong></li>
 </ul>
 
 <p>这个问题是因为我在开始忘了执行 sess.run(tf.global_variables_initializer()) ，导致tf的session无法找到对应的全局值，从而报错。在初始化 session 时加上这句话就行。</p>
 
 <ul>
-<li>运行时报错：You must feed a value for placeholder tensor
-&lsquo;placeholders_6/Placeholder&rsquo; with dtype float and shape [100,1]</li>
+<li>运行时报错：<strong>You must feed a value for placeholder tensor
+&lsquo;placeholders_6/Placeholder&rsquo; with dtype float and shape [100,1]</strong></li>
 </ul>
 
 <p>这是因为我在交互式命令行下执行的 python 语句，在多次执行某一语句块时，干扰了图的设定。所以在每次执行设定网络参数前，先执行一句  tf.reset_default_graph() 重置网络配置就行。</p>
@@ -377,11 +383,11 @@ weights_2/Variable</li>
 <ul class="widget-list">
     
     <li>
-        <a href="https://gsj987.github.io/posts/tensorflow-experience-0/" title="Tensorflow 体验篇-0 安装">Tensorflow 体验篇-0 安装</a>
+        <a href="https://gsj987.github.io/posts/tensorflow-experience-1/" title="Tensorflow 体验篇-1 使用 Tensorflow 做线性回归">Tensorflow 体验篇-1 使用 Tensorflow 做线性回归</a>
     </li>
     
     <li>
-        <a href="https://gsj987.github.io/posts/tensorflow-experience-1/" title="Tensorflow 体验篇-1 使用 Tensorflow 做线性回归">Tensorflow 体验篇-1 使用 Tensorflow 做线性回归</a>
+        <a href="https://gsj987.github.io/posts/tensorflow-experience-0/" title="Tensorflow 体验篇-0 安装">Tensorflow 体验篇-0 安装</a>
     </li>
     
 </ul>

@@ -6,26 +6,27 @@
     <description>Recent content on gsj987的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
+    <lastBuildDate>Fri, 26 Apr 2019 00:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://gsj987.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Tensorflow 体验篇-0 安装</title>
-      <link>https://gsj987.github.io/posts/tensorflow-experience-0/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <title>Tensorflow 体验篇-1 使用 Tensorflow 做线性回归</title>
+      <link>https://gsj987.github.io/posts/tensorflow-experience-1/</link>
+      <pubDate>Fri, 26 Apr 2019 00:00:00 +0800</pubDate>
       
-      <guid>https://gsj987.github.io/posts/tensorflow-experience-0/</guid>
-      <description>综述 当下机器学习火热，作为4年前也算是学过一些的研究生（半路出家），也很好奇现在的主流工业界对ML已经发展到什么程度了。在看了《精通数据科学：从线性回归到深度学习》1，以及简单的翻阅了几页的《TensorFlow for Deep Learning》2，我觉得现代深度学习的应用还算简单，比我们读书的时候新思路是很多，但是鉴于工业界的发展，实践也容易多了。</description>
+      <guid>https://gsj987.github.io/posts/tensorflow-experience-1/</guid>
+      <description>线性回归是非常基础的统计学知识，也是所有机器学习研究的源头，因为现在的数学都还没有能很好的解决非线性的问题，所以基本上所有的机器学习的思路都是用非线性核函数，将数据转换到近似线性的空间中，然后再用线性方法如线性回归进行解决。</description>
     </item>
     
     <item>
-      <title>Tensorflow 体验篇-1 使用 Tensorflow 做线性回归</title>
-      <link>https://gsj987.github.io/posts/tensorflow-experience-1/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <title>Tensorflow 体验篇-0 安装</title>
+      <link>https://gsj987.github.io/posts/tensorflow-experience-0/</link>
+      <pubDate>Sun, 21 Apr 2019 00:00:00 +0800</pubDate>
       
-      <guid>https://gsj987.github.io/posts/tensorflow-experience-1/</guid>
-      <description>线性回归 线性回归是非常基础的统计学知识，也是所有机器学习研究的源头，因为现在的数学都还没有能很好的解决非线性的问题，所以基本上所有的机器学习的思路都是用非线性核函数，将数据转换到近似线性的空间中，然后再用线性方法如线性回归进行解决。一般的，线性回归是要解决如下的问题，对线性公式： $$ y = wx + b $$ 我们采集了大量 $x$ 和 $y$ 的值对，代表客观观察，现在想要还原他的参数 $w$ 和 $b$ ，从而还原出整个公式。但是由于实际的数据会有噪音，不妨假设这个噪音符合正态分布，则我们可以用如下公式表示这个真实公式： $$ y = wx + b + N(0,\epsilon) $$ 其中 $\epsilon$ 代表噪音的标准差。我们使用 NumPy 生成人造数据：</description>
+      <guid>https://gsj987.github.io/posts/tensorflow-experience-0/</guid>
+      <description>综述 当下机器学习火热，作为4年前也算是学过一些的研究生（半路出家），也很好奇现在的主流工业界对ML已经发展到什么程度了。在看了《精通数据科学：从线性回归到深度学习》1，以及简单的翻阅了几页的《TensorFlow for Deep Learning》2，我觉得现代深度学习的应用还算简单，比我们读书的时候新思路是很多，但是鉴于工业界的发展，实践也容易多了。</description>
     </item>
     
   </channel>
