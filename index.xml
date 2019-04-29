@@ -6,10 +6,19 @@
     <description>Recent content on gsj987的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 26 Apr 2019 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 29 Apr 2019 00:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://gsj987.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Pisma.io 可以用来做什么？</title>
+      <link>https://gsj987.github.io/posts/what-can-prisma-io-do/</link>
+      <pubDate>Mon, 29 Apr 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://gsj987.github.io/posts/what-can-prisma-io-do/</guid>
+      <description>prisma.</description>
+    </item>
     
     <item>
       <title>Tensorflow 体验篇-1 使用 Tensorflow 做线性回归</title>
@@ -27,15 +36,6 @@
       
       <guid>https://gsj987.github.io/posts/tensorflow-experience-0/</guid>
       <description>综述 当下机器学习火热，作为4年前也算是学过一些的研究生（半路出家），也很好奇现在的主流工业界对ML已经发展到什么程度了。在看了《精通数据科学：从线性回归到深度学习》1，以及简单的翻阅了几页的《TensorFlow for Deep Learning》2，我觉得现代深度学习的应用还算简单，比我们读书的时候新思路是很多，但是鉴于工业界的发展，实践也容易多了。</description>
-    </item>
-    
-    <item>
-      <title>Pisma.io 可以用来做什么？</title>
-      <link>https://gsj987.github.io/posts/what-can-prisma-io-do/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://gsj987.github.io/posts/what-can-prisma-io-do/</guid>
-      <description>prisma.</description>
     </item>
     
   </channel>
