@@ -21,12 +21,21 @@
     </item>
     
     <item>
+      <title>关于我</title>
+      <link>https://gsj987.github.io/about/</link>
+      <pubDate>Fri, 03 May 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://gsj987.github.io/about/</guid>
+      <description>前互联网创业者，现物联网、机器视觉创业者，研究技术，讨论创业思路。欢迎朋友们进行交流。</description>
+    </item>
+    
+    <item>
       <title>Pisma.io 可以用来做什么？</title>
       <link>https://gsj987.github.io/posts/what-can-prisma-io-do/</link>
       <pubDate>Mon, 29 Apr 2019 00:00:00 +0800</pubDate>
       
       <guid>https://gsj987.github.io/posts/what-can-prisma-io-do/</guid>
-      <description>prisma.</description>
+      <description>prisma.io 是一个用 Scala写的 ORM-like 的服务层，可以方便的作为多种数据库的连接层，是微服务环境下的 ORM 替代品和快速 graphql 建设脚手夹。</description>
     </item>
     
     <item>
@@ -45,6 +54,15 @@
       
       <guid>https://gsj987.github.io/posts/tensorflow-experience-0/</guid>
       <description>综述 当下机器学习火热，作为4年前也算是学过一些的研究生（半路出家），也很好奇现在的主流工业界对ML已经发展到什么程度了。在看了《精通数据科学：从线性回归到深度学习》1，以及简单的翻阅了几页的《TensorFlow for Deep Learning》2，我觉得现代深度学习的应用还算简单，比我们读书的时候新思路是很多，但是鉴于工业界的发展，实践也容易多了。</description>
+    </item>
+    
+    <item>
+      <title>归档</title>
+      <link>https://gsj987.github.io/archives/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://gsj987.github.io/archives/</guid>
+      <description></description>
     </item>
     
   </channel>

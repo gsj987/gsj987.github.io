@@ -26,7 +26,7 @@
       <pubDate>Mon, 29 Apr 2019 00:00:00 +0800</pubDate>
       
       <guid>https://gsj987.github.io/posts/what-can-prisma-io-do/</guid>
-      <description>prisma.</description>
+      <description>prisma.io 是一个用 Scala写的 ORM-like 的服务层，可以方便的作为多种数据库的连接层，是微服务环境下的 ORM 替代品和快速 graphql 建设脚手夹。</description>
     </item>
     
     <item>
