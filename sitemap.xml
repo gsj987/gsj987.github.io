@@ -4,25 +4,48 @@
   
   <url>
     <loc>https://gsj987.github.io/categories/</loc>
-    <lastmod>2019-04-29T00:00:00+08:00</lastmod>
+    <lastmod>2019-05-03T00:00:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gsj987.github.io/posts/</loc>
+    <lastmod>2019-05-03T00:00:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gsj987.github.io/tags/</loc>
+    <lastmod>2019-05-03T00:00:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gsj987.github.io/posts/tensorflow-experience-2/</loc>
+    <lastmod>2019-05-03T00:00:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://gsj987.github.io/</loc>
+    <lastmod>2019-05-03T00:00:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gsj987.github.io/categories/machine-learning/</loc>
+    <lastmod>2019-05-03T00:00:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gsj987.github.io/tags/tensorflow/</loc>
+    <lastmod>2019-05-03T00:00:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://gsj987.github.io/posts/what-can-prisma-io-do/</loc>
     <lastmod>2019-04-29T00:00:00+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://gsj987.github.io/posts/</loc>
-    <lastmod>2019-04-29T00:00:00+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://gsj987.github.io/tags/</loc>
-    <lastmod>2019-04-29T00:00:00+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -44,12 +67,6 @@
   </url>
   
   <url>
-    <loc>https://gsj987.github.io/</loc>
-    <lastmod>2019-04-29T00:00:00+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://gsj987.github.io/categories/software-engineering/</loc>
     <lastmod>2019-04-29T00:00:00+08:00</lastmod>
     <priority>0</priority>
@@ -58,18 +75,6 @@
   <url>
     <loc>https://gsj987.github.io/posts/tensorflow-experience-1/</loc>
     <lastmod>2019-04-26T00:00:00+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://gsj987.github.io/categories/machine-learning/</loc>
-    <lastmod>2019-04-26T00:00:00+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://gsj987.github.io/tags/tensorflow/</loc>
-    <lastmod>2019-04-26T00:00:00+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
