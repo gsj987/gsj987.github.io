@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>elisp on gsj987的博客</title>
+    <link>https://gsj987.github.io/tags/elisp/</link>
+    <description>Recent content in elisp on gsj987的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 13 Aug 2019 00:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://gsj987.github.io/tags/elisp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>在 OrgMode 中保存并粘贴剪切板中的图片</title>
+      <link>https://gsj987.github.io/posts/save-and-paste-image-from-clipboard-in-orgmode/</link>
+      <pubDate>Tue, 13 Aug 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://gsj987.github.io/posts/save-and-paste-image-from-clipboard-in-orgmode/</guid>
+      <description>最近的一个项目中，我打算使用 OrgMode 作为文档的书写工具，主要原因是比较简单，而且可以使用文学编程，简化 API 文档的写作流程。但首先遇到了个难题：如何方便的插入图片。于是我花了些时间，边学边用 elisp 做了一个函数，解决了我项目中的问题：从剪贴板保存图片到项目目录，并以相对目录的形式插入到 org 文件中。</description>
+    </item>
+    
+  </channel>
+</rss>
