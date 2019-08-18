@@ -4,20 +4,49 @@
   
   <url>
     <loc>https://gsj987.github.io/categories/</loc>
-    <lastmod>2019-08-13T00:00:00+08:00</lastmod>
+    <lastmod>2019-08-18T00:00:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://gsj987.github.io/posts/</loc>
-    <lastmod>2019-08-13T00:00:00+08:00</lastmod>
+    <lastmod>2019-08-18T00:00:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://gsj987.github.io/tags/</loc>
-    <lastmod>2019-08-13T00:00:00+08:00</lastmod>
+    <lastmod>2019-08-18T00:00:00+08:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gsj987.github.io/tags/android/</loc>
+    <lastmod>2019-08-18T00:00:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gsj987.github.io/</loc>
+    <lastmod>2019-08-18T00:00:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gsj987.github.io/categories/linux/</loc>
+    <lastmod>2019-08-18T00:00:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gsj987.github.io/tags/raspberry-pi/</loc>
+    <lastmod>2019-08-18T00:00:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gsj987.github.io/posts/use-android-library-on-raspberry-pi-with-libhybris/</loc>
+    <lastmod>2019-08-18T00:00:00+08:00</lastmod>
   </url>
   
   <url>
@@ -28,12 +57,6 @@
   
   <url>
     <loc>https://gsj987.github.io/categories/emacs/</loc>
-    <lastmod>2019-08-13T00:00:00+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://gsj987.github.io/</loc>
     <lastmod>2019-08-13T00:00:00+08:00</lastmod>
     <priority>0</priority>
   </url>

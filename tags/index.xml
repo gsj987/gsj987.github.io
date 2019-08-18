@@ -6,10 +6,28 @@
     <description>Recent content in Tags on gsj987的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 13 Aug 2019 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 18 Aug 2019 00:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://gsj987.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>android</title>
+      <link>https://gsj987.github.io/tags/android/</link>
+      <pubDate>Sun, 18 Aug 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://gsj987.github.io/tags/android/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>raspberry pi</title>
+      <link>https://gsj987.github.io/tags/raspberry-pi/</link>
+      <pubDate>Sun, 18 Aug 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://gsj987.github.io/tags/raspberry-pi/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>elisp</title>
