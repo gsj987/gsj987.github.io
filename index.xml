@@ -17,7 +17,7 @@
       <pubDate>Sun, 18 Aug 2019 00:00:00 +0800</pubDate>
       
       <guid>https://gsj987.github.io/posts/use-android-library-on-raspberry-pi-with-libhybris/</guid>
-      <description>Android 是基于 Linux 的 OS，所以想要在 ARM 的 Linux 上，比如树莓派，是有可能的。但事实上其中还是有问题，主要是因为 Android 的 so 库是通过 Bionic 这个库代替了 libc 作为标准库，两者有很多的差别，无法直接移用。</description>
+      <description>Android 是基于 Linux 的 OS，所以想要在 ARM 的 Linux 上，比如树莓派，是有可能的。但事实上其中还是有问题，主要是因为 Android 的 so 库是通过 Bionic libc 代替了 glibc 作为标准库，两者有很多的差别，无法直接移用。</description>
     </item>
     
     <item>

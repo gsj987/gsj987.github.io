@@ -114,9 +114,9 @@
                         <div class="post-content">
                             
 
-<p>Android 是基于 Linux 的 OS，所以想要在 ARM 的 Linux 上，比如树莓派，是有可能的。但事实上其中还是有问题，主要是因为 Android 的 so 库是通过 Bionic 这个库代替了 libc 作为标准库，两者有很多的差别，无法直接移用。</p>
+<p>Android 是基于 Linux 的 OS，所以想要在 ARM 的 Linux 上，比如树莓派，是有可能的。但事实上其中还是有问题，主要是因为 Android 的 so 库是通过 Bionic libc 代替了 glibc 作为标准库，两者有很多的差别，无法直接移用。</p>
 
-<p>为了解决这个问题，出现了 libhybris 这个库，其主要作用是将 Android 库对 Bionic 的方法引用，Link 到 libc 上，以实现对 Android 库在 ARM Linux 上的支持。libhybris 原来是用于让各 Linux 发行版支持 Android 的驱动，比如 Ubuntu Touch 和 Sailfish OS 都是使用这个库来兼容 Android 设备的。原理图如下：</p>
+<p>为了解决这个问题，出现了 libhybris 这个库，其主要作用是将 Android 库对 Bionic libc 的方法引用，Link 到 glibc 上，以实现对 Android 库在 ARM Linux 上的支持。libhybris 原来是用于让各 Linux 发行版支持 Android 的驱动，比如 Ubuntu Touch 和 Sailfish OS 都是使用这个库来兼容 Android 设备的。原理图如下：</p>
 
 <p><img src="http://cdn.qiniu.gsj987.cn/201908181458_460.png?imageslim" alt="libhybris 原理图" /></p>
 
@@ -130,7 +130,7 @@
 
 <h2 id="环境">环境</h2>
 
-<p>需要 Android 的一个 ROM 的 zip 包，用于提供 bionic 相关库的内容。实践中我使用的是<a href="https://www.mokeedev.com/">魔趣</a>的 ROM 包，随便什么版本，解压以后提取其 /system/lib/ 文件夹到 Pi 的 /system/lib/ (目录一致）。</p>
+<p>需要 Android 的一个 ROM 的 zip 包，用于提供 bionic libc 相关库的内容。实践中我使用的是<a href="https://www.mokeedev.com/">魔趣</a>的 ROM 包，随便什么版本，解压以后提取其 /system/lib/ 文件夹到 Pi 的 /system/lib/ (目录一致）。</p>
 
 <p>另外为了编译 Android 的 libjpeg.so， PC 上要准备 Android-NDK，版本对应上面下载的 ROM 包即可。当然如果直接使用 ROM 包里的 libjpeg.so 也可以，但在后面操作时要注意修改一下实验用的源码。</p>
 
