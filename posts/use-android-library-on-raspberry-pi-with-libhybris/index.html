@@ -179,9 +179,19 @@ rm -rf android-headers_23.orig.tar.gz android-headers-23
 cd libhybris/hybris
 </code></pre>
 
+<p>安装一个依赖 libwayland-dev</p>
+
+<pre><code class="language-bash">sudo apt install libwayland-dev
+</code></pre>
+
+<p>否则会报错 <sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup></p>
+
+<pre><code class="language-bash">make[2]: *** No rule to make target '../egl/platforms/common/libwayland-egl.la', needed by
+</code></pre>
+
 <p>编译安装</p>
 
-<pre><code class="language-bash">./autogen.sh --with-android-headers=/usr/include/android-headers --prefix=/opt/libhybris
+<pre><code class="language-bash">./autogen.sh --with-android-headers=/usr/include/android-headers --prefix=/opt/libhybris --enable-wayland
 make
 sudo make install
 </code></pre>
@@ -202,21 +212,11 @@ sudo make install
 <pre><code class="language-bash">export LD_LIBRARY_PATH=&quot;/opt/libhybris/lib/&quot;
 </code></pre>
 
-<p>安装一个依赖 libwayland-dev</p>
-
-<pre><code class="language-bash">sudo apt install libwayland-dev
-</code></pre>
-
-<p>否则会报错 <sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup></p>
-
-<pre><code class="language-bash">make[2]: *** No rule to make target '../egl/platforms/common/libwayland-egl.la', needed by
-</code></pre>
-
 <p>然后编译</p>
 
 <pre><code class="language-bash"># jpeg-bridge
 cd jpeg-bridge
-./configure --with-hybris-internal-include-path=/opt/libhybris/include/ --enable-wayland
+./configure --with-hybris-internal-include-path=/opt/libhybris/include/
 make
 
 # jepg-client
