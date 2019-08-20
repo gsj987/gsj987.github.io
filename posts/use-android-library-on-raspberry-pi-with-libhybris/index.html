@@ -130,7 +130,7 @@
 
 <h2 id="环境">环境</h2>
 
-<p>需要 Android 的一个 ROM 的 zip 包，用于提供 bionic libc 相关库的内容。实践中我使用的是<a href="https://www.mokeedev.com/">魔趣</a>的 ROM 包，随便什么版本，解压以后提取其 /system/lib/ 文件夹到 Pi 的 /system/lib/ (目录一致）。</p>
+<p>需要 Android 的一个 ROM 的 zip 包，用于提供 bionic libc 相关库的内容。实践中我使用的是<a href="https://www.mokeedev.com/">魔趣</a>的 ROM 包，随便什么版本，解压以后提取其 /system/lib/ 文件夹到 Pi 的 /system/lib/ (目录一致）。我使用的是 MK60.1-flounder_lte-170418-HISTORY 这个版本，因为他是 Android 6.0, 且同时内含 lib 和 lib64 两个架构的库，后面用起来比较方便。</p>
 
 <p>另外为了编译 Android 的 libjpeg.so， PC 上要准备 Android-NDK，版本对应上面下载的 ROM 包即可。当然如果直接使用 ROM 包里的 libjpeg.so 也可以，但在后面操作时要注意修改一下实验用的源码。</p>
 
