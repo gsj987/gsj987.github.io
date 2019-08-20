@@ -105,6 +105,7 @@
 <li><a href="#编译-jpeg-client-和-jpeg-bridge">编译 jpeg-client 和 jpeg-bridge</a></li>
 </ul></li>
 <li><a href="#测试运行">测试运行</a></li>
+<li><a href="#关于架构的问题-arm-or-arm64">关于架构的问题 (Arm or Arm64)</a></li>
 <li><a href="#总结">总结</a></li>
 </ul>
 </nav>
@@ -232,6 +233,20 @@ make
 <li>将 jpeg-client/cjpet，jpeg-bridge/.lib/libjpeg-bridge.so, jpeg-bridge/.lib/libjpeg-bridge.so.0 放在同一目录下（可能需要 LD_LIBRARY_PATH 指定）</li>
 <li>执行  ./cjpeg -outfile out.jpg testimg.bmp 即可看到效果</li>
 </ul>
+
+<h1 id="关于架构的问题-arm-or-arm64">关于架构的问题 (Arm or Arm64)</h1>
+
+<p>默认的，libhybris 使用 32bit arm 进行编译和部署，在 Raspbian 上是没有任何问题的，因为 Raspbian 只有 32bit, 所以不存在架构的问题，但如果使用的是 Arm64 的 Ubuntu，则编译 libhybris 的时候会出现如下错误：</p>
+
+<pre><code class="language-bash">dlfcn.c:205:17: error: initializer element is not constant
+</code></pre>
+
+<p>这时应该选择一下编译的架构：</p>
+
+<pre><code class="language-bash">./autogen.sh --with-android-headers=/usr/include/android-headers --prefix=/opt/libhybris --enable-arch=arm64 --enable-wayland
+</code></pre>
+
+<p>之后编译出来的 libhybirs 就是 64 位的了，此时他使用的 bionic libc 也应该是 64bit 的，应将相关的 Android 库放在 /system/lib64 下。</p>
 
 <h1 id="总结">总结</h1>
 
