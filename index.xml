@@ -6,10 +6,19 @@
     <description>Recent content on gsj987的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 18 Aug 2019 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 07 Oct 2019 00:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://gsj987.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Tensorflow 体验篇-3 全连接网络</title>
+      <link>https://gsj987.github.io/posts/tensorflow-experience-3/</link>
+      <pubDate>Mon, 07 Oct 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://gsj987.github.io/posts/tensorflow-experience-3/</guid>
+      <description>全连接网络(fully connected network)是神经网络中非常重要的概念，他是由多层网络输入输出所组成的节点映射，每一层之间的节点都相互连接，对于一个 $R^m-&amp;gt;R^n$ 的全连接网络，输入(m 个节点） 和输出（n 个节点）之间可能会有多个隐藏层，如图所示：</description>
+    </item>
     
     <item>
       <title>利用 libhybris 在树莓派上使用 Android 库</title>

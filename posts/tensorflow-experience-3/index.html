@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.55.3" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Tensorflow 体验篇-3 全连接网络 | gsj987的博客</title>
+    <meta property="og:title" content="Tensorflow 体验篇-3 全连接网络 - gsj987的博客">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2019-10-07T00:00:00&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-10-07T00:00:00&#43;08:00">
+        
+    <meta name="Keywords" content="架构,python,前端,xamarin,软件工程,机器学习,机器视觉,c#,angular">
+    <meta name="description" content="Tensorflow 体验篇-3 全连接网络">
+        
+    <meta name="author" content="gsj987">
+    <meta property="og:url" content="https://gsj987.github.io/posts/tensorflow-experience-3/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://gsj987.github.io/">
+                        gsj987的博客
+                    </a>
+                
+                <p class="description">技术学习和创业思考</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://gsj987.github.io/">首页</a>
+                    
+                    <a  href="https://gsj987.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://gsj987.github.io/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">Tensorflow 体验篇-3 全连接网络</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年10月7日
+                        </date>
+                        
+                        <div class="post-meta">
+                            <span>|</span>
+                            
+                                <span class="meta-category"><a href="https://gsj987.github.io/categories/machine-learning">machine-learning</a></span>
+                            
+                        </div>
+                        
+                        
+                        
+                        <div class="clear">
+                            <div class="toc-article">
+                                <div class="toc-title">文章目录</div>
+                                <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#使用-bp-算法训练全连接网络">使用 BP 算法训练全连接网络</a></li>
+<li><a href="#为什么要用深度网络">为什么要用深度网络</a></li>
+<li><a href="#训练全连接神经网络">训练全连接神经网络</a>
+<ul>
+<li><a href="#数据变换">数据变换</a></li>
+<li><a href="#激活函数">激活函数</a></li>
+<li><a href="#全连接网络的记忆性">全连接网络的记忆性</a></li>
+</ul></li>
+<li><a href="#实践训练全连接网络">实践训练全连接网络</a>
+<ul>
+<li><a href="#创建批次数据">创建批次数据</a></li>
+<li><a href="#构建全连接网络的隐藏层">构建全连接网络的隐藏层</a></li>
+<li><a href="#在隐藏层中使用-dropout">在隐藏层中使用 Dropout</a></li>
+<li><a href="#喂入批量数据">喂入批量数据</a></li>
+<li><a href="#判断训练的准确性">判断训练的准确性</a></li>
+<li><a href="#研究训练过程">研究训练过程</a></li>
+</ul></li>
+<li><a href="#遇到的问题和解决">遇到的问题和解决</a></li>
+<li><a href="#总结">总结</a></li>
+</ul></li>
+</ul>
+</nav>
+                            </div>
+                        </div>
+                        
+                        <div class="post-content">
+                            
+
+<p>全连接网络(fully connected network)是神经网络中非常重要的概念，他是由多层网络输入输出所组成的节点映射，每一层之间的节点都相互连接，对于一个 $R^m-&gt;R^n$ 的全连接网络，输入(m 个节点） 和输出（n 个节点）之间可能会有多个隐藏层，如图所示：</p>
+
+<p><img src="http://cdn.qiniu.gsj987.cn/201910071139_769.jpg?imageslim" alt="一个含有 3 个隐藏层的全连接网络" /></p>
+
+<p>全连接网络也是一个经典的神经网络的结构，其最主要的好处就是“结构无关”，也就是说我们可以无需猜测输入数据是什么结构的，所以常用在图像或者视频分析的领域。</p>
+
+<h2 id="使用-bp-算法训练全连接网络">使用 BP 算法训练全连接网络</h2>
+
+<p>全神经网络使用 BP 算法为下降函数，计算网络的权重。其基本原理是将正向计算的整体网络的全体损失，反向平摊到网络的各节点权重上，作为一次权重调整，多次迭代后达到整体损失最低化的过程，大致可以理解为适应于神经网络的梯度下降法。更详细的解释，可以参考这篇文章： <a href="https://www.cnblogs.com/charlotte77/p/5629865.html">https://www.cnblogs.com/charlotte77/p/5629865.html</a></p>
+
+<p>值得注意的是，bp 算法不是所有的函数都能用做下降算法，最主要的限制就是 bp 算法无法保证求得的解就是全连接网络的最优解。另外 bp 算法也不是神经网络的唯一下降算法，还有一些模拟自然过程的如退火算法，或者遗传算法，都可用与下降优化。</p>
+
+<h2 id="为什么要用深度网络">为什么要用深度网络</h2>
+
+<p>在实践中，大家发现越深的网络越能容易理解复杂的模型，能让更复杂的模型被理解的“更迅速”。在有同样节点数的各种神经网络中，深度越深的网络能够学习更复杂的网络结构。虽然没有明确的证明，但是大量的例证展示出，越深的神经网络能够达到越广连接网络的学习复杂度，甚至能超过我们数学家的理解范围。</p>
+
+<h2 id="训练全连接神经网络">训练全连接神经网络</h2>
+
+<h3 id="数据变换">数据变换</h3>
+
+<p>为什么全连接神经网络有这样的能力？一种简单的理解方式就是，认为全连接层其实就是数据空间的特征变换问题。比如通过复变函数，我们能将复杂的时域问题，转换成频域问题，把原来需要用积分的复杂问题，转换到了加减乘除就能解决的小学生问题，大大简化了问题处理难度，增加了数学处理问题的范围，经典的如傅利叶变换。在一些经典的图像处理算法中，也会有一些频域变换或者特征提取的办法，提高图像分类准确性。全连接神经网络其实起到的就是这个作用，他通过较深层次的节点变换，将难以找到规律的图像、视频等问题，转换成相对好收敛的数域中，加快了训练速度。只是，这种变换的本身是难以解释的，不像傅利叶变换这样的人为推倒出来的公式，他是通过算法学习的结果。从某种程度上来说，可能这个过程就是智能的过程。</p>
+
+<p>所以有人认为，深度学习是第一种特征变换的算法，以后可能有基于更精妙的数学原理构建的特征变换算法，拓宽我们人工智能的研究领域。</p>
+
+<h3 id="激活函数">激活函数</h3>
+
+<p>在传统的神经网络或者回归算法中，激活函数会采用 sigmoid 这样的非线性算法来完成。但是在现在的深度网络中，往往会使用更简单的线性激活函数 ReLU: $ \theta(x) = max(x,0) $，在实践效果中比 sigmoid 函数更有效。这是因为随着网络的深度增加，sigmoid 容易在较深的网络中将输入全转换成 0，不利于较深网络的构建。关于两者比较的进一步讨论，可以参考这篇文章：<a href="https://blog.csdn.net/Leo_Xu06/article/details/53708647">https://blog.csdn.net/Leo_Xu06/article/details/53708647</a></p>
+
+<p><img src="http://cdn.qiniu.gsj987.cn/201910071326_168.jpg?imageslim" alt="比较深度 sigmoid 函数和 ReLU" /></p>
+
+<p>在后续的分类网络中，还有 softmax 等激活函数，他们与经典的 sigmoid 有各自的特点。</p>
+
+<h3 id="全连接网络的记忆性">全连接网络的记忆性</h3>
+
+<p>全连接网络的一个大问题就是只要训练的时间够长，他就能记忆整个过程中的训练数据，也就是有一定的过拟合性，所以无法用收敛来指示一个网络的训练程度。一个大型的网络很可能会将训练的损失训练成 0，这就是全连接网络的全局模糊性的一个特点的体现。但是这并不意味着训练的成功。如何去除这种过拟合是决定模型训练成功的关键。</p>
+
+<p>常用的处理办法是将数据正则化(Regulaziation)。但是深度学习中的正则化和统计学中的正则化又有一定的区别，统计学中非常符合直觉的规律，在深度学习中并不适用，比如 LASSO，在深度学习的建模过程中，并没有太大的意义。</p>
+
+<p>深度学习中比较常用的正则化方法有 Dropout, Early Stopping 和权值正则化等。其中最有意思的就是 Dropout，他在训练的过程中，随机的去除一些节点，如果训练得到的是“真规律”，则这些去除的节点也并不会对结果产生较大影响，否则就是伪规律。Dropout 可以有效防止网络的记忆性，并在一定程度上算是模拟了网络对新数据的预测能力。不过注意，在网络训练完成，预测结果时，需要将 dropout 关闭。</p>
+
+<h2 id="实践训练全连接网络">实践训练全连接网络</h2>
+
+<p>全连接网络在训练大型数据库时，往往会采用使用多批次的数据集，分批计算下降梯度。本次实践我们使用 deepchem 的化合物数据集 Tox21，他是一个有多种化合物特征的数据库，我们的任务则是使用机器学习来判断某种化合物是否有毒。Deepchem 的安装方法在后续章节我们再做介绍。</p>
+
+<p>我们首先载入数据集</p>
+
+<pre><code class="language-python">import deepchem as dc
+
+_, (train, valid, test), _ = dc.molnet.load_tox21()
+
+train_X, train_y, train_w = train.X, train.y, train.w
+valid_X, valid_y, valid_w = valid.X, valid.y, valid.w
+test_X, test_y, test_w = test.X, test.y, test.w
+
+# 删除一些多余的标签，以做简化
+train_y = train_y[:, 0]
+valid_y = valid_y[:, 0]
+test_y = test_y[:, 0]
+train_w = train_w[:, 0]
+valid_w = valid_w[:, 0]
+
+</code></pre>
+
+<p>其中，x 是化合物的特征向量，y 是标签，使用 0/1 的二元数据表示化合物是否和受体反映。由于 Tox21 是一个不平衡的数据集，也就是说正样本远小于负样本，所以数据库再单独给了一个值 w，用于表示样本的权重，以增加某个特征对正样本的重要性。这是在非平衡样本中，常用的处理方式。</p>
+
+<h3 id="创建批次数据">创建批次数据</h3>
+
+<p>由于样本中共有 947 个样本，50 个一个批次的话，最后一个批次只有 47 个样本。Tensorflow 中可以方便的处理这种情况，创建可变的占位符(Placeholder)，就是设置 tesnor 的第一个维度为 None:</p>
+
+<pre><code class="language-python"># 使用分批数据，处理所有的不同数据内容
+d = 1024  # Tox21 特征向量维度数
+with tf.name_scope(&quot;placeholdes&quot;):
+    x = tf.placeholder(tf.float32, (None, d))
+    y = tf.placeholder(tf.float32, (None, ))
+</code></pre>
+
+<h3 id="构建全连接网络的隐藏层">构建全连接网络的隐藏层</h3>
+
+<p>隐藏层的构建和逻辑回归中构建的方式比较类似，我们使用 n_hidden 代表隐藏层层数，这是一个超变量。</p>
+
+<pre><code class="language-python"># 定义一个隐藏层
+with tf.name_scope(&quot;hidden-layer&quot;):
+    W = tf.Variable(tf.random_normal((d, n_hidden)))
+    b = tf.Variable(tf.random_normal((n_hidden, )))
+    # 使用xW而不是Wx，为了方便处理多批次的数据
+    # 使用ReLU的非线性整流结果
+    # max(0, w^Tx + b)
+    x_hidden = tf.nn.relu(tf.matmul(x, W) + b)
+</code></pre>
+
+<p>剩余部分和前几个章节是一致的，不再赘述。</p>
+
+<pre><code class="language-python"># 使用分批数据，处理所有的不同数据内容
+d = 1024  # 特征向量维度数
+with tf.name_scope(&quot;placeholdes&quot;):
+    x = tf.placeholder(tf.float32, (None, d))
+    y = tf.placeholder(tf.float32, (None, ))
+
+# 定义一个隐藏层
+with tf.name_scope(&quot;hidden-layer&quot;):
+    W = tf.Variable(tf.random_normal((d, n_hidden)))
+    b = tf.Variable(tf.random_normal((n_hidden, )))
+    # 使用xW而不是Wx，为了方便处理多批次的数据
+    # 使用ReLU的非线性整流结果
+    # max(0, w^Tx + b)
+    x_hidden = tf.nn.relu(tf.matmul(x, W) + b)
+
+# 定义输出层
+with tf.name_scope(&quot;output&quot;):
+    W = tf.Variable(tf.random_normal((n_hidden, 1)))
+    b = tf.Variable(tf.random_normal((1, )))
+    y_logit = tf.matmul(x_hidden, W) + b
+    y_one_prob = tf.sigmoid(y_logit)
+    y_pred = tf.round(y_one_prob)
+
+# 定义损失函数
+with tf.name_scope(&quot;loss&quot;):
+    y_expand = tf.expand_dims(y, 1)
+    # 交叉熵差异损失函数
+    entropy = tf.nn.sigmoid_cross_entropy_with_logits(
+        logits=y_logit, labels=y_expand)
+    l = tf.reduce_sum(entropy)
+
+# 定义下降函数
+with tf.name_scope(&quot;optim&quot;):
+    train_op = tf.train.AdamOptimizer(learning_rate).minimize(l)
+
+with tf.name_scope(&quot;summaries&quot;):
+    tf.summary.scalar(&quot;loss&quot;, l)
+    merged = tf.summary.merge_all()
+
+train_writer = tf.summary.FileWriter('logs/train', tf.get_default_graph())
+</code></pre>
+
+<h3 id="在隐藏层中使用-dropout">在隐藏层中使用 Dropout</h3>
+
+<p>在隐藏层中加入 Dropout 比较简单，有内置函数即可完成。但 Dropout 的概率也是个超变量，并且在训练和预测的过程中使用不同的值，训练时我们采用 0.5，预测时我们使用 1.0。所以我们也把他加入到 placeholder 中去。</p>
+
+<pre><code class="language-python">with tf.name_scope(&quot;placeholdes&quot;):
+    x = tf.placeholder(tf.float32, (None, d))
+    y = tf.placeholder(tf.float32, (None, ))
+    keep_prob = tf.placeholder(tf.float32)
+
+# 定义一个隐藏层
+with tf.name_scope(&quot;hidden-layer&quot;):
+    W = tf.Variable(tf.random_normal((d, n_hidden)))
+    b = tf.Variable(tf.random_normal((n_hidden, )))
+    # 使用xW而不是Wx，为了方便处理多批次的数据
+    # 使用ReLU的非线性整流结果
+    # max(0, w^Tx + b)
+    x_hidden = tf.nn.relu(tf.matmul(x, W) + b)
+    # add dropout
+    x_hidden = tf.nn.dropout(x_hidden, keep_prob)
+</code></pre>
+
+<h3 id="喂入批量数据">喂入批量数据</h3>
+
+<p>过程和之前的一样，只是多一个步分 batch 的过程。实验时我们就进行了 10 段数据的分隔</p>
+
+<pre><code class="language-python"># 喂入批量数据
+step = 0
+
+N = train_X.shape[0]
+
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+
+    for epoch in range(n_epochs):
+        pos = 0
+        while pos &lt; N:
+            batch_x = train_X[pos:pos + batch_size]
+            batch_y = train_y[pos:pos + batch_size]
+            feed_dict = {x: batch_x, y: batch_y, keep_prob: dropout_prob}
+            _, summary, loss = sess.run([train_op, merged, l],
+                                        feed_dict=feed_dict)
+            print(&quot;epoch %d, step %d, loss: %f&quot; % (epoch, step, loss))
+
+            train_writer.add_summary(summary, step)
+
+            step += 1
+            pos += batch_size
+
+    # 得到预测结果
+    train_y_pred = sess.run(y_pred, feed_dict={x: train_X, keep_prob: 1.0})
+    valid_y_pred = sess.run(y_pred, feed_dict={x: valid_X, keep_prob: 1.0})
+    test_y_pred = sess.run(y_pred, feed_dict={x: test_X, keep_prob: 1.0})
+</code></pre>
+
+<h3 id="判断训练的准确性">判断训练的准确性</h3>
+
+<p>由于 Tox21 的数据不平衡性，使用 accuracy_score 函数进行计算时，需要加入权重，以保证样本的平衡。实践中，正样本的权重为负样本的 19 倍左右，此时用 MolecureNet 分类类别可得到 50%的准确度，相对来说就比较合理了。</p>
+
+<pre><code class="language-python"># 定义评价函数，由于0标签数量比1标签数量多的多，我们需要给1标签数量加权重
+train_weighted_score = accuracy_score(
+    train_y, train_y_pred, sample_weight=train_w)
+print(&quot;Train Weighted Classfiication Accuracy: %f&quot; % train_weighted_score)
+valid_weighted_score = accuracy_score(
+    valid_y, valid_y_pred, sample_weight=valid_w)
+print(&quot;Valid Weighted Classfication Accuracy: %f&quot; % valid_weighted_score)
+test_weighted_score = accuracy_score(test_y, test_y_pred, sample_weight=test_w)
+print(&quot;Test Weighted Classfication Accuracy: %f&quot; % test_weighted_score)
+</code></pre>
+
+<p>执行脚本，得到训练结果：</p>
+
+<p><img src="http://cdn.qiniu.gsj987.cn/201910071428_8.png?imageslim" alt="训练结果" /></p>
+
+<p>可以看到分 10 批，共 630 次训练后，在测试集上有了 53.8%的准确度，可以说并不算太高。</p>
+
+<h3 id="研究训练过程">研究训练过程</h3>
+
+<p>使用命令</p>
+
+<pre><code class="language-bash">tensorboard  --logdir logs/train
+</code></pre>
+
+<p>打开 tensorboard，查看训练过程。首先查看可视化的计算网络，可以看到训练过程中加入了一个隐藏网络 hidden layer。</p>
+
+<p><img src="http://cdn.qiniu.gsj987.cn/201910071433_685.png?imageslim" alt="可视化训练网络" /></p>
+
+<p>再点开隐藏层，可以看到其中的具体过程</p>
+
+<p><img src="http://cdn.qiniu.gsj987.cn/201910071435_699.png?imageslim" alt="隐藏层的具体计算过程" /></p>
+
+<p>而损失函数的下降可视化如图</p>
+
+<p><img src="http://cdn.qiniu.gsj987.cn/201910071437_519.png?imageslim" alt="损失函数可视化" /></p>
+
+<p>可见这个过程是极其不稳定的，这也是多批次数据训练的代价。其加快了训练过程，但也降低了稳定性。后续学习中，我们就要想办法来增加训练的稳定性，以及提升准确度。</p>
+
+<h2 id="遇到的问题和解决">遇到的问题和解决</h2>
+
+<p>实践过程中，由于在这之前我都是使用的 pipenv 代替 anaconda 的方式安装的依赖，本次过程中 deepchem 无法正常使用，pip 直接安装依赖无法满足所有依赖，特别是 rdkit，提示</p>
+
+<pre><code class="language-bash">&gt; pip install rdkit
+Collecting rdkit
+ERROR: Could not find a version that satisfies the requirement rdkit (from versions: none)
+ERROR: No matching distribution found for rdkit
+</code></pre>
+
+<p>看 deepchem 的官网，其官方支持的只有 linux 和 osx。索幸 windows 还有 WSL，于是我在 WSL 上安装了 anaconda，具体过程如资料：<a href="https://gist.github.com/kauffmanes/5e74916617f9993bc3479f401dfec7da">https://gist.github.com/kauffmanes/5e74916617f9993bc3479f401dfec7da</a></p>
+
+<p>安装的时候直接安装也可能会有依赖无法全部满足的问题，提示</p>
+
+<pre><code class="language-bash"># gsj987 @ LOU-THINKPAD in /mnt/c/Users/gsj98/Projects/tensorflow_tutorial [16:02:44] C:1
+$ ~/anaconda2/bin/conda install -c deepchem deepchem=2.1.0 python=3.5
+
+Solving environment: failed
+PackagesNotFoundError: The following packages are not available from current channels:
+
+ - deepchem=2.1.0
+ - pdbfixer==1.4
+ - deepchem=2.1.0
+ - xgboost==0.6a2
+ - deepchem=2.1.0
+ - rdkit==2017.09.1
+
+Current channels:
+
+ - [https://conda.anaconda.org/deepchem/linux-64](https://conda.anaconda.org/deepchem/linux-64)
+ - [https://conda.anaconda.org/deepchem/noarch](https://conda.anaconda.org/deepchem/noarch)
+ - [https://repo.anaconda.com/pkgs/main/linux-64](https://repo.anaconda.com/pkgs/main/linux-64)
+ - [https://repo.anaconda.com/pkgs/main/noarch](https://repo.anaconda.com/pkgs/main/noarch)
+ - [https://repo.anaconda.com/pkgs/free/linux-64](https://repo.anaconda.com/pkgs/free/linux-64)
+ - [https://repo.anaconda.com/pkgs/free/noarch](https://repo.anaconda.com/pkgs/free/noarch)
+ - [https://repo.anaconda.com/pkgs/r/linux-64](https://repo.anaconda.com/pkgs/r/linux-64)
+ - [https://repo.anaconda.com/pkgs/r/noarch](https://repo.anaconda.com/pkgs/r/noarch)
+ - [https://repo.anaconda.com/pkgs/pro/linux-64](https://repo.anaconda.com/pkgs/pro/linux-64)
+ - [https://repo.anaconda.com/pkgs/pro/noarch](https://repo.anaconda.com/pkgs/pro/noarch)
+
+To search for alternate channels that may provide the conda package you're
+looking for, navigate to
+ [https://anaconda.org](https://anaconda.org)
+
+and use the search bar at the top of the page.
+</code></pre>
+
+<p>解决办法是指定更详细的依赖列表：</p>
+
+<pre><code class="language-bash">conda install -c deepchem -c rdkit -c conda-forge -c omnia deepchem=2.1.0
+</code></pre>
+
+<p>另外有个坑就是 conda 启用 virtualenv 后，直接使用的 python 代替的默认 python 版本，而不是系统的 python3，后者使用的仍旧是系统版本，需要注意。</p>
+
+<h2 id="总结">总结</h2>
+
+<p>全连接网络是神经网络和深度学习中的重要概念。可以说特别是在图像的分类问题上，最后都会加上一个全连接网络作为最后的分类器。现代深度学习最大的突破也是将全连接网络的可计算深度大大增加，从而带来了更多的抽象理解能力。后续的工作就是如何提升网络的准确性，加快收敛速度等角度，但基本原理都来自全连接网络，需要重点理解。</p>
+
+                        </div>
+
+                        
+
+
+                        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/posts/tensorflow-experience-2/">Tensorflow 体验篇-2 使用 Tensorflow 做逻辑回归</a></li>
+        
+        <li><a href="/posts/tensorflow-experience-1/">Tensorflow 体验篇-1 使用 Tensorflow 做线性回归</a></li>
+        
+        <li><a href="/posts/tensorflow-experience-0/">Tensorflow 体验篇-0 安装</a></li>
+        
+        <li><a href="/posts/use-android-library-on-raspberry-pi-with-libhybris/">利用 libhybris 在树莓派上使用 Android 库</a></li>
+        
+        <li><a href="/posts/save-and-paste-image-from-clipboard-in-orgmode/">在 OrgMode 中保存并粘贴剪切板中的图片</a></li>
+        
+    </ul>
+</div>
+
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="https://gsj987.github.io/tags/tensorflow">tensorflow</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </article>
+                    
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "gsj987s-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://gsj987.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://gsj987.github.io/posts/tensorflow-experience-3/" title="Tensorflow 体验篇-3 全连接网络">Tensorflow 体验篇-3 全连接网络</a>
+    </li>
+    
+    <li>
+        <a href="https://gsj987.github.io/posts/use-android-library-on-raspberry-pi-with-libhybris/" title="利用 libhybris 在树莓派上使用 Android 库">利用 libhybris 在树莓派上使用 Android 库</a>
+    </li>
+    
+    <li>
+        <a href="https://gsj987.github.io/posts/save-and-paste-image-from-clipboard-in-orgmode/" title="在 OrgMode 中保存并粘贴剪切板中的图片">在 OrgMode 中保存并粘贴剪切板中的图片</a>
+    </li>
+    
+    <li>
+        <a href="https://gsj987.github.io/posts/tensorflow-experience-2/" title="Tensorflow 体验篇-2 使用 Tensorflow 做逻辑回归">Tensorflow 体验篇-2 使用 Tensorflow 做逻辑回归</a>
+    </li>
+    
+    <li>
+        <a href="https://gsj987.github.io/posts/what-can-prisma-io-do/" title="Pisma.io 可以用来做什么？">Pisma.io 可以用来做什么？</a>
+    </li>
+    
+    <li>
+        <a href="https://gsj987.github.io/posts/tensorflow-experience-1/" title="Tensorflow 体验篇-1 使用 Tensorflow 做线性回归">Tensorflow 体验篇-1 使用 Tensorflow 做线性回归</a>
+    </li>
+    
+    <li>
+        <a href="https://gsj987.github.io/posts/tensorflow-experience-0/" title="Tensorflow 体验篇-0 安装">Tensorflow 体验篇-0 安装</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://gsj987.github.io/categories/emacs/">emacs(1)</a>
+    </li>
+    
+    <li>
+        <a href="https://gsj987.github.io/categories/linux/">linux(1)</a>
+    </li>
+    
+    <li>
+        <a href="https://gsj987.github.io/categories/machine-learning/">machine-learning(4)</a>
+    </li>
+    
+    <li>
+        <a href="https://gsj987.github.io/categories/software-engineering/">software-engineering(1)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://gsj987.github.io/tags/android/">android</a>
+    
+    <a href="https://gsj987.github.io/tags/architecture/">architecture</a>
+    
+    <a href="https://gsj987.github.io/tags/ddd/">ddd</a>
+    
+    <a href="https://gsj987.github.io/tags/elisp/">elisp</a>
+    
+    <a href="https://gsj987.github.io/tags/graphql/">graphql</a>
+    
+    <a href="https://gsj987.github.io/tags/raspberry-pi/">raspberry-pi</a>
+    
+    <a href="https://gsj987.github.io/tags/tensorflow/">tensorflow</a>
+    
+    <a href="https://gsj987.github.io/tags/windows/">windows</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://gsj987.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2019 <a href="https://gsj987.github.io/">gsj987的博客 By gsj987</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    <script type="text/javascript">
+    
+    (function(){
+        $("pre code").parent().addClass("line-numbers")
+    }())
+
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [ ['$','$'] ],
+            processEscapes: true
+        }
+    };
+    </script>
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-59884936-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+</body>
+</html>

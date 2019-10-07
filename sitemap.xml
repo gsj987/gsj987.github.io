@@ -4,30 +4,47 @@
   
   <url>
     <loc>https://gsj987.github.io/categories/</loc>
-    <lastmod>2019-08-18T00:00:00+08:00</lastmod>
+    <lastmod>2019-10-07T00:00:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://gsj987.github.io/posts/</loc>
-    <lastmod>2019-08-18T00:00:00+08:00</lastmod>
+    <lastmod>2019-10-07T00:00:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://gsj987.github.io/tags/</loc>
-    <lastmod>2019-08-18T00:00:00+08:00</lastmod>
+    <lastmod>2019-10-07T00:00:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gsj987.github.io/posts/tensorflow-experience-3/</loc>
+    <lastmod>2019-10-07T00:00:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://gsj987.github.io/</loc>
+    <lastmod>2019-10-07T00:00:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gsj987.github.io/categories/machine-learning/</loc>
+    <lastmod>2019-10-07T00:00:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://gsj987.github.io/tags/tensorflow/</loc>
+    <lastmod>2019-10-07T00:00:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://gsj987.github.io/tags/android/</loc>
-    <lastmod>2019-08-18T00:00:00+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://gsj987.github.io/</loc>
     <lastmod>2019-08-18T00:00:00+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -75,18 +92,6 @@
   <url>
     <loc>https://gsj987.github.io/posts/tensorflow-experience-2/</loc>
     <lastmod>2019-05-03T00:00:00+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://gsj987.github.io/categories/machine-learning/</loc>
-    <lastmod>2019-05-03T00:00:00+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://gsj987.github.io/tags/tensorflow/</loc>
-    <lastmod>2019-05-03T00:00:00+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
