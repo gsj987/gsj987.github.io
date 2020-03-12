@@ -6,15 +6,24 @@
     <description>Recent content in Tags on gsj987的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 07 Oct 2019 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 09 Mar 2020 00:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://gsj987.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>cnn</title>
+      <link>https://gsj987.github.io/tags/cnn/</link>
+      <pubDate>Mon, 09 Mar 2020 00:00:00 +0800</pubDate>
+      
+      <guid>https://gsj987.github.io/tags/cnn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>tensorflow</title>
       <link>https://gsj987.github.io/tags/tensorflow/</link>
-      <pubDate>Mon, 07 Oct 2019 00:00:00 +0800</pubDate>
+      <pubDate>Mon, 09 Mar 2020 00:00:00 +0800</pubDate>
       
       <guid>https://gsj987.github.io/tags/tensorflow/</guid>
       <description></description>
