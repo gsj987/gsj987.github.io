@@ -6,18 +6,27 @@
     <description>Recent content in reading-notes on gsj987的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 09 Aug 2020 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 17 Sep 2020 00:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://gsj987.github.io/categories/reading-notes/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>聪明的笔记1 - 所要知道的一切</title>
+      <title>聪明的笔记2 - 四个重要原则</title>
+      <link>https://gsj987.github.io/posts/how-to-take-smart-notes-2/</link>
+      <pubDate>Thu, 17 Sep 2020 00:00:00 +0800</pubDate>
+      
+      <guid>https://gsj987.github.io/posts/how-to-take-smart-notes-2/</guid>
+      <description>本系列是书 《 How to take smart notes 》 的读书笔记，本书是系统的介绍 slipbox 笔记法的方法，原理和实践。本章是第五至八章，论述笔记方法在使用时我们要遵循的方法。</description>
+    </item>
+    
+    <item>
+      <title>聪明的笔记1 - 介绍</title>
       <link>https://gsj987.github.io/posts/how-to-take-smart-notes-1/</link>
       <pubDate>Sun, 09 Aug 2020 00:00:00 +0800</pubDate>
       
       <guid>https://gsj987.github.io/posts/how-to-take-smart-notes-1/</guid>
-      <description>本系列是书 《 How to take smart notes 》 的读书笔记，本书是系统的介绍 slipbox 笔记法的方法，原理和实践。本章是第一章，介绍 slipbox 笔记的来源。</description>
+      <description>本系列是书 《 How to take smart notes 》 的读书笔记，本书是系统的介绍 slipbox 笔记法的方法，原理和实践。本章是第一至四章，介绍 slipbox 笔记的来源和基本的工作流程。</description>
     </item>
     
   </channel>
