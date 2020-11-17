@@ -6,10 +6,19 @@
     <description>Recent content in reading-notes on gsj987的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 17 Sep 2020 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 17 Nov 2020 00:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://gsj987.github.io/categories/reading-notes/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>聪明的笔记3 - ﻿分离和连接任务</title>
+      <link>https://gsj987.github.io/posts/how-to-take-smart-notes-3/</link>
+      <pubDate>Tue, 17 Nov 2020 00:00:00 +0800</pubDate>
+      
+      <guid>https://gsj987.github.io/posts/how-to-take-smart-notes-3/</guid>
+      <description>本系列是书 《 How to take smart notes 》 的读书笔记，本书是系统的介绍 slipbox 笔记法的方法，原理和实践。本章是第九章，论述在写作过程中，如何拆分任务并组合他们。</description>
+    </item>
     
     <item>
       <title>聪明的笔记2 - 四个重要原则</title>

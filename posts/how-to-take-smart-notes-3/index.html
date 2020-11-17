@@ -7,20 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>利用 libhybris 在树莓派上使用 Android 库 | gsj987的博客</title>
-    <meta property="og:title" content="利用 libhybris 在树莓派上使用 Android 库 - gsj987的博客">
+    <title>聪明的笔记3 - ﻿分离和连接任务 | gsj987的博客</title>
+    <meta property="og:title" content="聪明的笔记3 - ﻿分离和连接任务 - gsj987的博客">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content="2019-08-18T00:00:00&#43;08:00">
+    <meta property="article:published_time" content="2020-11-17T00:00:00&#43;08:00">
         
         
-    <meta property="article:modified_time" content="2019-08-18T00:00:00&#43;08:00">
+    <meta property="article:modified_time" content="2020-11-17T00:00:00&#43;08:00">
         
     <meta name="Keywords" content="架构,python,前端,xamarin,软件工程,机器学习,机器视觉,c#,angular">
-    <meta name="description" content="利用 libhybris 在树莓派上使用 Android 库">
+    <meta name="description" content="聪明的笔记3 - ﻿分离和连接任务">
         
     <meta name="author" content="gsj987">
-    <meta property="og:url" content="https://gsj987.github.io/posts/use-android-library-on-raspberry-pi-with-libhybris/">
+    <meta property="og:url" content="https://gsj987.github.io/posts/how-to-take-smart-notes-3/">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/css/normalize.css">
@@ -72,16 +72,16 @@
                 <div class="res-cons">
                     <article class="post">
                         <header>
-                            <h1 class="post-title">利用 libhybris 在树莓派上使用 Android 库</h1>
+                            <h1 class="post-title">聪明的笔记3 - ﻿分离和连接任务</h1>
                         </header>
                         <date class="post-meta meta-date">
-                            2019年8月18日
+                            2020年11月17日
                         </date>
                         
                         <div class="post-meta">
                             <span>|</span>
                             
-                                <span class="meta-category"><a href="https://gsj987.github.io/categories/linux">linux</a></span>
+                                <span class="meta-category"><a href="https://gsj987.github.io/categories/reading-notes">reading-notes</a></span>
                             
                         </div>
                         
@@ -92,21 +92,15 @@
                                 <div class="toc-title">文章目录</div>
                                 <nav id="TableOfContents">
 <ul>
-<li><a href="#准备工作">准备工作</a>
+<li>
 <ul>
-<li><a href="#设备">设备</a></li>
-<li><a href="#环境">环境</a></li>
-<li><a href="#测试项目">测试项目</a></li>
+<li><a href="#给每个任务不可分割的注意力">给每个任务不可分割的注意力</a></li>
+<li><a href="#多线任务不可取">多线任务不可取</a></li>
+<li><a href="#给每个任务合适的注意力">给每个任务合适的注意力。</a></li>
+<li><a href="#不做计划-做个专家">不做计划，做个专家</a></li>
+<li><a href="#实现闭环">实现闭环</a></li>
+<li><a href="#减少决定的数量">减少决定的数量</a></li>
 </ul></li>
-<li><a href="#开始编译">开始编译</a>
-<ul>
-<li><a href="#编译-android-jpeg-library">编译 Android jpeg-library</a></li>
-<li><a href="#编译-libhybris">编译 libhybris</a></li>
-<li><a href="#编译-jpeg-client-和-jpeg-bridge">编译 jpeg-client 和 jpeg-bridge</a></li>
-</ul></li>
-<li><a href="#测试运行">测试运行</a></li>
-<li><a href="#关于架构的问题-arm-or-arm64">关于架构的问题 (Arm or Arm64)</a></li>
-<li><a href="#总结">总结</a></li>
 </ul>
 </nav>
                             </div>
@@ -115,151 +109,65 @@
                         <div class="post-content">
                             
 
-<p>Android 是基于 Linux 的 OS，所以想要在 ARM 的 Linux 上，比如树莓派，是有可能的。但事实上其中还是有问题，主要是因为 Android 的 so 库是通过 Bionic libc 代替了 glibc 作为标准库，两者有很多的差别，无法直接移用。</p>
+<p>本系列是书 《 How to take smart notes 》 的读书笔记，本书是系统的介绍 slipbox 笔记法的方法，原理和实践。本章是第九章，论述在写作过程中，如何拆分任务并组合他们。</p>
 
-<p>为了解决这个问题，出现了 libhybris 这个库，其主要作用是将 Android 库对 Bionic libc 的方法引用，Link 到 glibc 上，以实现对 Android 库在 ARM Linux 上的支持。libhybris 原来是用于让各 Linux 发行版支持 Android 的驱动，比如 Ubuntu Touch 和 Sailfish OS 都是使用这个库来兼容 Android 设备的。原理图如下：</p>
+<h2 id="给每个任务不可分割的注意力">给每个任务不可分割的注意力</h2>
 
-<p><img src="http://cdn.qiniu.gsj987.cn/201908181458_460.png?imageslim" alt="libhybris 原理图" /></p>
+<p>有不正式的研究表明，经常的邮件和消息打断我们的工作，会让我们的生产效率降低 40%。现在，我们的电视节目的市场也越来越短，我们越来越多暴露的片段信息中，缺少对注意力的训练。</p>
 
-<p>今天我尝试将 Bionic-jpeg 这个 Android 上的 jpeg 库，通过 libhybris 的包装，运行到装有 Raspbian 的树莓派上。原教程来源：<a href="https://mcaleely.com/jh/ToT/2013/09/06/bionic-jpeg-a-libhybris-exam">https://mcaleely.com/jh/ToT/2013/09/06/bionic-jpeg-a-libhybris-exam</a></p>
+<h2 id="多线任务不可取">多线任务不可取</h2>
 
-<h1 id="准备工作">准备工作</h1>
+<p>往往经常做多线任务的人会声称多线任务效率高，但他们其实并没有做过实际的比较测试。心理学家的测试表明，这些多线程带来的高效率仅仅是一种感觉，多线程的实际生产效率是降低了，工作的质量和数量都少于只做一件事情人对照组。</p>
 
-<h2 id="设备">设备</h2>
+<p>这种质量的下降不仅是需要专注的工作上，还表现在应对多样任务的处理能力上，这是令人震惊的。因为我们在多线程任务时起时还是在每一个时刻在做一个任务，然后频繁的切换注意力，这大大降低了我们的重新集中注意力的速度，降低我们对多任务的处理能力。</p>
 
-<p>我准备了一个树莓派 3b+, 装了 Raspbian buster。</p>
+<p>写作其实是一个多种任务集合的过程，不单单是把字写下来，更是阅读、理解、映射、创意、连接、区别、炼字、架构、组织、订正、重写的一系列过程。他们之间不会明显的区分过程，但又是需要不同的注意力。</p>
 
-<h2 id="环境">环境</h2>
+<p>我们理解注意力的时候，不只是有专注的注意力。集中注意力在一件事情上的时间每个人都差不多短，而长期维持专注注意力在一个事情上需要训练。如果我们不多线程工作，移除多余分担和任务，我们可以延长这个注意力。</p>
 
-<p>需要 Android 的一个 ROM 的 zip 包，用于提供 bionic libc 相关库的内容。实践中我使用的是<a href="https://www.mokeedev.com/">魔趣</a>的 ROM 包，随便什么版本，解压以后提取其 /system/lib/ 文件夹到 Pi 的 /system/lib/ (目录一致）。我使用的是 MK60.1-flounder_lte-170418-HISTORY 这个版本，因为他是 Android 6.0, 且同时内含 lib 和 lib64 两个架构的库，后面用起来比较方便。</p>
+<p>尽可能的区分任务，让他们不互相干扰。这不是仅仅考思考方式，也需要组织我们的工作流。用  Slipbox 方法让我们能将工作合理分割，用写作的方式确认每一个步骤被不受干扰的完成。</p>
 
-<p>另外为了编译 Android 的 libjpeg.so， PC 上要准备 Android-NDK，版本对应上面下载的 ROM 包即可。当然如果直接使用 ROM 包里的 libjpeg.so 也可以，但在后面操作时要注意修改一下实验用的源码。</p>
+<h2 id="给每个任务合适的注意力">给每个任务合适的注意力。</h2>
 
-<p>树莓派上要安装好编译用的基本环境</p>
+<p>写作的不同过程会需要不同的注意力，如校对时需要的注意力和炼字时是完全不一样的。</p>
 
-<pre><code class="language-bash">sudo apt-get install make automake autoconf libtool pkg-config
-</code></pre>
+<p>在做批判，读者和作者之间也要有不同的角色切换，才能在这个过程中得到新的观点，优化表达。</p>
 
-<h2 id="测试项目">测试项目</h2>
+<p>学术写作需要全种类型的注意力。除了专注之外，还需要类似艺术创意的灵活的注意力。顶级科学家可以自由切换两种注意力。需要让自己能灵活切换注意力类型，还需要合适的外部环境，一个灵活的工作架构，不会因为我们偏离了原先的计划就宕机。可惜的是所有写作指南都要求我们定计划。不要定计划，做个专家。</p>
 
-<p>下载测试项目的源码：<a href="https://launchpad.net/bionic-jpeg/+download">https://launchpad.net/bionic-jpeg/+download</a>，并解压。其中包含的目录如下：</p>
+<p>我们停止计划时就是开始了学习。通过环境选择和切换任务的紧迫性，从而产生良好写作洞见，这样的训练非常重要。就像学自行车，只有拆了辅助轮，感受车轮开始转起来的过程，一开始虽然有不安全感，但熟悉了一会才是学会自行车。</p>
 
-<ul>
-<li>jpeg-9: 从 IJG 下载的官方源码<a href="http://www.ijg.org/files/jpegsrc.v9.tar.gz">http://www.ijg.org/files/jpegsrc.v9.tar.gz</a></li>
-<li>include: 可在 Android 和 Ubuntu 适用的头文件 jconfig.h</li>
-<li>jpeg-library: 用 NDK 编译 libjpeg 的脚本</li>
-<li>jpeg-client: 用于 Ubuntu 的 jpeg 客户端 (cjpeg, djpeg, jpegtran, rdjpgcom, wrjpgcom)</li>
-<li>jpeg-bridge: 将 libhybaris 包装 jpeglib.h 的源码</li>
-</ul>
+<h2 id="不做计划-做个专家">不做计划，做个专家</h2>
 
-<p>本次实验的目标是在树莓派上用 Ubuntu 版本的 jpeg-client 调用 Android 版本的 libjpeg.so 后端。</p>
+<p>同样人不可能只通过按照计划，按照线性的工作流程，学会创造性的学术写作的艺术。</p>
 
-<h1 id="开始编译">开始编译</h1>
+<p>专家依靠的是对经验的实体化，来实现随心所欲的写作状态。一个专家有学术写作过程的直觉，大概了解什么任务会推进写作，什么任务只是单纯的干扰。这个过程中没有通用的执行规则，每个项目和任务之间都有差异。</p>
 
-<h2 id="编译-android-jpeg-library">编译 Android jpeg-library</h2>
+<p>为了成为专家，我们需要能自由的做决定，必要的错误会给我们带来成长。所有的写作指导不是教你这样的经验，而都是在教你写作的流程步骤，也没有教你真正学术写作的关键：产生想法并发表出来。</p>
 
-<p>在 PC 上安装 NDK，然后编译 jpeg-library。为了区分原本的 libjpeg.so，本项目中用 libjpeg2.so 代替。</p>
+<p>专家不会遵循具体的规则和方法，但他们的经验会根据具体的环境做出正确的判断。就像 Slipbox 方法不会告诉你什么步骤做什么，只是给了一种知识的组织结构，将任务切分成有效的部分，让你在相互关联的写作过程中有可控的任务拆分和及时的反馈，让你有机会做刻意学习。这样的经验越多，就可以越像专家一样通过直觉和技巧来判断下一步的任务，通过环境来做决定。</p>
 
-<pre><code class="language-bash">cd jpeg-library
-&lt;path-to-ndk&gt;/ndk-build
-</code></pre>
+<h2 id="实现闭环">实现闭环</h2>
 
-<h2 id="编译-libhybris">编译 libhybris</h2>
+<p>除了注意力，我们的短时记忆也是有限的。心理学家认为我们能短时同时记住的事情不会超过 7 样。所以经常我们需要购物单一样的待办事项帮助记忆。</p>
 
-<p>libhybris 在树莓派上编译。首先下载 android-headers，注意和之前下载的 ROM 版本保持兼容。我使用的是 API Level 23 (Android 6.0.1)</p>
+<p>但我们可以通过事务的关联性让记忆变得容易。所以记我们理解的事务比不理解的要容易的多。创建知识的连通性就是 Slipbox 做的事情。 经常性的去思考不同事务和理论之间的区别和联系，相互的解释性，能帮助我们理解，加速学习，同时更好的通过连接记忆。</p>
 
-<pre><code class="language-bash">wget https://launchpad.net/ubuntu/+archive/primary/+files/android-headers_23.orig.tar.gz
-tar -xvzf android-headers_23.orig.tar.gz
-sudo mv -f android-headers-23/23 /usr/include/android-headers
-rm -rf android-headers_23.orig.tar.gz android-headers-23
-</code></pre>
+<p>一个开放的任务会占据我们的短时记忆，我们会轻易的被未完成的任务分心，而忽略他们的重要性的差别。但其实不必完成任务，只要把它写下来，就能让我们从中抽离。这就是 GTD 的原理。</p>
 
-<p>然后下载 libhybris <a href="https://github.com/libhybris/libhybris">https://github.com/libhybris/libhybris</a></p>
+<p>Slipbox 的方法也是一样。 首先我们要确定写作的任务，把它拆分成多个可完成的子任务。第二步是将我们思考的产出记录下来，包括与未来查询相关的链接。可能的随后任务是开放的问题和对其他笔记的链接。还有其他的提示，如稍后复习这章找出遗漏。或还可以将一个还没审阅的笔记变成一个长期笔记，或有个阅读笔记还没加入引用。这样让我们在回头看时快速回到任务中。</p>
 
-<pre><code class="language-bash">git clone git@github.com:libhybris/libhybris.git
-cd libhybris/hybris
-</code></pre>
+<p>另外我们可以在头脑中保持一些未答复的问题，这样在闲暇的时刻可以思考。许多问题都是在不经意间解决的。</p>
 
-<p>安装一个依赖 libwayland-dev</p>
+<h2 id="减少决定的数量">减少决定的数量</h2>
 
-<pre><code class="language-bash">sudo apt install libwayland-dev
-</code></pre>
+<p>除了注意力和短期记忆，另一个容易消耗的是动力或意志力。意志力也是一种需要恢复的有限资源，训练可以提升总量，但需要时间和努力。众多的事物会有对意志力耗尽的效果。克服这个的办法是欺骗，与其强迫自己做不想做的事情，不如找到一个方法让我们感到去做会推动任务前进。做一个需要被完成的任务会减少我们做事时意志力的消耗。</p>
 
-<p>否则会报错 <sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup></p>
+<p>一个稳定和标准的工作环境能减少我们的意志力消耗。所以奥巴马和比尔盖茨只有两种外套的颜色。每天早上做最少的选择，把资源用在重要的事情上。</p>
 
-<pre><code class="language-bash">make[2]: *** No rule to make target '../egl/platforms/common/libwayland-egl.la', needed by
-</code></pre>
+<p>写作时也要减少选择，当要做和内容相关发选择时，大部分组织相关的工作可以提前做，并保持固定。比如总是用同一本笔记做快速记录，总是用同一种方法提取主要观点，总是用同样的方法整理长期笔记。这样我们就可以用更多的精力在重要的任务，如解决问题。</p>
 
-<p>编译安装</p>
-
-<pre><code class="language-bash">./autogen.sh --with-android-headers=/usr/include/android-headers --prefix=/opt/libhybris --enable-wayland
-make
-sudo make install
-</code></pre>
-
-<p>安装好的 libhybirs 库在 /opt/libhybris/ 下。</p>
-
-<h2 id="编译-jpeg-client-和-jpeg-bridge">编译 jpeg-client 和 jpeg-bridge</h2>
-
-<p>首先修改一处源码，在 jpeg-bridge/libjpeg-bridge.c #11</p>
-
-<pre><code class="language-c">#include &lt;hybris/internal/binding.h&gt;
-/* 改成 */
-#include &lt;hybris/common/binding.h&gt;
-</code></pre>
-
-<p>设置环境变量到 libhybirs</p>
-
-<pre><code class="language-bash">export LD_LIBRARY_PATH=&quot;/opt/libhybris/lib/&quot;
-</code></pre>
-
-<p>然后编译</p>
-
-<pre><code class="language-bash"># jpeg-bridge
-cd jpeg-bridge
-./configure --with-hybris-internal-include-path=/opt/libhybris/include/
-make
-
-# jepg-client
-cd jpeg-client
-./configure
-make
-</code></pre>
-
-<h1 id="测试运行">测试运行</h1>
-
-<ul>
-<li>将 NDK 编译好的 libjpeg2.so (在 jpeg-library/libs/armeabi/libjpeg2.so）放入 Pi 上的 /system/lib/ 下，同 Android 的 libc.so 等文件在一起。</li>
-<li>将 jpeg-client/cjpet，jpeg-bridge/.lib/libjpeg-bridge.so, jpeg-bridge/.lib/libjpeg-bridge.so.0 放在同一目录下（可能需要 LD_LIBRARY_PATH 指定）</li>
-<li>执行  ./cjpeg -outfile out.jpg testimg.bmp 即可看到效果</li>
-</ul>
-
-<h1 id="关于架构的问题-arm-or-arm64">关于架构的问题 (Arm or Arm64)</h1>
-
-<p>默认的，libhybris 使用 32bit arm 进行编译和部署，在 Raspbian 上是没有任何问题的，因为 Raspbian 只有 32bit, 所以不存在架构的问题，但如果使用的是 Arm64 的 Ubuntu，则编译 libhybris 的时候会出现如下错误：</p>
-
-<pre><code class="language-bash">dlfcn.c:205:17: error: initializer element is not constant
-</code></pre>
-
-<p>这时应该选择一下编译的架构：</p>
-
-<pre><code class="language-bash">./autogen.sh --with-android-headers=/usr/include/android-headers --prefix=/opt/libhybris --enable-arch=arm64 --enable-wayland
-</code></pre>
-
-<p>之后编译出来的 libhybirs 就是 64 位的了，此时他使用的 bionic libc 也应该是 64bit 的，应将相关的 Android 库放在 /system/lib64 下。</p>
-
-<h1 id="总结">总结</h1>
-
-<p>通过实验，libhybris 的原理还是简单的，在有处理好的 bridge 的情况下，基本没有什么坑。但最主要的还是这个 bridge 的处理，特别是各种符号之间的映射，处理不好就容易 Segmentation fault，调试起来就更难了。后续我再学习一下符号映射和调试的技巧。</p>
-<div class="footnotes">
-
-<hr />
-
-<ol>
-<li id="fn:1"><a href="https://github.com/libhybris/libhybris/issues/421">https://github.com/libhybris/libhybris/issues/421</a>
- <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
-</ol>
-</div>
+<p>及时的完成任务并再在中断的地方继续工作还有一个好处，让我们能中断工作而不用担心丢了工作流。中断不仅仅是休息，还是帮助我们学习的过程，让记忆长久。如果在一个学习过程中不中断，我们很快会耗尽精力或害怕忘记所学，并损害我们的效果。</p>
 
                         </div>
 
@@ -272,15 +180,15 @@ make
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/posts/save-and-paste-image-from-clipboard-in-orgmode/">在 OrgMode 中保存并粘贴剪切板中的图片</a></li>
+        <li><a href="/posts/how-to-take-smart-notes-2/">聪明的笔记2 - 四个重要原则</a></li>
         
-        <li><a href="/posts/tensorflow-experience-2/">Tensorflow 体验篇-2 使用 Tensorflow 做逻辑回归</a></li>
+        <li><a href="/posts/how-to-take-smart-notes-1/">聪明的笔记1 - 介绍</a></li>
         
-        <li><a href="/about/">关于我</a></li>
+        <li><a href="/posts/tensorflow-experience-4/">Tensorflow 体验篇-4 卷积网络和图像分类</a></li>
         
-        <li><a href="/posts/what-can-prisma-io-do/">Pisma.io 可以用来做什么？</a></li>
+        <li><a href="/posts/tensorflow-experience-3/">Tensorflow 体验篇-3 全连接网络</a></li>
         
-        <li><a href="/posts/tensorflow-experience-1/">Tensorflow 体验篇-1 使用 Tensorflow 做线性回归</a></li>
+        <li><a href="/posts/use-android-library-on-raspberry-pi-with-libhybris/">利用 libhybris 在树莓派上使用 Android 库</a></li>
         
     </ul>
 </div>
@@ -290,9 +198,9 @@ make
                             
                             <ul class="clearfix">
                                 
-                                <li><a href="https://gsj987.github.io/tags/android">android</a></li>
+                                <li><a href="https://gsj987.github.io/tags/how-to-take-smart-notes">how-to-take-smart-notes</a></li>
                                 
-                                <li><a href="https://gsj987.github.io/tags/raspberry-pi">raspberry pi</a></li>
+                                <li><a href="https://gsj987.github.io/tags/study-method">study-method</a></li>
                                 
                             </ul>
                             
