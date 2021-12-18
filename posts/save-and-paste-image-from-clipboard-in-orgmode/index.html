@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.55.3" />
+    <meta name="generator" content="Hugo 0.68.3" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -91,94 +91,66 @@
                             <div class="toc-article">
                                 <div class="toc-title">文章目录</div>
                                 <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#从剪贴板到本地图片">从剪贴板到本地图片</a></li>
-<li><a href="#将文件写入项目目录">将文件写入项目目录</a></li>
-<li><a href="#插入相对路径">插入相对路径</a></li>
-<li><a href="#完整版本">完整版本</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#从剪贴板到本地图片">从剪贴板到本地图片</a></li>
+    <li><a href="#将文件写入项目目录">将文件写入项目目录</a></li>
+    <li><a href="#插入相对路径">插入相对路径</a></li>
+    <li><a href="#完整版本">完整版本</a></li>
+  </ul>
 </nav>
                             </div>
                         </div>
                         
                         <div class="post-content">
-                            
-
-<p>最近的一个项目中，我打算使用 OrgMode 作为文档的书写工具，主要原因是比较简单，而且可以使用文学编程，简化 API 文档的写作流程。但首先遇到了个难题：如何方便的插入图片。于是我花了些时间，边学边用 elisp 做了一个函数，解决了我项目中的问题：从剪贴板保存图片到项目目录，并以相对目录的形式插入到 org 文件中。</p>
-
+                            <p>最近的一个项目中，我打算使用 OrgMode 作为文档的书写工具，主要原因是比较简单，而且可以使用文学编程，简化 API 文档的写作流程。但首先遇到了个难题：如何方便的插入图片。于是我花了些时间，边学边用 elisp 做了一个函数，解决了我项目中的问题：从剪贴板保存图片到项目目录，并以相对目录的形式插入到 org 文件中。</p>
 <h2 id="从剪贴板到本地图片">从剪贴板到本地图片</h2>
-
 <p>Linux 和 MacOS 的用户直接可以用 org-download 之类的插件，或者如<a href="https://stackoverflow.com/questions/17435995/paste-an-image-on-clipboard-to-emacs-org-mode-file-without-saving-it">这个网址所介绍的方法</a>，我使用的 windows 在方法上是有点不同，在原链里也有提到：使用 powershell 脚本</p>
-
-<pre><code class="language-powershell">powershell -command &quot;Add-Type -AssemblyName System.Windows.Forms;if ($([System.Windows.Forms.Clipboard]::ContainsImage())) {$image = [System.Windows.Forms.Clipboard]::GetImage();[System.Drawing.Bitmap]$image.Save('filepath.jpg',[System.Drawing.Imaging.ImageFormat]::Jpeg); Write-Output 'clipboard content saved as file'} else {Write-Output 'clipboard does not contain image data'}&quot;
-</code></pre>
-
-<p>基本原理就是用 .net framework 直接读 clipboard, 再保存到指定位置。可见 powershell 在 .net 加持下的强大。我们使用这段代码可以写出 elisp 函数的基本结构</p>
-
-<pre><code class="language-lisp">(defun org-docs-insert-image-from-clipboard ()
-  &quot;Take a screenshot into a time stamped unique-named file in the
-   same directory as the org-buffer and insert a link to this file.&quot;  
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">powershell -command <span style="color:#e6db74">&#34;Add-Type -AssemblyName System.Windows.Forms;if (</span>$(<span style="color:#66d9ef">[System.Windows.Forms.Clipboard]</span>::ContainsImage())<span style="color:#e6db74">) {$image = [System.Windows.Forms.Clipboard]::GetImage();[System.Drawing.Bitmap]$image.Save(&#39;filepath.jpg&#39;,[System.Drawing.Imaging.ImageFormat]::Jpeg); Write-Output &#39;clipboard content saved as file&#39;} else {Write-Output &#39;clipboard does not contain image data&#39;}&#34;</span>
+</code></pre></div><p>基本原理就是用 .net framework 直接读 clipboard, 再保存到指定位置。可见 powershell 在 .net 加持下的强大。我们使用这段代码可以写出 elisp 函数的基本结构</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lisp" data-lang="lisp">(defun org-docs-insert-image-from-clipboard ()
+  <span style="color:#e6db74">&#34;Take a screenshot into a time stamped unique-named file in the
+</span><span style="color:#e6db74">   same directory as the org-buffer and insert a link to this file.&#34;</span>  
    (interactive)
-   (setq (jpg-file-name (format-time-string &quot;%Y%m%d_%H%M%S.jpg&quot;)))
-   (shell-command (concat &quot;powershell -command \&quot;Add-Type -AssemblyName System.Windows.Forms;if ($([System.Windows.Forms.Clipboard]::ContainsImage())) {$image = [System.Windows.Forms.Clipboard]::GetImage();[System.Drawing.Bitmap]$image.Save('&quot; jpg-file-name &quot;',[System.Drawing.Imaging.ImageFormat]::Png); Write-Output 'clipboard content saved as file'} else {Write-Output 'clipboard does not contain image data'}\&quot;&quot;))
-   (insert (concat &quot;[[file:&quot; jpg-file-name &quot;]]&quot;))
-</code></pre>
-
-<h2 id="将文件写入项目目录">将文件写入项目目录</h2>
-
+   (<span style="color:#66d9ef">setq</span> (jpg-file-name (format-time-string <span style="color:#e6db74">&#34;%Y%m%d_%H%M%S.jpg&#34;</span>)))
+   (shell-command (concat <span style="color:#e6db74">&#34;powershell -command \&#34;Add-Type -AssemblyName System.Windows.Forms;if ($([System.Windows.Forms.Clipboard]::ContainsImage())) {$image = [System.Windows.Forms.Clipboard]::GetImage();[System.Drawing.Bitmap]$image.Save(&#39;&#34;</span> jpg-file-name <span style="color:#e6db74">&#34;&#39;,[System.Drawing.Imaging.ImageFormat]::Png); Write-Output &#39;clipboard content saved as file&#39;} else {Write-Output &#39;clipboard does not contain image data&#39;}\&#34;&#34;</span>))
+   (insert (concat <span style="color:#e6db74">&#34;[[file:&#34;</span> jpg-file-name <span style="color:#e6db74">&#34;]]&#34;</span>))
+</code></pre></div><h2 id="将文件写入项目目录">将文件写入项目目录</h2>
 <p>由于我的文档是在项目目录中的，所以我利用 projectile 定位将图片作为附件的目录，以让代码有更好的普适性</p>
-
-<pre><code class="language-lisp">(defun org-docs-insert-image-from-clipboard ()
-    &quot;Take a screenshot into a time stamped unique-named file in the
-   same directory as the org-buffer and insert a link to this file.&quot;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lisp" data-lang="lisp">(defun org-docs-insert-image-from-clipboard ()
+    <span style="color:#e6db74">&#34;Take a screenshot into a time stamped unique-named file in the
+</span><span style="color:#e6db74">   same directory as the org-buffer and insert a link to this file.&#34;</span>
     (interactive)
-    (let* ((the-dir (concat (projectile-project-root) &quot;docs/&quot;))
-           (attachments-dir (concat the-dir &quot;assets/attachments/&quot;))
-           (jpg-file-name (format-time-string &quot;%Y%m%d_%H%M%S.jpg&quot;))
+    (<span style="color:#66d9ef">let*</span> ((the-dir (concat (projectile-project-root) <span style="color:#e6db74">&#34;docs/&#34;</span>))
+           (attachments-dir (concat the-dir <span style="color:#e6db74">&#34;assets/attachments/&#34;</span>))
+           (jpg-file-name (format-time-string <span style="color:#e6db74">&#34;%Y%m%d_%H%M%S.jpg&#34;</span>))
            (jpg-path (concat attachments-dir jpg-file-name))
-    (shell-command (concat &quot;powershell -command \&quot;Add-Type -AssemblyName System.Windows.Forms;if ($([System.Windows.Forms.Clipboard]::ContainsImage())) {$image = [System.Windows.Forms.Clipboard]::GetImage();[System.Drawing.Bitmap]$image.Save('&quot; jpg-path &quot;',[System.Drawing.Imaging.ImageFormat]::Jpeg); Write-Output 'clipboard content saved as file'} else {Write-Output 'clipboard does not contain image data'}\&quot;&quot;))
-    (insert (concat &quot;[[file:&quot; jpg-path &quot;]]&quot;))
+    (shell-command (concat <span style="color:#e6db74">&#34;powershell -command \&#34;Add-Type -AssemblyName System.Windows.Forms;if ($([System.Windows.Forms.Clipboard]::ContainsImage())) {$image = [System.Windows.Forms.Clipboard]::GetImage();[System.Drawing.Bitmap]$image.Save(&#39;&#34;</span> jpg-path <span style="color:#e6db74">&#34;&#39;,[System.Drawing.Imaging.ImageFormat]::Jpeg); Write-Output &#39;clipboard content saved as file&#39;} else {Write-Output &#39;clipboard does not contain image data&#39;}\&#34;&#34;</span>))
+    (insert (concat <span style="color:#e6db74">&#34;[[file:&#34;</span> jpg-path <span style="color:#e6db74">&#34;]]&#34;</span>))
     ))
-</code></pre>
-
-<p>我的文档在项目目录的 ./docs/ 下，并在 ./docs/assets/attachments/ 下存放图片文件，方便统一的编译发布。</p>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/201908140010_746.png?imageslim" alt="我的项目目录" /></p>
-
+</code></pre></div><p>我的文档在项目目录的 ./docs/ 下，并在 ./docs/assets/attachments/ 下存放图片文件，方便统一的编译发布。</p>
+<p><img src="http://cdn.qiniu.gsj987.cn/201908140010_746.png?imageslim" alt="我的项目目录"></p>
 <h2 id="插入相对路径">插入相对路径</h2>
-
 <p>由于 docs 文件夹下可能会有多个目录，以方便对文档的组织，所以不同路径下的 org 文件，他的引用图片的相对路径也是不同的。为了得到相对路径，我就需要让当前文件和图片目录比较，以得到正确的相对路径。简单搜索了一下，发现 f.el 的辅助函数：f-relative（比较两个文件的相对位置） 和 f-dirname（获得文件目录），可以大大简化人代码</p>
-
-<pre><code class="language-lisp">(f-relative jpg-path  (f-dirname buffer-file-name))
-</code></pre>
-
-<p>比如在文件 ./docs/rest/basic.org 中，插入图片，地址就为 ../assets/attachments/xxx.jpg</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lisp" data-lang="lisp">(f-relative jpg-path  (f-dirname buffer-file-name))
+</code></pre></div><p>比如在文件 ./docs/rest/basic.org 中，插入图片，地址就为 ../assets/attachments/xxx.jpg</p>
 <h2 id="完整版本">完整版本</h2>
-
-<pre><code class="language-lisp">;; orgmode import image from clipboard
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lisp" data-lang="lisp"><span style="color:#75715e">;; orgmode import image from clipboard</span>
 (defun org-docs-insert-image-from-clipboard ()
-    &quot;Take a screenshot into a time stamped unique-named file in the
-    same directory as the org-buffer and insert a link to this file.&quot;
+    <span style="color:#e6db74">&#34;Take a screenshot into a time stamped unique-named file in the
+</span><span style="color:#e6db74">    same directory as the org-buffer and insert a link to this file.&#34;</span>
     (interactive)
-    (let* ((the-dir (concat (projectile-project-root) &quot;docs/&quot;))
-           (attachments-dir (concat the-dir &quot;assets/attachments/&quot;))
-           (jpg-file-name (format-time-string &quot;%Y%m%d_%H%M%S.jpg&quot;))
+    (<span style="color:#66d9ef">let*</span> ((the-dir (concat (projectile-project-root) <span style="color:#e6db74">&#34;docs/&#34;</span>))
+           (attachments-dir (concat the-dir <span style="color:#e6db74">&#34;assets/attachments/&#34;</span>))
+           (jpg-file-name (format-time-string <span style="color:#e6db74">&#34;%Y%m%d_%H%M%S.jpg&#34;</span>))
            (jpg-path (concat attachments-dir jpg-file-name))
            (jpg-relative-path (f-relative jpg-path  (f-dirname buffer-file-name))))
-          (shell-command (concat &quot;powershell -command \&quot;Add-Type -AssemblyName System.Windows.Forms;if ($([System.Windows.Forms.Clipboard]::ContainsImage())) {$image = [System.Windows.Forms.Clipboard]::GetImage();[System.Drawing.Bitmap]$image.Save('&quot; jpg-path &quot;',[System.Drawing.Imaging.ImageFormat]::Jpeg); Write-Output 'clipboard content saved as file'} else {Write-Output 'clipboard does not contain image data'}\&quot;&quot;))
-          (insert (concat &quot;[[file:&quot; jpg-relative-path &quot;]]&quot;))
+          (shell-command (concat <span style="color:#e6db74">&#34;powershell -command \&#34;Add-Type -AssemblyName System.Windows.Forms;if ($([System.Windows.Forms.Clipboard]::ContainsImage())) {$image = [System.Windows.Forms.Clipboard]::GetImage();[System.Drawing.Bitmap]$image.Save(&#39;&#34;</span> jpg-path <span style="color:#e6db74">&#34;&#39;,[System.Drawing.Imaging.ImageFormat]::Jpeg); Write-Output &#39;clipboard content saved as file&#39;} else {Write-Output &#39;clipboard does not contain image data&#39;}\&#34;&#34;</span>))
+          (insert (concat <span style="color:#e6db74">&#34;[[file:&#34;</span> jpg-relative-path <span style="color:#e6db74">&#34;]]&#34;</span>))
           ))
-;; set keybinding
-(global-set-key (kbd &quot;M-o M-v&quot;) 'org-docs-insert-image-from-clipboard)
-</code></pre>
-
-<p>实现的效果如图</p>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/201908140033_866.gif?imageslim" alt="实现截图效果" /></p>
+<span style="color:#75715e">;; set keybinding</span>
+(global-set-key (kbd <span style="color:#e6db74">&#34;M-o M-v&#34;</span>) <span style="color:#e6db74">&#39;org-docs-insert-image-from-clipboard</span>)
+</code></pre></div><p>实现的效果如图</p>
+<p><img src="http://cdn.qiniu.gsj987.cn/201908140033_866.gif?imageslim" alt="实现截图效果"></p>
 
                         </div>
 
@@ -191,9 +163,9 @@
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/posts/tensorflow-experience-2/">Tensorflow 体验篇-2 使用 Tensorflow 做逻辑回归</a></li>
-        
         <li><a href="/about/">关于我</a></li>
+        
+        <li><a href="/posts/tensorflow-experience-2/">Tensorflow 体验篇-2 使用 Tensorflow 做逻辑回归</a></li>
         
         <li><a href="/posts/what-can-prisma-io-do/">Pisma.io 可以用来做什么？</a></li>
         

@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.55.3" />
+    <meta name="generator" content="Hugo 0.68.3" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -91,59 +91,36 @@
                             <div class="toc-article">
                                 <div class="toc-title">文章目录</div>
                                 <nav id="TableOfContents">
-<ul>
-<li><a href="#准备工作">准备工作</a>
-<ul>
-<li><a href="#设备">设备</a></li>
-<li><a href="#环境">环境</a></li>
-<li><a href="#测试项目">测试项目</a></li>
-</ul></li>
-<li><a href="#开始编译">开始编译</a>
-<ul>
-<li><a href="#编译-android-jpeg-library">编译 Android jpeg-library</a></li>
-<li><a href="#编译-libhybris">编译 libhybris</a></li>
-<li><a href="#编译-jpeg-client-和-jpeg-bridge">编译 jpeg-client 和 jpeg-bridge</a></li>
-</ul></li>
-<li><a href="#测试运行">测试运行</a></li>
-<li><a href="#关于架构的问题-arm-or-arm64">关于架构的问题 (Arm or Arm64)</a></li>
-<li><a href="#总结">总结</a></li>
-</ul>
+  <ul>
+    <li><a href="#设备">设备</a></li>
+    <li><a href="#环境">环境</a></li>
+    <li><a href="#测试项目">测试项目</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#编译-android-jpeg-library">编译 Android jpeg-library</a></li>
+    <li><a href="#编译-libhybris">编译 libhybris</a></li>
+    <li><a href="#编译-jpeg-client-和-jpeg-bridge">编译 jpeg-client 和 jpeg-bridge</a></li>
+  </ul>
 </nav>
                             </div>
                         </div>
                         
                         <div class="post-content">
-                            
-
-<p>Android 是基于 Linux 的 OS，所以想要在 ARM 的 Linux 上，比如树莓派，是有可能的。但事实上其中还是有问题，主要是因为 Android 的 so 库是通过 Bionic libc 代替了 glibc 作为标准库，两者有很多的差别，无法直接移用。</p>
-
+                            <p>Android 是基于 Linux 的 OS，所以想要在 ARM 的 Linux 上，比如树莓派，是有可能的。但事实上其中还是有问题，主要是因为 Android 的 so 库是通过 Bionic libc 代替了 glibc 作为标准库，两者有很多的差别，无法直接移用。</p>
 <p>为了解决这个问题，出现了 libhybris 这个库，其主要作用是将 Android 库对 Bionic libc 的方法引用，Link 到 glibc 上，以实现对 Android 库在 ARM Linux 上的支持。libhybris 原来是用于让各 Linux 发行版支持 Android 的驱动，比如 Ubuntu Touch 和 Sailfish OS 都是使用这个库来兼容 Android 设备的。原理图如下：</p>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/201908181458_460.png?imageslim" alt="libhybris 原理图" /></p>
-
+<p><img src="http://cdn.qiniu.gsj987.cn/201908181458_460.png?imageslim" alt="libhybris 原理图"></p>
 <p>今天我尝试将 Bionic-jpeg 这个 Android 上的 jpeg 库，通过 libhybris 的包装，运行到装有 Raspbian 的树莓派上。原教程来源：<a href="https://mcaleely.com/jh/ToT/2013/09/06/bionic-jpeg-a-libhybris-exam">https://mcaleely.com/jh/ToT/2013/09/06/bionic-jpeg-a-libhybris-exam</a></p>
-
 <h1 id="准备工作">准备工作</h1>
-
 <h2 id="设备">设备</h2>
-
 <p>我准备了一个树莓派 3b+, 装了 Raspbian buster。</p>
-
 <h2 id="环境">环境</h2>
-
 <p>需要 Android 的一个 ROM 的 zip 包，用于提供 bionic libc 相关库的内容。实践中我使用的是<a href="https://www.mokeedev.com/">魔趣</a>的 ROM 包，随便什么版本，解压以后提取其 /system/lib/ 文件夹到 Pi 的 /system/lib/ (目录一致）。我使用的是 MK60.1-flounder_lte-170418-HISTORY 这个版本，因为他是 Android 6.0, 且同时内含 lib 和 lib64 两个架构的库，后面用起来比较方便。</p>
-
 <p>另外为了编译 Android 的 libjpeg.so， PC 上要准备 Android-NDK，版本对应上面下载的 ROM 包即可。当然如果直接使用 ROM 包里的 libjpeg.so 也可以，但在后面操作时要注意修改一下实验用的源码。</p>
-
 <p>树莓派上要安装好编译用的基本环境</p>
-
-<pre><code class="language-bash">sudo apt-get install make automake autoconf libtool pkg-config
-</code></pre>
-
-<h2 id="测试项目">测试项目</h2>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install make automake autoconf libtool pkg-config
+</code></pre></div><h2 id="测试项目">测试项目</h2>
 <p>下载测试项目的源码：<a href="https://launchpad.net/bionic-jpeg/+download">https://launchpad.net/bionic-jpeg/+download</a>，并解压。其中包含的目录如下：</p>
-
 <ul>
 <li>jpeg-9: 从 IJG 下载的官方源码<a href="http://www.ijg.org/files/jpegsrc.v9.tar.gz">http://www.ijg.org/files/jpegsrc.v9.tar.gz</a></li>
 <li>include: 可在 Android 和 Ubuntu 适用的头文件 jconfig.h</li>
@@ -151,115 +128,69 @@
 <li>jpeg-client: 用于 Ubuntu 的 jpeg 客户端 (cjpeg, djpeg, jpegtran, rdjpgcom, wrjpgcom)</li>
 <li>jpeg-bridge: 将 libhybaris 包装 jpeglib.h 的源码</li>
 </ul>
-
 <p>本次实验的目标是在树莓派上用 Ubuntu 版本的 jpeg-client 调用 Android 版本的 libjpeg.so 后端。</p>
-
 <h1 id="开始编译">开始编译</h1>
-
 <h2 id="编译-android-jpeg-library">编译 Android jpeg-library</h2>
-
 <p>在 PC 上安装 NDK，然后编译 jpeg-library。为了区分原本的 libjpeg.so，本项目中用 libjpeg2.so 代替。</p>
-
-<pre><code class="language-bash">cd jpeg-library
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd jpeg-library
 &lt;path-to-ndk&gt;/ndk-build
-</code></pre>
-
-<h2 id="编译-libhybris">编译 libhybris</h2>
-
+</code></pre></div><h2 id="编译-libhybris">编译 libhybris</h2>
 <p>libhybris 在树莓派上编译。首先下载 android-headers，注意和之前下载的 ROM 版本保持兼容。我使用的是 API Level 23 (Android 6.0.1)</p>
-
-<pre><code class="language-bash">wget https://launchpad.net/ubuntu/+archive/primary/+files/android-headers_23.orig.tar.gz
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget https://launchpad.net/ubuntu/+archive/primary/+files/android-headers_23.orig.tar.gz
 tar -xvzf android-headers_23.orig.tar.gz
 sudo mv -f android-headers-23/23 /usr/include/android-headers
 rm -rf android-headers_23.orig.tar.gz android-headers-23
-</code></pre>
-
-<p>然后下载 libhybris <a href="https://github.com/libhybris/libhybris">https://github.com/libhybris/libhybris</a></p>
-
-<pre><code class="language-bash">git clone git@github.com:libhybris/libhybris.git
+</code></pre></div><p>然后下载 libhybris <a href="https://github.com/libhybris/libhybris">https://github.com/libhybris/libhybris</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone git@github.com:libhybris/libhybris.git
 cd libhybris/hybris
-</code></pre>
-
-<p>安装一个依赖 libwayland-dev</p>
-
-<pre><code class="language-bash">sudo apt install libwayland-dev
-</code></pre>
-
-<p>否则会报错 <sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup></p>
-
-<pre><code class="language-bash">make[2]: *** No rule to make target '../egl/platforms/common/libwayland-egl.la', needed by
-</code></pre>
-
-<p>编译安装</p>
-
-<pre><code class="language-bash">./autogen.sh --with-android-headers=/usr/include/android-headers --prefix=/opt/libhybris --enable-wayland
+</code></pre></div><p>安装一个依赖 libwayland-dev</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt install libwayland-dev
+</code></pre></div><p>否则会报错 <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">make<span style="color:#f92672">[</span>2<span style="color:#f92672">]</span>: *** No rule to make target <span style="color:#e6db74">&#39;../egl/platforms/common/libwayland-egl.la&#39;</span>, needed by
+</code></pre></div><p>编译安装</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./autogen.sh --with-android-headers<span style="color:#f92672">=</span>/usr/include/android-headers --prefix<span style="color:#f92672">=</span>/opt/libhybris --enable-wayland
 make
 sudo make install
-</code></pre>
-
-<p>安装好的 libhybirs 库在 /opt/libhybris/ 下。</p>
-
+</code></pre></div><p>安装好的 libhybirs 库在 /opt/libhybris/ 下。</p>
 <h2 id="编译-jpeg-client-和-jpeg-bridge">编译 jpeg-client 和 jpeg-bridge</h2>
-
 <p>首先修改一处源码，在 jpeg-bridge/libjpeg-bridge.c #11</p>
-
-<pre><code class="language-c">#include &lt;hybris/internal/binding.h&gt;
-/* 改成 */
-#include &lt;hybris/common/binding.h&gt;
-</code></pre>
-
-<p>设置环境变量到 libhybirs</p>
-
-<pre><code class="language-bash">export LD_LIBRARY_PATH=&quot;/opt/libhybris/lib/&quot;
-</code></pre>
-
-<p>然后编译</p>
-
-<pre><code class="language-bash"># jpeg-bridge
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;hybris/internal/binding.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">/* 改成 */</span>
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;hybris/common/binding.h&gt;</span><span style="color:#75715e">
+</span></code></pre></div><p>设置环境变量到 libhybirs</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export LD_LIBRARY_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/opt/libhybris/lib/&#34;</span>
+</code></pre></div><p>然后编译</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># jpeg-bridge</span>
 cd jpeg-bridge
-./configure --with-hybris-internal-include-path=/opt/libhybris/include/
+./configure --with-hybris-internal-include-path<span style="color:#f92672">=</span>/opt/libhybris/include/
 make
 
-# jepg-client
+<span style="color:#75715e"># jepg-client</span>
 cd jpeg-client
 ./configure
 make
-</code></pre>
-
-<h1 id="测试运行">测试运行</h1>
-
+</code></pre></div><h1 id="测试运行">测试运行</h1>
 <ul>
 <li>将 NDK 编译好的 libjpeg2.so (在 jpeg-library/libs/armeabi/libjpeg2.so）放入 Pi 上的 /system/lib/ 下，同 Android 的 libc.so 等文件在一起。</li>
 <li>将 jpeg-client/cjpet，jpeg-bridge/.lib/libjpeg-bridge.so, jpeg-bridge/.lib/libjpeg-bridge.so.0 放在同一目录下（可能需要 LD_LIBRARY_PATH 指定）</li>
 <li>执行  ./cjpeg -outfile out.jpg testimg.bmp 即可看到效果</li>
 </ul>
-
 <h1 id="关于架构的问题-arm-or-arm64">关于架构的问题 (Arm or Arm64)</h1>
-
 <p>默认的，libhybris 使用 32bit arm 进行编译和部署，在 Raspbian 上是没有任何问题的，因为 Raspbian 只有 32bit, 所以不存在架构的问题，但如果使用的是 Arm64 的 Ubuntu，则编译 libhybris 的时候会出现如下错误：</p>
-
-<pre><code class="language-bash">dlfcn.c:205:17: error: initializer element is not constant
-</code></pre>
-
-<p>这时应该选择一下编译的架构：</p>
-
-<pre><code class="language-bash">./autogen.sh --with-android-headers=/usr/include/android-headers --prefix=/opt/libhybris --enable-arch=arm64 --enable-wayland
-</code></pre>
-
-<p>之后编译出来的 libhybirs 就是 64 位的了，此时他使用的 bionic libc 也应该是 64bit 的，应将相关的 Android 库放在 /system/lib64 下。</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">dlfcn.c:205:17: error: initializer element is not constant
+</code></pre></div><p>这时应该选择一下编译的架构：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./autogen.sh --with-android-headers<span style="color:#f92672">=</span>/usr/include/android-headers --prefix<span style="color:#f92672">=</span>/opt/libhybris --enable-arch<span style="color:#f92672">=</span>arm64 --enable-wayland
+</code></pre></div><p>之后编译出来的 libhybirs 就是 64 位的了，此时他使用的 bionic libc 也应该是 64bit 的，应将相关的 Android 库放在 /system/lib64 下。</p>
 <h1 id="总结">总结</h1>
-
 <p>通过实验，libhybris 的原理还是简单的，在有处理好的 bridge 的情况下，基本没有什么坑。但最主要的还是这个 bridge 的处理，特别是各种符号之间的映射，处理不好就容易 Segmentation fault，调试起来就更难了。后续我再学习一下符号映射和调试的技巧。</p>
-<div class="footnotes">
-
-<hr />
-
+<section class="footnotes" role="doc-endnotes">
+<hr>
 <ol>
-<li id="fn:1"><a href="https://github.com/libhybris/libhybris/issues/421">https://github.com/libhybris/libhybris/issues/421</a>
- <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://github.com/libhybris/libhybris/issues/421">https://github.com/libhybris/libhybris/issues/421</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
 </ol>
-</div>
+</section>
 
                         </div>
 
@@ -274,9 +205,9 @@ make
         
         <li><a href="/posts/save-and-paste-image-from-clipboard-in-orgmode/">在 OrgMode 中保存并粘贴剪切板中的图片</a></li>
         
-        <li><a href="/posts/tensorflow-experience-2/">Tensorflow 体验篇-2 使用 Tensorflow 做逻辑回归</a></li>
-        
         <li><a href="/about/">关于我</a></li>
+        
+        <li><a href="/posts/tensorflow-experience-2/">Tensorflow 体验篇-2 使用 Tensorflow 做逻辑回归</a></li>
         
         <li><a href="/posts/what-can-prisma-io-do/">Pisma.io 可以用来做什么？</a></li>
         

@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.55.3" />
+    <meta name="generator" content="Hugo 0.68.3" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -91,478 +91,388 @@
                             <div class="toc-article">
                                 <div class="toc-title">文章目录</div>
                                 <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#基本概念">基本概念</a>
-<ul>
-<li><a href="#local-receptive-fields-本地感受野">Local Receptive Fields 本地感受野</a></li>
-<li><a href="#convolutional-kernels-卷积核">Convolutional Kernels 卷积核</a></li>
-<li><a href="#池化层">池化层</a></li>
-<li><a href="#padding-补齐">Padding 补齐</a></li>
-<li><a href="#卷积神经网络">卷积神经网络</a></li>
-</ul></li>
-<li><a href="#识别-mnist-手写数字图片">识别 MNIST 手写数字图片</a>
-<ul>
-<li><a href="#mnist-数据集">MNIST 数据集</a></li>
-<li><a href="#google-colaboratory">Google Colaboratory</a></li>
-<li><a href="#lenet-5">LeNet-5</a></li>
-</ul></li>
-<li><a href="#训练过程">训练过程</a>
-<ul>
-<li><a href="#导入-mnist-数据集">导入 MNIST 数据集</a></li>
-<li><a href="#设计卷积层">设计卷积层</a></li>
-<li><a href="#组织卷积网络">组织卷积网络</a></li>
-<li><a href="#构建预测和损失评估">构建预测和损失评估</a></li>
-<li><a href="#分批的计算">分批的计算</a></li>
-<li><a href="#整合训练过程">整合训练过程</a></li>
-<li><a href="#训练结果">训练结果</a></li>
-<li><a href="#用得到的模型来识别手写数字">用得到的模型来识别手写数字</a></li>
-</ul></li>
-<li><a href="#总结">总结</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#基本概念">基本概念</a>
+      <ul>
+        <li><a href="#local-receptive-fields-本地感受野">Local Receptive Fields 本地感受野</a></li>
+        <li><a href="#convolutional-kernels-卷积核">Convolutional Kernels 卷积核</a></li>
+        <li><a href="#池化层">池化层</a></li>
+        <li><a href="#padding-补齐">Padding 补齐</a></li>
+        <li><a href="#卷积神经网络">卷积神经网络</a></li>
+      </ul>
+    </li>
+    <li><a href="#识别-mnist-手写数字图片">识别 MNIST 手写数字图片</a>
+      <ul>
+        <li><a href="#mnist-数据集">MNIST 数据集</a></li>
+        <li><a href="#google-colaboratory">Google Colaboratory</a></li>
+        <li><a href="#lenet-5">LeNet-5</a></li>
+      </ul>
+    </li>
+    <li><a href="#训练过程">训练过程</a>
+      <ul>
+        <li><a href="#导入-mnist-数据集">导入 MNIST 数据集</a></li>
+        <li><a href="#设计卷积层">设计卷积层</a></li>
+        <li><a href="#组织卷积网络">组织卷积网络</a></li>
+        <li><a href="#构建预测和损失评估">构建预测和损失评估</a></li>
+        <li><a href="#分批的计算">分批的计算</a></li>
+        <li><a href="#整合训练过程">整合训练过程</a></li>
+        <li><a href="#训练结果">训练结果</a></li>
+        <li><a href="#用得到的模型来识别手写数字">用得到的模型来识别手写数字</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
 </nav>
                             </div>
                         </div>
                         
                         <div class="post-content">
-                            
-
-<p>从理论上说，全连接神经网络能够表达一切的多项式，只要深度（隐藏层）够深，全连接神经网络能适应所有的模型，但缺点是需要极大的计算量，而且在深度增加，激活函数的传递量会大大减弱。卷积神经网络是为了解决这个问题，他利用类似生物的局部兴奋逐层整合，形成高级的抽象的概念的过程，减少训练参数，但增加深度，增加对抽象概念的准确性。CNN 在图像领域使用较多。</p>
-
+                            <p>从理论上说，全连接神经网络能够表达一切的多项式，只要深度（隐藏层）够深，全连接神经网络能适应所有的模型，但缺点是需要极大的计算量，而且在深度增加，激活函数的传递量会大大减弱。卷积神经网络是为了解决这个问题，他利用类似生物的局部兴奋逐层整合，形成高级的抽象的概念的过程，减少训练参数，但增加深度，增加对抽象概念的准确性。CNN 在图像领域使用较多。</p>
 <p>本文使用 CNN 来对 MNIST ( <a href="http://yann.lecun.com/exdb/mnist/">http://yann.lecun.com/exdb/mnist/</a>) 的手写数字图片集进行分类，预测出图片所对应的手写数字。</p>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/202003092051_992.png?imageslim" alt="MNIST" /></p>
-
+<p><img src="http://cdn.qiniu.gsj987.cn/202003092051_992.png?imageslim" alt="MNIST"></p>
 <h2 id="基本概念">基本概念</h2>
-
 <h3 id="local-receptive-fields-本地感受野">Local Receptive Fields 本地感受野</h3>
-
 <p>感受野代表的是在一个图像特征的观察窗口，就像是人的每个神经元只能在一个有限的范围内感受外界，超出这个范围的外界就需要其他的感受野来接收。如下图中的 Layer 1 上的绿色区域， 代表这个感受野为 3x3 像素的区域。这样区域的输入图像，组成的一连串框像素（特征），构成神经元，组成全连接层，最后形成网络，这就是 CNN 的基础。这个过程和人眼的视觉细胞的观察过程是类似的。</p>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/202003092059_227.png?imageslim" alt="Receptive Fields" /></p>
-
+<p><img src="http://cdn.qiniu.gsj987.cn/202003092059_227.png?imageslim" alt="Receptive Fields"></p>
 <h3 id="convolutional-kernels-卷积核">Convolutional Kernels 卷积核</h3>
-
 <p>每个感受野会在向下一层传递时，会应用一个非线性变换——卷积。机器视觉里的卷积和信号处理中的卷积有些类似，但更简单，只是单纯的将区域内的值相加。如上图中，Layer 1 到 Layer 2 的传递，就是将 Layer 1 中的特征相加，得到了 Layer 2 中的一个特征值。在一个特征感受野上应用的非现线性卷积变换，就是卷积核。卷积核上带有权重，会对感受野内的值进行加权计算，得到下一层的卷积特征。</p>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/202003092119_557.png?imageslim" alt="Convolutional Kernels" /></p>
-
+<p><img src="http://cdn.qiniu.gsj987.cn/202003092119_557.png?imageslim" alt="Convolutional Kernels"></p>
 <p>图像中会常用多感受野的像素尺寸来标记，如 5x5, 7x7 都是很常见的卷积核，代表这个卷积核会应用在每一个 5x5 或 7x7 的感受野上。在整个图像应用卷积核时，会对画面按感受野大小进行滑窗，这个滑窗的行为会有步长，叫 stride size，比如 stride size 为 2 时，卷积核的计算之间会有一个像素的间隔。</p>
-
 <p>卷积核又被称为 filter，而 filter 的数量决定我们能得到的结果数，使用时对同一个图像往往会应用多个不同的卷积核，这个数量就是卷积核的 channel 数。如我看一个风量画面，先用近视眼镜看看近景，再用远视眼镜看看远景，把两者的画面都传到下层，就是 2 个 channels。</p>
-
 <p>一组卷积核就是组成了一个卷积层，比如一个 5x5x64 的卷积层，就是由 64 个以 5x5 为感受野窗口的卷积核组成的卷积层。而在整个网络中，我们要训练得到的就是这 64 个 5x5 的卷积核的权重，共 64x5x5=1600 个参数。</p>
-
 <h3 id="池化层">池化层</h3>
-
 <p>池化层是一个对参数进行降维的过程，比如一个 5x5 的最大池化层（Maxpool Layer)，就是对每个特征的每 5x5 的窗口取最大值，传递给下一层。这样如果是一个 20x20x64 的输入，在传到下一层时，就只有 4x4x64 的大小了，大大减小了特征数量。</p>
-
 <p>上文中我们讨论的卷积核、池化层都简化了第三个维度，也就是 depth。实际使用时，卷积核和池化层都会有 depth，只是在最后输入为 channel 后，得到的维度就是 channel 了。如输入的数据是 28x28x3 的，在 4x4x64 的卷积核计算后，不补齐的情况下，得到的就是 24x24x64 的特征。</p>
-
 <h3 id="padding-补齐">Padding 补齐</h3>
-
 <p>由于卷积核的运算，输入的特征的尺寸一定是会变小的。实际使用中，我们会用 Padding 来补齐特征，让输出的特征的大小被控制，往往是补齐到和输入一致，这样就可以在 CNN 中多次重复某个结构多多次。如图，使用时是填 0，这样可以防止引入噪音。</p>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/202003102118_46.png?imageslim" alt="padding" /></p>
-
+<p><img src="http://cdn.qiniu.gsj987.cn/202003102118_46.png?imageslim" alt="padding"></p>
 <h3 id="卷积神经网络">卷积神经网络</h3>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/202003102124_76.png?imageslim" alt="CNN" /></p>
-
+<p><img src="http://cdn.qiniu.gsj987.cn/202003102124_76.png?imageslim" alt="CNN"></p>
 <p>一个典型的卷积神经网络是由多个卷积层-池化层组成的结构，多次重复后，接一个全连接神经网络。实际构建时有许多的细节，但基本上是这样一个结构。卷积层的实际作用其实是一种特征变换的过程，全连接网络的作用则是真正的分类。有的多步网络也会把这两个过程分开，变换和学习做两个步骤。</p>
-
 <h2 id="识别-mnist-手写数字图片">识别 MNIST 手写数字图片</h2>
-
 <h3 id="mnist-数据集">MNIST 数据集</h3>
-
 <p>MNIST [LeCun et al., 1998a] 是一个比较老的数据集，有 60,000 个手写数字样例和 10,000 个测试样例。这是 NIST 的一个子集，而后者有更大量的数据样例。每一张图片都已经二值化且合规到一样的大小(28*28)。MNIST 是很合适的图像算法上手数据集。</p>
-
 <h3 id="google-colaboratory">Google Colaboratory</h3>
-
 <p>Google Colaboratory (<a href="https://colab.research.google.com/notebooks/intro.ipynb#recent=true">https://colab.research.google.com/</a>) 是 Google 出品的在线版的 Jupyter Notebook，免费的分配计算资源，甚至还可以免费调用 GPU 和 TPU 来加速计算，还能在线协同，是很好的实验工具。本次识别训练，我就是使用的这个平台。</p>
-
 <h3 id="lenet-5">LeNet-5</h3>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/202003112131_304.png?imageslim" alt="LeNet-5" /></p>
-
+<p><img src="http://cdn.qiniu.gsj987.cn/202003112131_304.png?imageslim" alt="LeNet-5"></p>
 <p>LeNet-5 是一个简单的 CNN 网络结构，由两个卷积层，中夹有两个池化层组成。最后有两个全连接层组成的全连接网络，输出结果。这是一个典型的 CNN 网络的组成。</p>
-
 <p>在 <a href="https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/3_NeuralNetworks/convolutional_network.ipynb">Google 的教程</a>中，用了一个三层卷积层的网络，后跟了一个局部连接层 Locally-connected layer 做为和全连接层的连接，这个方法常见在图像的特征在画面的局部区域，与其他的区域的关联性比较小的时候，如人脸检测。Google 的方法除了这一点，基本就是 LeNet-5 的类似实现。本次实验我只用了一个 2 层卷积层和 1 层全接连层的网络。</p>
-
 <h2 id="训练过程">训练过程</h2>
-
 <h3 id="导入-mnist-数据集">导入 MNIST 数据集</h3>
-
 <p>由于我使用的是 Google 的 Colaboratory 服务，所以 MNIST 数据直接就使用 Google 提供的在线数据集，不再从 MNIST 的官方地址下载了。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>tensorflow_version <span style="color:#ae81ff">1.</span>x
+<span style="color:#f92672">import</span> tensorflow <span style="color:#f92672">as</span> tf
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
 
-<pre><code class="language-python">%tensorflow_version 1.x
-import tensorflow as tf
-import numpy as np
-import pandas as pd
+tf<span style="color:#f92672">.</span>logging<span style="color:#f92672">.</span>set_verbosity(tf<span style="color:#f92672">.</span>logging<span style="color:#f92672">.</span>ERROR)
+pd<span style="color:#f92672">.</span>options<span style="color:#f92672">.</span>display<span style="color:#f92672">.</span>max_rows <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+pd<span style="color:#f92672">.</span>options<span style="color:#f92672">.</span>display<span style="color:#f92672">.</span>float_format <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;{:.1f}&#39;</span><span style="color:#f92672">.</span>format
 
-tf.logging.set_verbosity(tf.logging.ERROR)
-pd.options.display.max_rows = 10
-pd.options.display.float_format = '{:.1f}'.format
+<span style="color:#75715e"># 载入 mnist 训练数据, 用 pandas 的 dataframe 读数据</span>
+mnist_dataframe <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(
+  <span style="color:#e6db74">&#34;https://download.mlcc.google.cn/mledu-datasets/mnist_train_small.csv&#34;</span>,
+  sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;,&#34;</span>,
+  header<span style="color:#f92672">=</span>None)
 
-# 载入 mnist 训练数据, 用 pandas 的 dataframe 读数据
-mnist_dataframe = pd.read_csv(
-  &quot;https://download.mlcc.google.cn/mledu-datasets/mnist_train_small.csv&quot;,
-  sep=&quot;,&quot;,
-  header=None)
-
-# 只使用前10000个数据做实验
-mnist_dataframe = mnist_dataframe.head(10000)
-mnist_dataframe = mnist_dataframe.reindex(np.random.permutation(mnist_dataframe.index))
-# 展示一下数据
-mnist_dataframe.head()
-</code></pre>
-
-<p>最后一个语句会打印一部分数据看看，如图</p>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/202003112153_190.png?imageslim" alt="展示的数据" /></p>
-
+<span style="color:#75715e"># 只使用前10000个数据做实验</span>
+mnist_dataframe <span style="color:#f92672">=</span> mnist_dataframe<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10000</span>)
+mnist_dataframe <span style="color:#f92672">=</span> mnist_dataframe<span style="color:#f92672">.</span>reindex(np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>permutation(mnist_dataframe<span style="color:#f92672">.</span>index))
+<span style="color:#75715e"># 展示一下数据</span>
+mnist_dataframe<span style="color:#f92672">.</span>head()
+</code></pre></div><p>最后一个语句会打印一部分数据看看，如图</p>
+<p><img src="http://cdn.qiniu.gsj987.cn/202003112153_190.png?imageslim" alt="展示的数据"></p>
 <p>写一个方法从数据中提取标签和特征</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">parse_labels_and_features</span>(dataset):
+  <span style="color:#e6db74">&#34;&#34;&#34;从数据中提取标签和特征
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">  Args:
+</span><span style="color:#e6db74">    dataset: Dataframe, 第一列是标签，余下的列为单色的像素数据
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">  Returns:
+</span><span style="color:#e6db74">    A `tuple` `(labels, features)`:
+</span><span style="color:#e6db74">      labels: A Pandas `Series`.
+</span><span style="color:#e6db74">      features: A Pandas `DataFrame`.
+</span><span style="color:#e6db74">  &#34;&#34;&#34;</span>
+  labels <span style="color:#f92672">=</span> dataset[<span style="color:#ae81ff">0</span>]
+  <span style="color:#75715e"># DataFrame.loc index ranges are inclusive at both ends.</span>
+  features <span style="color:#f92672">=</span> dataset<span style="color:#f92672">.</span>loc[:,<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">784</span>]
+  <span style="color:#75715e"># 原值是 0~255，归一化到 0~1.</span>
+  features <span style="color:#f92672">=</span> features <span style="color:#f92672">/</span> <span style="color:#ae81ff">255</span>
 
-<pre><code class="language-python">def parse_labels_and_features(dataset):
-  &quot;&quot;&quot;从数据中提取标签和特征
+  <span style="color:#66d9ef">return</span> labels, features
+</code></pre></div><p>然后用这个方法分别提取出训练集，验证集和测试集。其中因为 MNIST 没有提供验证集，所以直接从训练集中取一部分做验证集。用验证集的作用是调整模型参数，找到最合适的模型，防止进入局部最优。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 将数据的前7500个做为训练集，将标签和数据拆分</span>
+training_targets, training_examples <span style="color:#f92672">=</span> parse_labels_and_features(mnist_dataframe[:<span style="color:#ae81ff">7500</span>])
 
-  Args:
-    dataset: Dataframe, 第一列是标签，余下的列为单色的像素数据
+<span style="color:#75715e"># 拆出验证集的数据，用数据的后2500个</span>
+validation_targets, validation_examples <span style="color:#f92672">=</span> parse_labels_and_features(mnist_dataframe[<span style="color:#ae81ff">7500</span>:<span style="color:#ae81ff">10000</span>])
+</code></pre></div><p>随机的取一个数据样本，看看他长什么样。MNIST 的图都是 28x28x1 的。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 显示一个随机的数据</span>
+<span style="color:#f92672">from</span> matplotlib <span style="color:#f92672">import</span> pyplot <span style="color:#66d9ef">as</span> plt
+<span style="color:#f92672">from</span> IPython <span style="color:#f92672">import</span> display
 
-  Returns:
-    A `tuple` `(labels, features)`:
-      labels: A Pandas `Series`.
-      features: A Pandas `DataFrame`.
-  &quot;&quot;&quot;
-  labels = dataset[0]
-  # DataFrame.loc index ranges are inclusive at both ends.
-  features = dataset.loc[:,1:784]
-  # 原值是 0~255，归一化到 0~1.
-  features = features / 255
-
-  return labels, features
-</code></pre>
-
-<p>然后用这个方法分别提取出训练集，验证集和测试集。其中因为 MNIST 没有提供验证集，所以直接从训练集中取一部分做验证集。用验证集的作用是调整模型参数，找到最合适的模型，防止进入局部最优。</p>
-
-<pre><code class="language-python"># 将数据的前7500个做为训练集，将标签和数据拆分
-training_targets, training_examples = parse_labels_and_features(mnist_dataframe[:7500])
-
-# 拆出验证集的数据，用数据的后2500个
-validation_targets, validation_examples = parse_labels_and_features(mnist_dataframe[7500:10000])
-</code></pre>
-
-<p>随机的取一个数据样本，看看他长什么样。MNIST 的图都是 28x28x1 的。</p>
-
-<pre><code class="language-python"># 显示一个随机的数据
-from matplotlib import pyplot as plt
-from IPython import display
-
-rand_example = np.random.choice(training_examples.index)
-_, ax = plt.subplots()
-ax.matshow(training_examples.loc[rand_example].values.reshape(28, 28))
-ax.set_title(&quot;Label: %i&quot; % training_targets.loc[rand_example])
-ax.grid(False)
-</code></pre>
-
-<p>得到结果</p>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/202003112204_160.png?imageslim" alt="一个展示数据的样子" /></p>
-
+rand_example <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice(training_examples<span style="color:#f92672">.</span>index)
+_, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots()
+ax<span style="color:#f92672">.</span>matshow(training_examples<span style="color:#f92672">.</span>loc[rand_example]<span style="color:#f92672">.</span>values<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">28</span>))
+ax<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#34;Label: </span><span style="color:#e6db74">%i</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> training_targets<span style="color:#f92672">.</span>loc[rand_example])
+ax<span style="color:#f92672">.</span>grid(False)
+</code></pre></div><p>得到结果</p>
+<p><img src="http://cdn.qiniu.gsj987.cn/202003112204_160.png?imageslim" alt="一个展示数据的样子"></p>
 <p>用同样的方法下载 MNIST 的测试数据</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 载入 mnist 测试数据</span>
+test_dataframe <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(
+  <span style="color:#e6db74">&#34;https://download.mlcc.google.cn/mledu-datasets/mnist_test.csv&#34;</span>,
+  sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;,&#34;</span>,
+  header<span style="color:#f92672">=</span>None)
 
-<pre><code class="language-python"># 载入 mnist 测试数据
-test_dataframe = pd.read_csv(
-  &quot;https://download.mlcc.google.cn/mledu-datasets/mnist_test.csv&quot;,
-  sep=&quot;,&quot;,
-  header=None)
+<span style="color:#75715e"># 只使用前10000个数据做测试</span>
+test_dataframe <span style="color:#f92672">=</span> test_dataframe<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">5000</span>)
+test_dataframe <span style="color:#f92672">=</span> test_dataframe<span style="color:#f92672">.</span>reindex(np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>permutation(test_dataframe<span style="color:#f92672">.</span>index))
 
-# 只使用前10000个数据做测试
-test_dataframe = test_dataframe.head(5000)
-test_dataframe = test_dataframe.reindex(np.random.permutation(test_dataframe.index))
-
-# 提取测试用的特征和标签
-testing_targets, testing_examples = parse_labels_and_features(test_dataframe)
-</code></pre>
-
-<h3 id="设计卷积层">设计卷积层</h3>
-
+<span style="color:#75715e"># 提取测试用的特征和标签</span>
+testing_targets, testing_examples <span style="color:#f92672">=</span> parse_labels_and_features(test_dataframe)
+</code></pre></div><h3 id="设计卷积层">设计卷积层</h3>
 <p>先设定一些基本的参数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 参数设定</span>
+IMAGE_SIZE <span style="color:#f92672">=</span> <span style="color:#ae81ff">28</span>
+NUM_CHANNELS <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+PIXEL_DEPTH <span style="color:#f92672">=</span> <span style="color:#ae81ff">255</span>
+NUM_LABELS <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+SEED <span style="color:#f92672">=</span> <span style="color:#ae81ff">66478</span>  <span style="color:#75715e"># Set to None for random seed.</span>
+BATCH_SIZE <span style="color:#f92672">=</span> <span style="color:#ae81ff">64</span> <span style="color:#75715e"># 训练集的每批次数据量大小</span>
+NUM_EPOCHS <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+EVAL_BATCH_SIZE <span style="color:#f92672">=</span> <span style="color:#ae81ff">64</span> <span style="color:#75715e"># 验证集和测试集的每批次数据量大小</span>
+EVAL_FREQUENCY <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>  <span style="color:#75715e">#用验证集作评估的频率</span>
+TRAIN_SIZE <span style="color:#f92672">=</span> training_targets<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</code></pre></div><p>然后按照 LeNet-5 的结构，设计卷积层</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 定义 train 用的 placeholder 来存放 input 数据</span>
+train_data_node <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>placeholder(
+    tf<span style="color:#f92672">.</span>float32,
+    shape<span style="color:#f92672">=</span>(BATCH_SIZE, IMAGE_SIZE, IMAGE_SIZE, NUM_CHANNELS))
+train_labels_node <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>placeholder(tf<span style="color:#f92672">.</span>int64, shape<span style="color:#f92672">=</span>(BATCH_SIZE,))
 
-<pre><code class="language-python"># 参数设定
-IMAGE_SIZE = 28
-NUM_CHANNELS = 1
-PIXEL_DEPTH = 255
-NUM_LABELS = 10
-SEED = 66478  # Set to None for random seed.
-BATCH_SIZE = 64 # 训练集的每批次数据量大小
-NUM_EPOCHS = 10
-EVAL_BATCH_SIZE = 64 # 验证集和测试集的每批次数据量大小
-EVAL_FREQUENCY = 100  #用验证集作评估的频率
-TRAIN_SIZE = training_targets.shape[0]
-</code></pre>
+<span style="color:#75715e"># 评估用的 placeholder 来存放数据</span>
+eval_data <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>placeholder(
+    tf<span style="color:#f92672">.</span>float32,
+    shape<span style="color:#f92672">=</span>(EVAL_BATCH_SIZE, IMAGE_SIZE, IMAGE_SIZE, NUM_CHANNELS))
 
-<p>然后按照 LeNet-5 的结构，设计卷积层</p>
+<span style="color:#75715e"># 定义网络的权重，2层卷积层，中有2池化层</span>
+<span style="color:#75715e"># 第一个卷积层的权重, 5x5 的大小, depth 为 32.</span>
+conv1_weights <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>Variable(
+    tf<span style="color:#f92672">.</span>truncated_normal([<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, NUM_CHANNELS, <span style="color:#ae81ff">32</span>],  
+                        stddev<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>,
+                        seed<span style="color:#f92672">=</span>SEED, dtype<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>float32))
+<span style="color:#75715e"># 加一个 bais，下同</span>
+conv1_biases <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>Variable(tf<span style="color:#f92672">.</span>zeros([<span style="color:#ae81ff">32</span>], dtype<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>float32))
+<span style="color:#75715e"># 第二个卷积层，5x5x64</span>
+conv2_weights <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>Variable(tf<span style="color:#f92672">.</span>truncated_normal(
+    [<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">64</span>], stddev<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>,
+    seed<span style="color:#f92672">=</span>SEED, dtype<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>float32))
+conv2_biases <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>Variable(tf<span style="color:#f92672">.</span>constant(<span style="color:#ae81ff">0.1</span>, shape<span style="color:#f92672">=</span>[<span style="color:#ae81ff">64</span>],
+                           dtype<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>float32))
 
-<pre><code class="language-python"># 定义 train 用的 placeholder 来存放 input 数据
-train_data_node = tf.placeholder(
-    tf.float32,
-    shape=(BATCH_SIZE, IMAGE_SIZE, IMAGE_SIZE, NUM_CHANNELS))
-train_labels_node = tf.placeholder(tf.int64, shape=(BATCH_SIZE,))
-
-# 评估用的 placeholder 来存放数据
-eval_data = tf.placeholder(
-    tf.float32,
-    shape=(EVAL_BATCH_SIZE, IMAGE_SIZE, IMAGE_SIZE, NUM_CHANNELS))
-
-# 定义网络的权重，2层卷积层，中有2池化层
-# 第一个卷积层的权重, 5x5 的大小, depth 为 32.
-conv1_weights = tf.Variable(
-    tf.truncated_normal([5, 5, NUM_CHANNELS, 32],  
-                        stddev=0.1,
-                        seed=SEED, dtype=tf.float32))
-# 加一个 bais，下同
-conv1_biases = tf.Variable(tf.zeros([32], dtype=tf.float32))
-# 第二个卷积层，5x5x64
-conv2_weights = tf.Variable(tf.truncated_normal(
-    [5, 5, 32, 64], stddev=0.1,
-    seed=SEED, dtype=tf.float32))
-conv2_biases = tf.Variable(tf.constant(0.1, shape=[64],
-                           dtype=tf.float32))
-
-# 定义全连接网络层，由于经过了两个 2x2 的池化层，
-# 输入的特征为 (IMAGE_SIZE // 4 )^2 * 64
-# 全连接网络为 7*7*64 =&gt; 512 =&gt; 10
-# 第一层, depth 512.
-fc1_weights = tf.Variable(
-    tf.truncated_normal([IMAGE_SIZE // 4 * IMAGE_SIZE // 4 * 64, 512],
-                        stddev=0.1,
-                        seed=SEED,
-                        dtype=tf.float32))
-fc1_biases = tf.Variable(tf.constant(0.1, shape=[512],
-                         dtype=tf.float32))
-# 第二层，为输出层，depth 为 10
-fc2_weights = tf.Variable(tf.truncated_normal([512, NUM_LABELS],
-                                              stddev=0.1,
-                                              seed=SEED,
-                                              dtype=tf.float32))
-fc2_biases = tf.Variable(tf.constant(
-    0.1, shape=[NUM_LABELS], dtype=tf.float32))
-</code></pre>
-
-<h3 id="组织卷积网络">组织卷积网络</h3>
-
+<span style="color:#75715e"># 定义全连接网络层，由于经过了两个 2x2 的池化层，</span>
+<span style="color:#75715e"># 输入的特征为 (IMAGE_SIZE // 4 )^2 * 64</span>
+<span style="color:#75715e"># 全连接网络为 7*7*64 =&gt; 512 =&gt; 10</span>
+<span style="color:#75715e"># 第一层, depth 512.</span>
+fc1_weights <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>Variable(
+    tf<span style="color:#f92672">.</span>truncated_normal([IMAGE_SIZE <span style="color:#f92672">//</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">*</span> IMAGE_SIZE <span style="color:#f92672">//</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">512</span>],
+                        stddev<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>,
+                        seed<span style="color:#f92672">=</span>SEED,
+                        dtype<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>float32))
+fc1_biases <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>Variable(tf<span style="color:#f92672">.</span>constant(<span style="color:#ae81ff">0.1</span>, shape<span style="color:#f92672">=</span>[<span style="color:#ae81ff">512</span>],
+                         dtype<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>float32))
+<span style="color:#75715e"># 第二层，为输出层，depth 为 10</span>
+fc2_weights <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>Variable(tf<span style="color:#f92672">.</span>truncated_normal([<span style="color:#ae81ff">512</span>, NUM_LABELS],
+                                              stddev<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>,
+                                              seed<span style="color:#f92672">=</span>SEED,
+                                              dtype<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>float32))
+fc2_biases <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>Variable(tf<span style="color:#f92672">.</span>constant(
+    <span style="color:#ae81ff">0.1</span>, shape<span style="color:#f92672">=</span>[NUM_LABELS], dtype<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>float32))
+</code></pre></div><h3 id="组织卷积网络">组织卷积网络</h3>
 <p>开始定义 LeNet-5 网络，组织各层的结构，conv1 → maxPool1 → conv2 -&gt; maxPool2 -&gt; fc1 -&gt; fc2</p>
-
-<pre><code class="language-python"># 定义网络
-def model(data, train=False):
-  &quot;&quot;&quot;The Model definition.&quot;&quot;&quot;
-  # 4维的strides用以匹配数据的格式 [image index, y, x, depth]
-  # 每一层的 padding 为 SAME，即输入和输出的大小补全为一样
-  ###
-  # 第一层
-  conv = tf.nn.conv2d(data,
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 定义网络</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">model</span>(data, train<span style="color:#f92672">=</span>False):
+  <span style="color:#e6db74">&#34;&#34;&#34;The Model definition.&#34;&#34;&#34;</span>
+  <span style="color:#75715e"># 4维的strides用以匹配数据的格式 [image index, y, x, depth]</span>
+  <span style="color:#75715e"># 每一层的 padding 为 SAME，即输入和输出的大小补全为一样</span>
+  <span style="color:#75715e">###</span>
+  <span style="color:#75715e"># 第一层</span>
+  conv <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>conv2d(data,
                       conv1_weights,
-                      strides=[1, 1, 1, 1],
-                      padding='SAME')
-  # 使用 relu 做激活函数
-  relu = tf.nn.relu(tf.nn.bias_add(conv, conv1_biases))
-  # 最大池化层，窗口为2，步长为2
-  pool = tf.nn.max_pool(relu,
-                        ksize=[1, 2, 2, 1],
-                        strides=[1, 2, 2, 1],
-                        padding='SAME')
-  ###
-  # 第二层
-  conv = tf.nn.conv2d(pool,
+                      strides<span style="color:#f92672">=</span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>],
+                      padding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;SAME&#39;</span>)
+  <span style="color:#75715e"># 使用 relu 做激活函数</span>
+  relu <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>relu(tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>bias_add(conv, conv1_biases))
+  <span style="color:#75715e"># 最大池化层，窗口为2，步长为2</span>
+  pool <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>max_pool(relu,
+                        ksize<span style="color:#f92672">=</span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>],
+                        strides<span style="color:#f92672">=</span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>],
+                        padding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;SAME&#39;</span>)
+  <span style="color:#75715e">###</span>
+  <span style="color:#75715e"># 第二层</span>
+  conv <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>conv2d(pool,
                       conv2_weights,
-                      strides=[1, 1, 1, 1],
-                      padding='SAME')
-  relu = tf.nn.relu(tf.nn.bias_add(conv, conv2_biases))
-  pool = tf.nn.max_pool(relu,
-                        ksize=[1, 2, 2, 1],
-                        strides=[1, 2, 2, 1],
-                        padding='SAME')
+                      strides<span style="color:#f92672">=</span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>],
+                      padding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;SAME&#39;</span>)
+  relu <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>relu(tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>bias_add(conv, conv2_biases))
+  pool <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>max_pool(relu,
+                        ksize<span style="color:#f92672">=</span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>],
+                        strides<span style="color:#f92672">=</span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>],
+                        padding<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;SAME&#39;</span>)
 
-  # 将结果 reshape 后输入到全连接网络, [image index, x*y*64]
-  pool_shape = pool.get_shape().as_list()
-  reshape = tf.reshape(
+  <span style="color:#75715e"># 将结果 reshape 后输入到全连接网络, [image index, x*y*64]</span>
+  pool_shape <span style="color:#f92672">=</span> pool<span style="color:#f92672">.</span>get_shape()<span style="color:#f92672">.</span>as_list()
+  reshape <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>reshape(
       pool,
-      [pool_shape[0], pool_shape[1] * pool_shape[2] * pool_shape[3]])
+      [pool_shape[<span style="color:#ae81ff">0</span>], pool_shape[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> pool_shape[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">*</span> pool_shape[<span style="color:#ae81ff">3</span>]])
 
-  # 一个全连接层
-  hidden = tf.nn.relu(tf.matmul(reshape, fc1_weights) + fc1_biases)
+  <span style="color:#75715e"># 一个全连接层</span>
+  hidden <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>relu(tf<span style="color:#f92672">.</span>matmul(reshape, fc1_weights) <span style="color:#f92672">+</span> fc1_biases)
 
-  # 在训练时加入一个50%的dropout，防止过拟合
-  if train:
-    hidden = tf.nn.dropout(hidden, 0.5, seed=SEED)
-  return tf.matmul(hidden, fc2_weights) + fc2_biases
-</code></pre>
+  <span style="color:#75715e"># 在训练时加入一个50%的dropout，防止过拟合</span>
+  <span style="color:#66d9ef">if</span> train:
+    hidden <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>dropout(hidden, <span style="color:#ae81ff">0.5</span>, seed<span style="color:#f92672">=</span>SEED)
+  <span style="color:#66d9ef">return</span> tf<span style="color:#f92672">.</span>matmul(hidden, fc2_weights) <span style="color:#f92672">+</span> fc2_biases
+</code></pre></div><h3 id="构建预测和损失评估">构建预测和损失评估</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 训练计算，使用 logits + cross_entropy 做损失计算</span>
+logits <span style="color:#f92672">=</span> model(train_data_node, True)
+loss <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>reduce_mean(tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>sparse_softmax_cross_entropy_with_logits(
+    labels<span style="color:#f92672">=</span>train_labels_node, logits<span style="color:#f92672">=</span>logits))
 
-<h3 id="构建预测和损失评估">构建预测和损失评估</h3>
+<span style="color:#75715e"># 使用 L2 regularization 正则化全连接网络参数</span>
+regularizers <span style="color:#f92672">=</span> (tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>l2_loss(fc1_weights)
+                <span style="color:#f92672">+</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>l2_loss(fc1_biases)
+                <span style="color:#f92672">+</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>l2_loss(fc2_weights)
+                <span style="color:#f92672">+</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>l2_loss(fc2_biases))
 
-<pre><code class="language-python"># 训练计算，使用 logits + cross_entropy 做损失计算
-logits = model(train_data_node, True)
-loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(
-    labels=train_labels_node, logits=logits))
+<span style="color:#75715e"># Add the regularization term to the loss.</span>
+loss <span style="color:#f92672">+=</span> <span style="color:#ae81ff">5e-4</span> <span style="color:#f92672">*</span> regularizers
 
-# 使用 L2 regularization 正则化全连接网络参数
-regularizers = (tf.nn.l2_loss(fc1_weights)
-                + tf.nn.l2_loss(fc1_biases)
-                + tf.nn.l2_loss(fc2_weights)
-                + tf.nn.l2_loss(fc2_biases))
+<span style="color:#75715e"># 优化器：设一个变量，每批数据会增加，以控制训练速度</span>
+batch <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>Variable(<span style="color:#ae81ff">0</span>, dtype<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>float32)
 
-# Add the regularization term to the loss.
-loss += 5e-4 * regularizers
+<span style="color:#75715e"># 每个 epoch 后降低训练速度</span>
+learning_rate <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>train<span style="color:#f92672">.</span>exponential_decay(
+    <span style="color:#ae81ff">0.01</span>,                <span style="color:#75715e"># Base learning rate.</span>
+    batch <span style="color:#f92672">*</span> BATCH_SIZE,  <span style="color:#75715e"># Current index into the dataset.</span>
+    TRAIN_SIZE,          <span style="color:#75715e"># Decay step.</span>
+    <span style="color:#ae81ff">0.95</span>,                <span style="color:#75715e"># Decay rate.</span>
+    staircase<span style="color:#f92672">=</span>True)
 
-# 优化器：设一个变量，每批数据会增加，以控制训练速度
-batch = tf.Variable(0, dtype=tf.float32)
+<span style="color:#75715e"># 使用 MomentumOptimizer 做为优化器</span>
+optimizer <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>train<span style="color:#f92672">.</span>MomentumOptimizer(learning_rate,
+                                       <span style="color:#ae81ff">0.9</span>)<span style="color:#f92672">.</span>minimize(loss,
+                                                     global_step<span style="color:#f92672">=</span>batch)
 
-# 每个 epoch 后降低训练速度
-learning_rate = tf.train.exponential_decay(
-    0.01,                # Base learning rate.
-    batch * BATCH_SIZE,  # Current index into the dataset.
-    TRAIN_SIZE,          # Decay step.
-    0.95,                # Decay rate.
-    staircase=True)
+<span style="color:#75715e"># 计算预测结果</span>
+train_prediction <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>softmax(logits)
 
-# 使用 MomentumOptimizer 做为优化器
-optimizer = tf.train.MomentumOptimizer(learning_rate,
-                                       0.9).minimize(loss,
-                                                     global_step=batch)
-
-# 计算预测结果
-train_prediction = tf.nn.softmax(logits)
-
-# 计算余下的结果用于 validation 和 test
-eval_prediction = tf.nn.softmax(model(eval_data))
-</code></pre>
-
-<p>其中，使用 L2 regularization 正则化的目的是为了防止过拟合，控制模型的复杂度。更详细的介绍看这里 <a href="https://www.zhihu.com/question/26485586">https://www.zhihu.com/question/26485586</a></p>
-
+<span style="color:#75715e"># 计算余下的结果用于 validation 和 test</span>
+eval_prediction <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>softmax(model(eval_data))
+</code></pre></div><p>其中，使用 L2 regularization 正则化的目的是为了防止过拟合，控制模型的复杂度。更详细的介绍看这里 <a href="https://www.zhihu.com/question/26485586">https://www.zhihu.com/question/26485586</a></p>
 <p>另外定义一下预测结果的 loss 的评估方式。利用 numpy 的便捷语法，实现很简洁</p>
-
-<pre><code class="language-python">def error_rate(predictions, labels):
-  &quot;&quot;&quot;返回预测结果的误差率&quot;&quot;&quot;
-  return 100.0 - (
-      100.0 *
-      np.sum(np.argmax(predictions, 1) == labels) /
-      predictions.shape[0])
-</code></pre>
-
-<h3 id="分批的计算">分批的计算</h3>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">error_rate</span>(predictions, labels):
+  <span style="color:#e6db74">&#34;&#34;&#34;返回预测结果的误差率&#34;&#34;&#34;</span>
+  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">100.0</span> <span style="color:#f92672">-</span> (
+      <span style="color:#ae81ff">100.0</span> <span style="color:#f92672">*</span>
+      np<span style="color:#f92672">.</span>sum(np<span style="color:#f92672">.</span>argmax(predictions, <span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> labels) <span style="color:#f92672">/</span>
+      predictions<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>])
+</code></pre></div><h3 id="分批的计算">分批的计算</h3>
 <p>在计算的过程中，我们采用多个 batch 的方案来让网络分批训练。使用多个 batch 的目的是减少内存和 GPU 的使用，加速训练过程，适合数据量比较大的训练过程。多个 batch 组成一个 epoch，构成一次训练。</p>
-
 <p>这里定义一个方法能分批的在验证集和测试集上计算</p>
-
-<pre><code class="language-python">def eval_in_batches(data, sess):
-  &quot;&quot;&quot;分批计算网络，减少内存的使用&quot;&quot;&quot;
-  size = data.shape[0]
-  predictions = np.ndarray(shape=(size, NUM_LABELS),
-                              dtype=np.float32)
-  for begin in xrange(0, size, EVAL_BATCH_SIZE):
-    end = begin + EVAL_BATCH_SIZE
-    if end &lt;= size:
-      # 取一个 EVAL_BATCH_SIZE 的数据量，放入网络评估
-      predictions[begin:end, :] = sess.run(
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">eval_in_batches</span>(data, sess):
+  <span style="color:#e6db74">&#34;&#34;&#34;分批计算网络，减少内存的使用&#34;&#34;&#34;</span>
+  size <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+  predictions <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ndarray(shape<span style="color:#f92672">=</span>(size, NUM_LABELS),
+                              dtype<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>float32)
+  <span style="color:#66d9ef">for</span> begin <span style="color:#f92672">in</span> xrange(<span style="color:#ae81ff">0</span>, size, EVAL_BATCH_SIZE):
+    end <span style="color:#f92672">=</span> begin <span style="color:#f92672">+</span> EVAL_BATCH_SIZE
+    <span style="color:#66d9ef">if</span> end <span style="color:#f92672">&lt;=</span> size:
+      <span style="color:#75715e"># 取一个 EVAL_BATCH_SIZE 的数据量，放入网络评估</span>
+      predictions[begin:end, :] <span style="color:#f92672">=</span> sess<span style="color:#f92672">.</span>run(
           eval_prediction,
-          feed_dict={eval_data: data[begin:end, ...]})
-    else:
-      # 最后一批数据，放入余下的所有数据
-      batch_predictions = sess.run(
+          feed_dict<span style="color:#f92672">=</span>{eval_data: data[begin:end, <span style="color:#f92672">...</span>]})
+    <span style="color:#66d9ef">else</span>:
+      <span style="color:#75715e"># 最后一批数据，放入余下的所有数据</span>
+      batch_predictions <span style="color:#f92672">=</span> sess<span style="color:#f92672">.</span>run(
           eval_prediction,
-          feed_dict={eval_data: data[-EVAL_BATCH_SIZE:, ...]})
-      predictions[begin:, :] = batch_predictions[begin - size:, :]
-  return predictions
-</code></pre>
+          feed_dict<span style="color:#f92672">=</span>{eval_data: data[<span style="color:#f92672">-</span>EVAL_BATCH_SIZE:, <span style="color:#f92672">...</span>]})
+      predictions[begin:, :] <span style="color:#f92672">=</span> batch_predictions[begin <span style="color:#f92672">-</span> size:, :]
+  <span style="color:#66d9ef">return</span> predictions
+</code></pre></div><h3 id="整合训练过程">整合训练过程</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> six.moves <span style="color:#f92672">import</span> xrange
 
-<h3 id="整合训练过程">整合训练过程</h3>
+<span style="color:#75715e"># 把 dataframe 转成 numpy array</span>
+train_data <span style="color:#f92672">=</span> training_examples<span style="color:#f92672">.</span>to_numpy(np<span style="color:#f92672">.</span>float32)<span style="color:#f92672">.</span>reshape((<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">1</span>))
+train_labels <span style="color:#f92672">=</span> training_targets<span style="color:#f92672">.</span>to_numpy(np<span style="color:#f92672">.</span>float32)
+validation_data <span style="color:#f92672">=</span> validation_examples<span style="color:#f92672">.</span>to_numpy(np<span style="color:#f92672">.</span>float32)<span style="color:#f92672">.</span>reshape((<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">1</span>))
+validation_labels <span style="color:#f92672">=</span> validation_targets<span style="color:#f92672">.</span>to_numpy(np<span style="color:#f92672">.</span>float32)
+test_data <span style="color:#f92672">=</span> testing_examples<span style="color:#f92672">.</span>to_numpy(np<span style="color:#f92672">.</span>float32)<span style="color:#f92672">.</span>reshape((<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">1</span>))
+test_labels <span style="color:#f92672">=</span> testing_targets<span style="color:#f92672">.</span>to_numpy(np<span style="color:#f92672">.</span>float32)
 
-<pre><code class="language-python">from six.moves import xrange
+<span style="color:#75715e"># 开启 TF session，运行训练</span>
+<span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>Session() <span style="color:#66d9ef">as</span> sess:
+  <span style="color:#75715e"># 初始化 session</span>
+  tf<span style="color:#f92672">.</span>global_variables_initializer()<span style="color:#f92672">.</span>run()
 
-# 把 dataframe 转成 numpy array
-train_data = training_examples.to_numpy(np.float32).reshape((-1, 28, 28, 1))
-train_labels = training_targets.to_numpy(np.float32)
-validation_data = validation_examples.to_numpy(np.float32).reshape((-1, 28, 28, 1))
-validation_labels = validation_targets.to_numpy(np.float32)
-test_data = testing_examples.to_numpy(np.float32).reshape((-1, 28, 28, 1))
-test_labels = testing_targets.to_numpy(np.float32)
-
-# 开启 TF session，运行训练
-with tf.Session() as sess:
-  # 初始化 session
-  tf.global_variables_initializer().run()
-
-  # 执行多步循环
-  for step in xrange(int(NUM_EPOCHS * TRAIN_SIZE) // BATCH_SIZE):
-    # 计算当前 batch 的位置，进行运算
-    offset = (step * BATCH_SIZE) % (TRAIN_SIZE - BATCH_SIZE)
-    batch_data = train_data[offset:(offset + BATCH_SIZE), ...]
-    batch_labels = train_labels[offset:(offset + BATCH_SIZE)]
+  <span style="color:#75715e"># 执行多步循环</span>
+  <span style="color:#66d9ef">for</span> step <span style="color:#f92672">in</span> xrange(int(NUM_EPOCHS <span style="color:#f92672">*</span> TRAIN_SIZE) <span style="color:#f92672">//</span> BATCH_SIZE):
+    <span style="color:#75715e"># 计算当前 batch 的位置，进行运算</span>
+    offset <span style="color:#f92672">=</span> (step <span style="color:#f92672">*</span> BATCH_SIZE) <span style="color:#f92672">%</span> (TRAIN_SIZE <span style="color:#f92672">-</span> BATCH_SIZE)
+    batch_data <span style="color:#f92672">=</span> train_data[offset:(offset <span style="color:#f92672">+</span> BATCH_SIZE), <span style="color:#f92672">...</span>]
+    batch_labels <span style="color:#f92672">=</span> train_labels[offset:(offset <span style="color:#f92672">+</span> BATCH_SIZE)]
     
-    # 将这一批的数据进行训练
-    feed_dict = {train_data_node: batch_data,
+    <span style="color:#75715e"># 将这一批的数据进行训练</span>
+    feed_dict <span style="color:#f92672">=</span> {train_data_node: batch_data,
                  train_labels_node: batch_labels}
-    sess.run(optimizer, feed_dict=feed_dict)
+    sess<span style="color:#f92672">.</span>run(optimizer, feed_dict<span style="color:#f92672">=</span>feed_dict)
 
-    # 每次训练到一定的程度，用验证集做一次评估，并打印一些信息
-    if step % EVAL_FREQUENCY == 0:
-      # 计算一下当前的具体 loss 值，指示现在的训练进度
-      l, lr, predictions = sess.run([loss, learning_rate,
+    <span style="color:#75715e"># 每次训练到一定的程度，用验证集做一次评估，并打印一些信息</span>
+    <span style="color:#66d9ef">if</span> step <span style="color:#f92672">%</span> EVAL_FREQUENCY <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+      <span style="color:#75715e"># 计算一下当前的具体 loss 值，指示现在的训练进度</span>
+      l, lr, predictions <span style="color:#f92672">=</span> sess<span style="color:#f92672">.</span>run([loss, learning_rate,
                                      train_prediction],
-                                    feed_dict=feed_dict)
+                                    feed_dict<span style="color:#f92672">=</span>feed_dict)
 
-      print('Step %d (epoch %.2f)' %
-            (step, float(step) * BATCH_SIZE / TRAIN_SIZE))
-      print('Minibatch loss: %.3f, learning rate: %.6f' % (l, lr))
-      print('Minibatch error: %.1f%%'
-            % error_rate(predictions, batch_labels))
-      # 计算一下验证集的错误率
-      print('Validation error: %.1f%%' % error_rate(
+      <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Step </span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> (epoch </span><span style="color:#e6db74">%.2f</span><span style="color:#e6db74">)&#39;</span> <span style="color:#f92672">%</span>
+            (step, float(step) <span style="color:#f92672">*</span> BATCH_SIZE <span style="color:#f92672">/</span> TRAIN_SIZE))
+      <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Minibatch loss: </span><span style="color:#e6db74">%.3f</span><span style="color:#e6db74">, learning rate: </span><span style="color:#e6db74">%.6f</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> (l, lr))
+      <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Minibatch error: </span><span style="color:#e6db74">%.1f%%</span><span style="color:#e6db74">&#39;</span>
+            <span style="color:#f92672">%</span> error_rate(predictions, batch_labels))
+      <span style="color:#75715e"># 计算一下验证集的错误率</span>
+      <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Validation error: </span><span style="color:#e6db74">%.1f%%</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> error_rate(
           eval_in_batches(validation_data, sess), validation_labels))
 
-  # 训练完成，打印模型在测试集上的结果
-  test_error = error_rate(eval_in_batches(test_data, sess),
+  <span style="color:#75715e"># 训练完成，打印模型在测试集上的结果</span>
+  test_error <span style="color:#f92672">=</span> error_rate(eval_in_batches(test_data, sess),
                           test_labels)
-  print('Test error: %.1f%%' % test_error)
-</code></pre>
-
-<h3 id="训练结果">训练结果</h3>
-
+  <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Test error: </span><span style="color:#e6db74">%.1f%%</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> test_error)
+</code></pre></div><h3 id="训练结果">训练结果</h3>
 <p>由于这里只做了 10 个 epoch，最后的测试结果在错误率 3.1%，但比线性模型已经有非常大的提升，且只在 4 个 epoch 后就达到了 3.1% 的验证错误率。</p>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/202003122159_611.png?imageslim" alt="训练结果输出" /></p>
-
+<p><img src="http://cdn.qiniu.gsj987.cn/202003122159_611.png?imageslim" alt="训练结果输出"></p>
 <h3 id="用得到的模型来识别手写数字">用得到的模型来识别手写数字</h3>
-
 <p>现在随便在测试集中找几个数据，用刚训练得到的模型，来识别类型，并比对结果。
 我这里就是粗暴的，取了前 4 个结果来看。正式的方法应该是为单个 predict 动作再做一个 placeholde来做运算。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 测试集数据看看</span>
+test_images <span style="color:#f92672">=</span> test_data[:EVAL_BATCH_SIZE, <span style="color:#f92672">...</span>]
 
-<pre><code class="language-python"># 测试集数据看看
-test_images = test_data[:EVAL_BATCH_SIZE, ...]
-
-# 使用模型识别
-test_predictions = sess.run(
+<span style="color:#75715e"># 使用模型识别</span>
+test_predictions <span style="color:#f92672">=</span> sess<span style="color:#f92672">.</span>run(
 eval_prediction,
-feed_dict={eval_data: test_images})
-predictions = np.argmax(test_predictions, 1)
+feed_dict<span style="color:#f92672">=</span>{eval_data: test_images})
+predictions <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmax(test_predictions, <span style="color:#ae81ff">1</span>)
 
-# 显示4个结果
-for i in range(4):
-plt.imshow(np.reshape(test_images[i], [28, 28]), cmap='gray')
-plt.show()
-print(&quot;Model prediction:&quot;, predictions[i])
-</code></pre>
-
-<p>结果如下图，可以说是相对准确的识别出了手写数字</p>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/202003122235_699.png?imageslim" alt="预测结果" /></p>
-
+<span style="color:#75715e"># 显示4个结果</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">4</span>):
+plt<span style="color:#f92672">.</span>imshow(np<span style="color:#f92672">.</span>reshape(test_images[i], [<span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">28</span>]), cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Model prediction:&#34;</span>, predictions[i])
+</code></pre></div><p>结果如下图，可以说是相对准确的识别出了手写数字</p>
+<p><img src="http://cdn.qiniu.gsj987.cn/202003122235_699.png?imageslim" alt="预测结果"></p>
 <h2 id="总结">总结</h2>
-
 <p>本文学习了 CNN 的基本结构，卷积层的组成，卷积核的基本算法等。然后仿照 LeNet-5 的结构，用 Google Colaboratory 对 MNIST 手写数据进行训练和验证，得到了不错的结果，并用这个模型识别了测试数据，验证模型的可用性。</p>
 
                         </div>

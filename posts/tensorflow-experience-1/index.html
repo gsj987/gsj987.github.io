@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.55.3" />
+    <meta name="generator" content="Hugo 0.68.3" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -91,26 +91,20 @@
                             <div class="toc-article">
                                 <div class="toc-title">文章目录</div>
                                 <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#线性回归">线性回归</a></li>
-<li><a href="#设置训练网络">设置训练网络</a></li>
-<li><a href="#执行训练">执行训练</a></li>
-<li><a href="#验证训练结果">验证训练结果</a></li>
-<li><a href="#构建的时候遇到的问题">构建的时候遇到的问题</a></li>
-<li><a href="#总结">总结</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#线性回归">线性回归</a></li>
+    <li><a href="#设置训练网络">设置训练网络</a></li>
+    <li><a href="#执行训练">执行训练</a></li>
+    <li><a href="#验证训练结果">验证训练结果</a></li>
+    <li><a href="#构建的时候遇到的问题">构建的时候遇到的问题</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
 </nav>
                             </div>
                         </div>
                         
                         <div class="post-content">
-                            
-
-<h2 id="线性回归">线性回归</h2>
-
+                            <h2 id="线性回归">线性回归</h2>
 <p>线性回归是非常基础的统计学知识，也是所有机器学习研究的源头，因为现在的数学都还没有能很好的解决非线性的问题，所以基本上所有的机器学习的思路都是用非线性核函数，将数据转换到近似线性的空间中，然后再用线性方法如线性回归进行解决。一般的，线性回归是要解决如下的问题，对线性公式：
 $$
 y = wx + b
@@ -120,203 +114,158 @@ $$
 y = wx + b + N(0,\epsilon)
 $$
 其中 $\epsilon$ 代表噪音的标准差。我们使用 NumPy 生成人造数据：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
 
-<pre><code class="language-python">import numpy as np
+N<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> <span style="color:#75715e"># 100 个数据</span>
+w_true<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> <span style="color:#75715e"># 假设 w = 5</span>
+b_true<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> <span style="color:#75715e"># 假设 b = 5</span>
+noise_scale<span style="color:#f92672">=.</span><span style="color:#ae81ff">1</span>
+<span style="color:#75715e"># 构建 Nx1 维的 x 数据</span>
+x_np<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand(N,<span style="color:#ae81ff">1</span>)
+<span style="color:#75715e"># 生成正态分布的 Nx1 维的噪音</span>
+noise <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(scale<span style="color:#f92672">=</span>noise_scale,size<span style="color:#f92672">=</span>(N,<span style="color:#ae81ff">1</span>))
+<span style="color:#75715e"># 生成 y 数据，这里的 y 是 1xN 维的，方便计算</span>
+y_np<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>reshape(w_true<span style="color:#f92672">*</span>x_np<span style="color:#f92672">+</span>b_true<span style="color:#f92672">+</span>noise,(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
+</code></pre></div><p>使用 matplotlib 画个图看一下生成的数据的分布，在 jupyter 中使用</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>matplotlib inline
+<span style="color:#f92672">import</span> matplotlib
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
 
-N=100 # 100 个数据
-w_true=5 # 假设 w = 5
-b_true=5 # 假设 b = 5
-noise_scale=.1
-# 构建 Nx1 维的 x 数据
-x_np=np.random.rand(N,1)
-# 生成正态分布的 Nx1 维的噪音
-noise = np.random.normal(scale=noise_scale,size=(N,1))
-# 生成 y 数据，这里的 y 是 1xN 维的，方便计算
-y_np=np.reshape(w_true*x_np+b_true+noise,(-1))
-</code></pre>
-
-<p>使用 matplotlib 画个图看一下生成的数据的分布，在 jupyter 中使用</p>
-
-<pre><code class="language-python">%matplotlib inline
-import matplotlib
-import numpy as np
-import matplotlib.pyplot as plt
-
-line,=plt.plot(x_np,y_np,'bo')
-</code></pre>
-
-<p>结果如图所示</p>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/201904260013_105.png?imageslim" alt="生成的数据分布" /></p>
-
+line,<span style="color:#f92672">=</span>plt<span style="color:#f92672">.</span>plot(x_np,y_np,<span style="color:#e6db74">&#39;bo&#39;</span>)
+</code></pre></div><p>结果如图所示</p>
+<p><img src="http://cdn.qiniu.gsj987.cn/201904260013_105.png?imageslim" alt="生成的数据分布"></p>
 <h2 id="设置训练网络">设置训练网络</h2>
-
 <p>机器学习的步骤最主要的就是3步：</p>
-
 <ol>
 <li>定义损失函数，也就是如何评价当前参数的指标，一般来说损失函数的值越小，当前得到的参数性能越好</li>
 <li>定义优化算法。常见的优化算法有梯度下降算法，退火算法和遗传算法。用于在当前参数下，快速找到下一批待选择参数组合</li>
 <li>反复迭代，寻找最优解。利用上面两个步骤反复多次，直到函数收敛，得到最终的参数，也就是模型训练完成。</li>
 </ol>
-
 <p>本次案例中，我们用最简单的方式来定义我们的训练网络。损失函数就直接使用预测值与真实值之间的空间距离：
 $$
 loss = ( y_{pred} - y )^2
 $$</p>
-
 <p>而优化算法直接使用梯度下降算法：
 $$
 W_{next} = W - \alpha\Delta W
 $$
 其中的 $\alpha$ 就是迭代步长，是一个超参数，需要手动选择或者使用网格搜索才能调优的参数。</p>
-
 <p>具体的代码如下:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> tensorflow <span style="color:#f92672">as</span> tf
 
-<pre><code class="language-python">import tensorflow as tf
-
-# 定义数据占位符
-with tf.name_scope(&quot;placeholders&quot;): 
-    x = tf.placeholder(tf.float32, (N, 1))
-    y = tf.placeholder(tf.float32, (N,))
-# 定义变量占位符
-with tf.name_scope(&quot;weights&quot;):
-    # 使用正态分布的初始化数据
-    W = tf.Variable(tf.random_normal((1, 1)))
-    b = tf.Variable(tf.random_normal((1,)))
-# 定义计算函数
-with tf.name_scope(&quot;prediction&quot;):
-    y_pred = tf.matmul(x, W) + b
-# 定义损失函数
-with tf.name_scope(&quot;loss&quot;):
-    l = tf.reduce_sum((y - tf.squeeze(y_pred))**2)
-# 定义下降算法
-with tf.name_scope(&quot;optim&quot;):
-    # 使用默认的梯度下降算法, alpha = 0.001
-    train_op = tf.train.AdamOptimizer(.001).minimize(l)
-# 定义统计项
-with tf.name_scope(&quot;summaries&quot;):
-    # 统计损失函数
-    tf.summary.scalar(&quot;loss&quot;, l)
-    # 将所有指标写入磁盘
-    merged = tf.summary.merge_all()
-</code></pre>
-
-<h2 id="执行训练">执行训练</h2>
-
+<span style="color:#75715e"># 定义数据占位符</span>
+<span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;placeholders&#34;</span>): 
+    x <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>placeholder(tf<span style="color:#f92672">.</span>float32, (N, <span style="color:#ae81ff">1</span>))
+    y <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>placeholder(tf<span style="color:#f92672">.</span>float32, (N,))
+<span style="color:#75715e"># 定义变量占位符</span>
+<span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;weights&#34;</span>):
+    <span style="color:#75715e"># 使用正态分布的初始化数据</span>
+    W <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>Variable(tf<span style="color:#f92672">.</span>random_normal((<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)))
+    b <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>Variable(tf<span style="color:#f92672">.</span>random_normal((<span style="color:#ae81ff">1</span>,)))
+<span style="color:#75715e"># 定义计算函数</span>
+<span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;prediction&#34;</span>):
+    y_pred <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>matmul(x, W) <span style="color:#f92672">+</span> b
+<span style="color:#75715e"># 定义损失函数</span>
+<span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;loss&#34;</span>):
+    l <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>reduce_sum((y <span style="color:#f92672">-</span> tf<span style="color:#f92672">.</span>squeeze(y_pred))<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)
+<span style="color:#75715e"># 定义下降算法</span>
+<span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;optim&#34;</span>):
+    <span style="color:#75715e"># 使用默认的梯度下降算法, alpha = 0.001</span>
+    train_op <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>train<span style="color:#f92672">.</span>AdamOptimizer(<span style="color:#f92672">.</span><span style="color:#ae81ff">001</span>)<span style="color:#f92672">.</span>minimize(l)
+<span style="color:#75715e"># 定义统计项</span>
+<span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;summaries&#34;</span>):
+    <span style="color:#75715e"># 统计损失函数</span>
+    tf<span style="color:#f92672">.</span>summary<span style="color:#f92672">.</span>scalar(<span style="color:#e6db74">&#34;loss&#34;</span>, l)
+    <span style="color:#75715e"># 将所有指标写入磁盘</span>
+    merged <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>summary<span style="color:#f92672">.</span>merge_all()
+</code></pre></div><h2 id="执行训练">执行训练</h2>
 <p>我们将我们生成的模拟数据，填入到训练网络的占位符，多次迭代进行网络训练。每次迭代，都将中间结果写入磁盘，方便我们观察我们的网络的有效性。代码如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 定义结果写入文件</span>
+train_writer <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>summary<span style="color:#f92672">.</span>FileWriter(<span style="color:#e6db74">&#39;logs/train&#39;</span>, tf<span style="color:#f92672">.</span>get_default_graph())
 
-<pre><code class="language-python"># 定义结果写入文件
-train_writer = tf.summary.FileWriter('logs/train', tf.get_default_graph())
-
-n_steps = 8000 # 迭代 8000 次
-with tf.Session() as sess:
-    sess.run(tf.global_variables_initializer())
-    # 训练模型
-    for i in range(n_steps):
-        feed_dict = {x: x_np, y: y_np}
-        _, summary, loss = sess.run([train_op, merged, l], feed_dict=feed_dict)
-        print(&quot;step %d, loss: %f&quot; % (i, loss))
-        train_writer.add_summary(summary, i)
+n_steps <span style="color:#f92672">=</span> <span style="color:#ae81ff">8000</span> <span style="color:#75715e"># 迭代 8000 次</span>
+<span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>Session() <span style="color:#66d9ef">as</span> sess:
+    sess<span style="color:#f92672">.</span>run(tf<span style="color:#f92672">.</span>global_variables_initializer())
+    <span style="color:#75715e"># 训练模型</span>
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n_steps):
+        feed_dict <span style="color:#f92672">=</span> {x: x_np, y: y_np}
+        _, summary, loss <span style="color:#f92672">=</span> sess<span style="color:#f92672">.</span>run([train_op, merged, l], feed_dict<span style="color:#f92672">=</span>feed_dict)
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;step </span><span style="color:#e6db74">%d</span><span style="color:#e6db74">, loss: </span><span style="color:#e6db74">%f</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (i, loss))
+        train_writer<span style="color:#f92672">.</span>add_summary(summary, i)
         
-    # 计算参数
-    w_final, b_final = sess.run([W, b])
+    <span style="color:#75715e"># 计算参数</span>
+    w_final, b_final <span style="color:#f92672">=</span> sess<span style="color:#f92672">.</span>run([W, b])
 
-    # 计算预测值
-    y_pred_np = sess.run(y_pred, feed_dict={x: x_np})
-</code></pre>
-
-<p>8000步后，损失函数稳定值在3.59左右</p>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/201904260942_663.png?imageslim" alt="迭代损失函数最终得到的值" /></p>
-
+    <span style="color:#75715e"># 计算预测值</span>
+    y_pred_np <span style="color:#f92672">=</span> sess<span style="color:#f92672">.</span>run(y_pred, feed_dict<span style="color:#f92672">=</span>{x: x_np})
+</code></pre></div><p>8000步后，损失函数稳定值在3.59左右</p>
+<p><img src="http://cdn.qiniu.gsj987.cn/201904260942_663.png?imageslim" alt="迭代损失函数最终得到的值"></p>
 <p>我们使用命令查看一下刚才的训练过程</p>
-
-<pre><code class="language-sh">tensorboard --logdir logs/train
-</code></pre>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/201904260944_825.png?imageslim" alt="损失函数的下降图" /></p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">tensorboard --logdir logs/train
+</code></pre></div><p><img src="http://cdn.qiniu.gsj987.cn/201904260944_825.png?imageslim" alt="损失函数的下降图"></p>
 <p>上图为损失函数的下降曲线。可以看到快接近最终值时，曲线明显收敛。</p>
-
 <p>另一张图是网络的执行图：</p>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/201904260946_334.png?imageslim" alt="网络训练可视化" /></p>
-
+<p><img src="http://cdn.qiniu.gsj987.cn/201904260946_334.png?imageslim" alt="网络训练可视化"></p>
 <p>上图可以看到训练过程中每一步的流程和执行次数，线条越粗执行的次数越多。这个图可以方便的帮助我们优化自己的训练网络。</p>
-
 <h2 id="验证训练结果">验证训练结果</h2>
-
 <p>现在我们已经得到了一个训练好的网络，这个预测网络的两个参数 $W_{final}$ 和 $b_{final}$，也就得到了最终的线性方程的公式:
 $$
 y_{pred}=W_{final}x+b_{final}
 $$</p>
-
 <p>现在我们用两种不同的指标来验证我们训练的这个模型： $R^2$ 和 RMSE (root-mean-squared error，均方根差).  $R^2$ 是用于表示两个变量之间的相关性，用0~1之间的值表示，0表示不相关，1表示非常相关。对于数据集合 X 和 Y ，我们定义其 $R^2$ 如下
 $$
 R^2 = \frac{cov(X,Y)^2}{\sigma^2_X\sigma^2_Y}
 $$
 其中 $cov(X, Y)$ 是 X和Y的协方差，表示这两个数据集之间的相似情况，而 $\sigma_X$ 和 $\sigma_Y$ 是标准差，记录数据集各自内部数据的独立性。所以 $R^2$表示在两个数据集内，有多少个独立变量可以解释数据集的相关性。我们用如下代码计算 $y$和$y_{pred}$的$R^2$：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> scipy.stats <span style="color:#f92672">import</span> pearsonr
 
-<pre><code class="language-python">from scipy.stats import pearsonr
-
-y_pred_np = np.resharpe(y_pred_np, -1)
-r2 = pearsonr(y_np, y_pred_np)[0]**2 
-print(&quot;Pearson R^2:&quot;, r2)
-&gt;&gt; Pearson R^2: 0.994
-# 绘制图像
-plt.clf()
-plt.xlabel[&quot;Y-true&quot;]
-plt.ylabel[&quot;Y-pred&quot;]
-plt.title(&quot;Predicted versus True valuees&quot;)
-plt.scatter(y_np, y_pred_np)
-</code></pre>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/201904260949_219.png?imageslim" alt="预测值和真实值之间的关系" /></p>
-
+y_pred_np <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>resharpe(y_pred_np, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+r2 <span style="color:#f92672">=</span> pearsonr(y_np, y_pred_np)[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> 
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Pearson R^2:&#34;</span>, r2)
+<span style="color:#f92672">&gt;&gt;</span> Pearson R<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>: <span style="color:#ae81ff">0.994</span>
+<span style="color:#75715e"># 绘制图像</span>
+plt<span style="color:#f92672">.</span>clf()
+plt<span style="color:#f92672">.</span>xlabel[<span style="color:#e6db74">&#34;Y-true&#34;</span>]
+plt<span style="color:#f92672">.</span>ylabel[<span style="color:#e6db74">&#34;Y-pred&#34;</span>]
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Predicted versus True valuees&#34;</span>)
+plt<span style="color:#f92672">.</span>scatter(y_np, y_pred_np)
+</code></pre></div><p><img src="http://cdn.qiniu.gsj987.cn/201904260949_219.png?imageslim" alt="预测值和真实值之间的关系"></p>
 <p>从值可以看出，预测值和真值之间 $R^2$ 近似 1 ，高度相关，说明我们的模型基本上学会了数据的真实规则。但是我们仔细观察绘制的图像发现，两个数轴之间的值并不完全对应。说明 $R^2$ 无法在缩放尺度上描述模型的准确性。我们使用  RMSE 计算：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.metrics <span style="color:#f92672">import</span> mean_squared_error
 
-<pre><code class="language-python">from sklearn.metrics import mean_squared_error
-
-rms = np.sqrt(mean_squared_error(y_np, y_pred_np))
-print(&quot;RMSE: &quot;, rms)
-&gt;&gt; RMSE: 1.027
-# 绘制 RMSE 图像 
-plt.clf()
-plt.xlabel(&quot;x&quot;)
-plt.ylabel(&quot;y&quot;)
-plt.title(&quot;True Model versus Learned Model &quot;)
-plt.xlim(0, 1)
-plt.scatter(x_np, y_np)
-x_left = 0
-y_left = w_final[0]*x_left + b_final
-x_right = 1
-y_right = w_final[0]*x_right + b_final
-plt.plot([x_left, x_right], [y_left, y_right], color='k')
-</code></pre>
-
-<p><img src="http://cdn.qiniu.gsj987.cn/201904261359_944.png?imageslim" alt="线性公式图" /></p>
-
+rms <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sqrt(mean_squared_error(y_np, y_pred_np))
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;RMSE: &#34;</span>, rms)
+<span style="color:#f92672">&gt;&gt;</span> RMSE: <span style="color:#ae81ff">1.027</span>
+<span style="color:#75715e"># 绘制 RMSE 图像 </span>
+plt<span style="color:#f92672">.</span>clf()
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;True Model versus Learned Model &#34;</span>)
+plt<span style="color:#f92672">.</span>xlim(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)
+plt<span style="color:#f92672">.</span>scatter(x_np, y_np)
+x_left <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+y_left <span style="color:#f92672">=</span> w_final[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span>x_left <span style="color:#f92672">+</span> b_final
+x_right <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+y_right <span style="color:#f92672">=</span> w_final[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span>x_right <span style="color:#f92672">+</span> b_final
+plt<span style="color:#f92672">.</span>plot([x_left, x_right], [y_left, y_right], color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;k&#39;</span>)
+</code></pre></div><p><img src="http://cdn.qiniu.gsj987.cn/201904261359_944.png?imageslim" alt="线性公式图"></p>
 <p>RMSE代表数据预测值和真值之间的平均差异，这个值大约 1.027，说明在一定程度上，数据和真实值之间有一定差距，说明我们的算法在梯度下降过程中，达到了局部最优险井，这也是梯度下降算法常见的问题，我们可以通过多初始点为，多步长值等超参数的调优，说着增加迭代次数的方式，降低这种风险。</p>
-
 <h2 id="构建的时候遇到的问题">构建的时候遇到的问题</h2>
-
 <ul>
-<li>运行时报错: <strong>FailedPreconditionError
+<li>
+<p>运行时报错: <strong>FailedPreconditionError
 (see above for traceback): Attempting to use uninitialized value
-weights_2/Variable</strong></li>
-</ul>
-
+weights_2/Variable</strong></p>
 <p>这个问题是因为我在开始忘了执行 sess.run(tf.global_variables_initializer()) ，导致tf的session无法找到对应的全局值，从而报错。在初始化 session 时加上这句话就行。</p>
-
-<ul>
-<li>运行时报错：<strong>You must feed a value for placeholder tensor
-&lsquo;placeholders_6/Placeholder&rsquo; with dtype float and shape [100,1]</strong></li>
+</li>
+<li>
+<p>运行时报错：<strong>You must feed a value for placeholder tensor
+&lsquo;placeholders_6/Placeholder&rsquo; with dtype float and shape [100,1]</strong></p>
+</li>
 </ul>
-
 <p>这是因为我在交互式命令行下执行的 python 语句，在多次执行某一语句块时，干扰了图的设定。所以在每次执行设定网络参数前，先执行一句  tf.reset_default_graph() 重置网络配置就行。</p>
-
 <h2 id="总结">总结</h2>
-
 <p>本篇只是用一个简单的例子说明了线性回归的基本流程。但是基本上覆盖了机器学习的全部流程：定义模型，定义损失函数，定义调优函数，然后迭代运行，在执行方法上也涵盖了tf的大部分功能点。同时因为线性回归是基本上所有机器学习的基础，所以需要仔细体会。</p>
 
                         </div>

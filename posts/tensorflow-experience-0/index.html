@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.55.3" />
+    <meta name="generator" content="Hugo 0.68.3" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -91,81 +91,60 @@
                             <div class="toc-article">
                                 <div class="toc-title">文章目录</div>
                                 <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#综述">综述</a></li>
-<li><a href="#安装tensorflow">安装tensorflow</a></li>
-<li><a href="#使用jupyter可视化编程">使用jupyter可视化编程</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#综述">综述</a></li>
+    <li><a href="#安装tensorflow">安装tensorflow</a></li>
+    <li><a href="#使用jupyter可视化编程">使用jupyter可视化编程</a></li>
+  </ul>
 </nav>
                             </div>
                         </div>
                         
                         <div class="post-content">
-                            
-
-<h2 id="综述">综述</h2>
-
-<p>当下机器学习火热，作为4年前也算是学过一些的研究生（半路出家），也很好奇现在的主流工业界对ML已经发展到什么程度了。在看了《精通数据科学：从线性回归到深度学习》<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>，以及简单的翻阅了几页的《TensorFlow for Deep Learning》<sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup>，我觉得现代深度学习的应用还算简单，比我们读书的时候新思路是很多，但是鉴于工业界的发展，实践也容易多了。</p>
-
+                            <h2 id="综述">综述</h2>
+<p>当下机器学习火热，作为4年前也算是学过一些的研究生（半路出家），也很好奇现在的主流工业界对ML已经发展到什么程度了。在看了《精通数据科学：从线性回归到深度学习》<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，以及简单的翻阅了几页的《TensorFlow for Deep Learning》<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>，我觉得现代深度学习的应用还算简单，比我们读书的时候新思路是很多，但是鉴于工业界的发展，实践也容易多了。</p>
 <p>鉴于以上理由，我打算开始本次tensorflow的上手实验。本体验的最终目标是实现一套以基本算法实现的图像分类或者物体检测或者GAN。</p>
-
 <h2 id="安装tensorflow">安装tensorflow</h2>
-
 <p>就数据研究而言，数据可视化是重要的工具。在python界，这个工具链做的最好的应该是 iPython / jupyter-notebook 系列。于是我们安装 tensorflow + iPython 的组合。</p>
-
 <p>所有网上的教程都是使用 anacoda 作为包管理器，可能是因为 R 语言的原因？</p>
-
 <p>我个人因为做python开发习惯用 pipenv ，直接就不做改动的也作为安装工具好了。</p>
-
-<pre><code class="language-sh"># 新建项目目录
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#75715e"># 新建项目目录</span>
 mkdir tensorflow-tutorial
-# 进入项目目录
+<span style="color:#75715e"># 进入项目目录</span>
 cd tensorflow-tutorial
-# 建设环境(使用pytho3)
+<span style="color:#75715e"># 建设环境(使用pytho3)</span>
 pipenv shell --three
-# 安装numpy
+<span style="color:#75715e"># 安装numpy</span>
 pipenv install numpy --pypi-mirror https://pypi.douban.com/simple
-# 安装tensorflow
+<span style="color:#75715e"># 安装tensorflow</span>
 pipenv install tensorflow --pypi-mirror https://pypi.douban.com/simple
-</code></pre>
-
-<p>现在检验安装成果</p>
-
-<pre><code class="language-sh"># 启动python 
+</code></pre></div><p>现在检验安装成果</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#75715e"># 启动python</span> 
 python
-# 创建一个简单的 TensorFlow 程序在 python 命令行
+<span style="color:#75715e"># 创建一个简单的 TensorFlow 程序在 python 命令行</span>
 &gt;&gt;&gt; import tensorflow as tf
-&gt;&gt;&gt; hello = tf.constant('Hello, TensorFlow!')
-&gt;&gt;&gt; sess = tf.Session()
-&gt;&gt;&gt; print(sess.run(hello))
-</code></pre>
-
-<h2 id="使用jupyter可视化编程">使用jupyter可视化编程</h2>
-
+&gt;&gt;&gt; hello <span style="color:#f92672">=</span> tf.constant<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Hello, TensorFlow!&#39;</span><span style="color:#f92672">)</span>
+&gt;&gt;&gt; sess <span style="color:#f92672">=</span> tf.Session<span style="color:#f92672">()</span>
+&gt;&gt;&gt; print<span style="color:#f92672">(</span>sess.run<span style="color:#f92672">(</span>hello<span style="color:#f92672">))</span>
+</code></pre></div><h2 id="使用jupyter可视化编程">使用jupyter可视化编程</h2>
 <p>jupyter 是使用可视化方式进行 python 编程的解释器，可以方便的进行操作回溯，文档生成，数据可视化和任务追踪。另外还可以对接远程云服务器，如 AWS 的计算资源，很方便的就可以进行重资源的计算任务。</p>
-
-<pre><code class="language-sh"># 安装jupyter
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#75715e"># 安装jupyter</span>
 pipenv install jupyter
-# 启动jupyter
+<span style="color:#75715e"># 启动jupyter</span>
 jupyter notebook
-</code></pre>
-
-<p>然后就可以看到 jupyter 的交互式编程界面了。
-<img src="http://cdn.qiniu.gsj987.cn/blog/20190421/TaOBkRcRYIGm.png?imageslim" alt="jupyter-running" /></p>
-<div class="footnotes">
-
-<hr />
-
+</code></pre></div><p>然后就可以看到 jupyter 的交互式编程界面了。
+<img src="http://cdn.qiniu.gsj987.cn/blog/20190421/TaOBkRcRYIGm.png?imageslim" alt="jupyter-running"></p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
 <ol>
-<li id="fn:1">豆瓣地址 <a href="https://book.douban.com/subject/30217266/">https://book.douban.com/subject/30217266/</a>
- <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
-<li id="fn:2">豆瓣地址 <a href="https://book.douban.com/subject/30144021/">https://book.douban.com/subject/30144021/</a>
- <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
+<li id="fn:1" role="doc-endnote">
+<p>豆瓣地址 <a href="https://book.douban.com/subject/30217266/">https://book.douban.com/subject/30217266/</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>豆瓣地址 <a href="https://book.douban.com/subject/30144021/">https://book.douban.com/subject/30144021/</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
 </ol>
-</div>
+</section>
 
                         </div>
 
