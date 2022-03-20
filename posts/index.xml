@@ -6,10 +6,19 @@
     <description>Recent content in Posts on gsj987的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 19 Feb 2022 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 20 Mar 2022 00:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://gsj987.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>在微信小程序中使用 WebAssembly 调用 OpenCV</title>
+      <link>https://gsj987.github.io/posts/webassembly-in-wechat/</link>
+      <pubDate>Sun, 20 Mar 2022 00:00:00 +0800</pubDate>
+      
+      <guid>https://gsj987.github.io/posts/webassembly-in-wechat/</guid>
+      <description>微信小程序中已经支持了 WebAssembly ，但他的文档语焉不详，也无法直接使用 opencv 编译出来的 js 胶水文件。我们需要一些简单的改动，让他可以工作。</description>
+    </item>
     
     <item>
       <title>聪明的笔记6 - 分享观点 / 形成习惯 / 后记</title>
