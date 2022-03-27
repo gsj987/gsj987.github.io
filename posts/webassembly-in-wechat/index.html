@@ -1,438 +1,86 @@
-<!doctype html>
-<html lang="zh-CN">
-<head>
-
-    <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.68.3" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>在微信小程序中使用 WebAssembly 调用 OpenCV | gsj987的博客</title>
-    <meta property="og:title" content="在微信小程序中使用 WebAssembly 调用 OpenCV - gsj987的博客">
-    <meta property="og:type" content="article">
-        
-    <meta property="article:published_time" content="2022-03-20T00:00:00&#43;08:00">
-        
-        
-    <meta property="article:modified_time" content="2022-03-20T00:00:00&#43;08:00">
-        
-    <meta name="Keywords" content="架构,python,前端,xamarin,软件工程,机器学习,机器视觉,c#,angular">
-    <meta name="description" content="在微信小程序中使用 WebAssembly 调用 OpenCV">
-        
-    <meta name="author" content="gsj987">
-    <meta property="og:url" content="https://gsj987.github.io/posts/webassembly-in-wechat/">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-
-    <link rel="stylesheet" href="/css/normalize.css">
-    
-        <link rel="stylesheet" href="/css/prism.css">
-    
-    <link rel="stylesheet" href="/css/style.css">
-    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-
-    
-
-
-    
-    
-</head>
-
-<body>
-<header id="header" class="clearfix">
-    <div class="container">
-        <div class="col-group">
-            <div class="site-name ">
-                
-                    <a id="logo" href="https://gsj987.github.io/">
-                        gsj987的博客
-                    </a>
-                
-                <p class="description">技术学习和创业思考</p>
-            </div>
-            <div>
-                <nav id="nav-menu" class="clearfix">
-                    <a class="" href="https://gsj987.github.io/">首页</a>
-                    
-                    <a  href="https://gsj987.github.io/archives/" title="归档">归档</a>
-                    
-                    <a  href="https://gsj987.github.io/about/" title="关于">关于</a>
-                    
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
-
-
-<div id="body">
-    <div class="container">
-        <div class="col-group">
-
-            <div class="col-8" id="main">
-                <div class="res-cons">
-                    <article class="post">
-                        <header>
-                            <h1 class="post-title">在微信小程序中使用 WebAssembly 调用 OpenCV</h1>
-                        </header>
-                        <date class="post-meta meta-date">
-                            2022年3月20日
-                        </date>
-                        
-                        <div class="post-meta">
-                            <span>|</span>
-                            
-                                <span class="meta-category"><a href="https://gsj987.github.io/categories/opencv">OpenCV</a></span>
-                            
-                        </div>
-                        
-                        
-                        
-                        <div class="clear">
-                            <div class="toc-article">
-                                <div class="toc-title">文章目录</div>
-                                <nav id="TableOfContents">
-  <ul>
-    <li><a href="#使用-wxwebassembly-代替-webassembly">使用 WXWebAssembly 代替 WebAssembly</a></li>
-    <li><a href="#调整-wasm-文件的加载方式">调整 wasm 文件的加载方式</a></li>
-    <li><a href="#删除一些微信小程序不支持的方法">删除一些微信小程序不支持的方法</a></li>
-    <li><a href="#输出模块更好调用">输出模块，更好调用</a></li>
-  </ul>
-</nav>
-                            </div>
-                        </div>
-                        
-                        <div class="post-content">
-                            <p>微信小程序中已经支持了 WebAssembly ，但他的文档语焉不详，也无法直接使用 opencv 编译出来的 js 胶水文件。我们需要一些简单的改动，让他可以工作。</p>
-<h1 id="具体流程">具体流程</h1>
-<h2 id="使用-wxwebassembly-代替-webassembly">使用 WXWebAssembly 代替 WebAssembly</h2>
-<p>在微信小程序中，需要把所有的 <code>WebAssembly</code> 都替换成 <code>WXWebAssembly</code>。我们可以直接 opencv 编译出的 js 胶水文件中的所有内容</p>
-<p>替换完成后，要调整 <code>WXWebAssembly</code> 中没有的 API ，如 <code>function abort()</code> 中，有对 <code>WXWebAssembly.RuntimeError</code> 的引用，我们可以直接改写</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-patch" data-lang="patch"><span style="color:#f92672">- var e = new WXWebAssembly.RuntimeError(what);
-</span><span style="color:#f92672">- throw e
-</span><span style="color:#f92672"></span><span style="color:#a6e22e">+ throw what
-</span></code></pre></div><h2 id="调整-wasm-文件的加载方式">调整 wasm 文件的加载方式</h2>
-<p>由于微信只支持使用本地的 wasm 文件加载方式，所以我们可以调整 js 文件中的异步加载的过程，简化代码，可以解决大部分问题</p>
-<p>在 instantiateArrayBuffer 方法中，原：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">  <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">instantiateArrayBuffer</span>(<span style="color:#a6e22e">receiver</span>) {
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">getBinaryPromise</span>().<span style="color:#a6e22e">then</span>(<span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">binary</span>) {
-      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">WebAssembly</span>.<span style="color:#a6e22e">instantiate</span>(<span style="color:#a6e22e">binary</span>, <span style="color:#a6e22e">info</span>)
-    }).<span style="color:#a6e22e">then</span>(<span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">instance</span>) {
-      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">instance</span>
-    }).<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">receiver</span>, <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">reason</span>) {
-      <span style="color:#a6e22e">err</span>(<span style="color:#e6db74">&#34;failed to asynchronously prepare wasm: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">reason</span>);
-      <span style="color:#a6e22e">abort</span>(<span style="color:#a6e22e">reason</span>)
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=generator content="Hugo 0.68.3"><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><title>在微信小程序中使用 WebAssembly 调用 OpenCV | gsj987的博客</title><meta property="og:title" content="在微信小程序中使用 WebAssembly 调用 OpenCV - gsj987的博客"><meta property="og:type" content="article"><meta property="article:published_time" content="2022-03-20T00:00:00+08:00"><meta property="article:modified_time" content="2022-03-20T00:00:00+08:00"><meta name=Keywords content="架构,python,前端,xamarin,软件工程,机器学习,机器视觉,c#,angular"><meta name=description content="在微信小程序中使用 WebAssembly 调用 OpenCV"><meta name=author content="gsj987"><meta property="og:url" content="https://gsj987.github.io/posts/webassembly-in-wechat/"><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=stylesheet href=/css/normalize.css><link rel=stylesheet href=/css/prism.css><link rel=stylesheet href=/css/style.css><script type=text/javascript src=//cdn.bootcss.com/jquery/3.2.1/jquery.min.js></script></head><body><header id=header class=clearfix><div class=container><div class=col-group><div class=site-name><a id=logo href=https://gsj987.github.io/>gsj987的博客</a><p class=description>技术学习和创业思考</p></div><div><nav id=nav-menu class=clearfix><a href=https://gsj987.github.io/>首页</a>
+<a href=https://gsj987.github.io/archives/ title=归档>归档</a>
+<a href=https://gsj987.github.io/about/ title=关于>关于</a></nav></div></div></div></header><div id=body><div class=container><div class=col-group><div class=col-8 id=main><div class=res-cons><article class=post><header><h1 class=post-title>在微信小程序中使用 WebAssembly 调用 OpenCV</h1></header><date class="post-meta meta-date">2022年3月20日</date><div class=post-meta><span>|</span>
+<span class=meta-category><a href=https://gsj987.github.io/categories/opencv>OpenCV</a></span></div><div class=clear><div class=toc-article><div class=toc-title>文章目录</div><nav id=TableOfContents><ul><li><a href=#使用-wxwebassembly-代替-webassembly>使用 WXWebAssembly 代替 WebAssembly</a></li><li><a href=#调整-wasm-文件的加载方式>调整 wasm 文件的加载方式</a></li><li><a href=#删除一些微信小程序不支持的方法>删除一些微信小程序不支持的方法</a></li><li><a href=#输出模块更好调用>输出模块，更好调用</a></li></ul></nav></div></div><div class=post-content><p>微信小程序中已经支持了 WebAssembly ，但他的文档语焉不详，也无法直接使用 opencv 编译出来的 js 胶水文件。我们需要一些简单的改动，让他可以工作。</p><h1 id=具体流程>具体流程</h1><h2 id=使用-wxwebassembly-代替-webassembly>使用 WXWebAssembly 代替 WebAssembly</h2><p>在微信小程序中，需要把所有的 <code>WebAssembly</code> 都替换成 <code>WXWebAssembly</code>。我们可以直接 opencv 编译出的 js 胶水文件中的所有内容</p><p>替换完成后，要调整 <code>WXWebAssembly</code> 中没有的 API ，如 <code>function abort()</code> 中，有对 <code>WXWebAssembly.RuntimeError</code> 的引用，我们可以直接改写</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-patch data-lang=patch><span style=color:#f92672>- var e = new WXWebAssembly.RuntimeError(what);
+</span><span style=color:#f92672>- throw e
+</span><span style=color:#f92672></span><span style=color:#a6e22e>+ throw what
+</span></code></pre></div><h2 id=调整-wasm-文件的加载方式>调整 wasm 文件的加载方式</h2><p>由于微信只支持使用本地的 wasm 文件加载方式，所以我们可以调整 js 文件中的异步加载的过程，简化代码，可以解决大部分问题</p><p>在 instantiateArrayBuffer 方法中，原：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js>  <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>instantiateArrayBuffer</span>(<span style=color:#a6e22e>receiver</span>) {
+    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>getBinaryPromise</span>().<span style=color:#a6e22e>then</span>(<span style=color:#66d9ef>function</span> (<span style=color:#a6e22e>binary</span>) {
+      <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>WebAssembly</span>.<span style=color:#a6e22e>instantiate</span>(<span style=color:#a6e22e>binary</span>, <span style=color:#a6e22e>info</span>)
+    }).<span style=color:#a6e22e>then</span>(<span style=color:#66d9ef>function</span> (<span style=color:#a6e22e>instance</span>) {
+      <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>instance</span>
+    }).<span style=color:#a6e22e>then</span>(<span style=color:#a6e22e>receiver</span>, <span style=color:#66d9ef>function</span> (<span style=color:#a6e22e>reason</span>) {
+      <span style=color:#a6e22e>err</span>(<span style=color:#e6db74>&#34;failed to asynchronously prepare wasm: &#34;</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>reason</span>);
+      <span style=color:#a6e22e>abort</span>(<span style=color:#a6e22e>reason</span>)
     })
   }
-</code></pre></div><p>修改后：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">  <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">instantiateArrayBuffer</span>(<span style="color:#a6e22e">receiver</span>) {
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">WXWebAssembly</span>.<span style="color:#a6e22e">instantiate</span>(<span style="color:#e6db74">&#34;your-lib.wasm&#34;</span>, <span style="color:#a6e22e">info</span>)
-      .<span style="color:#a6e22e">then</span>(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">wasm</span>) { 
-        <span style="color:#a6e22e">receiver</span>(<span style="color:#a6e22e">wasm</span>);
+</code></pre></div><p>修改后：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js>  <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>instantiateArrayBuffer</span>(<span style=color:#a6e22e>receiver</span>) {
+    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>WXWebAssembly</span>.<span style=color:#a6e22e>instantiate</span>(<span style=color:#e6db74>&#34;your-lib.wasm&#34;</span>, <span style=color:#a6e22e>info</span>)
+      .<span style=color:#a6e22e>then</span>(<span style=color:#66d9ef>function</span>(<span style=color:#a6e22e>wasm</span>) { 
+        <span style=color:#a6e22e>receiver</span>(<span style=color:#a6e22e>wasm</span>);
        })
   }
-</code></pre></div><p>他的调用者 instantiateAsync 也可以简化成</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">  <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">instantiateAsync</span>() {
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">instantiateArrayBuffer</span>(<span style="color:#a6e22e">receiveInstantiationResult</span>) 
+</code></pre></div><p>他的调用者 instantiateAsync 也可以简化成</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js>  <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>instantiateAsync</span>() {
+    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>instantiateArrayBuffer</span>(<span style=color:#a6e22e>receiveInstantiationResult</span>) 
   }
-</code></pre></div><h2 id="删除一些微信小程序不支持的方法">删除一些微信小程序不支持的方法</h2>
-<p>微信中有许多不支持的 BOM 会被 WebAssembly 的胶水代码引用，我们都要改成替代方法，如</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">  <span style="color:#a6e22e">DB_NAME</span><span style="color:#f92672">:</span> () =&gt; {
-    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;EM_FS_&#34;</span> <span style="color:#f92672">+</span> window.<span style="color:#a6e22e">location</span>.<span style="color:#a6e22e">pathname</span>
+</code></pre></div><h2 id=删除一些微信小程序不支持的方法>删除一些微信小程序不支持的方法</h2><p>微信中有许多不支持的 BOM 会被 WebAssembly 的胶水代码引用，我们都要改成替代方法，如</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js>  <span style=color:#a6e22e>DB_NAME</span><span style=color:#f92672>:</span> () =&gt; {
+    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;EM_FS_&#34;</span> <span style=color:#f92672>+</span> window.<span style=color:#a6e22e>location</span>.<span style=color:#a6e22e>pathname</span>
   },
-</code></pre></div><p>改成</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">  <span style="color:#a6e22e">DB_NAME</span><span style="color:#f92672">:</span> () =&gt; {
-    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;EM_FS_WORKER&#34;</span>
+</code></pre></div><p>改成</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js>  <span style=color:#a6e22e>DB_NAME</span><span style=color:#f92672>:</span> () =&gt; {
+    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;EM_FS_WORKER&#34;</span>
   },
-</code></pre></div><p>还有</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">ENVIRONMENT_IS_WORKER</span>) {
-    <span style="color:#a6e22e">scriptDirectory</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">self</span>.<span style="color:#a6e22e">location</span>.<span style="color:#a6e22e">href</span>
-  } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">typeof</span> document <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;undefined&#34;</span> <span style="color:#f92672">&amp;&amp;</span> document.<span style="color:#a6e22e">currentScript</span>) {
-    <span style="color:#a6e22e">scriptDirectory</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">currentScript</span>.<span style="color:#a6e22e">src</span>
+</code></pre></div><p>还有</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js>  <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>ENVIRONMENT_IS_WORKER</span>) {
+    <span style=color:#a6e22e>scriptDirectory</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>self</span>.<span style=color:#a6e22e>location</span>.<span style=color:#a6e22e>href</span>
+  } <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> (<span style=color:#66d9ef>typeof</span> document <span style=color:#f92672>!=</span> <span style=color:#e6db74>&#34;undefined&#34;</span> <span style=color:#f92672>&amp;&amp;</span> document.<span style=color:#a6e22e>currentScript</span>) {
+    <span style=color:#a6e22e>scriptDirectory</span> <span style=color:#f92672>=</span> document.<span style=color:#a6e22e>currentScript</span>.<span style=color:#a6e22e>src</span>
   }
-  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">scriptDirectory</span>.<span style="color:#a6e22e">indexOf</span>(<span style="color:#e6db74">&#34;blob:&#34;</span>) <span style="color:#f92672">!==</span> <span style="color:#ae81ff">0</span>) {
-    <span style="color:#a6e22e">scriptDirectory</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">scriptDirectory</span>.<span style="color:#a6e22e">substr</span>(<span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">scriptDirectory</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/[?#].*/</span>, <span style="color:#e6db74">&#34;&#34;</span>).<span style="color:#a6e22e">lastIndexOf</span>(<span style="color:#e6db74">&#34;/&#34;</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
-  } <span style="color:#66d9ef">else</span> {
-    <span style="color:#a6e22e">scriptDirectory</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+  <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>scriptDirectory</span>.<span style=color:#a6e22e>indexOf</span>(<span style=color:#e6db74>&#34;blob:&#34;</span>) <span style=color:#f92672>!==</span> <span style=color:#ae81ff>0</span>) {
+    <span style=color:#a6e22e>scriptDirectory</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>scriptDirectory</span>.<span style=color:#a6e22e>substr</span>(<span style=color:#ae81ff>0</span>, <span style=color:#a6e22e>scriptDirectory</span>.<span style=color:#a6e22e>replace</span>(<span style=color:#e6db74>/[?#].*/</span>, <span style=color:#e6db74>&#34;&#34;</span>).<span style=color:#a6e22e>lastIndexOf</span>(<span style=color:#e6db74>&#34;/&#34;</span>) <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>)
+  } <span style=color:#66d9ef>else</span> {
+    <span style=color:#a6e22e>scriptDirectory</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;</span>
   }
-</code></pre></div><p>检查以后，这里完全可以简化成</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">  <span style="color:#a6e22e">scriptDirectory</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
-</code></pre></div><p>另外在真机上，不支持 <code>new Function</code> 这样的写法，所以 <code>createNamedFunction</code> 就要简化成</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">createNamedFunction</span>(<span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">body</span>) {
-  <span style="color:#66d9ef">return</span> ()=&gt;{}
+</code></pre></div><p>检查以后，这里完全可以简化成</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js>  <span style=color:#a6e22e>scriptDirectory</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;</span>
+</code></pre></div><p>另外在真机上，不支持 <code>new Function</code> 这样的写法，所以 <code>createNamedFunction</code> 就要简化成</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>createNamedFunction</span>(<span style=color:#a6e22e>name</span>, <span style=color:#a6e22e>body</span>) {
+  <span style=color:#66d9ef>return</span> ()=&gt;{}
 }
-</code></pre></div><p>同理，真机没有 <code>performance</code> 对象，我们要替换其为 <code>Date</code> 方法</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-patch" data-lang="patch"><span style="color:#f92672">- } else _emscripten_get_now = (() =&gt; performance.now());
-</span><span style="color:#f92672"></span><span style="color:#a6e22e">+ } else _emscripten_get_now = (() =&gt; new Date().getTime());
-</span></code></pre></div><h2 id="输出模块更好调用">输出模块，更好调用</h2>
-<p>删除文件底部的 run 函数，并 export default Module</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-patch" data-lang="patch"> - run();
+</code></pre></div><p>同理，真机没有 <code>performance</code> 对象，我们要替换其为 <code>Date</code> 方法</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-patch data-lang=patch><span style=color:#f92672>- } else _emscripten_get_now = (() =&gt; performance.now());
+</span><span style=color:#f92672></span><span style=color:#a6e22e>+ } else _emscripten_get_now = (() =&gt; new Date().getTime());
+</span></code></pre></div><h2 id=输出模块更好调用>输出模块，更好调用</h2><p>删除文件底部的 run 函数，并 export default Module</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-patch data-lang=patch> - run();
  + export default Module;
-</code></pre></div><p>这样在调用处，我们可以这样</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">wasm</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;./lib&#39;</span>).<span style="color:#66d9ef">default</span>
+</code></pre></div><p>这样在调用处，我们可以这样</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>wasm</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;./lib&#39;</span>).<span style=color:#66d9ef>default</span>
 
-<span style="color:#a6e22e">wasm</span>.<span style="color:#a6e22e">onRuntimeInitialized</span> <span style="color:#f92672">=</span> ()=&gt; {
-    <span style="color:#75715e">// your callback
-</span><span style="color:#75715e"></span>};
+<span style=color:#a6e22e>wasm</span>.<span style=color:#a6e22e>onRuntimeInitialized</span> <span style=color:#f92672>=</span> ()=&gt; {
+    <span style=color:#75715e>// your callback
+</span><span style=color:#75715e></span>};
 
-<span style="color:#a6e22e">wasm</span>.<span style="color:#a6e22e">run</span>(); <span style="color:#75715e">// start loading
-</span></code></pre></div><h1 id="使用时的事项">使用时的事项</h1>
-<p>微信上 onCameraFrame 的方法返回的 frame.data 是一个 ArrayBuffer ，是一个 RGBA 的数据，我们在实际使用中经常会通过 <code>Worker.postMessage</code> 传递给 Worker 运算来提升效率。</p>
-<p>WebAssembly 中无法直接访问到 js 空间中的内存，我们需要手动申请内存，并把 ArrayBuffer 的值传进去，这里需要一个 Uint8Array 的转化，我们才能在 WebAssembly 空间中使用</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">width</span>, <span style="color:#a6e22e">height</span>, <span style="color:#a6e22e">data</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">payload</span>;
+<span style=color:#a6e22e>wasm</span>.<span style=color:#a6e22e>run</span>(); <span style=color:#75715e>// start loading
+</span></code></pre></div><h1 id=使用时的事项>使用时的事项</h1><p>微信上 onCameraFrame 的方法返回的 frame.data 是一个 ArrayBuffer ，是一个 RGBA 的数据，我们在实际使用中经常会通过 <code>Worker.postMessage</code> 传递给 Worker 运算来提升效率。</p><p>WebAssembly 中无法直接访问到 js 空间中的内存，我们需要手动申请内存，并把 ArrayBuffer 的值传进去，这里需要一个 Uint8Array 的转化，我们才能在 WebAssembly 空间中使用</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=color:#66d9ef>const</span> { <span style=color:#a6e22e>width</span>, <span style=color:#a6e22e>height</span>, <span style=color:#a6e22e>data</span> } <span style=color:#f92672>=</span> <span style=color:#a6e22e>payload</span>;
 
-<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">buffer</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">wasm</span>.<span style="color:#a6e22e">_malloc</span>(<span style="color:#ae81ff">4</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">width</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">height</span>); 
-<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">newData</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Uint8Array</span>(<span style="color:#a6e22e">data</span>);
-<span style="color:#a6e22e">wasm</span>.<span style="color:#a6e22e">HEAPU8</span>.<span style="color:#a6e22e">set</span>(<span style="color:#a6e22e">newData</span>, <span style="color:#a6e22e">buffer</span>);
+<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>buffer</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>wasm</span>.<span style=color:#a6e22e>_malloc</span>(<span style=color:#ae81ff>4</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>width</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>height</span>); 
+<span style=color:#66d9ef>const</span> <span style=color:#a6e22e>newData</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Uint8Array</span>(<span style=color:#a6e22e>data</span>);
+<span style=color:#a6e22e>wasm</span>.<span style=color:#a6e22e>HEAPU8</span>.<span style=color:#a6e22e>set</span>(<span style=color:#a6e22e>newData</span>, <span style=color:#a6e22e>buffer</span>);
 
-<span style="color:#a6e22e">wasm</span>.<span style="color:#a6e22e">_analyse</span>(<span style="color:#a6e22e">buffer</span>);
+<span style=color:#a6e22e>wasm</span>.<span style=color:#a6e22e>_analyse</span>(<span style=color:#a6e22e>buffer</span>);
 
-<span style="color:#75715e">// free
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">wasm</span>.<span style="color:#a6e22e">_free</span>(<span style="color:#a6e22e">buffer</span>);
-</code></pre></div><p>另外，在实际使用时，由于真机的运行内存比 PC 少太多，所以我们要打开内存增涨 flag 以防止 OOM</p>
-<pre><code>-sALLOW_MEMORY_GROWTH=1
-</code></pre>
-                        </div>
-
-                        
-
-
-                        
-
-<div class="post-archive">
-    <h2>See Also</h2>
-    <ul class="listing">
-        
-        <li><a href="/posts/how-to-take-smart-notes-7/">聪明的笔记6 - 分享观点 / 形成习惯 / 后记</a></li>
-        
-        <li><a href="/posts/how-to-take-smart-notes-6/">聪明的笔记6 - 构建想法</a></li>
-        
-        <li><a href="/posts/how-to-take-smart-notes-5/">聪明的笔记5 - 记聪明的笔记</a></li>
-        
-        <li><a href="/posts/how-to-take-smart-notes-4/">聪明的笔记4 - 为了理解而阅读</a></li>
-        
-        <li><a href="/posts/how-to-take-smart-notes-3/">聪明的笔记3 - ﻿分离和连接任务</a></li>
-        
-    </ul>
-</div>
-
-
-                        <div class="post-meta meta-tags">
-                            
-                            <ul class="clearfix">
-                                
-                                <li><a href="https://gsj987.github.io/tags/wechat">WeChat</a></li>
-                                
-                                <li><a href="https://gsj987.github.io/tags/opencv">OpenCV</a></li>
-                                
-                            </ul>
-                            
-                        </div>
-                    </article>
-                    
-    <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "gsj987s-blog" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-    
-    
-                </div>
-            </div>
-            <div id="secondary">
-    <section class="widget">
-        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
-      
-      <input type="text" name="q" maxlength="20" placeholder="Search">
-      <input type="hidden" name="sitesearch" value="https://gsj987.github.io/">
-      <button type="submit" class="submit icon-search"></button>
-</form>
-    </section>
-    
-    <section class="widget">
-        <h3 class="widget-title">最近文章</h3>
-<ul class="widget-list">
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/webassembly-in-wechat/" title="在微信小程序中使用 WebAssembly 调用 OpenCV">在微信小程序中使用 WebAssembly 调用 OpenCV</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/how-to-take-smart-notes-7/" title="聪明的笔记6 - 分享观点 / 形成习惯 / 后记">聪明的笔记6 - 分享观点 / 形成习惯 / 后记</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/how-to-take-smart-notes-6/" title="聪明的笔记6 - 构建想法">聪明的笔记6 - 构建想法</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/how-to-take-smart-notes-5/" title="聪明的笔记5 - 记聪明的笔记">聪明的笔记5 - 记聪明的笔记</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/how-to-take-smart-notes-4/" title="聪明的笔记4 - 为了理解而阅读">聪明的笔记4 - 为了理解而阅读</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/how-to-take-smart-notes-3/" title="聪明的笔记3 - ﻿分离和连接任务">聪明的笔记3 - ﻿分离和连接任务</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/how-to-take-smart-notes-2/" title="聪明的笔记2 - 四个重要原则">聪明的笔记2 - 四个重要原则</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/how-to-take-smart-notes-1/" title="聪明的笔记1 - 介绍">聪明的笔记1 - 介绍</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/tensorflow-experience-4/" title="Tensorflow 体验篇-4 卷积网络和图像分类">Tensorflow 体验篇-4 卷积网络和图像分类</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/tensorflow-experience-3/" title="Tensorflow 体验篇-3 全连接网络">Tensorflow 体验篇-3 全连接网络</a>
-    </li>
-    
-</ul>
-    </section>
-
-    
-
-    <section class="widget">
-        <h3 class="widget-title">分类</h3>
-<ul class="widget-list">
-    
-    <li>
-        <a href="https://gsj987.github.io/categories/emacs/">emacs(1)</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/categories/linux/">linux(1)</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/categories/machine-learning/">machine-learning(5)</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/categories/opencv/">opencv(1)</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/categories/reading-notes/">reading-notes(7)</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/categories/software-engineering/">software-engineering(1)</a>
-    </li>
-    
-</ul>
-    </section>
-
-    <section class="widget">
-        <h3 class="widget-title">标签</h3>
-<div class="tagcloud">
-    
-    <a href="https://gsj987.github.io/tags/android/">android</a>
-    
-    <a href="https://gsj987.github.io/tags/architecture/">architecture</a>
-    
-    <a href="https://gsj987.github.io/tags/cnn/">cnn</a>
-    
-    <a href="https://gsj987.github.io/tags/ddd/">ddd</a>
-    
-    <a href="https://gsj987.github.io/tags/elisp/">elisp</a>
-    
-    <a href="https://gsj987.github.io/tags/graphql/">graphql</a>
-    
-    <a href="https://gsj987.github.io/tags/how-to-take-smart-notes/">how-to-take-smart-notes</a>
-    
-    <a href="https://gsj987.github.io/tags/opencv/">opencv</a>
-    
-    <a href="https://gsj987.github.io/tags/raspberry-pi/">raspberry-pi</a>
-    
-    <a href="https://gsj987.github.io/tags/study-method/">study-method</a>
-    
-    <a href="https://gsj987.github.io/tags/tensorflow/">tensorflow</a>
-    
-    <a href="https://gsj987.github.io/tags/wechat/">wechat</a>
-    
-    <a href="https://gsj987.github.io/tags/windows/">windows</a>
-    
-</div>
-    </section>
-
-    
-
-    <section class="widget">
-        <h3 class="widget-title">其它</h3>
-        <ul class="widget-list">
-            <li><a href="https://gsj987.github.io/index.xml">文章 RSS</a></li>
-        </ul>
-    </section>
-</div>
-        </div>
-    </div>
-</div>
-<footer id="footer">
-    <div class="container">
-        &copy; 2022 <a href="https://gsj987.github.io/">gsj987的博客 By gsj987</a>.
-        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
-        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
-        
-    </div>
-</footer>
-
-
-    <script type="text/javascript">
-    
-    (function(){
-        $("pre code").parent().addClass("line-numbers")
-    }())
-
-    window.MathJax = {
-        tex2jax: {
-            inlineMath: [ ['$','$'] ],
-            processEscapes: true
-        }
-    };
-    </script>
-    <script type="text/javascript" src="/js/prism.js" async="true"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
-
-<a id="rocket" href="#top"></a>
-<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-59884936-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
-
-
-
-</body>
-</html>
+<span style=color:#75715e>// free
+</span><span style=color:#75715e></span><span style=color:#a6e22e>wasm</span>.<span style=color:#a6e22e>_free</span>(<span style=color:#a6e22e>buffer</span>);
+</code></pre></div><p>另外，在实际使用时，由于真机的运行内存比 PC 少太多，所以我们要打开内存增涨 flag 以防止 OOM</p><pre><code>-sALLOW_MEMORY_GROWTH=1
+</code></pre></div><div class=post-archive><h2>See Also</h2><ul class=listing><li><a href=/posts/how-to-take-smart-notes-7/>聪明的笔记6 - 分享观点 / 形成习惯 / 后记</a></li><li><a href=/posts/how-to-take-smart-notes-6/>聪明的笔记6 - 构建想法</a></li><li><a href=/posts/how-to-take-smart-notes-5/>聪明的笔记5 - 记聪明的笔记</a></li><li><a href=/posts/how-to-take-smart-notes-4/>聪明的笔记4 - 为了理解而阅读</a></li><li><a href=/posts/how-to-take-smart-notes-3/>聪明的笔记3 - ﻿分离和连接任务</a></li></ul></div><div class="post-meta meta-tags"><ul class=clearfix><li><a href=https://gsj987.github.io/tags/wechat>WeChat</a></li><li><a href=https://gsj987.github.io/tags/opencv>OpenCV</a></li></ul></div></article><div id=disqus_thread></div><script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return;}
+var d=document,s=d.createElement('script');s.async=true;s.src='//'+"gsj987s-blog"+'.disqus.com/embed.js';s.setAttribute('data-timestamp',+new Date());(d.head||d.body).appendChild(s);})();</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div><div id=secondary><section class=widget><form id=search action=//www.google.com/search method=get accept-charset=utf-8 target=_blank _lpchecked=1><input type=text name=q maxlength=20 placeholder=Search>
+<input type=hidden name=sitesearch value=https://gsj987.github.io/>
+<button type=submit class="submit icon-search"></button></form></section><section class=widget><h3 class=widget-title>最近文章</h3><ul class=widget-list><li><a href=https://gsj987.github.io/posts/publish-blog-from-ios/ title="在iOS上发布GitHub pages 文章">在iOS上发布GitHub pages 文章</a></li><li><a href=https://gsj987.github.io/posts/webassembly-in-wechat/ title="在微信小程序中使用 WebAssembly 调用 OpenCV">在微信小程序中使用 WebAssembly 调用 OpenCV</a></li><li><a href=https://gsj987.github.io/posts/how-to-take-smart-notes-7/ title="聪明的笔记6 - 分享观点 / 形成习惯 / 后记">聪明的笔记6 - 分享观点 / 形成习惯 / 后记</a></li><li><a href=https://gsj987.github.io/posts/how-to-take-smart-notes-6/ title="聪明的笔记6 - 构建想法">聪明的笔记6 - 构建想法</a></li><li><a href=https://gsj987.github.io/posts/how-to-take-smart-notes-5/ title="聪明的笔记5 - 记聪明的笔记">聪明的笔记5 - 记聪明的笔记</a></li><li><a href=https://gsj987.github.io/posts/how-to-take-smart-notes-4/ title="聪明的笔记4 - 为了理解而阅读">聪明的笔记4 - 为了理解而阅读</a></li><li><a href=https://gsj987.github.io/posts/how-to-take-smart-notes-3/ title="聪明的笔记3 - ﻿分离和连接任务">聪明的笔记3 - ﻿分离和连接任务</a></li><li><a href=https://gsj987.github.io/posts/how-to-take-smart-notes-2/ title="聪明的笔记2 - 四个重要原则">聪明的笔记2 - 四个重要原则</a></li><li><a href=https://gsj987.github.io/posts/how-to-take-smart-notes-1/ title="聪明的笔记1 - 介绍">聪明的笔记1 - 介绍</a></li><li><a href=https://gsj987.github.io/posts/tensorflow-experience-4/ title="Tensorflow 体验篇-4 卷积网络和图像分类">Tensorflow 体验篇-4 卷积网络和图像分类</a></li></ul></section><section class=widget><h3 class=widget-title>分类</h3><ul class=widget-list><li><a href=https://gsj987.github.io/categories/emacs/>emacs(1)</a></li><li><a href=https://gsj987.github.io/categories/linux/>linux(1)</a></li><li><a href=https://gsj987.github.io/categories/machine-learning/>machine-learning(5)</a></li><li><a href=https://gsj987.github.io/categories/opencv/>opencv(1)</a></li><li><a href=https://gsj987.github.io/categories/reading-notes/>reading-notes(7)</a></li><li><a href=https://gsj987.github.io/categories/software-engineering/>software-engineering(1)</a></li><li><a href=https://gsj987.github.io/categories/workflow/>workflow(1)</a></li></ul></section><section class=widget><h3 class=widget-title>标签</h3><div class=tagcloud><a href=https://gsj987.github.io/tags/android/>android</a>
+<a href=https://gsj987.github.io/tags/architecture/>architecture</a>
+<a href=https://gsj987.github.io/tags/cnn/>cnn</a>
+<a href=https://gsj987.github.io/tags/ddd/>ddd</a>
+<a href=https://gsj987.github.io/tags/elisp/>elisp</a>
+<a href=https://gsj987.github.io/tags/graphql/>graphql</a>
+<a href=https://gsj987.github.io/tags/how-to-take-smart-notes/>how-to-take-smart-notes</a>
+<a href=https://gsj987.github.io/tags/opencv/>opencv</a>
+<a href=https://gsj987.github.io/tags/raspberry-pi/>raspberry-pi</a>
+<a href=https://gsj987.github.io/tags/study-method/>study-method</a>
+<a href=https://gsj987.github.io/tags/tensorflow/>tensorflow</a>
+<a href=https://gsj987.github.io/tags/wechat/>wechat</a>
+<a href=https://gsj987.github.io/tags/windows/>windows</a></div></section><section class=widget><h3 class=widget-title>其它</h3><ul class=widget-list><li><a href=https://gsj987.github.io/index.xml>文章 RSS</a></li></ul></section></div></div></div></div><footer id=footer><div class=container>&copy; 2022 <a href=https://gsj987.github.io/>gsj987的博客 By gsj987</a>.
+Powered by <a rel="nofollow noreferer noopener" href=https://gohugo.io target=_blank>Hugo</a>.
+<a href=https://www.flysnow.org/ target=_blank>Theme</a> based on <a href=https://github.com/rujews/maupassant-hugo target=_blank>maupassant</a>.</div></footer><script type=text/javascript>(function(){$("pre code").parent().addClass("line-numbers")}())
+window.MathJax={tex2jax:{inlineMath:[['$','$']],processEscapes:true}};</script><script type=text/javascript src=/js/prism.js async></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script><a id=rocket href=#top></a><script type=text/javascript src="/js/totop.js?v=0.0.0" async></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-59884936-1','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script></body></html>

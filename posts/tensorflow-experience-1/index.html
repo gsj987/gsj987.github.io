@@ -1,111 +1,7 @@
-<!doctype html>
-<html lang="zh-CN">
-<head>
-
-    <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.68.3" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Tensorflow 体验篇-1 使用 Tensorflow 做线性回归 | gsj987的博客</title>
-    <meta property="og:title" content="Tensorflow 体验篇-1 使用 Tensorflow 做线性回归 - gsj987的博客">
-    <meta property="og:type" content="article">
-        
-    <meta property="article:published_time" content="2019-04-26T00:00:00&#43;08:00">
-        
-        
-    <meta property="article:modified_time" content="2019-04-26T00:00:00&#43;08:00">
-        
-    <meta name="Keywords" content="架构,python,前端,xamarin,软件工程,机器学习,机器视觉,c#,angular">
-    <meta name="description" content="Tensorflow 体验篇-1 使用 Tensorflow 做线性回归">
-        
-    <meta name="author" content="gsj987">
-    <meta property="og:url" content="https://gsj987.github.io/posts/tensorflow-experience-1/">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-
-    <link rel="stylesheet" href="/css/normalize.css">
-    
-        <link rel="stylesheet" href="/css/prism.css">
-    
-    <link rel="stylesheet" href="/css/style.css">
-    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-
-    
-
-
-    
-    
-</head>
-
-<body>
-<header id="header" class="clearfix">
-    <div class="container">
-        <div class="col-group">
-            <div class="site-name ">
-                
-                    <a id="logo" href="https://gsj987.github.io/">
-                        gsj987的博客
-                    </a>
-                
-                <p class="description">技术学习和创业思考</p>
-            </div>
-            <div>
-                <nav id="nav-menu" class="clearfix">
-                    <a class="" href="https://gsj987.github.io/">首页</a>
-                    
-                    <a  href="https://gsj987.github.io/archives/" title="归档">归档</a>
-                    
-                    <a  href="https://gsj987.github.io/about/" title="关于">关于</a>
-                    
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
-
-
-<div id="body">
-    <div class="container">
-        <div class="col-group">
-
-            <div class="col-8" id="main">
-                <div class="res-cons">
-                    <article class="post">
-                        <header>
-                            <h1 class="post-title">Tensorflow 体验篇-1 使用 Tensorflow 做线性回归</h1>
-                        </header>
-                        <date class="post-meta meta-date">
-                            2019年4月26日
-                        </date>
-                        
-                        <div class="post-meta">
-                            <span>|</span>
-                            
-                                <span class="meta-category"><a href="https://gsj987.github.io/categories/machine-learning">machine-learning</a></span>
-                            
-                        </div>
-                        
-                        
-                        
-                        <div class="clear">
-                            <div class="toc-article">
-                                <div class="toc-title">文章目录</div>
-                                <nav id="TableOfContents">
-  <ul>
-    <li><a href="#线性回归">线性回归</a></li>
-    <li><a href="#设置训练网络">设置训练网络</a></li>
-    <li><a href="#执行训练">执行训练</a></li>
-    <li><a href="#验证训练结果">验证训练结果</a></li>
-    <li><a href="#构建的时候遇到的问题">构建的时候遇到的问题</a></li>
-    <li><a href="#总结">总结</a></li>
-  </ul>
-</nav>
-                            </div>
-                        </div>
-                        
-                        <div class="post-content">
-                            <h2 id="线性回归">线性回归</h2>
-<p>线性回归是非常基础的统计学知识，也是所有机器学习研究的源头，因为现在的数学都还没有能很好的解决非线性的问题，所以基本上所有的机器学习的思路都是用非线性核函数，将数据转换到近似线性的空间中，然后再用线性方法如线性回归进行解决。一般的，线性回归是要解决如下的问题，对线性公式：
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=generator content="Hugo 0.68.3"><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><title>Tensorflow 体验篇-1 使用 Tensorflow 做线性回归 | gsj987的博客</title><meta property="og:title" content="Tensorflow 体验篇-1 使用 Tensorflow 做线性回归 - gsj987的博客"><meta property="og:type" content="article"><meta property="article:published_time" content="2019-04-26T00:00:00+08:00"><meta property="article:modified_time" content="2019-04-26T00:00:00+08:00"><meta name=Keywords content="架构,python,前端,xamarin,软件工程,机器学习,机器视觉,c#,angular"><meta name=description content="Tensorflow 体验篇-1 使用 Tensorflow 做线性回归"><meta name=author content="gsj987"><meta property="og:url" content="https://gsj987.github.io/posts/tensorflow-experience-1/"><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=stylesheet href=/css/normalize.css><link rel=stylesheet href=/css/prism.css><link rel=stylesheet href=/css/style.css><script type=text/javascript src=//cdn.bootcss.com/jquery/3.2.1/jquery.min.js></script></head><body><header id=header class=clearfix><div class=container><div class=col-group><div class=site-name><a id=logo href=https://gsj987.github.io/>gsj987的博客</a><p class=description>技术学习和创业思考</p></div><div><nav id=nav-menu class=clearfix><a href=https://gsj987.github.io/>首页</a>
+<a href=https://gsj987.github.io/archives/ title=归档>归档</a>
+<a href=https://gsj987.github.io/about/ title=关于>关于</a></nav></div></div></div></header><div id=body><div class=container><div class=col-group><div class=col-8 id=main><div class=res-cons><article class=post><header><h1 class=post-title>Tensorflow 体验篇-1 使用 Tensorflow 做线性回归</h1></header><date class="post-meta meta-date">2019年4月26日</date><div class=post-meta><span>|</span>
+<span class=meta-category><a href=https://gsj987.github.io/categories/machine-learning>machine-learning</a></span></div><div class=clear><div class=toc-article><div class=toc-title>文章目录</div><nav id=TableOfContents><ul><li><a href=#线性回归>线性回归</a></li><li><a href=#设置训练网络>设置训练网络</a></li><li><a href=#执行训练>执行训练</a></li><li><a href=#验证训练结果>验证训练结果</a></li><li><a href=#构建的时候遇到的问题>构建的时候遇到的问题</a></li><li><a href=#总结>总结</a></li></ul></nav></div></div><div class=post-content><h2 id=线性回归>线性回归</h2><p>线性回归是非常基础的统计学知识，也是所有机器学习研究的源头，因为现在的数学都还没有能很好的解决非线性的问题，所以基本上所有的机器学习的思路都是用非线性核函数，将数据转换到近似线性的空间中，然后再用线性方法如线性回归进行解决。一般的，线性回归是要解决如下的问题，对线性公式：
 $$
 y = wx + b
 $$
@@ -113,395 +9,132 @@ $$
 $$
 y = wx + b + N(0,\epsilon)
 $$
-其中 $\epsilon$ 代表噪音的标准差。我们使用 NumPy 生成人造数据：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+其中 $\epsilon$ 代表噪音的标准差。我们使用 NumPy 生成人造数据：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> numpy <span style=color:#f92672>as</span> np
 
-N<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> <span style="color:#75715e"># 100 个数据</span>
-w_true<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> <span style="color:#75715e"># 假设 w = 5</span>
-b_true<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> <span style="color:#75715e"># 假设 b = 5</span>
-noise_scale<span style="color:#f92672">=.</span><span style="color:#ae81ff">1</span>
-<span style="color:#75715e"># 构建 Nx1 维的 x 数据</span>
-x_np<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand(N,<span style="color:#ae81ff">1</span>)
-<span style="color:#75715e"># 生成正态分布的 Nx1 维的噪音</span>
-noise <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(scale<span style="color:#f92672">=</span>noise_scale,size<span style="color:#f92672">=</span>(N,<span style="color:#ae81ff">1</span>))
-<span style="color:#75715e"># 生成 y 数据，这里的 y 是 1xN 维的，方便计算</span>
-y_np<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>reshape(w_true<span style="color:#f92672">*</span>x_np<span style="color:#f92672">+</span>b_true<span style="color:#f92672">+</span>noise,(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
-</code></pre></div><p>使用 matplotlib 画个图看一下生成的数据的分布，在 jupyter 中使用</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>matplotlib inline
-<span style="color:#f92672">import</span> matplotlib
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+N<span style=color:#f92672>=</span><span style=color:#ae81ff>100</span> <span style=color:#75715e># 100 个数据</span>
+w_true<span style=color:#f92672>=</span><span style=color:#ae81ff>5</span> <span style=color:#75715e># 假设 w = 5</span>
+b_true<span style=color:#f92672>=</span><span style=color:#ae81ff>5</span> <span style=color:#75715e># 假设 b = 5</span>
+noise_scale<span style=color:#f92672>=.</span><span style=color:#ae81ff>1</span>
+<span style=color:#75715e># 构建 Nx1 维的 x 数据</span>
+x_np<span style=color:#f92672>=</span>np<span style=color:#f92672>.</span>random<span style=color:#f92672>.</span>rand(N,<span style=color:#ae81ff>1</span>)
+<span style=color:#75715e># 生成正态分布的 Nx1 维的噪音</span>
+noise <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>random<span style=color:#f92672>.</span>normal(scale<span style=color:#f92672>=</span>noise_scale,size<span style=color:#f92672>=</span>(N,<span style=color:#ae81ff>1</span>))
+<span style=color:#75715e># 生成 y 数据，这里的 y 是 1xN 维的，方便计算</span>
+y_np<span style=color:#f92672>=</span>np<span style=color:#f92672>.</span>reshape(w_true<span style=color:#f92672>*</span>x_np<span style=color:#f92672>+</span>b_true<span style=color:#f92672>+</span>noise,(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>))
+</code></pre></div><p>使用 matplotlib 画个图看一下生成的数据的分布，在 jupyter 中使用</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>%</span>matplotlib inline
+<span style=color:#f92672>import</span> matplotlib
+<span style=color:#f92672>import</span> numpy <span style=color:#f92672>as</span> np
+<span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#f92672>as</span> plt
 
-line,<span style="color:#f92672">=</span>plt<span style="color:#f92672">.</span>plot(x_np,y_np,<span style="color:#e6db74">&#39;bo&#39;</span>)
-</code></pre></div><p>结果如图所示</p>
-<p><img src="http://cdn.qiniu.gsj987.cn/201904260013_105.png?imageslim" alt="生成的数据分布"></p>
-<h2 id="设置训练网络">设置训练网络</h2>
-<p>机器学习的步骤最主要的就是3步：</p>
-<ol>
-<li>定义损失函数，也就是如何评价当前参数的指标，一般来说损失函数的值越小，当前得到的参数性能越好</li>
-<li>定义优化算法。常见的优化算法有梯度下降算法，退火算法和遗传算法。用于在当前参数下，快速找到下一批待选择参数组合</li>
-<li>反复迭代，寻找最优解。利用上面两个步骤反复多次，直到函数收敛，得到最终的参数，也就是模型训练完成。</li>
-</ol>
-<p>本次案例中，我们用最简单的方式来定义我们的训练网络。损失函数就直接使用预测值与真实值之间的空间距离：
+line,<span style=color:#f92672>=</span>plt<span style=color:#f92672>.</span>plot(x_np,y_np,<span style=color:#e6db74>&#39;bo&#39;</span>)
+</code></pre></div><p>结果如图所示</p><p><img src=http://cdn.qiniu.gsj987.cn/201904260013_105.png?imageslim alt=生成的数据分布></p><h2 id=设置训练网络>设置训练网络</h2><p>机器学习的步骤最主要的就是3步：</p><ol><li>定义损失函数，也就是如何评价当前参数的指标，一般来说损失函数的值越小，当前得到的参数性能越好</li><li>定义优化算法。常见的优化算法有梯度下降算法，退火算法和遗传算法。用于在当前参数下，快速找到下一批待选择参数组合</li><li>反复迭代，寻找最优解。利用上面两个步骤反复多次，直到函数收敛，得到最终的参数，也就是模型训练完成。</li></ol><p>本次案例中，我们用最简单的方式来定义我们的训练网络。损失函数就直接使用预测值与真实值之间的空间距离：
 $$
 loss = ( y_{pred} - y )^2
-$$</p>
-<p>而优化算法直接使用梯度下降算法：
+$$</p><p>而优化算法直接使用梯度下降算法：
 $$
 W_{next} = W - \alpha\Delta W
 $$
-其中的 $\alpha$ 就是迭代步长，是一个超参数，需要手动选择或者使用网格搜索才能调优的参数。</p>
-<p>具体的代码如下:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> tensorflow <span style="color:#f92672">as</span> tf
+其中的 $\alpha$ 就是迭代步长，是一个超参数，需要手动选择或者使用网格搜索才能调优的参数。</p><p>具体的代码如下:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> tensorflow <span style=color:#f92672>as</span> tf
 
-<span style="color:#75715e"># 定义数据占位符</span>
-<span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;placeholders&#34;</span>): 
-    x <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>placeholder(tf<span style="color:#f92672">.</span>float32, (N, <span style="color:#ae81ff">1</span>))
-    y <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>placeholder(tf<span style="color:#f92672">.</span>float32, (N,))
-<span style="color:#75715e"># 定义变量占位符</span>
-<span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;weights&#34;</span>):
-    <span style="color:#75715e"># 使用正态分布的初始化数据</span>
-    W <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>Variable(tf<span style="color:#f92672">.</span>random_normal((<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)))
-    b <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>Variable(tf<span style="color:#f92672">.</span>random_normal((<span style="color:#ae81ff">1</span>,)))
-<span style="color:#75715e"># 定义计算函数</span>
-<span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;prediction&#34;</span>):
-    y_pred <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>matmul(x, W) <span style="color:#f92672">+</span> b
-<span style="color:#75715e"># 定义损失函数</span>
-<span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;loss&#34;</span>):
-    l <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>reduce_sum((y <span style="color:#f92672">-</span> tf<span style="color:#f92672">.</span>squeeze(y_pred))<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)
-<span style="color:#75715e"># 定义下降算法</span>
-<span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;optim&#34;</span>):
-    <span style="color:#75715e"># 使用默认的梯度下降算法, alpha = 0.001</span>
-    train_op <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>train<span style="color:#f92672">.</span>AdamOptimizer(<span style="color:#f92672">.</span><span style="color:#ae81ff">001</span>)<span style="color:#f92672">.</span>minimize(l)
-<span style="color:#75715e"># 定义统计项</span>
-<span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;summaries&#34;</span>):
-    <span style="color:#75715e"># 统计损失函数</span>
-    tf<span style="color:#f92672">.</span>summary<span style="color:#f92672">.</span>scalar(<span style="color:#e6db74">&#34;loss&#34;</span>, l)
-    <span style="color:#75715e"># 将所有指标写入磁盘</span>
-    merged <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>summary<span style="color:#f92672">.</span>merge_all()
-</code></pre></div><h2 id="执行训练">执行训练</h2>
-<p>我们将我们生成的模拟数据，填入到训练网络的占位符，多次迭代进行网络训练。每次迭代，都将中间结果写入磁盘，方便我们观察我们的网络的有效性。代码如下：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 定义结果写入文件</span>
-train_writer <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>summary<span style="color:#f92672">.</span>FileWriter(<span style="color:#e6db74">&#39;logs/train&#39;</span>, tf<span style="color:#f92672">.</span>get_default_graph())
+<span style=color:#75715e># 定义数据占位符</span>
+<span style=color:#66d9ef>with</span> tf<span style=color:#f92672>.</span>name_scope(<span style=color:#e6db74>&#34;placeholders&#34;</span>): 
+    x <span style=color:#f92672>=</span> tf<span style=color:#f92672>.</span>placeholder(tf<span style=color:#f92672>.</span>float32, (N, <span style=color:#ae81ff>1</span>))
+    y <span style=color:#f92672>=</span> tf<span style=color:#f92672>.</span>placeholder(tf<span style=color:#f92672>.</span>float32, (N,))
+<span style=color:#75715e># 定义变量占位符</span>
+<span style=color:#66d9ef>with</span> tf<span style=color:#f92672>.</span>name_scope(<span style=color:#e6db74>&#34;weights&#34;</span>):
+    <span style=color:#75715e># 使用正态分布的初始化数据</span>
+    W <span style=color:#f92672>=</span> tf<span style=color:#f92672>.</span>Variable(tf<span style=color:#f92672>.</span>random_normal((<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>)))
+    b <span style=color:#f92672>=</span> tf<span style=color:#f92672>.</span>Variable(tf<span style=color:#f92672>.</span>random_normal((<span style=color:#ae81ff>1</span>,)))
+<span style=color:#75715e># 定义计算函数</span>
+<span style=color:#66d9ef>with</span> tf<span style=color:#f92672>.</span>name_scope(<span style=color:#e6db74>&#34;prediction&#34;</span>):
+    y_pred <span style=color:#f92672>=</span> tf<span style=color:#f92672>.</span>matmul(x, W) <span style=color:#f92672>+</span> b
+<span style=color:#75715e># 定义损失函数</span>
+<span style=color:#66d9ef>with</span> tf<span style=color:#f92672>.</span>name_scope(<span style=color:#e6db74>&#34;loss&#34;</span>):
+    l <span style=color:#f92672>=</span> tf<span style=color:#f92672>.</span>reduce_sum((y <span style=color:#f92672>-</span> tf<span style=color:#f92672>.</span>squeeze(y_pred))<span style=color:#f92672>**</span><span style=color:#ae81ff>2</span>)
+<span style=color:#75715e># 定义下降算法</span>
+<span style=color:#66d9ef>with</span> tf<span style=color:#f92672>.</span>name_scope(<span style=color:#e6db74>&#34;optim&#34;</span>):
+    <span style=color:#75715e># 使用默认的梯度下降算法, alpha = 0.001</span>
+    train_op <span style=color:#f92672>=</span> tf<span style=color:#f92672>.</span>train<span style=color:#f92672>.</span>AdamOptimizer(<span style=color:#f92672>.</span><span style=color:#ae81ff>001</span>)<span style=color:#f92672>.</span>minimize(l)
+<span style=color:#75715e># 定义统计项</span>
+<span style=color:#66d9ef>with</span> tf<span style=color:#f92672>.</span>name_scope(<span style=color:#e6db74>&#34;summaries&#34;</span>):
+    <span style=color:#75715e># 统计损失函数</span>
+    tf<span style=color:#f92672>.</span>summary<span style=color:#f92672>.</span>scalar(<span style=color:#e6db74>&#34;loss&#34;</span>, l)
+    <span style=color:#75715e># 将所有指标写入磁盘</span>
+    merged <span style=color:#f92672>=</span> tf<span style=color:#f92672>.</span>summary<span style=color:#f92672>.</span>merge_all()
+</code></pre></div><h2 id=执行训练>执行训练</h2><p>我们将我们生成的模拟数据，填入到训练网络的占位符，多次迭代进行网络训练。每次迭代，都将中间结果写入磁盘，方便我们观察我们的网络的有效性。代码如下：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#75715e># 定义结果写入文件</span>
+train_writer <span style=color:#f92672>=</span> tf<span style=color:#f92672>.</span>summary<span style=color:#f92672>.</span>FileWriter(<span style=color:#e6db74>&#39;logs/train&#39;</span>, tf<span style=color:#f92672>.</span>get_default_graph())
 
-n_steps <span style="color:#f92672">=</span> <span style="color:#ae81ff">8000</span> <span style="color:#75715e"># 迭代 8000 次</span>
-<span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>Session() <span style="color:#66d9ef">as</span> sess:
-    sess<span style="color:#f92672">.</span>run(tf<span style="color:#f92672">.</span>global_variables_initializer())
-    <span style="color:#75715e"># 训练模型</span>
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n_steps):
-        feed_dict <span style="color:#f92672">=</span> {x: x_np, y: y_np}
-        _, summary, loss <span style="color:#f92672">=</span> sess<span style="color:#f92672">.</span>run([train_op, merged, l], feed_dict<span style="color:#f92672">=</span>feed_dict)
-        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;step </span><span style="color:#e6db74">%d</span><span style="color:#e6db74">, loss: </span><span style="color:#e6db74">%f</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (i, loss))
-        train_writer<span style="color:#f92672">.</span>add_summary(summary, i)
+n_steps <span style=color:#f92672>=</span> <span style=color:#ae81ff>8000</span> <span style=color:#75715e># 迭代 8000 次</span>
+<span style=color:#66d9ef>with</span> tf<span style=color:#f92672>.</span>Session() <span style=color:#66d9ef>as</span> sess:
+    sess<span style=color:#f92672>.</span>run(tf<span style=color:#f92672>.</span>global_variables_initializer())
+    <span style=color:#75715e># 训练模型</span>
+    <span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> range(n_steps):
+        feed_dict <span style=color:#f92672>=</span> {x: x_np, y: y_np}
+        _, summary, loss <span style=color:#f92672>=</span> sess<span style=color:#f92672>.</span>run([train_op, merged, l], feed_dict<span style=color:#f92672>=</span>feed_dict)
+        <span style=color:#66d9ef>print</span>(<span style=color:#e6db74>&#34;step </span><span style=color:#e6db74>%d</span><span style=color:#e6db74>, loss: </span><span style=color:#e6db74>%f</span><span style=color:#e6db74>&#34;</span> <span style=color:#f92672>%</span> (i, loss))
+        train_writer<span style=color:#f92672>.</span>add_summary(summary, i)
         
-    <span style="color:#75715e"># 计算参数</span>
-    w_final, b_final <span style="color:#f92672">=</span> sess<span style="color:#f92672">.</span>run([W, b])
+    <span style=color:#75715e># 计算参数</span>
+    w_final, b_final <span style=color:#f92672>=</span> sess<span style=color:#f92672>.</span>run([W, b])
 
-    <span style="color:#75715e"># 计算预测值</span>
-    y_pred_np <span style="color:#f92672">=</span> sess<span style="color:#f92672">.</span>run(y_pred, feed_dict<span style="color:#f92672">=</span>{x: x_np})
-</code></pre></div><p>8000步后，损失函数稳定值在3.59左右</p>
-<p><img src="http://cdn.qiniu.gsj987.cn/201904260942_663.png?imageslim" alt="迭代损失函数最终得到的值"></p>
-<p>我们使用命令查看一下刚才的训练过程</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">tensorboard --logdir logs/train
-</code></pre></div><p><img src="http://cdn.qiniu.gsj987.cn/201904260944_825.png?imageslim" alt="损失函数的下降图"></p>
-<p>上图为损失函数的下降曲线。可以看到快接近最终值时，曲线明显收敛。</p>
-<p>另一张图是网络的执行图：</p>
-<p><img src="http://cdn.qiniu.gsj987.cn/201904260946_334.png?imageslim" alt="网络训练可视化"></p>
-<p>上图可以看到训练过程中每一步的流程和执行次数，线条越粗执行的次数越多。这个图可以方便的帮助我们优化自己的训练网络。</p>
-<h2 id="验证训练结果">验证训练结果</h2>
-<p>现在我们已经得到了一个训练好的网络，这个预测网络的两个参数 $W_{final}$ 和 $b_{final}$，也就得到了最终的线性方程的公式:
+    <span style=color:#75715e># 计算预测值</span>
+    y_pred_np <span style=color:#f92672>=</span> sess<span style=color:#f92672>.</span>run(y_pred, feed_dict<span style=color:#f92672>=</span>{x: x_np})
+</code></pre></div><p>8000步后，损失函数稳定值在3.59左右</p><p><img src=http://cdn.qiniu.gsj987.cn/201904260942_663.png?imageslim alt=迭代损失函数最终得到的值></p><p>我们使用命令查看一下刚才的训练过程</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>tensorboard --logdir logs/train
+</code></pre></div><p><img src=http://cdn.qiniu.gsj987.cn/201904260944_825.png?imageslim alt=损失函数的下降图></p><p>上图为损失函数的下降曲线。可以看到快接近最终值时，曲线明显收敛。</p><p>另一张图是网络的执行图：</p><p><img src=http://cdn.qiniu.gsj987.cn/201904260946_334.png?imageslim alt=网络训练可视化></p><p>上图可以看到训练过程中每一步的流程和执行次数，线条越粗执行的次数越多。这个图可以方便的帮助我们优化自己的训练网络。</p><h2 id=验证训练结果>验证训练结果</h2><p>现在我们已经得到了一个训练好的网络，这个预测网络的两个参数 $W_{final}$ 和 $b_{final}$，也就得到了最终的线性方程的公式:
 $$
 y_{pred}=W_{final}x+b_{final}
-$$</p>
-<p>现在我们用两种不同的指标来验证我们训练的这个模型： $R^2$ 和 RMSE (root-mean-squared error，均方根差).  $R^2$ 是用于表示两个变量之间的相关性，用0~1之间的值表示，0表示不相关，1表示非常相关。对于数据集合 X 和 Y ，我们定义其 $R^2$ 如下
+$$</p><p>现在我们用两种不同的指标来验证我们训练的这个模型： $R^2$ 和 RMSE (root-mean-squared error，均方根差). $R^2$ 是用于表示两个变量之间的相关性，用0~1之间的值表示，0表示不相关，1表示非常相关。对于数据集合 X 和 Y ，我们定义其 $R^2$ 如下
 $$
 R^2 = \frac{cov(X,Y)^2}{\sigma^2_X\sigma^2_Y}
 $$
-其中 $cov(X, Y)$ 是 X和Y的协方差，表示这两个数据集之间的相似情况，而 $\sigma_X$ 和 $\sigma_Y$ 是标准差，记录数据集各自内部数据的独立性。所以 $R^2$表示在两个数据集内，有多少个独立变量可以解释数据集的相关性。我们用如下代码计算 $y$和$y_{pred}$的$R^2$：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> scipy.stats <span style="color:#f92672">import</span> pearsonr
+其中 $cov(X, Y)$ 是 X和Y的协方差，表示这两个数据集之间的相似情况，而 $\sigma_X$ 和 $\sigma_Y$ 是标准差，记录数据集各自内部数据的独立性。所以 $R^2$表示在两个数据集内，有多少个独立变量可以解释数据集的相关性。我们用如下代码计算 $y$和$y_{pred}$的$R^2$：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>from</span> scipy.stats <span style=color:#f92672>import</span> pearsonr
 
-y_pred_np <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>resharpe(y_pred_np, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
-r2 <span style="color:#f92672">=</span> pearsonr(y_np, y_pred_np)[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> 
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Pearson R^2:&#34;</span>, r2)
-<span style="color:#f92672">&gt;&gt;</span> Pearson R<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>: <span style="color:#ae81ff">0.994</span>
-<span style="color:#75715e"># 绘制图像</span>
-plt<span style="color:#f92672">.</span>clf()
-plt<span style="color:#f92672">.</span>xlabel[<span style="color:#e6db74">&#34;Y-true&#34;</span>]
-plt<span style="color:#f92672">.</span>ylabel[<span style="color:#e6db74">&#34;Y-pred&#34;</span>]
-plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Predicted versus True valuees&#34;</span>)
-plt<span style="color:#f92672">.</span>scatter(y_np, y_pred_np)
-</code></pre></div><p><img src="http://cdn.qiniu.gsj987.cn/201904260949_219.png?imageslim" alt="预测值和真实值之间的关系"></p>
-<p>从值可以看出，预测值和真值之间 $R^2$ 近似 1 ，高度相关，说明我们的模型基本上学会了数据的真实规则。但是我们仔细观察绘制的图像发现，两个数轴之间的值并不完全对应。说明 $R^2$ 无法在缩放尺度上描述模型的准确性。我们使用  RMSE 计算：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.metrics <span style="color:#f92672">import</span> mean_squared_error
+y_pred_np <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>resharpe(y_pred_np, <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+r2 <span style=color:#f92672>=</span> pearsonr(y_np, y_pred_np)[<span style=color:#ae81ff>0</span>]<span style=color:#f92672>**</span><span style=color:#ae81ff>2</span> 
+<span style=color:#66d9ef>print</span>(<span style=color:#e6db74>&#34;Pearson R^2:&#34;</span>, r2)
+<span style=color:#f92672>&gt;&gt;</span> Pearson R<span style=color:#f92672>^</span><span style=color:#ae81ff>2</span>: <span style=color:#ae81ff>0.994</span>
+<span style=color:#75715e># 绘制图像</span>
+plt<span style=color:#f92672>.</span>clf()
+plt<span style=color:#f92672>.</span>xlabel[<span style=color:#e6db74>&#34;Y-true&#34;</span>]
+plt<span style=color:#f92672>.</span>ylabel[<span style=color:#e6db74>&#34;Y-pred&#34;</span>]
+plt<span style=color:#f92672>.</span>title(<span style=color:#e6db74>&#34;Predicted versus True valuees&#34;</span>)
+plt<span style=color:#f92672>.</span>scatter(y_np, y_pred_np)
+</code></pre></div><p><img src=http://cdn.qiniu.gsj987.cn/201904260949_219.png?imageslim alt=预测值和真实值之间的关系></p><p>从值可以看出，预测值和真值之间 $R^2$ 近似 1 ，高度相关，说明我们的模型基本上学会了数据的真实规则。但是我们仔细观察绘制的图像发现，两个数轴之间的值并不完全对应。说明 $R^2$ 无法在缩放尺度上描述模型的准确性。我们使用 RMSE 计算：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>from</span> sklearn.metrics <span style=color:#f92672>import</span> mean_squared_error
 
-rms <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sqrt(mean_squared_error(y_np, y_pred_np))
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;RMSE: &#34;</span>, rms)
-<span style="color:#f92672">&gt;&gt;</span> RMSE: <span style="color:#ae81ff">1.027</span>
-<span style="color:#75715e"># 绘制 RMSE 图像 </span>
-plt<span style="color:#f92672">.</span>clf()
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)
-plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;True Model versus Learned Model &#34;</span>)
-plt<span style="color:#f92672">.</span>xlim(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)
-plt<span style="color:#f92672">.</span>scatter(x_np, y_np)
-x_left <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-y_left <span style="color:#f92672">=</span> w_final[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span>x_left <span style="color:#f92672">+</span> b_final
-x_right <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-y_right <span style="color:#f92672">=</span> w_final[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span>x_right <span style="color:#f92672">+</span> b_final
-plt<span style="color:#f92672">.</span>plot([x_left, x_right], [y_left, y_right], color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;k&#39;</span>)
-</code></pre></div><p><img src="http://cdn.qiniu.gsj987.cn/201904261359_944.png?imageslim" alt="线性公式图"></p>
-<p>RMSE代表数据预测值和真值之间的平均差异，这个值大约 1.027，说明在一定程度上，数据和真实值之间有一定差距，说明我们的算法在梯度下降过程中，达到了局部最优险井，这也是梯度下降算法常见的问题，我们可以通过多初始点为，多步长值等超参数的调优，说着增加迭代次数的方式，降低这种风险。</p>
-<h2 id="构建的时候遇到的问题">构建的时候遇到的问题</h2>
-<ul>
-<li>
-<p>运行时报错: <strong>FailedPreconditionError
+rms <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>sqrt(mean_squared_error(y_np, y_pred_np))
+<span style=color:#66d9ef>print</span>(<span style=color:#e6db74>&#34;RMSE: &#34;</span>, rms)
+<span style=color:#f92672>&gt;&gt;</span> RMSE: <span style=color:#ae81ff>1.027</span>
+<span style=color:#75715e># 绘制 RMSE 图像 </span>
+plt<span style=color:#f92672>.</span>clf()
+plt<span style=color:#f92672>.</span>xlabel(<span style=color:#e6db74>&#34;x&#34;</span>)
+plt<span style=color:#f92672>.</span>ylabel(<span style=color:#e6db74>&#34;y&#34;</span>)
+plt<span style=color:#f92672>.</span>title(<span style=color:#e6db74>&#34;True Model versus Learned Model &#34;</span>)
+plt<span style=color:#f92672>.</span>xlim(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>)
+plt<span style=color:#f92672>.</span>scatter(x_np, y_np)
+x_left <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+y_left <span style=color:#f92672>=</span> w_final[<span style=color:#ae81ff>0</span>]<span style=color:#f92672>*</span>x_left <span style=color:#f92672>+</span> b_final
+x_right <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>
+y_right <span style=color:#f92672>=</span> w_final[<span style=color:#ae81ff>0</span>]<span style=color:#f92672>*</span>x_right <span style=color:#f92672>+</span> b_final
+plt<span style=color:#f92672>.</span>plot([x_left, x_right], [y_left, y_right], color<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;k&#39;</span>)
+</code></pre></div><p><img src=http://cdn.qiniu.gsj987.cn/201904261359_944.png?imageslim alt=线性公式图></p><p>RMSE代表数据预测值和真值之间的平均差异，这个值大约 1.027，说明在一定程度上，数据和真实值之间有一定差距，说明我们的算法在梯度下降过程中，达到了局部最优险井，这也是梯度下降算法常见的问题，我们可以通过多初始点为，多步长值等超参数的调优，说着增加迭代次数的方式，降低这种风险。</p><h2 id=构建的时候遇到的问题>构建的时候遇到的问题</h2><ul><li><p>运行时报错: <strong>FailedPreconditionError
 (see above for traceback): Attempting to use uninitialized value
-weights_2/Variable</strong></p>
-<p>这个问题是因为我在开始忘了执行 sess.run(tf.global_variables_initializer()) ，导致tf的session无法找到对应的全局值，从而报错。在初始化 session 时加上这句话就行。</p>
-</li>
-<li>
-<p>运行时报错：<strong>You must feed a value for placeholder tensor
-&lsquo;placeholders_6/Placeholder&rsquo; with dtype float and shape [100,1]</strong></p>
-</li>
-</ul>
-<p>这是因为我在交互式命令行下执行的 python 语句，在多次执行某一语句块时，干扰了图的设定。所以在每次执行设定网络参数前，先执行一句  tf.reset_default_graph() 重置网络配置就行。</p>
-<h2 id="总结">总结</h2>
-<p>本篇只是用一个简单的例子说明了线性回归的基本流程。但是基本上覆盖了机器学习的全部流程：定义模型，定义损失函数，定义调优函数，然后迭代运行，在执行方法上也涵盖了tf的大部分功能点。同时因为线性回归是基本上所有机器学习的基础，所以需要仔细体会。</p>
-
-                        </div>
-
-                        
-
-
-                        
-
-<div class="post-archive">
-    <h2>See Also</h2>
-    <ul class="listing">
-        
-        <li><a href="/posts/tensorflow-experience-0/">Tensorflow 体验篇-0 安装</a></li>
-        
-        <li><a href="/archives/">归档</a></li>
-        
-    </ul>
-</div>
-
-
-                        <div class="post-meta meta-tags">
-                            
-                            <ul class="clearfix">
-                                
-                                <li><a href="https://gsj987.github.io/tags/tensorflow">tensorflow</a></li>
-                                
-                            </ul>
-                            
-                        </div>
-                    </article>
-                    
-    <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "gsj987s-blog" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-    
-    
-                </div>
-            </div>
-            <div id="secondary">
-    <section class="widget">
-        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
-      
-      <input type="text" name="q" maxlength="20" placeholder="Search">
-      <input type="hidden" name="sitesearch" value="https://gsj987.github.io/">
-      <button type="submit" class="submit icon-search"></button>
-</form>
-    </section>
-    
-    <section class="widget">
-        <h3 class="widget-title">最近文章</h3>
-<ul class="widget-list">
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/webassembly-in-wechat/" title="在微信小程序中使用 WebAssembly 调用 OpenCV">在微信小程序中使用 WebAssembly 调用 OpenCV</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/how-to-take-smart-notes-7/" title="聪明的笔记6 - 分享观点 / 形成习惯 / 后记">聪明的笔记6 - 分享观点 / 形成习惯 / 后记</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/how-to-take-smart-notes-6/" title="聪明的笔记6 - 构建想法">聪明的笔记6 - 构建想法</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/how-to-take-smart-notes-5/" title="聪明的笔记5 - 记聪明的笔记">聪明的笔记5 - 记聪明的笔记</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/how-to-take-smart-notes-4/" title="聪明的笔记4 - 为了理解而阅读">聪明的笔记4 - 为了理解而阅读</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/how-to-take-smart-notes-3/" title="聪明的笔记3 - ﻿分离和连接任务">聪明的笔记3 - ﻿分离和连接任务</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/how-to-take-smart-notes-2/" title="聪明的笔记2 - 四个重要原则">聪明的笔记2 - 四个重要原则</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/how-to-take-smart-notes-1/" title="聪明的笔记1 - 介绍">聪明的笔记1 - 介绍</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/tensorflow-experience-4/" title="Tensorflow 体验篇-4 卷积网络和图像分类">Tensorflow 体验篇-4 卷积网络和图像分类</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/posts/tensorflow-experience-3/" title="Tensorflow 体验篇-3 全连接网络">Tensorflow 体验篇-3 全连接网络</a>
-    </li>
-    
-</ul>
-    </section>
-
-    
-
-    <section class="widget">
-        <h3 class="widget-title">分类</h3>
-<ul class="widget-list">
-    
-    <li>
-        <a href="https://gsj987.github.io/categories/emacs/">emacs(1)</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/categories/linux/">linux(1)</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/categories/machine-learning/">machine-learning(5)</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/categories/opencv/">opencv(1)</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/categories/reading-notes/">reading-notes(7)</a>
-    </li>
-    
-    <li>
-        <a href="https://gsj987.github.io/categories/software-engineering/">software-engineering(1)</a>
-    </li>
-    
-</ul>
-    </section>
-
-    <section class="widget">
-        <h3 class="widget-title">标签</h3>
-<div class="tagcloud">
-    
-    <a href="https://gsj987.github.io/tags/android/">android</a>
-    
-    <a href="https://gsj987.github.io/tags/architecture/">architecture</a>
-    
-    <a href="https://gsj987.github.io/tags/cnn/">cnn</a>
-    
-    <a href="https://gsj987.github.io/tags/ddd/">ddd</a>
-    
-    <a href="https://gsj987.github.io/tags/elisp/">elisp</a>
-    
-    <a href="https://gsj987.github.io/tags/graphql/">graphql</a>
-    
-    <a href="https://gsj987.github.io/tags/how-to-take-smart-notes/">how-to-take-smart-notes</a>
-    
-    <a href="https://gsj987.github.io/tags/opencv/">opencv</a>
-    
-    <a href="https://gsj987.github.io/tags/raspberry-pi/">raspberry-pi</a>
-    
-    <a href="https://gsj987.github.io/tags/study-method/">study-method</a>
-    
-    <a href="https://gsj987.github.io/tags/tensorflow/">tensorflow</a>
-    
-    <a href="https://gsj987.github.io/tags/wechat/">wechat</a>
-    
-    <a href="https://gsj987.github.io/tags/windows/">windows</a>
-    
-</div>
-    </section>
-
-    
-
-    <section class="widget">
-        <h3 class="widget-title">其它</h3>
-        <ul class="widget-list">
-            <li><a href="https://gsj987.github.io/index.xml">文章 RSS</a></li>
-        </ul>
-    </section>
-</div>
-        </div>
-    </div>
-</div>
-<footer id="footer">
-    <div class="container">
-        &copy; 2022 <a href="https://gsj987.github.io/">gsj987的博客 By gsj987</a>.
-        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
-        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
-        
-    </div>
-</footer>
-
-
-    <script type="text/javascript">
-    
-    (function(){
-        $("pre code").parent().addClass("line-numbers")
-    }())
-
-    window.MathJax = {
-        tex2jax: {
-            inlineMath: [ ['$','$'] ],
-            processEscapes: true
-        }
-    };
-    </script>
-    <script type="text/javascript" src="/js/prism.js" async="true"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
-
-<a id="rocket" href="#top"></a>
-<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-59884936-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
-
-
-
-</body>
-</html>
+weights_2/Variable</strong></p><p>这个问题是因为我在开始忘了执行 sess.run(tf.global_variables_initializer()) ，导致tf的session无法找到对应的全局值，从而报错。在初始化 session 时加上这句话就行。</p></li><li><p>运行时报错：<strong>You must feed a value for placeholder tensor
+&lsquo;placeholders_6/Placeholder&rsquo; with dtype float and shape [100,1]</strong></p></li></ul><p>这是因为我在交互式命令行下执行的 python 语句，在多次执行某一语句块时，干扰了图的设定。所以在每次执行设定网络参数前，先执行一句 tf.reset_default_graph() 重置网络配置就行。</p><h2 id=总结>总结</h2><p>本篇只是用一个简单的例子说明了线性回归的基本流程。但是基本上覆盖了机器学习的全部流程：定义模型，定义损失函数，定义调优函数，然后迭代运行，在执行方法上也涵盖了tf的大部分功能点。同时因为线性回归是基本上所有机器学习的基础，所以需要仔细体会。</p></div><div class=post-archive><h2>See Also</h2><ul class=listing><li><a href=/posts/tensorflow-experience-0/>Tensorflow 体验篇-0 安装</a></li><li><a href=/archives/>归档</a></li></ul></div><div class="post-meta meta-tags"><ul class=clearfix><li><a href=https://gsj987.github.io/tags/tensorflow>tensorflow</a></li></ul></div></article><div id=disqus_thread></div><script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return;}
+var d=document,s=d.createElement('script');s.async=true;s.src='//'+"gsj987s-blog"+'.disqus.com/embed.js';s.setAttribute('data-timestamp',+new Date());(d.head||d.body).appendChild(s);})();</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div><div id=secondary><section class=widget><form id=search action=//www.google.com/search method=get accept-charset=utf-8 target=_blank _lpchecked=1><input type=text name=q maxlength=20 placeholder=Search>
+<input type=hidden name=sitesearch value=https://gsj987.github.io/>
+<button type=submit class="submit icon-search"></button></form></section><section class=widget><h3 class=widget-title>最近文章</h3><ul class=widget-list><li><a href=https://gsj987.github.io/posts/publish-blog-from-ios/ title="在iOS上发布GitHub pages 文章">在iOS上发布GitHub pages 文章</a></li><li><a href=https://gsj987.github.io/posts/webassembly-in-wechat/ title="在微信小程序中使用 WebAssembly 调用 OpenCV">在微信小程序中使用 WebAssembly 调用 OpenCV</a></li><li><a href=https://gsj987.github.io/posts/how-to-take-smart-notes-7/ title="聪明的笔记6 - 分享观点 / 形成习惯 / 后记">聪明的笔记6 - 分享观点 / 形成习惯 / 后记</a></li><li><a href=https://gsj987.github.io/posts/how-to-take-smart-notes-6/ title="聪明的笔记6 - 构建想法">聪明的笔记6 - 构建想法</a></li><li><a href=https://gsj987.github.io/posts/how-to-take-smart-notes-5/ title="聪明的笔记5 - 记聪明的笔记">聪明的笔记5 - 记聪明的笔记</a></li><li><a href=https://gsj987.github.io/posts/how-to-take-smart-notes-4/ title="聪明的笔记4 - 为了理解而阅读">聪明的笔记4 - 为了理解而阅读</a></li><li><a href=https://gsj987.github.io/posts/how-to-take-smart-notes-3/ title="聪明的笔记3 - ﻿分离和连接任务">聪明的笔记3 - ﻿分离和连接任务</a></li><li><a href=https://gsj987.github.io/posts/how-to-take-smart-notes-2/ title="聪明的笔记2 - 四个重要原则">聪明的笔记2 - 四个重要原则</a></li><li><a href=https://gsj987.github.io/posts/how-to-take-smart-notes-1/ title="聪明的笔记1 - 介绍">聪明的笔记1 - 介绍</a></li><li><a href=https://gsj987.github.io/posts/tensorflow-experience-4/ title="Tensorflow 体验篇-4 卷积网络和图像分类">Tensorflow 体验篇-4 卷积网络和图像分类</a></li></ul></section><section class=widget><h3 class=widget-title>分类</h3><ul class=widget-list><li><a href=https://gsj987.github.io/categories/emacs/>emacs(1)</a></li><li><a href=https://gsj987.github.io/categories/linux/>linux(1)</a></li><li><a href=https://gsj987.github.io/categories/machine-learning/>machine-learning(5)</a></li><li><a href=https://gsj987.github.io/categories/opencv/>opencv(1)</a></li><li><a href=https://gsj987.github.io/categories/reading-notes/>reading-notes(7)</a></li><li><a href=https://gsj987.github.io/categories/software-engineering/>software-engineering(1)</a></li><li><a href=https://gsj987.github.io/categories/workflow/>workflow(1)</a></li></ul></section><section class=widget><h3 class=widget-title>标签</h3><div class=tagcloud><a href=https://gsj987.github.io/tags/android/>android</a>
+<a href=https://gsj987.github.io/tags/architecture/>architecture</a>
+<a href=https://gsj987.github.io/tags/cnn/>cnn</a>
+<a href=https://gsj987.github.io/tags/ddd/>ddd</a>
+<a href=https://gsj987.github.io/tags/elisp/>elisp</a>
+<a href=https://gsj987.github.io/tags/graphql/>graphql</a>
+<a href=https://gsj987.github.io/tags/how-to-take-smart-notes/>how-to-take-smart-notes</a>
+<a href=https://gsj987.github.io/tags/opencv/>opencv</a>
+<a href=https://gsj987.github.io/tags/raspberry-pi/>raspberry-pi</a>
+<a href=https://gsj987.github.io/tags/study-method/>study-method</a>
+<a href=https://gsj987.github.io/tags/tensorflow/>tensorflow</a>
+<a href=https://gsj987.github.io/tags/wechat/>wechat</a>
+<a href=https://gsj987.github.io/tags/windows/>windows</a></div></section><section class=widget><h3 class=widget-title>其它</h3><ul class=widget-list><li><a href=https://gsj987.github.io/index.xml>文章 RSS</a></li></ul></section></div></div></div></div><footer id=footer><div class=container>&copy; 2022 <a href=https://gsj987.github.io/>gsj987的博客 By gsj987</a>.
+Powered by <a rel="nofollow noreferer noopener" href=https://gohugo.io target=_blank>Hugo</a>.
+<a href=https://www.flysnow.org/ target=_blank>Theme</a> based on <a href=https://github.com/rujews/maupassant-hugo target=_blank>maupassant</a>.</div></footer><script type=text/javascript>(function(){$("pre code").parent().addClass("line-numbers")}())
+window.MathJax={tex2jax:{inlineMath:[['$','$']],processEscapes:true}};</script><script type=text/javascript src=/js/prism.js async></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script><a id=rocket href=#top></a><script type=text/javascript src="/js/totop.js?v=0.0.0" async></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-59884936-1','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script></body></html>
