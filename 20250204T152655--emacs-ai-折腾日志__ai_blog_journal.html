@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>emacs + AI 折腾日志</title>
+<meta name="author" content="gsj987" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+
+  <link rel="stylesheet" href="/styles/style.css" type="text/css"/>
+</head>
+<body>
+<div id="preamble" class="status">
+
+ <nav>
+  <ul>
+    <li><a href="/index.html">Home</a></li>
+    <li><a href="/about.html">About</a></li>
+    <li><a href="/rss.xml">RSS</a></li>
+    <li><a href="https://github.com/gsj987/">GitHub</a></li>
+  </ul>
+</nav>
+</div>
+<div id="content" class="content">
+<h1 class="title">emacs + AI 折腾日志</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org4fc210b">基本使用过程（在 org mode 中指导一个话题）</a></li>
+<li><a href="#org3920479">快速尝试</a></li>
+<li><a href="#org338eeca">在 org mode 中使用</a></li>
+<li><a href="#org3d0ec21">把 gptel 添加到 embark 指令中</a>
+<ul>
+<li><a href="#org092e486"><span class="todo TODO">TODO</span> 调整实现，只对 prog 模式启用，在其他模式下不启用</a></li>
+<li><a href="#org731003d"><span class="todo TODO">TODO</span> 学习 gptel-quick 使用 postframe 显示提示内容</a></li>
+<li><a href="#org88e21d5"><span class="todo TODO">TODO</span> 增加多个 buffer 或 region 以帮助分析代码作用</a></li>
+<li><a href="#orge6a2129"><span class="todo TODO">TODO</span> 试试其他模型，比如 claude</a></li>
+</ul>
+</li>
+<li><a href="#org3605080">使用 ai 做编程指导</a>
+<ul>
+<li><a href="#org0a80736">使用 elysium 写代码</a></li>
+<li><a href="#org626cbde">使用 magit 自动生成 commit 信息</a></li>
+</ul>
+</li>
+<li><a href="#org491930f">使用 ai 指导做一个博客自动发布流程的 el 脚本</a></li>
+</ul>
+</div>
+</div>
+<p>
+安装 gptel 获得基本的 emacs gpt 能力
+<a href="https://github.com/karthink/gptel">https://github.com/karthink/gptel</a>
+</p>
+
+<p>
+基本使用过程
+</p>
+<ol class="org-ol">
+<li>使用命令： <code>gptel</code> 开启一个聊天的 buffer ，直接打文字</li>
+<li>在 gptel 的 buffer 下，使用命令 <code>gptel-menu</code> 后可以打开命令行，使用 RET 就可以发送事件
+或者也可以使用命令 <code>C-c RET</code> 直接执行 <code>gptel-send</code> 发送指令</li>
+</ol>
+
+<p>
+gptel 的模式其实就是一个 markdown mode 的模式，然后在这个基础上增加了菜单
+这个菜单可以通过切换模型：比如 gpt-3.5-turbo ，然后就可以发命令了
+</p>
+
+<div id="outline-container-org4fc210b" class="outline-2">
+<h2 id="org4fc210b">基本使用过程（在 org mode 中指导一个话题）</h2>
+<div class="outline-text-2" id="text-org4fc210b">
+<p>
+其实默认的 gptel-mode 下就是一个类似 org-mode 的方式进行消息发送。
+在 org mode 下最简单的方式也可以直接 <code>gptel-send</code>
+一个例子，我写如下一段话，然后直接调用 gptel-send ：
+</p>
+
+<pre class="example" id="orgac41642">
+我在使用 emacs 以及使用了 gptel 这个插件来调用 openai 的 api ，我怎样简单的把这个工具集成到 org-mode 中让他指导我的文档写作
+</pre>
+
+<p>
+gptel 能给我直接返回：
+</p>
+
+<pre class="example" id="orgdce8afc">
+To integrate gptel into org-mode for guiding document writing:
+1. Use 'gptel-send' in gptel-mode or org-mode to interact with OpenAI's API for guidance.
+2. Consider customizing gptel for org-mode to streamline the integration.
+</pre>
+
+<p>
+增加额外的 context 信息，则需要使用 <code>gptel-menu</code> 来增加。
+另外也可以使用 <code>C-c u</code> 放在 <code>gptel-send</code> 之前，就能定制某次发送的特殊字段，包括
+</p>
+<ol class="org-ol">
+<li>选择使用 gpt model</li>
+<li>只应用在下一次 send 时的指令</li>
+<li>从另处读取 prompt 或把结果输出到别的地方</li>
+<li>直接把 prompt 替换为 response 的操作</li>
+</ol>
+
+<p>
+另外默认上下文是包含全部上下文的，在 <code>gptel-menu</code> 中我可以设置只附加几条，我设成了4
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3920479" class="outline-2">
+<h2 id="org3920479">快速尝试</h2>
+<div class="outline-text-2" id="text-org3920479">
+<p>
+如果我需要解释一段代码的作用，我可以先选中代码，使用 <code>C-u M-x gptel-send</code> ，设置 System prompt 为 "请帮我解释如下代码：" ，并把 prompt from 改成 minibuffer ，把 response to 改成了 echo ，回车后， gptel 帮我完成了解释
+</p>
+
+<p>
+如果不使用 minibuffer 作为 prompt from 的选项，则他会直接发送
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org338eeca" class="outline-2">
+<h2 id="org338eeca">在 org mode 中使用</h2>
+<div class="outline-text-2" id="text-org338eeca">
+<p>
+在 org-mode 中的话，可以通过 <code>gptel-org-set-topic</code> 的方式，把话题限制在当前 org head 中
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3d0ec21" class="outline-2">
+<h2 id="org3d0ec21">把 gptel 添加到 embark 指令中</h2>
+<div class="outline-text-2" id="text-org3d0ec21">
+<p>
+基本想法：在一些常见的 embark 模式中，比如 embark-expression-map 中，绑定一些函数，这些函数主动触发 gptel 的方法，以实现查询
+</p>
+
+<p>
+<a href="https://github.com/karthink/gptel/wiki/Defining-custom-gptel-commands">https://github.com/karthink/gptel/wiki/Defining-custom-gptel-commands</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(defun gptel-explain-code (bounds &amp;optional directive)
+    "Send the selected code from expression to GPT for explanation."
+    (interactive
+     (list
+      (cond
+       ;; if it's a region
+       ((use-region-p) (cons (region-beginning) (region-end)))
+       ;; if it's in text mode, get sentence at point
+       ((derived-mode-p 'text-mode)
+        (list (bounds-of-thing-at-point 'sentence)))
+       ;; otherwise get the line
+       (t (cons (line-beginning-position) (line-end-position))))
+      (and current-prefix-arg
+           (read-string "ChatGPT Directive: "
+                        "请帮我总结和解释这段代码的作用。"))))
+    (gptel-request
+        (buffer-substring-no-properties (car bounds) (cdr bounds)) ;the prompt
+      :system (or directive "请帮我总结和解释这段代码的作用。")
+      :buffer (current-buffer)
+      :context (cons (set-marker (make-marker) (car bounds))
+                     (set-marker (make-marker) (cdr bounds)))
+      :callback
+      (lambda (response info)
+        (if (not response)
+            (message "ChatGPT response failed with: %s" (plist-get info :status))
+          (with-current-buffer (get-buffer-create "*gptel-lookup*")
+            (let ((inhibit-read-only t))
+           (erase-buffer)
+           (insert response))
+            (special-mode)
+            (display-buffer (current-buffer)
+                            `((display-buffer-in-side-window)
+                              (side . bottom)
+                              (window-height . ,#'fit-window-to-buffer)))))))
+
+    )
+</pre>
+</div>
+
+<p>
+然后把这个方法绑定，比如
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(define-key embark-region-map (kbd "0") 'gptel-explain-code)
+</pre>
+</div>
+
+<p>
+例子里还有其他代码，包括如何解析一个 url 并总结他的内容，都是值得学习的。
+</p>
+
+<p>
+项目：
+<a href="https://github.com/kamushadenes/gptel-extensions.el">https://github.com/kamushadenes/gptel-extensions.el</a>
+有许多实现也可以作为学习对象
+</p>
+</div>
+
+<div id="outline-container-org092e486" class="outline-3">
+<h3 id="org092e486"><span class="todo TODO">TODO</span> 调整实现，只对 prog 模式启用，在其他模式下不启用</h3>
+</div>
+
+<div id="outline-container-org731003d" class="outline-3">
+<h3 id="org731003d"><span class="todo TODO">TODO</span> 学习 gptel-quick 使用 postframe 显示提示内容</h3>
+</div>
+
+<div id="outline-container-org88e21d5" class="outline-3">
+<h3 id="org88e21d5"><span class="todo TODO">TODO</span> 增加多个 buffer 或 region 以帮助分析代码作用</h3>
+</div>
+
+<div id="outline-container-orge6a2129" class="outline-3">
+<h3 id="orge6a2129"><span class="todo TODO">TODO</span> 试试其他模型，比如 claude</h3>
+<div class="outline-text-3" id="text-orge6a2129">
+<p>
+可以使用 openRouter <a href="https://openrouter.ai/anthropic/claude-3.5-haiku-20241022:beta">https://openrouter.ai/anthropic/claude-3.5-haiku-20241022:beta</a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3605080" class="outline-2">
+<h2 id="org3605080">使用 ai 做编程指导</h2>
+<div class="outline-text-2" id="text-org3605080">
+<p>
+如何交互式的去优化一段代码，比如说，我先选中一段代码，问 gpt 他的作用，然后在上下文中，继续追问我要如何修改，以达到我的某种目的，然后逐渐完善我的代码，最好问答记录都能存下来，以便我反复的问同一段代码
+</p>
+</div>
+
+<div id="outline-container-org0a80736" class="outline-3">
+<h3 id="org0a80736">使用 elysium 写代码</h3>
+<div class="outline-text-3" id="text-org0a80736">
+<p>
+<a href="https://github.com/lanceberge/elysium">https://github.com/lanceberge/elysium</a>
+</p>
+
+<p>
+快速使用：
+打开任何一个代码文件，可以选中需要调整的部分，也可以不选则为整个 buffer ，然后调用 <code>elysium-query</code> 输入要求，就能自动生成修改。
+生成修改后，可以用 <code>smerge-keep-upper</code> 或者 <code>smerge-keep-lower</code> 来选择使用哪个版本的代码。
+代码都可以开启 <code>smerge-mode</code> 这样会有高亮。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org626cbde" class="outline-3">
+<h3 id="org626cbde">使用 magit 自动生成 commit 信息</h3>
+<div class="outline-text-3" id="text-org626cbde">
+<p>
+<a href="https://github.com/douo/magit-gptcommit">https://github.com/douo/magit-gptcommit</a>
+这个库不好用，因为依赖外部库，而 emacs 的依赖处理不好，无法做到我的依赖只依赖我的版本， gptel 本身一升级， magit-gptcommit 就不能用了
+</p>
+
+<p>
+后来换成了 <a href="https://github.com/ywkim/gpt-commit">https://github.com/ywkim/gpt-commit</a>
+用起来就比较简单好用，不需要复杂的配置。本身 commit 信息的生成任务比编码要简单，这里就用一个独立的库而不是依赖 gptel 来使用
+</p>
+
+
+
+<div id="org4bf001a" class="figure">
+<p><img src="https://cdn.qiniu.gsj987.cn/blog/ace920f3ad93fb28436e1a73ee4f7d7f.png" alt="2024-12-14_21-48-13_screenshot.png" />
+</p>
+</div>
+
+
+<p>
+这个自动总结的 commit 信息还是有点啰嗦，后续可以看一下如何优化
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org491930f" class="outline-2">
+<h2 id="org491930f">使用 ai 指导做一个博客自动发布流程的 el 脚本</h2>
+<div class="outline-text-2" id="text-org491930f">
+<p>
+参考过程 <a href="https://emacs-china.org/t/org-mode-ox-publish/13869">https://emacs-china.org/t/org-mode-ox-publish/13869</a>
+<a href="https://emacs-china.org/t/advice-ox-publish-org-roam/26973">https://emacs-china.org/t/advice-ox-publish-org-roam/26973</a>
+</p>
+
+<p>
+这个过程也可以引入到：
+一个笔记系统的思考
+</p>
+
+<p>
+实现功能：
+</p>
+<ol class="org-ol">
+<li>本地图片会放在一个固定文件夹下，使用 org-download 这样的机制</li>
+<li>在 ox publish 时，扫描当前 page ，提取出所有图片，并上传 cdn ，在最终文件中替换成 cdn 地址</li>
+<li>如果某个文件已经被上传过，或 hash 没改变，则不上传</li>
+<li>添加 ga 信息，生成索引文件和 rss 文件</li>
+<li><p>
+将文件发布到 github 上
+</p>
+
+<p>
+以上处理只针对带有 blog 和 publish tag 的帖子
+</p>
+
+<p>
+我创建一个 <code>my-ox-publish.el</code> 文件，让 elysium 按我的描述反复修改和生成这个代码
+</p></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+
+<p class="author">Author: <a href="mailto:gsj987@gmail.com">gsj987</a></p>
+<p class="date">Date: 2025-02-04 Tue 15:26</p>
+</div>
+</body>
+</html>

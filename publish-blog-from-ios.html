@@ -5,8 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>gsj987的博客</title>
-<meta name="author" content="user" />
+<title>Publish Blog from iOS</title>
+<meta name="author" content="gsj987" />
 <meta name="generator" content="Org Mode" />
 <style>
   #content { max-width: 60em; margin: auto; }
@@ -208,65 +208,208 @@
   </ul>
 </nav>
 </div>
-<section id="content" class="content">
-<h1 class="title">gsj987的博客</h1>
-<ul class="org-ul">
-<li><p>
-<a href="emacs-ai-journal.html">Emacs + AI 折腾日志</a>
-</p>
-<p class="pub-date">发布时间：2025-02-04</p>
-<p class="pub-desc">摘要：Emacs 中使用 gptel 和 AI 工具增强编辑和开发体验的个人折腾日志。主要介绍了 gptel 插件的基本使用、在 org-mode 中的集成、代码解释、Embark 集成,以及使用 AI 辅助编程和自动生成 commit 信息等实践。</p></li>
-<li><p>
-<a href="build-homelab-log.html">Build Homelab Log</a>
-</p>
-<p class="pub-date">发布时间：2023-01-25</p>
-<p class="pub-desc">摘要：我的 2023 homelab 构建日志。</p></li>
-<li><p>
-<a href="take-note-with-denote-el.html">Take Notes with Denote.el</a>
-</p>
-<p class="pub-date">发布时间：2022-10-16</p>
-<p class="pub-desc">摘要：Denote.el是一个简单灵活的Emacs笔记工具，支持多种文件格式，以文件名作为唯一标识。我通过自定义函数实现了日记、笔记创建、链接和搜索，构建了一个高效的个人知识管理工作流。</p></li>
-<li><p>
-<a href="publish-blog-from-ios.html">Publish Blog from iOS</a>
-</p>
-<p class="pub-date">发布时间：2022-03-24</p>
-<p class="pub-desc">摘要：通过 Shortcuts 和 GitHub REST API 实现了从 iOS 手机直接发布博客到GitHub Pages。</p></li>
-<li><p>
-<a href="webassembly-in-wechat.html">Webassembly in Wechat</a>
-</p>
-<p class="pub-date">发布时间：2022-03-20</p>
-<p class="pub-desc">摘要：研究在微信小程序中使用 WebAssembly，并运行 OpenCV 程序。</p></li>
-<li><p>
-<a href="how-to-take-smart-notes.html">How to Take Smart Notes</a>
-</p>
-<p class="pub-date">发布时间：2020-08-09</p>
-<p class="pub-desc">摘要：我的《How to Take Smart Notes》读书笔记。</p></li>
-<li><p>
-<a href="use-android-library-on-raspberry-pi-with-libhybris.html">利用 libhybris 在树莓派上使用 Android 库</a>
-</p>
-<p class="pub-date">发布时间：2019-08-18</p>
-<p class="pub-desc">摘要：利用libhybris技术，通过兼容层将Android的Bionic libc库移植到树莓派Linux系统。本文详细介绍了在树莓派上编译和使用Android的JPEG库的过程，包括准备环境、编译libhybris、适配库文件等关键步骤。</p></li>
-<li><p>
-<a href="save-and-paste-image-from-clipboard-in-orgmode.html">在 OrgMode 中保存并粘贴剪切板中的图片</a>
-</p>
-<p class="pub-date">发布时间：2019-08-13</p>
-<p class="pub-desc">摘要：在Emacs的OrgMode中，通过编写Elisp函数实现了从剪贴板直接保存并插入图片的功能。利用Powershell读取剪贴板图像，结合Projectile和f.el库，可以自动生成时间戳文件名并插入相对路径的图片链接。</p></li>
-<li><p>
-<a href="what-can-prisma-io-do.html">Pisma.io 可以用来做什么？</a>
-</p>
-<p class="pub-date">发布时间：2019-04-29</p>
-<p class="pub-desc">摘要：prisma.io 是一个用 Scala写的 ORM-like 的服务层，可以方便的作为多种数据库的连接层，是微服务环境下的 ORM 替代品和快速 graphql 建设脚手夹。</p></li>
-<li><p>
-<a href="tensorflow-experience.html">Tensorflow Experience</a>
-</p>
-<p class="pub-date">发布时间：2019-04-21</p>
-<p class="pub-desc">摘要：我的《TensorFlow for Deep Learning》阅读笔记和实践记录，从线性回归到 CNN 深度学习。</p></li>
+<div id="content" class="content">
+<h1 class="title">Publish Blog from iOS</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org3f998b5">用 github action 自动编译博文</a></li>
+<li><a href="#org15240a5">用 github api 新建文件或更新文件</a></li>
+<li><a href="#orgc0fdb70">使用 ios shortcuts 提交文件到 github 上</a></li>
+<li><a href="#orgcd217ed">后记</a></li>
 </ul>
-</section>
+</div>
+</div>
+<p>
+利用 iOS 的 shortcuts 功能和 GitHub 的 rest API 我们可以轻松的从手机上直接发布博客内容到GitHub pages 上。
+</p>
+
+<div id="outline-container-org3f998b5" class="outline-2">
+<h2 id="org3f998b5">用 github action 自动编译博文</h2>
+<div class="outline-text-2" id="text-org3f998b5">
+<p>
+在 github pages 上我们需要编译好的静态网站用于发布，所以除了博客站点外，我们还需要一个存放 markdown 的源码 repo，并由 github action 来触发编译。
+</p>
+
+<p>
+我选用的博客框架是基于 hugo 的，所以我可以简单的引入 action 
+<a href="https://github.com/marketplace/actions/hugo-setup#%EF%B8%8F-create-your-workflow">hugo-setup</a> 来应用这个过程，具体的就是在代码目录的 <code>.github/workflows/</code> 下创建 action.yml 文件，如下 (我的在 <code>.github/workflows/deploy.yml</code> )
+</p>
+
+<div class="org-src-container">
+<pre>
+<code class="language-yaml">name: deploy
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.68.3'
+          extended: true
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+</code></pre>
+</div>
+
+<p>
+这个 action 会在我们每次把新的 markdown 文件的修改被 commit 到 github 上时，自动激活编译，发布生成的网站到 github pages 上。
+</p>
+
+<p>
+注意这里最后一个步骤 Deploy 中使用了 actions-gh-pages ，他这里默认会把编译好的站点法到 branch： gh-pages 上，如此，我们只需要把 github pages 的 repo 中设置的 branch 为 gh-pages ，并把博客站点的源码放在同 repo 的 master 分支，一举两得一个 repo 就能同时存放源码和发布站点了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org15240a5" class="outline-2">
+<h2 id="org15240a5">用 github api 新建文件或更新文件</h2>
+<div class="outline-text-2" id="text-org15240a5">
+<p>
+首先我们需要有 GitHub personal access token，可以在 github 的 settings → Developer Settings → Personal access token 中生成。
+</p>
+
+<p>
+Github rest API 中创建一个新文件的 api 是
+</p>
+
+<pre class="example" id="orgc7050dd">
+PUT https://api.github.com/repos/:user/:repo/contents/:path-to-file
+Authorization: Bearer [personal-access-token]
+Accept: application/vnd.github.v3+json
+Content-Type: application/json
+
+{
+    "message": "the-commit-message",
+    "committer": {
+        "name": "your-name",
+        "email": "your-email"
+    },
+    "content": base64encode("your-file-content")
+}
+</pre>
+
+<p>
+这里需要注意的是， content 所提交的内容是 md 文件的文本内容用 base64 进行 encode 后的内容。
+</p>
+
+<p>
+而如果是更新已有文件，则再需要在上述参数中添加已有文件的 sha 值，获取 sha 值的方式则是使用  get 方法获取
+</p>
+
+<pre class="example" id="orgd56ff67">
+GET https://api.github.com/repos/:user/:repo/contents/:path-to-file
+Authorization: Bearer [personal-access-token]
+Accept: application/vnd.github.v3+json
+Content-Type: application/json
+</pre>
+
+<p>
+并在 PUT 请求时，加上当前文件的 sha 值
+</p>
+
+<pre class="example" id="orgf110dc1">
+PUT https://api.github.com/repos/:user/:repo/contents/:path-to-file
+Authorization: Bearer [personal-access-token]
+Accept: application/vnd.github.v3+json
+Content-Type: application/json
+
+{
+    "message": "the-commit-message",
+    "committer": {
+        "name": "your-name",
+        "email": "your-email"
+    },
+    "content": base64encode("your-file-content"),
+    "sha": "sha-value-of-current-file-from-get-api"
+}
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgc0fdb70" class="outline-2">
+<h2 id="orgc0fdb70">使用 ios shortcuts 提交文件到 github 上</h2>
+<div class="outline-text-2" id="text-orgc0fdb70">
+<p>
+大致的思路是，从 markdown 编辑器中，通过 share menu 分享文件，由 shortcuts 接收，执行脚本，先请求远程看是否有 sha 文件存在，如果有则更新之，否则创建一个新的文件（区别就是请求时带不带 sha ）。
+</p>
+
+<p>
+具体步骤如下：
+</p>
+
+<ol class="org-ol">
+<li>Receive <b>File</b> from <b>Share Sheet</b></li>
+<li>Get text from <b>Shortcut Input</b> (读取文件内容)</li>
+<li>Encode <b>Text</b> with base64 ( 注意，这里需要选择 line breaks: none )</li>
+<li>Set varaible <b>content</b> to <b>Base64 Enconded</b></li>
+<li>Get name of <b>Shortcut Input</b> （这里是重新获得文件名）</li>
+<li>Set variable <b>fileName</b> to <b>Name</b></li>
+<li>Text <code>https://api.github.com/repos/:user/:repo/contents/content/posts/[fileName].md</code> (这里是组织出请求的 URL ，由于我这里使用的是 hugo 所以指定上传位置在 <code>/content/posts/</code> 下)</li>
+<li>Get URLs from <b>Text</b></li>
+<li>Get contents of <b>URLs</b> (这里是一个 Get 方法的请求，用于查看文件是否已经存在)</li>
+<li>Set varaible <b>responseJson</b> to <b>Contents of URL</b></li>
+<li>if <b>responseJson</b> <b>contains</b> <b>sha</b></li>
+<li>Get <b>Value</b> for <b>sha</b> in <b>responseJson</b> ( 把 sha 值取出来 )</li>
+<li>Get contents of <b>URLs</b> (这里请求带 sha 的 PUT 方法)</li>
+<li>Otherwise</li>
+<li>Get contents of <b>URLs</b> (这里请求不带 sha 的 PUT 方法)</li>
+<li>End if</li>
+</ol>
+
+<p>
+这样我们就可以在任何一个 markdown 编辑器中，将我们的博客文件推送到 blog source code repo 中，并激活 github action 启动自动发布，将博文发布在 github pages 上了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcd217ed" class="outline-2">
+<h2 id="orgcd217ed">后记</h2>
+<div class="outline-text-2" id="text-orgcd217ed">
+<p>
+这个方法可以让所有的 markdown 编辑器支持发布博客文章，但有个缺点是必须要有文件名。中文博客的一个难题是不能像英文博客一样，直接拿 title 自动生成文件名（当然也不不行，但很难看也很难管理），所以许多的只支持档案而不是文件编辑的工具就不适合这套了。
+</p>
+
+<p>
+另外，现在市面上好用的 markdown 编辑器其实也没这么多，很多也不顺手。如果能直接拿苹果的 Notes.app 的 rtf 转成 markdown ，再由这个 workflow 发布成博客，那是非常有趣的。然而遗憾的是，现在 shortcuts 里自带的 rich text to markdown 的转换指令遇到中文就会乱码，无法使用。后续或许可以找个三方工具再适配一下（不知道 ios 上有没有 pandoc ）
+</p>
+</div>
+</div>
+</div>
 <div id="postamble" class="status">
 
-<p class="copyright">© [2019-2025] [<a href="https://x.com/gsj987" target=_blank>user</a>]</p>
+
+<p class="author">Author: <a href="https://x.com/gsj987" target=_blank>gsj987</a></p>
+<p class="date">Publish Date: 2022-03-24 Thu 00:00</p>
+<p class="license">License: <a href="https://www.creativecommons.org/licenses/by-nc/4.0/deed.zh-hans">CC BY-NC 4.0</a></p>
+
 <script src="/assets/dynamic-toc.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/powershell.min.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/lisp.min.js"></script>
+<script>hljs.highlightAll();</script>
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-C71VVP1YSV"></script>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+	 xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	 xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	 xmlns:dc="http://purl.org/dc/elements/1.1/"
+	 xmlns:atom="http://www.w3.org/2005/Atom"
+	 xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	 xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	 xmlns:georss="http://www.georss.org/georss"
+     xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+     xmlns:media="http://search.yahoo.com/mrss/"><channel>
+  <title>gsj987的博客</title>
+  <atom:link href="https://gsj987.github.io/rss.xml" rel="self" type="application/rss+xml" />
+  <link>https://gsj987.github.io</link>
+  <description><![CDATA[]]></description>
+  <language>en</language>
+  <pubDate>Sun, 09 Mar 2025 12:22:40 +0800</pubDate>
+  <lastBuildDate>Sun, 09 Mar 2025 12:22:40 +0800</lastBuildDate>
+  <generator>Emacs 29.1 Org-mode 9.6.6</generator>
+  <webMaster>gsj987@gmail.com (gsj987)</webMaster>
+  <image>
+    <url>https://orgmode.org/img/org-mode-unicorn-logo.png</url>
+    <title>gsj987的博客</title>
+    <link>https://gsj987.github.io</link>
+  </image>
+
+
+  <item>
+    <title>emacs + AI 折腾日志</title>
+    <link>https://gsj987.github.io/emacs-ai-journal.html</link>
+    <author>gsj987@gmail.com (gsj987)</author>
+    <guid isPermaLink="false">https://gsj987.github.io/emacs-ai-journal.html</guid>
+    <pubDate>Tue, 04 Feb 2025 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    Emacs 中使用 gptel 和 AI 工具增强编辑和开发体验的个人折腾日志。主要介绍了 gptel 插件的基本使用、在 org-mode 中的集成、代码解释、Embark 集成,以及使用 AI 辅助编程和自动生成 commit 信息等实践。
+    </p>
+    ]]></description>
+  </item>
+  <item>
+    <title>build-homelab-log</title>
+    <link>https://gsj987.github.io/build-homelab-log.html</link>
+    <author>gsj987@gmail.com (gsj987)</author>
+    <guid isPermaLink="false">https://gsj987.github.io/build-homelab-log.html</guid>
+    <pubDate>Wed, 25 Jan 2023 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    我的 2023 homelab 构建日志。
+    </p>
+    ]]></description>
+  </item>
+  <item>
+    <title>Take Notes with Denote.el</title>
+    <link>https://gsj987.github.io/take-note-with-denote-el.html</link>
+    <author>gsj987@gmail.com (gsj987)</author>
+    <guid isPermaLink="false">https://gsj987.github.io/take-note-with-denote-el.html</guid>
+    <pubDate>Sun, 16 Oct 2022 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    Denote.el是一个简单灵活的Emacs笔记工具，支持多种文件格式，以文件名作为唯一标识。我通过自定义函数实现了日记、笔记创建、链接和搜索，构建了一个高效的个人知识管理工作流。
+    </p>
+    ]]></description>
+  </item>
+  <item>
+    <title>publish blog from ios</title>
+    <link>https://gsj987.github.io/publish-blog-from-ios.html</link>
+    <author>gsj987@gmail.com (gsj987)</author>
+    <guid isPermaLink="false">https://gsj987.github.io/publish-blog-from-ios.html</guid>
+    <pubDate>Thu, 24 Mar 2022 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    通过 Shortcuts 和 GitHub REST API 实现了从 iOS 手机直接发布博客到GitHub Pages。
+    </p>
+    ]]></description>
+  </item>
+  <item>
+    <title>Webassembly in Wechat</title>
+    <link>https://gsj987.github.io/webassembly-in-wechat.html</link>
+    <author>gsj987@gmail.com (gsj987)</author>
+    <guid isPermaLink="false">https://gsj987.github.io/webassembly-in-wechat.html</guid>
+    <pubDate>Sun, 20 Mar 2022 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    研究在微信小程序中使用 WebAssembly，并运行 OpenCV 程序。
+    </p>
+    ]]></description>
+  </item>
+  <item>
+    <title>How to Take Smart Notes</title>
+    <link>https://gsj987.github.io/how-to-take-smart-notes.html</link>
+    <author>gsj987@gmail.com (gsj987)</author>
+    <guid isPermaLink="false">https://gsj987.github.io/how-to-take-smart-notes.html</guid>
+    <pubDate>Sun, 09 Aug 2020 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    我的《How to Take Smart Notes》读书笔记。
+    </p>
+    ]]></description>
+  </item>
+  <item>
+    <title>利用 libhybris 在树莓派上使用 Android 库</title>
+    <link>https://gsj987.github.io/use-android-library-on-raspberry-pi-with-libhybris.html</link>
+    <author>gsj987@gmail.com (gsj987)</author>
+    <guid isPermaLink="false">https://gsj987.github.io/use-android-library-on-raspberry-pi-with-libhybris.html</guid>
+    <pubDate>Sun, 18 Aug 2019 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    利用libhybris技术，通过兼容层将Android的Bionic libc库移植到树莓派Linux系统。本文详细介绍了在树莓派上编译和使用Android的JPEG库的过程，包括准备环境、编译libhybris、适配库文件等关键步骤。
+    </p>
+    ]]></description>
+  </item>
+  <item>
+    <title>save and paste image from clipboard in orgmode</title>
+    <link>https://gsj987.github.io/save-and-paste-image-from-clipboard-in-orgmode.html</link>
+    <author>gsj987@gmail.com (gsj987)</author>
+    <guid isPermaLink="false">https://gsj987.github.io/save-and-paste-image-from-clipboard-in-orgmode.html</guid>
+    <pubDate>Tue, 13 Aug 2019 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    在Emacs的OrgMode中，通过编写Elisp函数实现了从剪贴板直接保存并插入图片的功能。利用Powershell读取剪贴板图像，结合Projectile和f.el库，可以自动生成时间戳文件名并插入相对路径的图片链接。
+    </p>
+    ]]></description>
+  </item>
+  <item>
+    <title>Pisma.io 可以用来做什么？</title>
+    <link>https://gsj987.github.io/what-can-prisma-io-do.html</link>
+    <author>gsj987@gmail.com (gsj987)</author>
+    <guid isPermaLink="false">https://gsj987.github.io/what-can-prisma-io-do.html</guid>
+    <pubDate>Mon, 29 Apr 2019 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    prisma.io 是一个用 Scala写的 ORM-like 的服务层，可以方便的作为多种数据库的连接层，是微服务环境下的 ORM 替代品和快速 graphql 建设脚手夹。
+    </p>
+    ]]></description>
+  </item>
+  <item>
+    <title>Tensorflow Experience</title>
+    <link>https://gsj987.github.io/tensorflow-experience.html</link>
+    <author>gsj987@gmail.com (gsj987)</author>
+    <guid isPermaLink="false">https://gsj987.github.io/tensorflow-experience.html</guid>
+    <pubDate>Sun, 21 Apr 2019 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    我的《TensorFlow for Deep Learning》阅读笔记和实践记录，从线性回归到 CNN 深度学习。
+    </p>
+    ]]></description>
+  </item>
+</channel>
+</rss>

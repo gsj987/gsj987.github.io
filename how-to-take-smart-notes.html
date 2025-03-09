@@ -1,0 +1,1291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>How to Take Smart Notes</title>
+<meta name="author" content="gsj987" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+
+
+  <link rel="stylesheet" href="/assets/style.css" type="text/css"/>
+</head>
+<body>
+<div id="preamble" class="status">
+
+ <nav>
+  <ul>
+    <li><a href="/index.html">Home</a></li>
+    <li><a href="/about.html">About</a></li>
+    <li><a href="/rss.xml">RSS</a></li>
+    <li><a href="https://github.com/gsj987/">GitHub</a></li>
+  </ul>
+</nav>
+</div>
+<div id="content" class="content">
+<h1 class="title">How to Take Smart Notes</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org62baf83">介绍</a>
+<ul>
+<li><a href="#org06861ac">所要知道的一切</a></li>
+<li><a href="#org2b60f5b">所要做的一切</a></li>
+<li><a href="#orgdb7d8eb">使用的工具</a></li>
+</ul>
+</li>
+<li><a href="#org6428fd4">四个重要原则</a>
+<ul>
+<li><a href="#org98f522b">写作是唯一重要的事</a></li>
+<li><a href="#orge2385c4">简单至上</a></li>
+<li><a href="#orga166f78">没有人仅是从草稿开始的</a></li>
+<li><a href="#orge654b8f">让工作带你前进</a></li>
+</ul>
+</li>
+<li><a href="#org23f753d">分离和连接任务</a>
+<ul>
+<li><a href="#org3344104">给每个任务不可分割的注意力</a></li>
+<li><a href="#org0caac1e">多线任务不可取</a></li>
+<li><a href="#orgbff0fc5">给每个任务合适的注意力</a></li>
+<li><a href="#org1ec2c73">不做计划，做个专家</a></li>
+<li><a href="#orgb75821a">实现闭环</a></li>
+<li><a href="#org3b6fca1">减少决定的数量</a></li>
+</ul>
+</li>
+<li><a href="#org96d80ec">为了理解而阅读</a>
+<ul>
+<li><a href="#orgb43a682">在阅读时拿支笔</a></li>
+<li><a href="#org66c1fa1">保持开放思维</a></li>
+<li><a href="#orgeb29042">抓住主旨</a></li>
+<li><a href="#org2bf4143">学习阅读</a></li>
+<li><a href="#org8898e9a">从阅读中学习</a></li>
+</ul>
+</li>
+<li><a href="#orgbb11bf1">记聪明的笔记</a>
+<ul>
+<li><a href="#org17f3d0c">长期定时记笔记</a></li>
+<li><a href="#org39893d1">在脑外思考</a></li>
+<li><a href="#orge4148e6">学习不是试错</a></li>
+<li><a href="#org16a0b60">将正式笔记加入 slip box</a></li>
+</ul>
+</li>
+<li><a href="#org21ab646">构建想法</a>
+<ul>
+<li><a href="#org8acc3f4">构建话题</a></li>
+<li><a href="#org7504f64">产生聪明的连接</a></li>
+<li><a href="#org393e7e2">比较、纠正、区分</a></li>
+<li><a href="#orgb3652a7">作为思考的工具盒</a></li>
+<li><a href="#orga62548f">将 slipbox 作为创新的机器</a></li>
+<li><a href="#org3fe24d3">在盒中思考</a></li>
+<li><a href="#orgd071419">在局限中创新</a></li>
+</ul>
+</li>
+<li><a href="#orgdf9a5b5">分享观点 / 形成习惯 / 后记</a>
+<ul>
+<li><a href="#orgc063227">分享观点</a></li>
+<li><a href="#org6a8324c">不要头脑风暴，要 slipbox 风暴</a></li>
+<li><a href="#org3a3d770">从上向下，到自下到上</a></li>
+<li><a href="#org3d92c32">用你的兴趣驱动 GTD</a></li>
+<li><a href="#orgbe9b8d1">收尾和回顾</a></li>
+<li><a href="#org6dc397e">成为放弃计划的专家</a></li>
+<li><a href="#orgd81472b">真的开写</a></li>
+<li><a href="#org2ba9db1">养成习惯</a></li>
+<li><a href="#org677c78f">后记</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+本系列是书 《 How to take smart notes 》 的读书笔记，本书是系统的介绍 slipbox 笔记法的方法，原理和实践。
+</p>
+
+<div id="outline-container-org62baf83" class="outline-2">
+<h2 id="org62baf83">介绍</h2>
+<div class="outline-text-2" id="text-org62baf83">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">[2020-08-09 Sun] </span></span> 本章是原书的第一至四章，介绍 slipbox 笔记的来源和基本的工作流程。
+</p>
+</div>
+
+<div id="outline-container-org06861ac" class="outline-3">
+<h3 id="org06861ac">所要知道的一切</h3>
+<div class="outline-text-3" id="text-org06861ac">
+<p>
+﻿一个人所能获得的成就和他的 IQ 没有太直接的关系，和他的工作方法有关。现在有很多的工作法如gtd，在世界上有一定的流行程度。但这个只适合于有明确期限和工作内容的工作，比如管理和商业。但对于长期的开放任务，如学术研究，并不是太成功。比如我在读一篇文章时，有几段关联的概念不明白，要查阅另一篇文献时，则就是跳跃出到了另一个任务上，很难明确规划这个任务节点。
+</p>
+
+<p>
+作者认为德国学者 Luhmann 的笔记工作法是一个合适的适合开放任务的工作法。
+Luhmann 通过他自己的slipbox的笔记方法，在30年的业余研究生涯中，创造了惊人的书籍和论文的产出，其中不乏重要的学术著作。
+虽然他也对自己的工作方法不做隐瞒，但目前还鲜有这方面的研究。原因有三
+</p>
+
+<ol class="org-ol">
+<li>多数讨论都是用德语的，只在小范围内传播</li>
+<li>多数人只是学他的笔记方法，但没有学他的工作流，所以效果不佳</li>
+<li>大部分人不相信这样简单的方法会产生惊人的结果</li>
+</ol>
+
+<p>
+真要说，一个可以长期坚持的工作方法一定是一件简单的方法。
+</p>
+
+<p>
+他的笔记方法是这样的。他准备两个slipbox，其中一个是书目盒，另一个是主盒。书目盒中存放的是他在阅读文章和书籍的时候，记下的文章的摘要和内容引用。主盒记录的是他在阅读时产生的想法。
+无论读什么内容，他会记录内容的摘要和书目，放在书目盒中。
+</p>
+
+<p>
+另一方面，他会用自己的语言，组织观点和想法写在卡片上，放在主盒中。他控制一页只写一个观点，并在背面写上引用的来源。相似上下文的观点卡片组织在一起，并对卡片进行编号。
+</p>
+
+<p>
+当他制作一个观点卡片后，他会盒中找到相似上下文的卡片把他们放一起。而对于不同上下文的卡片，他会将他们的编号连接起来，写在卡片背面。
+</p>
+
+<p>
+通过这种方式，他可以从下往上串联观点，最后形成主题。他会选取一两个卡片作为主题的起点，用序号串联这些卡片形成主题内容。
+</p>
+
+<p>
+当时他都是用手动的方式，现在我们完全可以通过软件来完成以上工作了 。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2b60f5b" class="outline-3">
+<h3 id="org2b60f5b">所要做的一切</h3>
+<div class="outline-text-3" id="text-org2b60f5b">
+<p>
+﻿创意性工作的基本工作：思考，阅读，理解，产生想法。我们的工作方法正是以这几个步骤来向前推进的：
+</p>
+<ol class="org-ol">
+<li>写零散笔记。在脑海中一闪而过的想法，把他们快速的记录下来，可以是记在任何地方，一页便签或一张纸巾都可以。并把他们归拢到一个地方，比如inbox</li>
+<li>写一些阅读笔记。在阅读的时候记一些你不想忘记的想法或内容，用精简的语言复述。把他们收集起来放在书目引用中</li>
+<li>写正式的笔记。用slipbox方法记录他们。把步骤1，2的笔记浏览一遍，思考他们和自己现在研究内容的关联之处。不仅仅是收集，更多的是通过这个过程思考自己研究的内容的新想法，是否和以前的观点一致，不同或印证，是否能通过这个过程产生新的问题。把这些想法一个个记录下来，作为正式卡片。记录的语言要尽可能的详细，准确，闭合完整，就像在和别人介绍自己的想法一样。然后归档零散笔记和阅读笔记</li>
+<li>把新做的正式笔记归档，编号，连接</li>
+<li>从系统中自下而上的构建主题和研究项目。看看还缺少什么，或者产生了什么问题。顺着想法去做更多阅读，并从新信息中修正想法，做更多卡片。顺着思路行进，不需要线性思考，不用被某个课题抓住不放，也不必对着某个课题硬做头脑风暴，就是凭着思考的惯性进行就行，卡片系统会帮助记忆。</li>
+<li>一段时间后我们有了某个话题的足够多的笔记，将他们单独整理出来，串联并思考还有什么欠缺和多余。花足够的时间阅读，思考这个话题，并思考这些笔记之间的结构</li>
+<li>将笔记整理成文章草稿。不是简单的抄写，而是理解，组织他们，构成论点。仔细研究论点的不足，补全或调整他们</li>
+<li>写成正文</li>
+</ol>
+
+<p>
+我们做研究时往往不会只盯着某个具体的话题，观点也不会是从一开始就确定。阅读书籍和材料是，上面的内容和观点也未必都和我们正着手的工作相关。但思考本身也没有这么强的目的性，一旦阅读，我们就可以用笔记方法将思考记录下来以备他用。每次思考都是对未来理解和写作的一个积累。
+</p>
+
+<p>
+所以有了笔记的支持，我们短暂的思如泉涌可以保留，热情褪去后马上转投他处也没关系。思考不再是痛苦的过程，可以完全由临时的兴趣驱动，然后抛在脑后，另在他日有新灵感时得以继续。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdb7d8eb" class="outline-3">
+<h3 id="orgdb7d8eb">使用的工具</h3>
+<div class="outline-text-3" id="text-orgdb7d8eb">
+<p>
+﻿传统学术笔记的方法是采用标重点，做研究日志，在书页的空白处写想法，这样的方式。但这样往往记录了以后容易让我们忘记，在回头翻看时迷失在大量的书页中，所以我们需要有slipbox来集中所有的笔记。
+</p>
+
+<p>
+做笔记的工具有如下内容:
+</p>
+<ul class="org-ul">
+<li>书写工具（纸笔）</li>
+<li>引用管理系统（有免费软件）</li>
+<li>slipbox（也有免费）</li>
+<li>编辑器（基本都免费）</li>
+</ul>
+
+<p>
+当然工具越简单越好
+</p>
+<ul class="org-ul">
+<li>记录想法的工具要足够简单。纸笔是最方便的，能涂能写，当然要有归拢能力也很重要，方便回头整理，所以一个纸质的笔记本是个好选择</li>
+<li>好的引用系统能够自动化的处理引文和书籍信息，避免我们在这上面浪费时间。zetoro是个不错的选择</li>
+<li>slipbox可以用物理的盒子，饼干盒就可以。当然也可以用工具。Zettelkasten以及他的模仿者们是个不错的选择</li>
+<li>编辑器。word就很好。当然我推荐emacs</li>
+</ul>
+
+<p>
+选择工具不应花费过多时间，10分钟以内完成。更重要的是放入内容和长期整理，否则就是“思考的坟墓”
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6428fd4" class="outline-2">
+<h2 id="org6428fd4">四个重要原则</h2>
+<div class="outline-text-2" id="text-org6428fd4">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">[2020-09-17 Thu] </span></span> 本章是原书的第五至八章，论述笔记方法在使用时我们要遵循的方法。
+</p>
+</div>
+
+<div id="outline-container-org98f522b" class="outline-3">
+<h3 id="org98f522b">写作是唯一重要的事</h3>
+<div class="outline-text-3" id="text-org98f522b">
+<p>
+﻿很多人认为学生写作只是为了学习，是巩固和展现学习内容的方法。写作被认为是一个有起止的过程，有明确的任务和主题的活动。
+</p>
+
+<p>
+但其实写作本身就是一种独立研究的过程，学习本身就是研究。学生从各种材料中发掘观点，用自己的理解再做表述，就是一种探寻知识的过程。
+</p>
+
+<p>
+在做学术讨论或学生的写作交流时，作者的观点其实并不重要，重要的是听众对观点的理解，这个过程本身就是在对读者自身观点的一种锤炼，这个过程和作者或背景无关。所以发表观点和产生知识是做研究不可分割的过程，所以研究就意味着必须写作。
+</p>
+
+<p>
+花时间在写作上并不意味着浪费研究的时间，并不意味着减少阅读和交流的时间。事实上阅读和交流是写作的信息源，写的越多就要读的越多，交流的越多。写作越多意味着要越多的花时间在新的观点上，而不是重复以前的观点。越多发表思考的内容越可以锤炼自己的观点。越多的记录能让你越快速的在阅读中发掘出新的观点，抓住重点。
+</p>
+
+<p>
+如果在研究中不能用自己的话复述出别人的观点，其实就是没有理解，那也称不上是做了研究。写作也能提升阅读的能力。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge2385c4" class="outline-3">
+<h3 id="orge2385c4">简单至上</h3>
+<div class="outline-text-3" id="text-orge2385c4">
+<p>
+﻿集装箱的发明并不是因为他是最优的方案，而是因为他是最简单的方案，立即投入就立即能产生直观效果的方案，一切的劣势都会在运作过程中被逐渐克服。
+</p>
+
+<p>
+所以那些认真记录下想法，分门别类的整理每一篇论文，对每一个课题进行头脑风暴，要进行组织整理，是非常困难的
+</p>
+
+<p>
+slipbox 是一个简单的集装箱方案。所有记录在其中的笔记只有一个原则，就是可以用来发表的观点。当观点越积越多，可以轻松的组织出主题，不会有困扰。slipbox存在的目的就是让你记录下观点后直接遗忘，以把注意力放在现在的课题上。
+</p>
+
+<p>
+为了防止笔记混杂，我们应该区分几种笔记形式:
+</p>
+<ul class="org-ul">
+<li>零散笔记。就是用来快速记录防止遗忘，马上就会进垃圾桶</li>
+<li>正式笔记。他们应该永久的保存在slipbox中</li>
+<li>项目笔记。他们被整理在项目中，项目结束后就可以归档的内容</li>
+</ul>
+
+<p>
+不要把所有想法，事无巨细的记录到正式笔记中。正式笔记应该是提炼的，经得起检验的，主题越来越精炼的，方便再寻找和再思考的内容。也不能只收集和某项目完全相关的内容，完全的安项目归类。也不能只做零散笔记。
+</p>
+
+<p>
+一个好的区分是正式笔记和项目笔记的方法是，经过很长的一段时间你都没有去触碰某个笔记，然后你也忘记了他的意图和上下文的时候，他就是一个可归档的项目笔记。
+</p>
+
+<p>
+只有引用笔记和正式笔记会被放到slipbox中。前者是比较简单的，就是说明在拿个材料的什么位置就行。
+</p>
+
+<p>
+无需担心正式笔记的发展，正式笔记应该是足够精巧，能够在其未来成为一个正式文章的某一段观点的。虽然他的文字未必在未来成为观点和想法，但能成为正式观点的思考过程。
+</p>
+
+<p>
+所以统一的格式和存储是提炼观点的重要方法。
+</p>
+
+<p>
+项目笔记可以涵盖的内容有:
+</p>
+<ul class="org-ul">
+<li>手稿收到的评论</li>
+<li>项目相关的资料</li>
+<li>大纲</li>
+<li>草稿</li>
+<li>计划</li>
+<li>代办和提醒</li>
+</ul>
+
+<p>
+当合上项目文件夹，桌上应只剩纸笔
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga166f78" class="outline-3">
+<h3 id="orga166f78">没有人仅是从草稿开始的</h3>
+<div class="outline-text-3" id="text-orga166f78">
+<p>
+﻿许多学习方法的过程其实存在着误解，认为我们开始写时头脑中已经有话题的清晰轮廓了，有大量的知识储备和技巧，于是有各种的写作技巧。
+</p>
+
+<p>
+其实写作的过程并不是那么的线形，而是一个环。我们要找一个合适讨论的问题，找到相关的话题，首先要大量的阅读，不仅仅是相关话题的内容，也有无关话题的。而决定读什么内容也是基于对基础知识的理解之上的。
+</p>
+
+<p>
+所以要让我们一拿到一个话题就产生思路，然后实践一套写作技巧的步，骤显然是不可能的。即使我们已经有一些模糊的认识，我们的大脑也是不可靠的，带来的过程只能是痛苦。只有兴趣和精力所在的课题，才能让我们在阅读，讨论，写作是得到信息，构建出想法。这是我们构建知识和理解外部的方法。
+</p>
+
+<p>
+但这不意味着我们可以找话题或做研究更容易，只是用 slipbox 收集想法再创造话题的方式是符合我们的认知过程的。当我们查看我们的 slipbox 时，不仅仅是我们的可能的话题，也是我们已经构思过的构想的集合，只是我们已经忘了。这就让不再从草稿开始写作变得可能。
+</p>
+
+<p>
+这也能防止我们总是复述自己从前的观点，或者毫无依据和充满矛盾的新观点。
+</p>
+
+<p>
+所以在写作时不要再头脑风暴，而应该是盒子风暴，从盒子中找话题，那里才是可靠灵感的来源。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge654b8f" class="outline-3">
+<h3 id="orge654b8f">让工作带你前进</h3>
+<div class="outline-text-3" id="text-orge654b8f">
+<p>
+﻿任何时候约定性的习惯，都会退化为直接去索要约定的奖励。比如给自己约定运动后才能去看电视，都会退化为直接去看电视。所以一定要把激励过程变成从过程中得到回报，让工作本身的结果量化为回报
+</p>
+
+<p>
+当这样的正向激励循环建立后，不再需要意志力去驱动工作，人自己就会趋势自己前进。
+</p>
+
+<p>
+正向循环是帮助我们建立长期行动的动力。而构建这种循环需要我们有增长意识，而阻碍这种意识形成的就是固定意识。而后者在好学生中更容易出现，因为他们害怕失败和批评。增长意识是从挑战的成功中获得的，而挑战本身就是容易失败的过程。
+</p>
+
+<p>
+出了增长意识，还需要有合理的学习系统。如果我们从一个过于长期的工作中反思，很容易由于时间过长不得要领，所以线性的学习过程很少有反馈的机会，最后可能得到的只是当时应不应该选这个题目的后悔。
+</p>
+
+<p>
+而使用循环方法进行学习，可以给我们机会在学习中及时的提升和反思，找到错误并修正。
+</p>
+
+<p>
+边学习边记录的方式，不但让我们有机会验证是否理解，也能锻炼我们的再表达能力，从而达到快速抓住关键想法的能力。这样的积累能让我们更快的阅读，更快的理解，更快的抓住重点。这样的我们就形成了笔记的正循环。
+</p>
+
+<p>
+所以 slipbox 不是一个笔记的收集，而是一个观点和事实的混合。当收集越来越多，他也就越来越有用，指数的增长。而且他的关联性，能让我们在发掘过程中找到不经意的想法，而且他们的关联会越来越强。
+</p>
+
+<p>
+这也是 slipbox 和 wiki 的区别，他是我们自己的知识构建，也是我们学习的动力源。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org23f753d" class="outline-2">
+<h2 id="org23f753d">分离和连接任务</h2>
+<div class="outline-text-2" id="text-org23f753d">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">[2020-11-17 Tue] </span></span> 本章是原书第九章，论述在写作过程中，如何拆分任务并组合他们。
+</p>
+</div>
+
+<div id="outline-container-org3344104" class="outline-3">
+<h3 id="org3344104">给每个任务不可分割的注意力</h3>
+<div class="outline-text-3" id="text-org3344104">
+<p>
+有不正式的研究表明，经常的邮件和消息打断我们的工作，会让我们的生产效率降低 40%。现在，我们的电视节目的市场也越来越短，我们越来越多暴露的片段信息中，缺少对注意力的训练。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0caac1e" class="outline-3">
+<h3 id="org0caac1e">多线任务不可取</h3>
+<div class="outline-text-3" id="text-org0caac1e">
+<p>
+往往经常做多线任务的人会声称多线任务效率高，但他们其实并没有做过实际的比较测试。心理学家的测试表明，这些多线程带来的高效率仅仅是一种感觉，多线程的实际生产效率是降低了，工作的质量和数量都少于只做一件事情人对照组。
+</p>
+
+<p>
+这种质量的下降不仅是需要专注的工作上，还表现在应对多样任务的处理能力上，这是令人震惊的。因为我们在多线程任务时起时还是在每一个时刻在做一个任务，然后频繁的切换注意力，这大大降低了我们的重新集中注意力的速度，降低我们对多任务的处理能力。
+</p>
+
+<p>
+写作其实是一个多种任务集合的过程，不单单是把字写下来，更是阅读、理解、映射、创意、连接、区别、炼字、架构、组织、订正、重写的一系列过程。他们之间不会明显的区分过程，但又是需要不同的注意力。
+</p>
+
+<p>
+我们理解注意力的时候，不只是有专注的注意力。集中注意力在一件事情上的时间每个人都差不多短，而长期维持专注注意力在一个事情上需要训练。如果我们不多线程工作，移除多余分担和任务，我们可以延长这个注意力。
+</p>
+
+<p>
+尽可能的区分任务，让他们不互相干扰。这不是仅仅考思考方式，也需要组织我们的工作流。用  Slipbox 方法让我们能将工作合理分割，用写作的方式确认每一个步骤被不受干扰的完成。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbff0fc5" class="outline-3">
+<h3 id="orgbff0fc5">给每个任务合适的注意力</h3>
+<div class="outline-text-3" id="text-orgbff0fc5">
+<p>
+写作的不同过程会需要不同的注意力，如校对时需要的注意力和炼字时是完全不一样的。
+</p>
+
+<p>
+在做批判，读者和作者之间也要有不同的角色切换，才能在这个过程中得到新的观点，优化表达。
+</p>
+
+<p>
+学术写作需要全种类型的注意力。除了专注之外，还需要类似艺术创意的灵活的注意力。顶级科学家可以自由切换两种注意力。需要让自己能灵活切换注意力类型，还需要合适的外部环境，一个灵活的工作架构，不会因为我们偏离了原先的计划就宕机。可惜的是所有写作指南都要求我们定计划。不要定计划，做个专家。
+</p>
+
+<p>
+我们停止计划时就是开始了学习。通过环境选择和切换任务的紧迫性，从而产生良好写作洞见，这样的训练非常重要。就像学自行车，只有拆了辅助轮，感受车轮开始转起来的过程，一开始虽然有不安全感，但熟悉了一会才是学会自行车。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1ec2c73" class="outline-3">
+<h3 id="org1ec2c73">不做计划，做个专家</h3>
+<div class="outline-text-3" id="text-org1ec2c73">
+<p>
+同样人不可能只通过按照计划，按照线性的工作流程，学会创造性的学术写作的艺术。
+</p>
+
+<p>
+专家依靠的是对经验的实体化，来实现随心所欲的写作状态。一个专家有学术写作过程的直觉，大概了解什么任务会推进写作，什么任务只是单纯的干扰。这个过程中没有通用的执行规则，每个项目和任务之间都有差异。
+</p>
+
+<p>
+为了成为专家，我们需要能自由的做决定，必要的错误会给我们带来成长。所有的写作指导不是教你这样的经验，而都是在教你写作的流程步骤，也没有教你真正学术写作的关键：产生想法并发表出来。
+</p>
+
+<p>
+专家不会遵循具体的规则和方法，但他们的经验会根据具体的环境做出正确的判断。就像 Slipbox 方法不会告诉你什么步骤做什么，只是给了一种知识的组织结构，将任务切分成有效的部分，让你在相互关联的写作过程中有可控的任务拆分和及时的反馈，让你有机会做刻意学习。这样的经验越多，就可以越像专家一样通过直觉和技巧来判断下一步的任务，通过环境来做决定。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb75821a" class="outline-3">
+<h3 id="orgb75821a">实现闭环</h3>
+<div class="outline-text-3" id="text-orgb75821a">
+<p>
+除了注意力，我们的短时记忆也是有限的。心理学家认为我们能短时同时记住的事情不会超过 7 样。所以经常我们需要购物单一样的待办事项帮助记忆。
+</p>
+
+<p>
+但我们可以通过事务的关联性让记忆变得容易。所以记我们理解的事务比不理解的要容易的多。创建知识的连通性就是 Slipbox 做的事情。 经常性的去思考不同事务和理论之间的区别和联系，相互的解释性，能帮助我们理解，加速学习，同时更好的通过连接记忆。
+</p>
+
+<p>
+一个开放的任务会占据我们的短时记忆，我们会轻易的被未完成的任务分心，而忽略他们的重要性的差别。但其实不必完成任务，只要把它写下来，就能让我们从中抽离。这就是 GTD 的原理。
+</p>
+
+<p>
+Slipbox 的方法也是一样。 首先我们要确定写作的任务，把它拆分成多个可完成的子任务。第二步是将我们思考的产出记录下来，包括与未来查询相关的链接。可能的随后任务是开放的问题和对其他笔记的链接。还有其他的提示，如稍后复习这章找出遗漏。或还可以将一个还没审阅的笔记变成一个长期笔记，或有个阅读笔记还没加入引用。这样让我们在回头看时快速回到任务中。
+</p>
+
+<p>
+另外我们可以在头脑中保持一些未答复的问题，这样在闲暇的时刻可以思考。许多问题都是在不经意间解决的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3b6fca1" class="outline-3">
+<h3 id="org3b6fca1">减少决定的数量</h3>
+<div class="outline-text-3" id="text-org3b6fca1">
+<p>
+除了注意力和短期记忆，另一个容易消耗的是动力或意志力。意志力也是一种需要恢复的有限资源，训练可以提升总量，但需要时间和努力。众多的事物会有对意志力耗尽的效果。克服这个的办法是欺骗，与其强迫自己做不想做的事情，不如找到一个方法让我们感到去做会推动任务前进。做一个需要被完成的任务会减少我们做事时意志力的消耗。
+</p>
+
+<p>
+一个稳定和标准的工作环境能减少我们的意志力消耗。所以奥巴马和比尔盖茨只有两种外套的颜色。每天早上做最少的选择，把资源用在重要的事情上。
+</p>
+
+<p>
+写作时也要减少选择，当要做和内容相关发选择时，大部分组织相关的工作可以提前做，并保持固定。比如总是用同一本笔记做快速记录，总是用同一种方法提取主要观点，总是用同样的方法整理长期笔记。这样我们就可以用更多的精力在重要的任务，如解决问题。
+</p>
+
+<p>
+及时的完成任务并再在中断的地方继续工作还有一个好处，让我们能中断工作而不用担心丢了工作流。中断不仅仅是休息，还是帮助我们学习的过程，让记忆长久。如果在一个学习过程中不中断，我们很快会耗尽精力或害怕忘记所学，并损害我们的效果。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org96d80ec" class="outline-2">
+<h2 id="org96d80ec">为了理解而阅读</h2>
+<div class="outline-text-2" id="text-org96d80ec">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">[2020-12-17 Thu] </span></span> 本章是原书的第十章，论述在在阅读文章，材料，书籍时，我们应该保持的习惯。总得来说就是，应该拿阅读的过程作为理解的过程，让自己在这个过程中检验是否真的理解了，并同时的去思考当前内容和以前的知识是否有关联，从而提升阅读质量，并为做正式笔记的书写打好基础。这就需要一系列的方法论。
+</p>
+</div>
+
+<div id="outline-container-orgb43a682" class="outline-3">
+<h3 id="orgb43a682">在阅读时拿支笔</h3>
+<div class="outline-text-3" id="text-orgb43a682">
+<p>
+要文章写得好，就要打好草稿。要草稿打的好，就要有好素材。要有好的素材，就需要在阅读时手上拿支笔做笔记。
+</p>
+
+<p>
+如果你懂得自己阅读的内容，你就会不自觉地把自己看的和自己想的上下文联系起来，用自己的知识去理解阅读的内容，并用读的内容打磨自己的思考。slipbox 就是这样的动态增长和变化的。
+</p>
+
+<p>
+从 slipbox 到草稿的过程不是机械的，更像是一种对话，在这个过程中我们也能打磨和充实我们愿先的想法。
+</p>
+
+<p>
+我们从阅读中提取内容时往往是有上下文的，支持其论述或者表达观点。如果不用我们自己的语言来表述，仅仅是摘抄，就很有可能曲解原文意义，且不会成为一个融贯的思考。
+</p>
+
+<p>
+即便是阅读的引用笔记，虽然和 slipbox 的想法笔记是分开存放的，也应该是时刻保持和上下文的相关，以及和 slipbox 中的想法产生了联系。L是这么做的：在阅读时在卡片的一面写下当前页的想法，反面写上索引信息。当完成阅读，则想着如何将卡片和 slipbox 中已有的内容关联。所以阅读本身也是着眼在 slipbox 中的思考的。
+</p>
+
+<p>
+阅读笔记的长短和文字以及我们需要程度相关也和我们的缩减能力文字的复杂度和理解难度有关。阅读笔记是理解和抓取文字内容的重要方式，所以复杂的笔记，在有挑战的案例中会非常有用，但很多时候简单的几个草稿也够了。当我们开始阅读一个全新的不熟悉的内容，使我们的笔记就容易记多，但不必担心，因为这是刻意练习的必要步骤。有时候我们应该减慢我们的笔记工作，而有的时候一整本书也只有几句话就能够记清楚。唯一重要的是是否能够提供足够的内容，为我们下一步，也就是整理正式的 slipbox 笔记。
+</p>
+
+<p>
+做阅读笔记有很多的不同方法，但很多学生容易以写得过于抽象或过于详细。如果只是把笔记记在书页中而没有一个全局的规划，那这样的笔记就毫无意义。只有将所有的笔记统一的整理，在 slipbox 中才能构成一个清晰的如何阅读和如何记笔记的认识。
+</p>
+
+<p>
+系阅读笔记的目的是让这个过程变清晰，所以可以用各种办法来帮助理解和阅读，但是这些都是为真正重要步骤做准备，就是记长期笔记。￼￼记忆阅读笔记的目的是抓住党对当前文字的理解，用作在长期笔记是有一定的准备，他不是一个独立的任务。一切对这一点无益的都是多余的步骤。￼￼
+</p>
+</div>
+</div>
+
+<div id="outline-container-org66c1fa1" class="outline-3">
+<h3 id="org66c1fa1">保持开放思维</h3>
+<div class="outline-text-3" id="text-org66c1fa1">
+<p>
+选择性是记聪明笔记的关键，但我们的大脑并不擅长选择信息，当遇到我们不确定，或和思考方式有冲突的概念时，我们自然会去用已经相信或熟悉的方式去思考。当我们做决定，使我们大脑会自动地去寻找我们认同概念的或有相同思考人的做事方式，而自动的忽视那些不认同的事实，假装没看到他们。
+</p>
+
+<p>
+确认偏见是一个强大的力量，即便是卓有成就的名人也无法避免。有两个方式可以应对，首先将整个写作过程抛在脑后，其次，将收集材料过程变得不带偏见，不加区分地收集相关资料而不是仅支持某种观点。
+</p>
+
+<p>
+线性的写作在一开始就预设一个话题，往往在学习写作推进过程中产生与预设话题矛盾的发展，从而阻碍我们形成真正的洞见。所以自底向上的构建话题比自上向下形成的话题，更能够产生正确的成果。相比于预设观点，我们只要：
+</p>
+<ul class="org-ul">
+<li>确认我们已经拆分任务，并专注于理解阅读的内容。</li>
+<li>确认我们确实重视内容。</li>
+<li>找到内容的相关，并让他们产生联系。</li>
+</ul>
+
+<p>
+余下的问题就是是否要将这些观点写入 slipbox。重要的是保持开放连接，而不是支持或反对某个观点或某个项目。当我们在某一个观点发展上积累足够，我们就可以去寻找与之相对的事实，这样才能扩充 slipbox，从而充实我们的观点。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgeb29042" class="outline-3">
+<h3 id="orgeb29042">抓住主旨</h3>
+<div class="outline-text-3" id="text-orgeb29042">
+<p>
+区分相关和不相关的内容，是另一项只能通过做，而不能学到的技能。我们阅读时不停的从文章中汲取主旨，并写下一个又一个的长期笔记，就是对这项技能的刻意练习。
+</p>
+
+<p>
+这种模式不断让我们在阅读文章和时快速的找到理论概念，也能够帮助我们找到观点的常见漏洞，基本的分类能力，写作方法和思考模型。这种能力只有是使用我们自己的思考，刻意地从阅读中摘取重要信息。使用自己的理解，是一种挑战，而不是从他人学得的。当实践的越多，我们就可以越快地记下笔记。这种能力也让我们能够锻炼使用更合适的词语，更简洁的表达来阐述观点，所以也能让我们的表达和讲述能力得到锻炼。
+</p>
+
+<p>
+与此同时，提取文章重点的能力也是重新表达文章观点的能力。而这是让我们能够从文章中获得知识的关键期技能。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2bf4143" class="outline-3">
+<h3 id="org2bf4143">学习阅读</h3>
+<div class="outline-text-3" id="text-org2bf4143">
+<p>
+如果你不能清楚地把它说出来，说明你没有理解他。阅读时书写是一个小型的试讲会。记忆长期笔记也是一个面向对文章上下文完全无知的听众的一次演讲，这个听众就是未来的自己。 而书写的过程能让我们快速直面没有理解，但以为理解的内容。
+</p>
+
+<p>
+阅读特别是重读，经常会让我们误认为自己理解了内容。但熟悉并不是理解，书写的过程能让我们快速察觉我们的不理解。这个过程可能痛苦的，但却是迈向理解的唯一机会。
+</p>
+
+<p>
+这也是为什么我们应该选择一个外部系统，强迫我们做刻意练习，让我们暴露在可能的没有理解之中。这是一种聪明的学习进程。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8898e9a" class="outline-3">
+<h3 id="org8898e9a">从阅读中学习</h3>
+<div class="outline-text-3" id="text-org8898e9a">
+<p>
+学习需要刻意练习，这种学习是让我们理解世界，而不是通过某次考试。这种刻意练习需要花费努力，因为他需要我们思考理解，以及和旧知识关联。那种分门别类的知识管理方法与学习是相违背的，因为它让我们失去了让知识相互关联的机会。
+</p>
+
+<p>
+如果不进行分类学习，很可能会遇到我们从来没遇到过的知识。但即使尝试学习和理解这些未知知识失败了，我们也能更好的去记忆答案。用分类学习其实是一种填鸭式的学习，他只会让我们一遍一遍地阅读，但不能产生真正的理解，这样的阅读也是白费。
+</p>
+
+<p>
+单纯的复习并没有意义，也不会帮助我们加深对学习的理解，甚至不能称之为学习。现在学习方法中最成功的是精益学习（elaboration），也提倡将学到的知识和其他知识关联，也反对单纯的复习。他认为阅读时应该将不同的问题话题和知识进行结合。区别是有了 slipbox，我们不必要再反复的对阅读进行深入，毕竟没人总是会对百科知识进行考试般的要求。
+</p>
+
+<p>
+有了 slipbox，我们不必再把知识存在大脑里，而是永久的记录在设施中。我们的大脑可以专注在主旨深层次的理解和全局印象中，可以花更多的精力用作创意。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbb11bf1" class="outline-2">
+<h2 id="orgbb11bf1">记聪明的笔记</h2>
+<div class="outline-text-2" id="text-orgbb11bf1">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">[2021-01-17 Sun] </span></span> 本章是原书的第十一章，论述如何记正式笔记，也就是从各种阅读资料和临时笔记中，整理的思考笔记，并将内容整理到存储设备 slipbox 的方法。
+</p>
+
+<p>
+研究表明，学习成功和不怎么成功的学生的最大区别在于思考在文本内容之外的能力。一个优秀的读者可以跳出方法的局限，也就是与其他知识和方法的关联。事实上，如果不能关联正在阅读和学习资料之外的知识，我们无法真正的学习到其描述的知识。所以我们记笔记的方法不是仅仅凭藉脑中的想法，而是有一个固定的方法：我们思考这些内容的其他意思，并把他明确地写在纸上，然后将其联系起来。
+</p>
+</div>
+
+<div id="outline-container-org17f3d0c" class="outline-3">
+<h3 id="org17f3d0c">长期定时记笔记</h3>
+<div class="outline-text-3" id="text-org17f3d0c">
+<p>
+当写一篇长文的时候是非常绝望的，如此多的章节，每一页内容中有大量的内容，每一处都包含包含想法的验证，来源的确认和文章的引用。同时又有人认为，每天写一定数量的内容并不是一件难事。比如有小说家，只是每天早上吃完饭的 15 分钟固定的写 250 字，但积累下来，每年可以产出三本小说。学术写作没法做到这样，因为学术写作涉及到更多的工作内容，有阅读，研究思考和提炼想法，每一个步骤都无法精确的控制进度，没法做到“每天写一页”这样精确的写作控制。
+</p>
+
+<p>
+但我们可以换一个思路，将控制的计量换成是笔记的数量，每天固定的记录，3～10 个笔记，对一个研究者来说是非常常规的工作量，但只要长期积累一年下来，也会有非常可观的笔记数量而这些笔记都是记录在 slipbox 中，能产生的关联知识产出是极大的。也可以通过对笔记的数量的技术来评估自己的每日工作效率。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org39893d1" class="outline-3">
+<h3 id="org39893d1">在脑外思考</h3>
+<div class="outline-text-3" id="text-org39893d1">
+<p>
+做引用笔记是一种刻意练习的方式，让我们有是否理解了文本的反馈，也是一种帮助我们理解阅读的方法。写长期笔记，也是自我检验的方式。阅读的内容是否在写作中有意义，是否得到了文章的核心思考，是否已经有了足够的应用事实和支撑材料。同时写作也是整理思路的好方法。
+</p>
+
+<p>
+做长期笔记更像是在写作中的思考，以及和已经在 slipbox 中的观点的讨论。任何一个复杂的观点，需要被写下来，能脱离作者的进行独立的讨论。但我们的大脑有他的缺陷，总是希望愉悦，容易自动陷入无意识运作，而忽略讨论本身。只有让让思考离开大脑放到纸上，我们才能摆脱无关论述对大脑所有资源的占据，把聚焦放在观察问题本身上。另一方面，大脑其实并不理性，其运作机制更像是跳跃到一个想象中的结论，如果不借助笔记，我们无法完成理性的系统化的思考。大脑需要一个外部系统，将当前的想法，理论或者模型固化，以用作进一步的思考。
+</p>
+
+<p>
+将一个想法写进 slipbox 的上下文的通用的方法，是写下我们思考的重要性的原因。作者在这里举了个例子，他自己阅读时的体验。他在阅读一本书时，首先记下这本书的阅读笔记，记录这本书观点的 how and why。然后在他写长期笔记时，首先就会回答这个问题，而这个问题的回答也往往会和他的研究领域相关，如这个问题在他研究领域中的重要性。然后第二篇笔记就是回答为什么的问题。接下来顺着这些思路，他可以添加更多的思考，如这些观点是否已经被别人讨论过，是哪些人讨论过，如果没有那为什么，我接下来应该去哪里找观点。在这个过程中，可以翻看原先 slipbox 中的笔记，可能有些观点可以回答这些问题，于是他们就产生了关联。许多的问题不需要当场回答，特别是需要更多研究和阅读的问题。只需要把它们写下来并让他和别的笔记产生关联，这样在做别的研究时，可以回到这些点上产生新的认识。在这个过程中，研究的弊端和没考虑到点也会自动地暴露出来，这样我们在做研究时，就可以把重点放在这些问题上。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge4148e6" class="outline-3">
+<h3 id="orge4148e6">学习不是试错</h3>
+<div class="outline-text-3" id="text-orge4148e6">
+<p>
+我们已经做了阅读笔记，让阅读的思考能够长期的记忆，但这只是第一步，接下来应该把其转化成自己的想法，自己的理论或者概念。这就需要提炼总结记下正式的笔记，阅读笔记将在之后会被归档。正式的笔记会被记录到外部系统，如 slipbox，从而让我们忘记他们。
+</p>
+
+<p>
+遗忘是直觉认知和长期记忆之间的屏障，但它的好处也很明显。如果没有这层过滤，大脑将会被大量记忆冲垮，无法集中注意力在身边的事上。大脑依赖潜意识的机制来抑制所有的记忆在任何时刻的涌现。而从长期记忆中调取记忆靠的是回想机制。回想机制能帮我们找出记忆中和当前环境最相关的记忆，而他恰好就是依赖了遗忘的机制来腾空当前的认知。如果无法从大量的认知中找到最合适的记忆，我们将无法理解抽象的模式。
+</p>
+
+<p>
+同时，我们的大脑的记忆力非常有限，我们只能记住有限的生活记忆和一点点的详细经验。所以依靠记忆来学习是非常不可靠的学习，应该像是构建不同信息快的连接和桥梁，并利用利用遗忘机制来快速调取正确的记忆。用正确的线索来触发正确的记忆，用这种方式来帮我们找到最有用的信息。
+</p>
+
+<p>
+记忆的技巧有多种多样，但是在学术写作领域，我们不需要他们，只要把我们阅读的材料和思考记录在笔记，中用外部系统帮助我们记忆。而学术写作真正的挑战不是如何学习，而是如何理解。每个问题并不是总是清晰需要去探究，这就需要我们细化研究，这种细化本身就是让信息之间产生关联，首先写下一篇信息，然后思考他对其他上下文的意义。研究表明，用上下文关联进行学习的学生能比分门别类分话题进行学习的学生更快掌握知识。
+</p>
+
+<p>
+正确的学习就是理解学习的内容，就是让他和其他知识产生有意义的连接。得到合适的线索后，人就不会轻易的忘记他所学到的知识。只要精力分配得到就可以通过这个方法不停地产生新的知识而难以自拔。所以往往好的科学家都是好的老师，他们把自己学的内容交给学生本身也是加强自己的理解。
+记笔记和在 slipbox 整理他们也是一种强制自己理解学习的过程，他强制向我们提问，这是什么意思，他和什么关联，他和别的话题有什么区别？他和什么相似。这样的连接可以适合各种笔记，而不仅仅是相类似的笔记更广泛的连接，能让知识变得更有意义，让学习学得更快。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org16a0b60" class="outline-3">
+<h3 id="org16a0b60">将正式笔记加入 slip box</h3>
+<div class="outline-text-3" id="text-org16a0b60">
+<p>
+将长期笔记加入 slipbox 的方法：
+</p>
+<ul class="org-ul">
+<li>将笔记直接加到其直接引用的笔记之后。或者如果没有引用，就直接加载所有笔记的最后并给他加上编号。</li>
+<li>增加对其他笔记的链接，或从其他笔记链接到这篇新笔记上。</li>
+<li>确保他可以被索引到，可以把它加到目录笔记，或者其他可以被索引得到的笔记的链接上。</li>
+<li>构建网络结构的心智模型。</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org21ab646" class="outline-2">
+<h2 id="org21ab646">构建想法</h2>
+<div class="outline-text-2" id="text-org21ab646">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">[2021-12-18 Sat] </span></span> 本章是原书的第十二章，论述如何利用笔记构建想法，从已有笔记中找到新的灵感，并利用笔记系统对他们进行捕捉。这个过程也有一系列的方法论。
+</p>
+</div>
+
+<div id="outline-container-org8acc3f4" class="outline-3">
+<h3 id="org8acc3f4">构建话题</h3>
+<div class="outline-text-3" id="text-org8acc3f4">
+<p>
+Slipbox 笔记法是使用一个种非结构化的方式进行关联。他不需要使用一个特殊的 index 方式，让记录者能够方便的找到具体某个笔记。
+</p>
+
+<p>
+因为 slipbox 笔记的作用不是维基，不是作为百科全书式的使用，而是记录我们的思考过程。当笔记之间能够相互串联，从一个笔记能够想到另一个笔记，我们就能轻松的找到我们想要的话题。笔记是思维记录的结果，也是下一次思维开始的地方。这样的结构是不需要像档案管理员一样准确的安排每一个笔记的位置，它的关键词，或者名称的。
+</p>
+
+<p>
+有些人会用 keyword 来记录笔记，方便归类，但这也是不必要的。因为关键词的抽象往往也和阅读的目的有关，比如同一篇材料，如果是经济学家和政治学家，他们所提炼出来的关键词是完全不一样的。所以对文章的关键词抽取，需要有研究背景做支持。
+</p>
+
+<p>
+一个比较好的构建索引的方式是，对关注话题的列表单独做一个 note 来记录索引，在这个过程中如果有新的思考，可以再添加新的笔记加入索引中。如果一段时间后，原来的索引已经不能满足我们的需要了，那就再建一个新的索引。这样也可以降低我们对索引构建的负担。
+</p>
+
+<blockquote>
+<p>
+“Every consideration on the structure of a topic is just another consideration on a note – bound to change and dependent on the development of our understanding.”
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org7504f64" class="outline-3">
+<h3 id="org7504f64">产生聪明的连接</h3>
+<div class="outline-text-3" id="text-org7504f64">
+<p>
+Luman 用了4种类型的交叉引用文档。但如果用软件管理笔记，就只要用第一种和最后一种，因为中间构建链接的过程已经被软件的行为替代了。
+</p>
+
+<ol class="org-ol">
+<li>将笔记连接到主题的总览笔记中
+<ul class="org-ul">
+<li>这种笔记可以连接所有相关话题的笔记，并且我们可以记下我们对这个话题的整体思考。</li>
+<li>随着时间推移，我们可以增加或者移除一些笔记连接，来确定我们对这个话题的走向控制，并且记录为何这样的变化是合理的.</li>
+</ul></li>
+<li>将多个放在差不多物理位置的笔记归拢在一起的笔记总览
+<ul class="org-ul">
+<li>用这种方式可以快速的了解一个话题下更多维度之间的关系，方便查看。但这个索引的主要用于书写系统中，如果是用软件来做笔记，现在都有连接图，可以完美替代这个方法</li>
+</ul></li>
+<li>列出所有和这个笔记向关联的反向笔记索引
+<ul class="org-ul">
+<li>这个目的是查看所有反向连接。这个也在许多软件中已经实现了。</li>
+</ul></li>
+<li>最常见的是笔记到笔记之间的连接。
+<ul class="org-ul">
+<li>这些连接能让我们在以笔记为基础进行思考时，产生不同的思路</li>
+</ul></li>
+</ol>
+
+<p>
+当这样的连接成规模后，笔记之间相互连接能让思考模式涌现。从这种关联中找到对应笔记的行为也是另一中形式的思考，所以这个工作不是一个枯燥的日常劳作，而是一种创造新想法的过程。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org393e7e2" class="outline-3">
+<h3 id="org393e7e2">比较、纠正、区分</h3>
+<div class="outline-text-3" id="text-org393e7e2">
+<p>
+如果我们常做笔记，就会发现很多新想法其实早就已经在笔记中了，有些甚至是别的作者已经提出了的观点，不能算是新想法。面对这种情况，我们可以尝试对两个类似的概念进行比较，发现其中相同和不同的概念，仔细区别类似的概念但不同的表述，能发现其中的矛盾, 帮助我们发现新的知识。
+</p>
+
+<p>
+在添加新笔记到老笔记的过程，也是让我们去比较老笔记的过程，这不仅仅是推进这个工作，还是补全我们以前理解内容的弱点，让我们不得不去原文再做一些研究。
+</p>
+
+<p>
+另一方面，能从 slipbox 中找到类似话题的笔记，也能帮我们强化对这个概念和观点的记忆，强化认知。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb3652a7" class="outline-3">
+<h3 id="orgb3652a7">作为思考的工具盒</h3>
+<div class="outline-text-3" id="text-orgb3652a7">
+<p>
+由于我们的笔记采用 flash card 的形式来组织，这会带来个问题，就是我们在阅读，理解时，没有相应的上下文，这让我们理解的时候有些困难。而我们阅读时，我们需要有非常广泛的背景知识，或者说心智模型，否则无法产生他的效果。仅仅靠记忆各种概念无法帮助我们理解他们，只有从实践中学习，将他们转换成心智模型。
+</p>
+
+<p>
+当我们记录一些内容到笔记中，仔细观察每个观点背后的原则，比较和筛选对这个观点的最好的解释，并把不同的观点相互比较，串联，形成网络。这个过程就是在构建心智模型的过程。这个过程是和 slipbox 互动的过程。
+</p>
+
+<p>
+有几个关于这一过程的建议：
+</p>
+<ol class="org-ol">
+<li>关注你需要记住的事情</li>
+<li>编码你想要记住的信息（构思他合适的关联线索）</li>
+<li>训练回忆起这个事情</li>
+</ol>
+
+<p>
+在关联笔记的过程中，我们不仅仅是细化笔记，而也是能在不同时间和上下文环境中，去提炼出新的检索意图。slipbox 在这过程中强迫我们学习。当我们尝试去关联老笔记的过程中，我们将会重新梳理，混合各种笔记，并产生新的组合。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga62548f" class="outline-3">
+<h3 id="orga62548f">将 slipbox 作为创新的机器</h3>
+<div class="outline-text-3" id="text-orga62548f">
+<p>
+即使是理论的突破也不是依靠灵光一闪的，是科学家已经有了大量的实验，思考和他人的结论的情况下，再由一个新的灵感而产生的。即使是纯的理论，也无法直接转换成知识，这个转换必须经历过实践，以及大量的刻意思考与练习。
+</p>
+
+<p>
+这也是为什么对细微差异的比较是思考运作的关键。通过仔细比较相似概念的差异，我们可以得到全新的概念。把所有关联的笔记平铺在桌面上，能帮助我们更好的进行这种比较。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3fe24d3" class="outline-3">
+<h3 id="org3fe24d3">在盒中思考</h3>
+<div class="outline-text-3" id="text-org3fe24d3">
+<p>
+从对各种笔记的比较的过程中我们可以提炼新的想法，而对想法的把玩和修补才是形成新洞见的手段。这个过程就需要我们对原内容的上下文重新审视，并构建和抽象出新的上下文。
+</p>
+
+<p>
+虽然抽象不是思考的最终目的，但确实是必经之路。但除了抽象，我们还需要能将新的想法提取出来，并整合到更多的上下文当中，形成系统化的实践过程。
+</p>
+
+<p>
+另外阻碍我们思考的重要问题，就是我们的惰性，因为这要求我们抛弃旧有的思路，构建完全不同的思维方式。这里我们可以用 slipbox 来作为一个外部工具来打破我们的旧思维习惯。这里有一些方法论：
+</p>
+<ol class="org-ol">
+<li>构建 feedback 流程，直面我们的错误</li>
+<li>经常性的高亮关注细节背后的想法，抓住重点</li>
+<li>确保你真的看到了你认为看到的东西，并尽可能平实地描述它。</li>
+</ol>
+
+<p>
+没有什么技术手段能帮我们看出什么是问题和概念中丢失的部分，但我们可以养成一个习惯就是总是提问，什么是这个拼图中缺失的内容。一个好用的方法就是总是提问 “what if”，或者可以用一种辩证法。
+</p>
+
+<p>
+有时，重新审视我们已经有解决方案的问题，比我们单纯的去找问题更重要。问题很少直接得到解决。大多数情况下，向前迈进的关键一步是重新定义问题，以便可以采用已经存在的解决方案。第一个问题应该总是针对问题本身。以这种特殊的方式提出问题，你能期待什么样的答案？缺少什么？
+</p>
+
+<p>
+我们可以从对简单问题的反复追问中，找到其中的复杂性。而把一个问题搞的比他看起来更复杂，是找到这种复杂性的一个好方式。简单想法可以构建复杂的理论，但对复杂想法未必适用。所以我们需要把 slipbox 作为日常习惯，经常性的审视他的问题，有意识的训练出这种洞察能力，并通过文本记录的方式构建新卡片，让问题暴露在眼前，找到那个缺失的部分。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd071419" class="outline-3">
+<h3 id="orgd071419">在局限中创新</h3>
+<div class="outline-text-3" id="text-orgd071419">
+<p>
+使用纯文本进行笔记记录有他的局限性，形式不够多样。但这也有他的好处，他强迫我们使用纯文字提炼出关键的想法，同时我们可以用一些规定让我们的笔记更省力，如
+</p>
+<ol class="org-ol">
+<li>一个笔记的内容不应太多，电子笔记的话应控制在一页之内</li>
+<li>可以用标准格式来记录，如在某数的第几页，阐述了个什么观点</li>
+</ol>
+
+<p>
+笔记格式从来都不是限制我们创造的，反而是那些我应该使用更灵活的方式来扩张我的思维的想法，才是一种误导。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdf9a5b5" class="outline-2">
+<h2 id="orgdf9a5b5">分享观点 / 形成习惯 / 后记</h2>
+<div class="outline-text-2" id="text-orgdf9a5b5">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">[2022-02-19 Sat] </span></span> 本章是原书的第十三章、十四章和后记。这是这个系列文章的最后部分，讲述如何整理笔记，构建文章，以及如何把这种笔记方法成为我们的习惯。
+</p>
+</div>
+
+<div id="outline-container-orgc063227" class="outline-3">
+<h3 id="orgc063227">分享观点</h3>
+<div class="outline-text-3" id="text-orgc063227">
+<p>
+从 slipbox 中发展文章，就是从现有的笔记中找到联系，构建文章大纲，并试图阐述内容。
+</p>
+
+<p>
+这些卡片和观点会不停的吸引你的兴趣，并在这个过程中我们可以看到许多未解答的问题，以及需要继续补充的工作。所以现在新的任务是，如何发展一种新的观点，不是扩展思维式的扩展出新思路，而是缩小视野，只对一个主题进行立论，而删掉与主题不相关的内容。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6a8324c" class="outline-3">
+<h3 id="org6a8324c">不要头脑风暴，要 slipbox 风暴</h3>
+<div class="outline-text-3" id="text-org6a8324c">
+<p>
+尽管头脑风暴到目前为止都被认为是构建新想法的好办法，但作者认为这样产生的想法完全没有质量。头脑风暴这种不依赖外部工具的思考方式其实是一种教条，就好像让学生纯靠记忆来学知识。
+</p>
+
+<p>
+大脑在工作时会更倾向于想到最近的事情，而不是与我们话题最相关的事情。而那些抽象的，模糊的，情绪中立的，甚至听起来不怎样的话题会被大脑忽略，这显然不是智力构建的正确方式。而更糟的是，在头脑风暴时我们会更倾向于一开始的想法。同时越多的人参与讨论，并不会产生多少好想法，反而让所以的话题倾向在同一个方向上。
+</p>
+
+<p>
+但对于已经收集了许多笔记的人来说，想法已经存在在 slipbox 中，而无需再去从头构建应写点什么。盒子中已经有我们积累数月的想法，而不需要从头构建想法，甚至这些想法已经证明了其被研究的价值。很多时候，证明一个话题有价值也需要一段的时间。每天的阅读中，我们已经形成了许多话题是否应该被些的决定。在每次做长期笔记的过程中，我们已经做了是否要长期研究某个话题的决定。
+</p>
+
+<p>
+这个过程是自加强的。一开始我们随着一些卡片收集新的想法，构建更多的联系，在这个过程中主题是自下向上的涌现出来。等到内容积累到一定程度后，我们再反观 slipbox 中，我们能发现什么话题是真正有价值的。
+这个过程改变了选题过程，现在重要的不是写什么话题，而是在写作过程中要问什么问题。在阅读和学习过程中，我们会产生许多的问题。这个过程中很少问题能被解答，有些过宽泛，有些过于具体，有些我们的知识体系还不够回答，更多的是我们的资料不够。
+</p>
+
+<p>
+所以如果遵循一个计划或想法进行写作，容易卡在某个话题上，要么换方向，要么死瞌到底。如果这些问题是来自 slipbox ，那这些问题已经被多次思考过，或因为没有什么价值而被遗弃。
+</p>
+
+<p>
+问题就是这样进化出来的，而不是计划出来的。一个好的问题来自相关性和兴趣，他不这么容易被解答，但可以在我们的材料中被找到依据。一个好的问题，光想是不够的，还需做一些什么，让我们能做更好的判断：写笔记，创建链接，比较差异，完善，解释问题。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3a3d770" class="outline-3">
+<h3 id="org3a3d770">从上向下，到自下到上</h3>
+<div class="outline-text-3" id="text-org3a3d770">
+<p>
+构建话题和问题来自于大量我们已有的资料，同时也让我们更欢迎出新想法。
+</p>
+
+<p>
+虽然反直觉，但如果不能充分讨论我们已经收集的，我们无法找到其中缺失的或局限的。对已知的资料更熟悉，能让我们更容易的去修改他，而不用担心重复了别人已经发表过的观点。我们知道多数想法其实并没有那么创新，且随着了解越多我们原创的可能性越低，但也越有可能真创生些新想法。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3d92c32" class="outline-3">
+<h3 id="org3d92c32">用你的兴趣驱动 GTD</h3>
+<div class="outline-text-3" id="text-org3d92c32">
+<p>
+研究表明对学习的兴趣是影响学生学习能力的最重要指标之一，仅次于对学习课程的掌握程度。一个好学生如果挂了课，往往是因为他没能把这个课程内容与自己的学习目标挂钩。
+</p>
+
+<p>
+一个好目标和动力能让学习过程变轻松，而一个项目如果看上去没啥意义，也会让人没法推进这个学习过程。
+对一个长期项目的兴趣很容易因为缺乏期待而让人丧失兴趣。所以让一个项目的组织方式变得灵活，让人能随时改变行进目标，就显得重要。
+</p>
+
+<p>
+通过在做笔记时，不停的发问，如 “这个的好处是什么？”， “这个与话题有何相关性，值得我们记下来” 等问题，而不是我们个人的兴趣来选择信息。通过阐述问题，发现我们不曾关注的新话题，来构建新的兴趣点。在研究过程中，兴趣点不会是永远不变的。
+</p>
+
+<p>
+适时的改变工作方向是一种控制形式，不同于为了要坚持在目标上而不断改变环境的手段。保持对工作的控制，并能在适当的时候改变方向，是由于写文章可以被拆解成小的、具体的任务，这让我们能在确定的时间做具体的事情，并以次做下一步的动作。
+</p>
+
+<p>
+我们约是投入工作，控制工作，将其引入到我们认为有趣和相关的方向，我们投入这个工作所需要的意志力就约少，这样工作才能拥有源源不断的动力，对项目的完成至关重要。合理的，与人的目的，与人的价值方向相关的工作选项，能让人充满干劲。但如果和人的目的无关，和人的兴趣无关的选项，则会增加我们工作上的意志力消耗。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbe9b8d1" class="outline-3">
+<h3 id="orgbe9b8d1">收尾和回顾</h3>
+<div class="outline-text-3" id="text-orgbe9b8d1">
+<p>
+现在我们已经完成了大部分的工作，还有一些剩下的事情要处理。在这个阶段，有两个诀窍：
+</p>
+
+<p>
+其一是尽量保持笔记和文章结构的松散。我们现在是要把我们的叙事变的线性有调理，但也正是在这个时候，我们可以让各种草稿相互可见。我们在这个阶段中，可以检查一下不同个章节是否有相互的关联性。在这个阶段，我们手上不是没有资料，而是资料太多，组织他们让他们相互连接，是这个阶段必须要考虑的。同时不应该固定某种次序或一上来就专注写某个章节的明文，因为不到最后还会调整章节也是非常可能的。
+</p>
+
+<p>
+其二是可以在同一时间同时写多个文章或者话题。当我们写作时，往往会产生复产品，这种复产品伴随我们的阅读，研究，写作的新想法而产生。我们可以让这种兴趣带领我们在多个不同的文章中切换，以保持写作思路的连贯。同时，一但在当前话题卡住，我们可以立即切换到另一个更有思路的话题上，充分利用我们写作的兴致，且还有可能在这个过程中不经意的找到原话题的新思路。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org6dc397e" class="outline-3">
+<h3 id="org6dc397e">成为放弃计划的专家</h3>
+<div class="outline-text-3" id="text-org6dc397e">
+<p>
+大部分学生都无法自己计划一个研究或者写作活动，让他们即使在最坏的可能性下预估的时间，都远短于他们实际所使用的时间。同时在一年后，再让这些作出过错误预计的学生做计划评估，大部分人依然估计出了远短于实际的时间。所幸的是，这个结论对所有人都一样。
+</p>
+
+<p>
+这里的教训是我们的计划总是关注最后的产出，而不是为了这个产出所需要的步骤和真实工作。在这个方面，我们需要有更现实的认识。对任何需要付出努力和忍耐的工作，对现实有更充分的认识不但能帮他们取得更好的结果，还能提高效率。
+</p>
+
+<p>
+另一个教训是我们无法从经验中或者教训帮助我们计划的更周密，除非我们能快速的从经历中得到反馈。所以我们需要把一个漫长的写作流程，拆成多个可控步骤阶段，这样我们就可以从这个过程中得到更多的基准评估，帮助我们改进。如果有人理想化的认为写作可以线性的，一气喝成的完成，所有的研究，阅读，整理，讨论都是线性可分片的，那这样的计划一定会失败。因为一但我们开始做研究，我们就会发现我们一开始的话题并不好，或者资料并不能立论，或者在一个阅读后会有延伸的阅读，或者在写作时我们发现一个论述需要有另一段论述来支撑，或我们一开始的理解压根就是错的。所有以上的因素都会让我们的计划失败。
+</p>
+
+<p>
+如果我们坚持前文的，每天写3篇笔记的习惯，这个过程就是让我们把长篇的，线性的写作拆解了。这个过程我们会学习，阅读，比较立论，反复切换话题。这个过程让我们从一开始要写作起，就有一个更现实的对这次问题的理解。
+</p>
+
+<p>
+这个过程其实最难的是，「从哪里开始」的问题。我们每天要求自己写3篇笔记，收集这个文章所需要的资料，远远明确于一个模糊的计划「我这周要写一篇论文」，更容易被执行。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd81472b" class="outline-3">
+<h3 id="orgd81472b">真的开写</h3>
+<div class="outline-text-3" id="text-orgd81472b">
+<p>
+海明威在最终完成他的小说前会大量修改他的结局，所以我们也永远无法知道什么时候才是写作完成的时候。我们应当有这样的心态，草稿永远只是草稿。如果不说服自己，我仅仅是写下我当前的想法，很多人连一个字都不会开始写。虽然我们可以安慰自己说，也许这个内容未来会用到某个地方，但其实大部分时候都用不到，但这也是常态。所以不要考虑太多，直接开写，就是写做的执行。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2ba9db1" class="outline-3">
+<h3 id="org2ba9db1">养成习惯</h3>
+<div class="outline-text-3" id="text-org2ba9db1">
+<p>
+会决定一个人的短期行为的是我们的意图。而在长期看来，现在还没有在意图和行为之间有什么联系。但有一点是确定的，如果我们以前做过这个事情，我们会按照我们的意图行事。
+</p>
+
+<p>
+我们会更容易的做以前做过的事情，好的意图不会很长久。而我们要改变这样的习惯，最好从一开始就有一个现实的认识：这会很困难。这不太容易，因为我们越是习惯做某事，就认为自己对这个事情有掌控力，但其实并不是。
+</p>
+
+<p>
+这里的技巧是，不要废弃原来的习惯，也不要用意志力强迫自己去做一个新的事情，而是技巧性的，用新的习惯去替代旧的习惯。比如我们阅读时常拿一支笔在手上写写画画，我们可以把他改成把想法写在卡片上。当我们的 slipbox 中有大量的这种卡片时，我们就会不由自主的想要去整理他们，阅读他们，产生新的想法。这个时候我们的一个新习惯就实现了：阅读、笔记、整理、思考，不需要额外的努力。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org677c78f" class="outline-3">
+<h3 id="org677c78f">后记</h3>
+<div class="outline-text-3" id="text-org677c78f">
+<p>
+作者的这本书就是同过 slipbox 的方法写成的，这是证明这个笔记方法有效的最好例证了。
+</p>
+
+<p>
+现在这种写作方法已经在各种学术机构里流行，但这也不是银弹，对那些有主要学业任务或学习大纲的学生来说，可能过于发散，毕竟考试时老师不会让你慢慢整理你的卡片。有许多其他的学习法可以支持学生们创新，但缺少实际行动的方法，无法改变工作流，也没有说服力。以学习者为中心的学习法是错误的，学习者不是重点，重点是一个外部的支撑框架。
+</p>
+
+<p>
+slipbox 不是关注学习者，而是让学习者的思考和知识体系形成网络，以积累知识。slipbox 也不是百科全书，不是那种我有什么问题，在里面翻一翻就能找出来的工具。他是一种工作流程，一种思考方法，一个知识构建的体系。所以这个方法必须用一本书，而不是一篇手册就能表达的。
+</p>
+
+<p>
+学生总是在遇到问题，写不出东西来时(特别是毕业论文)，才各种找学习技巧和方法，给了市面上各种知识整理方法以机会。且当我们压力越大，我们越不想改变工作流，越依赖于我们习惯的旧方法。另外要改变一个工作流也是很难的。所幸的是 slipbox 足够简单，能让我们有机会改变并成为日常的习惯。所以从现在起拿起纸笔，从头开始，读、想、写，做聪明的笔记。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+
+
+<p class="author">Author: <a href="https://x.com/gsj987" target=_blank>gsj987</a></p>
+<p class="date">Publish Date: 2020-08-09 Sun 00:00</p>
+<p class="license">License: <a href="https://www.creativecommons.org/licenses/by-nc/4.0/deed.zh-hans">CC BY-NC 4.0</a></p>
+
+<script src="/assets/dynamic-toc.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/powershell.min.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/lisp.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C71VVP1YSV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C71VVP1YSV');
+</script>
+</div>
+</body>
+</html>

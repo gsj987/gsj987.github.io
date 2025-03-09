@@ -5,8 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>gsj987的博客</title>
-<meta name="author" content="user" />
+<title>Build Homelab Log</title>
+<meta name="author" content="gsj987" />
 <meta name="generator" content="Org Mode" />
 <style>
   #content { max-width: 60em; margin: auto; }
@@ -208,65 +208,97 @@
   </ul>
 </nav>
 </div>
-<section id="content" class="content">
-<h1 class="title">gsj987的博客</h1>
+<div id="content" class="content">
+<h1 class="title">Build Homelab Log</h1>
+<p>
+最近搬新家，顺便把家庭网络和 homelab 的结构简单搭建了一下。
+</p>
+
+<p>
+其实以前一直有用树莓派搭建简单的 self-hosted 服务，以及下载服务。但毕竟一个派的计算能力有限，arm 平台的应用也经常由于支持性问题，许多服务没有最好的选择。
+</p>
+
+<p>
+在新家我有了更好的网络设施，也设了专门的信息箱，可以添加海量设备，正好把原有的服务有个整理和扩展。
+</p>
+
+<p>
+就需求而言，我的 homelab 主要解决以下的几个问题：
+</p>
 <ul class="org-ul">
-<li><p>
-<a href="emacs-ai-journal.html">Emacs + AI 折腾日志</a>
-</p>
-<p class="pub-date">发布时间：2025-02-04</p>
-<p class="pub-desc">摘要：Emacs 中使用 gptel 和 AI 工具增强编辑和开发体验的个人折腾日志。主要介绍了 gptel 插件的基本使用、在 org-mode 中的集成、代码解释、Embark 集成,以及使用 AI 辅助编程和自动生成 commit 信息等实践。</p></li>
-<li><p>
-<a href="build-homelab-log.html">Build Homelab Log</a>
-</p>
-<p class="pub-date">发布时间：2023-01-25</p>
-<p class="pub-desc">摘要：我的 2023 homelab 构建日志。</p></li>
-<li><p>
-<a href="take-note-with-denote-el.html">Take Notes with Denote.el</a>
-</p>
-<p class="pub-date">发布时间：2022-10-16</p>
-<p class="pub-desc">摘要：Denote.el是一个简单灵活的Emacs笔记工具，支持多种文件格式，以文件名作为唯一标识。我通过自定义函数实现了日记、笔记创建、链接和搜索，构建了一个高效的个人知识管理工作流。</p></li>
-<li><p>
-<a href="publish-blog-from-ios.html">Publish Blog from iOS</a>
-</p>
-<p class="pub-date">发布时间：2022-03-24</p>
-<p class="pub-desc">摘要：通过 Shortcuts 和 GitHub REST API 实现了从 iOS 手机直接发布博客到GitHub Pages。</p></li>
-<li><p>
-<a href="webassembly-in-wechat.html">Webassembly in Wechat</a>
-</p>
-<p class="pub-date">发布时间：2022-03-20</p>
-<p class="pub-desc">摘要：研究在微信小程序中使用 WebAssembly，并运行 OpenCV 程序。</p></li>
-<li><p>
-<a href="how-to-take-smart-notes.html">How to Take Smart Notes</a>
-</p>
-<p class="pub-date">发布时间：2020-08-09</p>
-<p class="pub-desc">摘要：我的《How to Take Smart Notes》读书笔记。</p></li>
-<li><p>
-<a href="use-android-library-on-raspberry-pi-with-libhybris.html">利用 libhybris 在树莓派上使用 Android 库</a>
-</p>
-<p class="pub-date">发布时间：2019-08-18</p>
-<p class="pub-desc">摘要：利用libhybris技术，通过兼容层将Android的Bionic libc库移植到树莓派Linux系统。本文详细介绍了在树莓派上编译和使用Android的JPEG库的过程，包括准备环境、编译libhybris、适配库文件等关键步骤。</p></li>
-<li><p>
-<a href="save-and-paste-image-from-clipboard-in-orgmode.html">在 OrgMode 中保存并粘贴剪切板中的图片</a>
-</p>
-<p class="pub-date">发布时间：2019-08-13</p>
-<p class="pub-desc">摘要：在Emacs的OrgMode中，通过编写Elisp函数实现了从剪贴板直接保存并插入图片的功能。利用Powershell读取剪贴板图像，结合Projectile和f.el库，可以自动生成时间戳文件名并插入相对路径的图片链接。</p></li>
-<li><p>
-<a href="what-can-prisma-io-do.html">Pisma.io 可以用来做什么？</a>
-</p>
-<p class="pub-date">发布时间：2019-04-29</p>
-<p class="pub-desc">摘要：prisma.io 是一个用 Scala写的 ORM-like 的服务层，可以方便的作为多种数据库的连接层，是微服务环境下的 ORM 替代品和快速 graphql 建设脚手夹。</p></li>
-<li><p>
-<a href="tensorflow-experience.html">Tensorflow Experience</a>
-</p>
-<p class="pub-date">发布时间：2019-04-21</p>
-<p class="pub-desc">摘要：我的《TensorFlow for Deep Learning》阅读笔记和实践记录，从线性回归到 CNN 深度学习。</p></li>
+<li>科学上网能力，国内工作者的刚需</li>
+<li>私有服务的部署能力，不能把自己的一切都交给大公司</li>
+<li>资料存储能力，家庭共享和保存古早资料是个好习惯</li>
+<li>稳定的内网环境，方便倒腾各种玩意儿</li>
 </ul>
-</section>
+
+<p>
+总体而言，我的网络结构如下图
+</p>
+
+
+<div id="orgfb8f7e9" class="figure">
+<p><img src="https://cdn.qiniu.gsj987.cn/blog/20230125/Untitled-2023-01-24-1137.png" alt="Untitled-2023-01-24-1137.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>homelab</p>
+</div>
+
+<p>
+全屋wifi 覆盖我选择使用 TP Link 的全屋网络方案，上墙的 AP 用 POE 在墙内走线，在装修时就预埋进去，节省空间又能让所有房间都有充足的信号覆盖，同时保留了有线网口，在书房可以用有线连接桌面设备，提供更稳定的网络连接能力，玩嵌入式设备的时候一接网线就搞定。
+</p>
+
+<p>
+POE Switch 是 TP Link 自带的 POE 路由器充当的。由于我在上层还有一个软路由，所以只拿他当交换机用，所有的口连接的都是 Lan。TP Link总控提供了4个lan口，套装里却只有3个AP，感觉上厂商在设计时已经考虑我这样的使用情况了。
+</p>
+
+<p>
+软路由我选了 iKoolcore R1 ，倒也没有什么特殊的理由，就是在推上看到的广告，同时又是最新的 intel 架构，比友善之臂性能更好，应用面也更强，网口丰富（有3个lan，1个wan），价格也不贵，就顺下了。整体的体验还是蛮不错的，出厂已经预装了 PVE 和两个虚拟系统：OpenWRT和Debian，前者是目前功能最丰富的路由系统，后者是经典 linux 发行版跑 Docker 绝对稳定。x86的架构不用再像以前玩 arm，连个合适的 docker 镜像都下不到，自己编译还可能有问题。OpenWRT在出厂时已经装了不少应用，几乎是零折腾。
+</p>
+
+<p>
+OpenWRT 的部署在 POE Switch 的 lan 上，这样才能和 AP 共享内网网段。TP Link 不知道如何在 wan 上设桥接，用 lan 一样完美解决问题（就是浪费一个 lan 口）。主要的点在于 AP 上设备的 DHCP 是由 Switch 提供的，而内网段上其他的服务，都是由 OpenWRT提供的。所以在 DHCP 的设置上，两个服务应提供不同的 IP 段避免冲突。
+</p>
+
+<p>
+内网穿透方案我选了Tailscale，一个服务化的 wireguard ，看者网上的教程很容易就搭建完成。我家的手机和宽带都是电信，所以直接能建立连接不需要中转。之前也折腾过 wireguard ,但复杂的配置方式，以及做内网穿透需要一个中转服务器的做法，令人劝退。Tailscale的服务化配置，零折腾的让我构建好组网，经过测试，这样的组网方式没有中转，唯一的缺点是 Tailscale 的免费方案有设备上限，但对个人用户来说已经足够。
+</p>
+
+<p>
+另一方面，ios上要连接tailscale需要有专门的客户端，启动方式也是调用系统的 api 创建一个 vpn 连接，这会和手机上的科学上网产生冲突。我原先手机是用 Surge 科学上网的，他的收费版也支持 wireguard 协议，但不支持 tailscale。还好另一款移动端翻墙应用 Choc 支持 tailscale，可以在 ios 上同时开启科学上网和内网访问，因此我也全面把手机端的翻墙应用换成了 Choc，目前实用感觉还可以。
+</p>
+
+<p>
+回到内网，在openWRT 中，我使用Openclash 用来科学上网，具体的使用方法和移动端 clash 差不多，可以导入机场的服务器配置。在内网手机中，我通过对 Surge 或 Choc 做额外规则，让网络连接到家庭网络时，自动全部使用直接连接，这样不会让 openclash 和移动端的 Surge 重复代理，在家里有科学上网路由器的情况下没必要。
+</p>
+
+<p>
+另外，内网中各服务还是需要分配域名，同时如果要在移动端使用这些服务，比如我使用 webdav 或 caldav 在 ios 上共享日历和文件，必须配置域名和SSL。我使用 let’s encrypt 自动定期更新免费的 ssl ，并分配域名 htts://*.local.gsj987.cn 给所有内网服务，在DNS上全配置成内网域名。由于我的域名托管在阿里云上，可以通过自动化脚本配置域名解析规则更新ssl证书。另由于我的服务都是通过tailscale进行的访问，所以在公网上也可以直接解析成内网网址，都可以访问到，也解决了安全问题。
+</p>
+
+<p>
+在网络出口处，我还是用了运营商的光猫来接入网络，多占了一个设备，所有的网络出口瓶颈就全在这个光猫上了。有些别的玩家会使用猫棒来增加出口的流量。这个可以是未来可以继续探索优化的方案。
+</p>
+
+<p>
+Pi 和移动硬盘都是旧设备，所以本着废物利用，不买就是赚的原则，没有用 NAS 作为存储，而是用 Pi + 移动硬盘组建了一个 NFS 作为存储，总的来说工作还算顺利，但就数据安全而言，用 NAS 做个 Raid 才是完全方案，也是值得下一步探索。
+</p>
+
+<p>
+以上就是我初步的 homelab 方案，后续我会在这个基础上逐步把方案优化，包括上述的猫棒和NAS，以及更好的内网路由和虚拟化方案，方便做快速的实验。期待和读者交流。
+</p>
+</div>
 <div id="postamble" class="status">
 
-<p class="copyright">© [2019-2025] [<a href="https://x.com/gsj987" target=_blank>user</a>]</p>
+
+<p class="author">Author: <a href="https://x.com/gsj987" target=_blank>gsj987</a></p>
+<p class="date">Publish Date: 2023-01-25 Wed 16:04</p>
+<p class="license">License: <a href="https://www.creativecommons.org/licenses/by-nc/4.0/deed.zh-hans">CC BY-NC 4.0</a></p>
+
 <script src="/assets/dynamic-toc.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/powershell.min.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/lisp.min.js"></script>
+<script>hljs.highlightAll();</script>
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-C71VVP1YSV"></script>

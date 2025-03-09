@@ -5,8 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>gsj987的博客</title>
-<meta name="author" content="user" />
+<title>save and paste image from clipboard in orgmode</title>
+<meta name="author" content="gsj987" />
 <meta name="generator" content="Org Mode" />
 <style>
   #content { max-width: 60em; margin: auto; }
@@ -193,8 +193,7 @@
   .org-svg { }
 </style>
 
-
-  <link rel="stylesheet" href="/assets/style.css" type="text/css"/>
+  <link rel="stylesheet" href="/styles/style.css" type="text/css"/>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -208,75 +207,135 @@
   </ul>
 </nav>
 </div>
-<section id="content" class="content">
-<h1 class="title">gsj987的博客</h1>
-<ul class="org-ul">
-<li><p>
-<a href="emacs-ai-journal.html">Emacs + AI 折腾日志</a>
-</p>
-<p class="pub-date">发布时间：2025-02-04</p>
-<p class="pub-desc">摘要：Emacs 中使用 gptel 和 AI 工具增强编辑和开发体验的个人折腾日志。主要介绍了 gptel 插件的基本使用、在 org-mode 中的集成、代码解释、Embark 集成,以及使用 AI 辅助编程和自动生成 commit 信息等实践。</p></li>
-<li><p>
-<a href="build-homelab-log.html">Build Homelab Log</a>
-</p>
-<p class="pub-date">发布时间：2023-01-25</p>
-<p class="pub-desc">摘要：我的 2023 homelab 构建日志。</p></li>
-<li><p>
-<a href="take-note-with-denote-el.html">Take Notes with Denote.el</a>
-</p>
-<p class="pub-date">发布时间：2022-10-16</p>
-<p class="pub-desc">摘要：Denote.el是一个简单灵活的Emacs笔记工具，支持多种文件格式，以文件名作为唯一标识。我通过自定义函数实现了日记、笔记创建、链接和搜索，构建了一个高效的个人知识管理工作流。</p></li>
-<li><p>
-<a href="publish-blog-from-ios.html">Publish Blog from iOS</a>
-</p>
-<p class="pub-date">发布时间：2022-03-24</p>
-<p class="pub-desc">摘要：通过 Shortcuts 和 GitHub REST API 实现了从 iOS 手机直接发布博客到GitHub Pages。</p></li>
-<li><p>
-<a href="webassembly-in-wechat.html">Webassembly in Wechat</a>
-</p>
-<p class="pub-date">发布时间：2022-03-20</p>
-<p class="pub-desc">摘要：研究在微信小程序中使用 WebAssembly，并运行 OpenCV 程序。</p></li>
-<li><p>
-<a href="how-to-take-smart-notes.html">How to Take Smart Notes</a>
-</p>
-<p class="pub-date">发布时间：2020-08-09</p>
-<p class="pub-desc">摘要：我的《How to Take Smart Notes》读书笔记。</p></li>
-<li><p>
-<a href="use-android-library-on-raspberry-pi-with-libhybris.html">利用 libhybris 在树莓派上使用 Android 库</a>
-</p>
-<p class="pub-date">发布时间：2019-08-18</p>
-<p class="pub-desc">摘要：利用libhybris技术，通过兼容层将Android的Bionic libc库移植到树莓派Linux系统。本文详细介绍了在树莓派上编译和使用Android的JPEG库的过程，包括准备环境、编译libhybris、适配库文件等关键步骤。</p></li>
-<li><p>
-<a href="save-and-paste-image-from-clipboard-in-orgmode.html">在 OrgMode 中保存并粘贴剪切板中的图片</a>
-</p>
-<p class="pub-date">发布时间：2019-08-13</p>
-<p class="pub-desc">摘要：在Emacs的OrgMode中，通过编写Elisp函数实现了从剪贴板直接保存并插入图片的功能。利用Powershell读取剪贴板图像，结合Projectile和f.el库，可以自动生成时间戳文件名并插入相对路径的图片链接。</p></li>
-<li><p>
-<a href="what-can-prisma-io-do.html">Pisma.io 可以用来做什么？</a>
-</p>
-<p class="pub-date">发布时间：2019-04-29</p>
-<p class="pub-desc">摘要：prisma.io 是一个用 Scala写的 ORM-like 的服务层，可以方便的作为多种数据库的连接层，是微服务环境下的 ORM 替代品和快速 graphql 建设脚手夹。</p></li>
-<li><p>
-<a href="tensorflow-experience.html">Tensorflow Experience</a>
-</p>
-<p class="pub-date">发布时间：2019-04-21</p>
-<p class="pub-desc">摘要：我的《TensorFlow for Deep Learning》阅读笔记和实践记录，从线性回归到 CNN 深度学习。</p></li>
+<div id="content" class="content">
+<h1 class="title">save and paste image from clipboard in orgmode</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org6b554de">从剪贴板到本地图片</a></li>
+<li><a href="#orgd4439f6">将文件写入项目目录</a></li>
+<li><a href="#org4ff06ca">插入相对路径</a></li>
+<li><a href="#org992c17a">完整版本</a></li>
 </ul>
-</section>
+</div>
+</div>
+<p>
+最近的一个项目中，我打算使用 OrgMode 作为文档的书写工具，主要原因是比较简单，而且可以使用文学编程，简化 API 文档的写作流程。但首先遇到了个难题：如何方便的插入图片。于是我花了些时间，边学边用 elisp 做了一个函数，解决了我项目中的问题：从剪贴板保存图片到项目目录，并以相对目录的形式插入到 org 文件中。
+</p>
+
+<div id="outline-container-org6b554de" class="outline-2">
+<h2 id="org6b554de">从剪贴板到本地图片</h2>
+<div class="outline-text-2" id="text-org6b554de">
+<p>
+Linux 和 MacOS 的用户直接可以用 org-download 之类的插件，或者如<a href="https://stackoverflow.com/questions/17435995/paste-an-image-on-clipboard-to-emacs-org-mode-file-without-saving-it">这个网址所介绍的方法</a>，我使用的 windows 在方法上是有点不同，在原链里也有提到：使用 powershell 脚本
+</p>
+<pre class="example" id="orge7fc41a">
+powershell -command "Add-Type -AssemblyName System.Windows.Forms;if ($([System.Windows.Forms.Clipboard]::ContainsImage())) {$image = [System.Windows.Forms.Clipboard]::GetImage();[System.Drawing.Bitmap]$image.Save('filepath.jpg',[System.Drawing.Imaging.ImageFormat]::Jpeg); Write-Output 'clipboard content saved as file'} else {Write-Output 'clipboard does not contain image data'}"
+</pre>
+
+<p>
+基本原理就是用 .net framework 直接读 clipboard, 再保存到指定位置。可见 powershell 在 .net 加持下的强大。我们使用这段代码可以写出 elisp 函数的基本结构
+</p>
+<pre class="example" id="org769096b">
+(defun org-docs-insert-image-from-clipboard ()
+  "Take a screenshot into a time stamped unique-named file in the
+   same directory as the org-buffer and insert a link to this file."  
+   (interactive)
+   (setq (jpg-file-name (format-time-string "%Y%m%d_%H%M%S.jpg")))
+   (shell-command (concat "powershell -command \"Add-Type -AssemblyName System.Windows.Forms;if ($([System.Windows.Forms.Clipboard]::ContainsImage())) {$image = [System.Windows.Forms.Clipboard]::GetImage();[System.Drawing.Bitmap]$image.Save('" jpg-file-name "',[System.Drawing.Imaging.ImageFormat]::Png); Write-Output 'clipboard content saved as file'} else {Write-Output 'clipboard does not contain image data'}\""))
+   (insert (concat "[[file:" jpg-file-name "]]"))
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-orgd4439f6" class="outline-2">
+<h2 id="orgd4439f6">将文件写入项目目录</h2>
+<div class="outline-text-2" id="text-orgd4439f6">
+<p>
+由于我的文档是在项目目录中的，所以我利用 projectile 定位将图片作为附件的目录，以让代码有更好的普适性
+</p>
+<pre class="example" id="orgba3d42c">
+(defun org-docs-insert-image-from-clipboard ()
+    "Take a screenshot into a time stamped unique-named file in the
+   same directory as the org-buffer and insert a link to this file."
+    (interactive)
+    (let* ((the-dir (concat (projectile-project-root) "docs/"))
+           (attachments-dir (concat the-dir "assets/attachments/"))
+           (jpg-file-name (format-time-string "%Y%m%d_%H%M%S.jpg"))
+           (jpg-path (concat attachments-dir jpg-file-name))
+    (shell-command (concat "powershell -command \"Add-Type -AssemblyName System.Windows.Forms;if ($([System.Windows.Forms.Clipboard]::ContainsImage())) {$image = [System.Windows.Forms.Clipboard]::GetImage();[System.Drawing.Bitmap]$image.Save('" jpg-path "',[System.Drawing.Imaging.ImageFormat]::Jpeg); Write-Output 'clipboard content saved as file'} else {Write-Output 'clipboard does not contain image data'}\""))
+    (insert (concat "[[file:" jpg-path "]]"))
+    ))
+</pre>
+
+<p>
+我的文档在项目目录的 <code>./docs/</code> 下，并在 <code>./docs/assets/attachments/</code> 下存放图片文件，方便统一的编译发布。
+</p>
+
+
+<div id="org3708821" class="figure">
+<p><img src="http://cdn.qiniu.gsj987.cn/201908140010_746.png?imageslim" alt="201908140010_746.png?imageslim" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4ff06ca" class="outline-2">
+<h2 id="org4ff06ca">插入相对路径</h2>
+<div class="outline-text-2" id="text-org4ff06ca">
+<p>
+由于 docs 文件夹下可能会有多个目录，以方便对文档的组织，所以不同路径下的 org 文件，他的引用图片的相对路径也是不同的。为了得到相对路径，我就需要让当前文件和图片目录比较，以得到正确的相对路径。简单搜索了一下，发现 f.el 的辅助函数：f-relative（比较两个文件的相对位置） 和 f-dirname（获得文件目录），可以大大简化人代码
+</p>
+
+<pre class="example" id="org771188c">
+(f-relative jpg-path  (f-dirname buffer-file-name))
+</pre>
+
+<p>
+比如在文件 ./docs/rest/basic.org 中，插入图片，地址就为 ../assets/attachments/xxx.jpg
+</p>
+</div>
+</div>
+
+<div id="outline-container-org992c17a" class="outline-2">
+<h2 id="org992c17a">完整版本</h2>
+<div class="outline-text-2" id="text-org992c17a">
+<pre class="example" id="org2c52f68">
+;; orgmode import image from clipboard
+(defun org-docs-insert-image-from-clipboard ()
+    "Take a screenshot into a time stamped unique-named file in the
+    same directory as the org-buffer and insert a link to this file."
+    (interactive)
+    (let* ((the-dir (concat (projectile-project-root) "docs/"))
+           (attachments-dir (concat the-dir "assets/attachments/"))
+           (jpg-file-name (format-time-string "%Y%m%d_%H%M%S.jpg"))
+           (jpg-path (concat attachments-dir jpg-file-name))
+           (jpg-relative-path (f-relative jpg-path  (f-dirname buffer-file-name))))
+          (shell-command (concat "powershell -command \"Add-Type -AssemblyName System.Windows.Forms;if ($([System.Windows.Forms.Clipboard]::ContainsImage())) {$image = [System.Windows.Forms.Clipboard]::GetImage();[System.Drawing.Bitmap]$image.Save('" jpg-path "',[System.Drawing.Imaging.ImageFormat]::Jpeg); Write-Output 'clipboard content saved as file'} else {Write-Output 'clipboard does not contain image data'}\""))
+          (insert (concat "[[file:" jpg-relative-path "]]"))
+          ))
+;; set keybinding
+(global-set-key (kbd "M-o M-v") 'org-docs-insert-image-from-clipboard)
+</pre>
+
+<p>
+实现的效果如图
+</p>
+
+<div id="orgc6f5819" class="figure">
+<p><img src="http://cdn.qiniu.gsj987.cn/201908140033_866.gif?imageslim" alt="201908140033_866.gif?imageslim" />
+</p>
+<p><span class="figure-number">Figure 1: </span>实现截图效果</p>
+</div>
+</div>
+</div>
+</div>
 <div id="postamble" class="status">
 
-<p class="copyright">© [2019-2025] [<a href="https://x.com/gsj987" target=_blank>user</a>]</p>
-<script src="/assets/dynamic-toc.js"></script>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C71VVP1YSV"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-C71VVP1YSV');
-</script>
+<p class="author">Author: <a href="mailto:gsj987@gmail.com">gsj987</a></p>
+<p class="date">Date: 2019-08-13 Tue 21:00</p>
 </div>
 </body>
 </html>

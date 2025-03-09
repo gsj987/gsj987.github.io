@@ -5,8 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>gsj987的博客</title>
-<meta name="author" content="user" />
+<title>Webassembly in Wechat</title>
+<meta name="author" content="gsj987" />
 <meta name="generator" content="Org Mode" />
 <style>
   #content { max-width: 60em; margin: auto; }
@@ -193,8 +193,7 @@
   .org-svg { }
 </style>
 
-
-  <link rel="stylesheet" href="/assets/style.css" type="text/css"/>
+  <link rel="stylesheet" href="/styles/style.css" type="text/css"/>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -208,75 +207,223 @@
   </ul>
 </nav>
 </div>
-<section id="content" class="content">
-<h1 class="title">gsj987的博客</h1>
-<ul class="org-ul">
-<li><p>
-<a href="emacs-ai-journal.html">Emacs + AI 折腾日志</a>
-</p>
-<p class="pub-date">发布时间：2025-02-04</p>
-<p class="pub-desc">摘要：Emacs 中使用 gptel 和 AI 工具增强编辑和开发体验的个人折腾日志。主要介绍了 gptel 插件的基本使用、在 org-mode 中的集成、代码解释、Embark 集成,以及使用 AI 辅助编程和自动生成 commit 信息等实践。</p></li>
-<li><p>
-<a href="build-homelab-log.html">Build Homelab Log</a>
-</p>
-<p class="pub-date">发布时间：2023-01-25</p>
-<p class="pub-desc">摘要：我的 2023 homelab 构建日志。</p></li>
-<li><p>
-<a href="take-note-with-denote-el.html">Take Notes with Denote.el</a>
-</p>
-<p class="pub-date">发布时间：2022-10-16</p>
-<p class="pub-desc">摘要：Denote.el是一个简单灵活的Emacs笔记工具，支持多种文件格式，以文件名作为唯一标识。我通过自定义函数实现了日记、笔记创建、链接和搜索，构建了一个高效的个人知识管理工作流。</p></li>
-<li><p>
-<a href="publish-blog-from-ios.html">Publish Blog from iOS</a>
-</p>
-<p class="pub-date">发布时间：2022-03-24</p>
-<p class="pub-desc">摘要：通过 Shortcuts 和 GitHub REST API 实现了从 iOS 手机直接发布博客到GitHub Pages。</p></li>
-<li><p>
-<a href="webassembly-in-wechat.html">Webassembly in Wechat</a>
-</p>
-<p class="pub-date">发布时间：2022-03-20</p>
-<p class="pub-desc">摘要：研究在微信小程序中使用 WebAssembly，并运行 OpenCV 程序。</p></li>
-<li><p>
-<a href="how-to-take-smart-notes.html">How to Take Smart Notes</a>
-</p>
-<p class="pub-date">发布时间：2020-08-09</p>
-<p class="pub-desc">摘要：我的《How to Take Smart Notes》读书笔记。</p></li>
-<li><p>
-<a href="use-android-library-on-raspberry-pi-with-libhybris.html">利用 libhybris 在树莓派上使用 Android 库</a>
-</p>
-<p class="pub-date">发布时间：2019-08-18</p>
-<p class="pub-desc">摘要：利用libhybris技术，通过兼容层将Android的Bionic libc库移植到树莓派Linux系统。本文详细介绍了在树莓派上编译和使用Android的JPEG库的过程，包括准备环境、编译libhybris、适配库文件等关键步骤。</p></li>
-<li><p>
-<a href="save-and-paste-image-from-clipboard-in-orgmode.html">在 OrgMode 中保存并粘贴剪切板中的图片</a>
-</p>
-<p class="pub-date">发布时间：2019-08-13</p>
-<p class="pub-desc">摘要：在Emacs的OrgMode中，通过编写Elisp函数实现了从剪贴板直接保存并插入图片的功能。利用Powershell读取剪贴板图像，结合Projectile和f.el库，可以自动生成时间戳文件名并插入相对路径的图片链接。</p></li>
-<li><p>
-<a href="what-can-prisma-io-do.html">Pisma.io 可以用来做什么？</a>
-</p>
-<p class="pub-date">发布时间：2019-04-29</p>
-<p class="pub-desc">摘要：prisma.io 是一个用 Scala写的 ORM-like 的服务层，可以方便的作为多种数据库的连接层，是微服务环境下的 ORM 替代品和快速 graphql 建设脚手夹。</p></li>
-<li><p>
-<a href="tensorflow-experience.html">Tensorflow Experience</a>
-</p>
-<p class="pub-date">发布时间：2019-04-21</p>
-<p class="pub-desc">摘要：我的《TensorFlow for Deep Learning》阅读笔记和实践记录，从线性回归到 CNN 深度学习。</p></li>
+<div id="content" class="content">
+<h1 class="title">Webassembly in Wechat</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org7b7320e">具体流程</a>
+<ul>
+<li><a href="#orgb6e12d2">使用 WXWebAssembly 代替 WebAssembly</a></li>
+<li><a href="#org1adaa34">调整 wasm 文件的加载方式</a></li>
+<li><a href="#org88763ee">删除一些微信小程序不支持的方法</a></li>
+<li><a href="#org6825600">输出模块，更好调用</a></li>
 </ul>
-</section>
+</li>
+<li><a href="#org7f041b7">使用时的事项</a></li>
+</ul>
+</div>
+</div>
+<p>
+微信小程序中已经支持了 WebAssembly ，但他的文档语焉不详，也无法直接使用 opencv 编译出来的 js 胶水文件。我们需要一些简单的改动，让他可以工作。
+</p>
+
+
+<div id="outline-container-org7b7320e" class="outline-2">
+<h2 id="org7b7320e">具体流程</h2>
+<div class="outline-text-2" id="text-org7b7320e">
+</div>
+<div id="outline-container-orgb6e12d2" class="outline-3">
+<h3 id="orgb6e12d2">使用 WXWebAssembly 代替 WebAssembly</h3>
+<div class="outline-text-3" id="text-orgb6e12d2">
+<p>
+在微信小程序中，需要把所有的 <code>WebAssembly</code> 都替换成 <code>WXWebAssembly</code> 。我们可以直接 opencv 编译出的 js 胶水文件中的所有内容
+</p>
+
+<p>
+替换完成后，要调整 <code>WXWebAssembly</code> 中没有的 API ，如 <code>function abort()</code> 中，有对 <code>WXWebAssembly.RuntimeError</code> 的引用，我们可以直接改写
+</p>
+<pre class="example" id="org5543bc1">
+- var e = new WXWebAssembly.RuntimeError(what);
+- throw e
++ throw what
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org1adaa34" class="outline-3">
+<h3 id="org1adaa34">调整 wasm 文件的加载方式</h3>
+<div class="outline-text-3" id="text-org1adaa34">
+<p>
+由于微信只支持使用本地的 wasm 文件加载方式，所以我们可以调整 js 文件中的异步加载的过程，简化代码，可以解决大部分问题
+</p>
+
+<p>
+在 instantiateArrayBuffer 方法中，原：
+</p>
+<pre class="example" id="org6e07457">
+function instantiateArrayBuffer(receiver) {
+  return getBinaryPromise().then(function (binary) {
+    return WebAssembly.instantiate(binary, info)
+  }).then(function (instance) {
+    return instance
+  }).then(receiver, function (reason) {
+    err("failed to asynchronously prepare wasm: " + reason);
+    abort(reason)
+  })
+}
+</pre>
+
+<p>
+修改后：
+</p>
+<pre class="example" id="org769dbf7">
+function instantiateArrayBuffer(receiver) {
+  return WXWebAssembly.instantiate("your-lib.wasm", info)
+    .then(function(wasm) { 
+      receiver(wasm);
+     })
+}
+</pre>
+
+<p>
+他的调用者 instantiateAsync 也可以简化成
+</p>
+<pre class="example" id="org0c65bdb">
+function instantiateAsync() {
+  return instantiateArrayBuffer(receiveInstantiationResult) 
+}
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org88763ee" class="outline-3">
+<h3 id="org88763ee">删除一些微信小程序不支持的方法</h3>
+<div class="outline-text-3" id="text-org88763ee">
+<p>
+微信中有许多不支持的 BOM 会被 WebAssembly 的胶水代码引用，我们都要改成替代方法，如
+</p>
+<pre class="example" id="org32ddcc3">
+DB_NAME: () =&gt; {
+  return "EM_FS_" + window.location.pathname
+},
+</pre>
+
+<p>
+改成
+</p>
+<pre class="example" id="org95e92df">
+DB_NAME: () =&gt; {
+  return "EM_FS_WORKER"
+},
+</pre>
+
+<p>
+还有
+</p>
+<pre class="example" id="orgc26160a">
+if (ENVIRONMENT_IS_WORKER) {
+  scriptDirectory = self.location.href
+} else if (typeof document != "undefined" &amp;&amp; document.currentScript) {
+  scriptDirectory = document.currentScript.src
+}
+if (scriptDirectory.indexOf("blob:") !== 0) {
+  scriptDirectory = scriptDirectory.substr(0, scriptDirectory.replace(/[?#].*/, "").lastIndexOf("/") + 1)
+} else {
+  scriptDirectory = ""
+}
+</pre>
+
+<p>
+检查以后，这里完全可以简化成
+</p>
+<pre class="example" id="org18c1f4c">
+scriptDirectory = ""
+</pre>
+
+<p>
+另外在真机上，不支持 <code>new Function</code> 这样的写法，所以 <code>createNamedFunction</code> 就要简化成
+</p>
+<pre class="example" id="org2679f3c">
+function createNamedFunction(name, body) {
+  return ()=&gt;{}
+}
+</pre>
+
+<p>
+同理，真机没有 <code>performance</code> 对象，我们要替换其为 <code>Date</code> 方法
+</p>
+<pre class="example" id="orgaa54c24">
+- } else _emscripten_get_now = (() =&gt; performance.now());
++ } else _emscripten_get_now = (() =&gt; new Date().getTime());
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org6825600" class="outline-3">
+<h3 id="org6825600">输出模块，更好调用</h3>
+<div class="outline-text-3" id="text-org6825600">
+<p>
+删除文件底部的 run 函数，并 export default Module
+</p>
+<pre class="example" id="orgb7a5412">
+- run();
++ export default Module;
+</pre>
+
+<p>
+这样在调用处，我们可以这样
+</p>
+<pre class="example" id="org51cc9e4">
+const wasm = require('./lib').default
+
+wasm.onRuntimeInitialized = ()=&gt; {
+    // your callback
+};
+
+wasm.run(); // start loading
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7f041b7" class="outline-2">
+<h2 id="org7f041b7">使用时的事项</h2>
+<div class="outline-text-2" id="text-org7f041b7">
+<p>
+微信上 onCameraFrame 的方法返回的 frame.data 是一个 ArrayBuffer ，是一个 RGBA 的数据，我们在实际使用中经常会通过 `Worker.postMessage` 传递给 Worker 运算来提升效率。
+</p>
+
+<p>
+WebAssembly 中无法直接访问到 js 空间中的内存，我们需要手动申请内存，并把 ArrayBuffer 的值传进去，这里需要一个 Uint8Array 的转化，我们才能在 WebAssembly 空间中使用
+</p>
+<pre class="example" id="orgd7e2ed2">
+const { width, height, data } = payload;
+
+let buffer = wasm._malloc(4 * width * height); 
+const newData = new Uint8Array(data);
+wasm.HEAPU8.set(newData, buffer);
+
+wasm._analyse(buffer);
+
+// free
+wasm._free(buffer);
+</pre>
+
+<p>
+另外，在实际使用时，由于真机的运行内存比 PC 少太多，所以我们要打开内存增涨 flag 以防止 OOM 
+</p>
+<pre class="example" id="org0e87ec3">
+-sALLOW_MEMORY_GROWTH=1
+</pre>
+</div>
+</div>
+</div>
 <div id="postamble" class="status">
 
-<p class="copyright">© [2019-2025] [<a href="https://x.com/gsj987" target=_blank>user</a>]</p>
-<script src="/assets/dynamic-toc.js"></script>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C71VVP1YSV"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-C71VVP1YSV');
-</script>
+<p class="author">Author: <a href="mailto:gsj987@gmail.com">gsj987</a></p>
+<p class="date">Date: 2022-03-20 Sun 20:00</p>
 </div>
 </body>
 </html>
