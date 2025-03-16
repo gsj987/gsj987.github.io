@@ -14,8 +14,8 @@
   <link>https://gsj987.github.io</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Sun, 09 Mar 2025 17:59:32 +0800</pubDate>
-  <lastBuildDate>Sun, 09 Mar 2025 17:59:32 +0800</lastBuildDate>
+  <pubDate>Sun, 16 Mar 2025 21:16:49 +0800</pubDate>
+  <lastBuildDate>Sun, 16 Mar 2025 21:16:49 +0800</lastBuildDate>
   <generator>Emacs 29.1 Org-mode 9.6.6</generator>
   <webMaster>gsj987@gmail.com (gsj987)</webMaster>
   <image>
@@ -25,6 +25,18 @@
   </image>
 
 
+  <item>
+    <title>使用 org-mode 写博客</title>
+    <link>https://gsj987.github.io/use-org-mode-publish-blog.html</link>
+    <author>gsj987@gmail.com (gsj987)</author>
+    <guid isPermaLink="false">https://gsj987.github.io/use-org-mode-publish-blog.html</guid>
+    <pubDate>Sat, 15 Mar 2025 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    这篇文章介绍了我近期使用 org-mode、denote 和 org-publish 搭建个人博客的工作流程。
+    </p>
+    ]]></description>
+  </item>
   <item>
     <title>emacs + AI 折腾日志</title>
     <link>https://gsj987.github.io/emacs-ai-journal.html</link>

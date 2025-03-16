@@ -1,0 +1,983 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>使用 org-mode 写博客</title>
+<meta name="author" content="gsj987" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+
+
+  <link rel="stylesheet" href="/assets/style.css" type="text/css"/>
+</head>
+<body>
+<div id="preamble" class="status">
+
+ <nav>
+  <ul>
+    <li><a href="/index.html">Home</a></li>
+    <li><a href="/about.html">About</a></li>
+    <li><a href="/rss.xml">RSS</a></li>
+    <li><a href="https://github.com/gsj987/">GitHub</a></li>
+  </ul>
+</nav>
+</div>
+<div id="content" class="content">
+<h1 class="title">使用 org-mode 写博客</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org1032f72">基本架构</a></li>
+<li><a href="#h:8B24FFF2-0773-4B86-8F88-954DE4321640">导出特定 keyword 的笔记</a></li>
+<li><a href="#org36c61a7">处理导出文件的链接</a></li>
+<li><a href="#orgdcaf99d">处理图片资源</a></li>
+<li><a href="#orgc0e9ea0">生成首页和 RSS</a></li>
+<li><a href="#org13ee782">优化样式</a>
+<ul>
+<li><a href="#orge2ad251">增加导航和页尾</a></li>
+<li><a href="#org3565625">代码高亮</a></li>
+<li><a href="#orgfc0fb2e">TOC 在多屏幕尺寸下的自适应样式</a></li>
+<li><a href="#orga89a499">暗色模式</a></li>
+</ul>
+</li>
+<li><a href="#orgcc19cb3">发布博客</a></li>
+<li><a href="#orge8f2bc5">后续思考</a>
+<ul>
+<li><a href="#org63a03c7">为什么不使用 denote 直接写 markdown 文档？</a></li>
+<li><a href="#org2bf747a">为什么不用 org-mode 导出成 markdown 然后使用 hugo 发布？</a></li>
+<li><a href="#org74b9abd">跨平台编辑内容怎么办？</a></li>
+<li><a href="#org0717936">接下来要做什么</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+我现在基本所有的个人笔记都会选择使用 denote 来写和收集。原先工作流里会使用 hugo 构建博客，是使用 markdown 为基础的博客系统，与我的笔记系统还是有点割裂，于是我计划做一个整合。
+</p>
+
+<div id="outline-container-org1032f72" class="outline-2">
+<h2 id="org1032f72">基本架构</h2>
+<div class="outline-text-2" id="text-org1032f72">
+<p>
+整体的工作流程如图：
+</p>
+
+<div id="org1a99683" class="figure">
+<p><img src="https://cdn.qiniu.gsj987.cn/blog/f234b735801e54515cd9b53f2c78906f.jpg" alt="2025-03-16_17-06-25_blog-workflow.jpg" />
+</p>
+</div>
+
+<p>
+大致的过程也很简单：
+</p>
+<ol class="org-ol">
+<li>日常使用 denote 写普通的 org-mode 格式的笔记，详情可以参考 <a href="take-note-with-denote-el.html">Take Notes with Denote.el</a></li>
+<li>给普通 org-mode 笔记添加 keyword: <code>blog</code> ，则会标记这个笔记会成为博文</li>
+<li>通过 org-publish 把有 blog 关键词的文章导出成 html ，并生成 index 和 rss</li>
+<li>把所有生成的内容发布到 GitHub Pages</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-h:8B24FFF2-0773-4B86-8F88-954DE4321640" class="outline-2">
+<h2 id="h:8B24FFF2-0773-4B86-8F88-954DE4321640">导出特定 keyword 的笔记</h2>
+<div class="outline-text-2" id="text-h:8B24FFF2-0773-4B86-8F88-954DE4321640">
+<p>
+因为所有的笔记都是由 denote 在相同的目录下管理的，我需要首先区分选出可以导出的笔记和一般的笔记。为了让管理变的简单，我直接使用 <code>filetags</code> 包含 <code>blog</code> 作为筛选条件，而不是放在单独文件夹<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup> 下的做法。
+</p>
+
+<p>
+当我决定一篇笔记需要成为笔记，我执行方法:
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-lisp">(defun my/denote-convert-note-to-blog-post ()
+  "把当前 denote buffer 变成 blog 文件"
+  (interactive)
+  (my/org-add-file-tag "blog")
+  (my/org-add-file-tag "draft")
+  (if (seq-empty-p (org-collect-keywords '("EXPORT_FILE_NAME")))
+      (my/insert-blog-export-file-name))    
+  (let ((denote-rename-confirmations nil))
+    (denote-rename-file-using-front-matter buffer-file-name)))
+</code></pre>
+</div>
+
+<p>
+对当前的 denote buffer 执行操作：
+</p>
+<ol class="org-ol">
+<li>增加 <code>blog</code> 和 <code>draft</code> 到当前 org-mode 笔记的 <code>filetags</code> 中。默认我会对笔记带上 <code>draft</code> 标签，防止在笔记未完成前就被发布掉。</li>
+<li>增加一个文件的全局属性 <code>export_file_name</code> ，用于更好的控制输出的文件名，这个下面会介绍。</li>
+<li>执行 <code>denote-rename</code> 操作，把新增的 file tag 增加到当前文件的文件名中，方便后续搜索。</li>
+</ol>
+
+<p>
+当我完成对笔记的编辑，准备把它转成正式的待发布博文时，我执行方法：
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-lisp">(defun my/denote-publish-blog-post ()
+  "把当前 denote 文件标记为发布的 blog 文件"
+  (interactive)
+  (if (seq-empty-p (org-collect-keywords '("SUMMARY")))
+      (my-org-generate-summary-with-gptel)
+      )
+  (my/org-remove-file-tag "draft")
+  (let ((denote-rename-confirmations nil))
+    (denote-rename-file-using-front-matter buffer-file-name)))
+</code></pre>
+</div>
+
+<p>
+这个函数做了两件事情：
+</p>
+<ol class="org-ol">
+<li>如果当前笔记还没有 summary 属性，则使用 gptel 自动生成一个 140 字以内的文章摘要，放到文件属性中，后续将会成为输出的内容一部分。</li>
+<li>移除当前笔记的 <code>draft</code> 标签，并使用 <code>denote-rename</code> 操作应用到文件名上。这样这篇笔记就能在后续的导出操作中被选择。</li>
+</ol>
+
+<p>
+当一篇笔记被正式标记成博文后，我执行 <code>org-publish</code> 来导出整个博客项目。由于这个过滤过程是动态的，所以我需要一个函数能在每次 publish 时动态生成 <code>org-publish-project-alist</code> 变量：
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-lisp">(defun my/generate-org-publish-project-alist ()
+  "Generate `org-publish-project-alist` dynamically for org files with the `blog` tag."
+  (let* ((denote-directory denote-note-home)
+         (my-blog-files (denote-directory-files "_blog.*\\.org")))
+    `(("posts"
+       :base-directory ,denote-note-home
+       :base-extension "org"
+       :section-numbers nil
+       :with-toc t
+       :with-tags t
+       :publishing-directory ,my/org-publish-path
+       :publishing-function org-html-publish-to-html
+       :time-stamp-file nil ;; 避免每次执行 org-publish 的时候都往 HTML 插入最新的时间戳
+       :exclude ".*"
+       :include ,my-blog-files
+       )
+
+      ;; ... other contents
+
+      ("blog" :components ("posts" )))))
+
+(defun my/generate-blog()
+  "publish my blog"
+  (interactive)
+  (let ((org-publish-project-alist (my/generate-org-publish-project-alist)))
+    (org-publish "blog" t))
+  )
+</code></pre>
+</div>
+
+<p>
+这里使用了 <code>denote-directory-files</code> 方法过滤出所有带有 blog 标签的文档，使用参数 <code>:eclude: ".*"</code> 把所有文件先剔除掉，然后只 <code>:include</code> 过滤出来的文件，以实现只发布选定 org 文件。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org36c61a7" class="outline-2">
+<h2 id="org36c61a7">处理导出文件的链接</h2>
+<div class="outline-text-2" id="text-org36c61a7">
+<p>
+由于我的笔记大都是用中文做 title ，按 denote 的命名规则 <code>DATE--TITLE__KEYWORDS.EXTENSION</code> ，他会把这样的中文 title 放在文件名上，并加上以当前时间戳组成的 id ，最后还有 keywords 。这样的文件格式默认输出的 html 也会是这样的格式。
+</p>
+
+<p>
+这样的格式是相当不方便的，且先不说中文 path 在浏览器中的 url 将会被编码成很丑的 unicode 可读性很差，光就文件名中包含了 keywords 就会让 url 变的不稳定，后续编辑时增加或删除一个 keyword 都会导致 url 变化，很不适合 SEO。
+</p>
+
+<p>
+所以我在上面的步骤中会生成一个文件变量 <code>export_file_name</code> 以应对这个问题。 <code>org-export</code> 会默认读取这个值作为输出文件名。在把一篇普通笔记标记成博文时，我就会使用函数：
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-lisp">(defun my/insert-blog-export-file-name ()
+    "使用 `denote-retrieve-title-value' 来生成 export-file-name，用来去除 keyword 或时间这类内容"
+    (save-excursion
+      (goto-char 0)
+      (search-forward "filetags")
+      (end-of-line)
+      (insert (format
+               "\n#+export_file_name: %s"
+               (denote-sluggify-title
+                (denote-retrieve-title-value buffer-file-name 'org))))))
+</code></pre>
+</div>
+
+<p>
+这里默认使用了 <code>denote-retrieve-title-value</code>  方法来生成这个导出文件名，如果文章标题是中文，我会手动把他改成另一个英文名，增加输出 url 的可读性。
+</p>
+
+<p>
+但这个变量只有导出 html 时才被应用，在文章内如果有链接，或者使用 sitemap 功能生成 index 时，org-mode 是完全不处理链接文件名的。为此我创建函数：
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-lisp">(defun my/get-denote-export-file-name (path)
+  "generate the export file name by a given path"
+  (let ((export-file-name (my/org-file-find-keyword path "EXPORT_FILE_NAME")))
+    (or export-file-name (denote-sluggify-title
+                                      (denote-retrieve-filename-title path)))
+    ))
+</code></pre>
+</div>
+
+<p>
+并增加处理 denote link 的 html 导出行为：
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-lisp">(defun my/denote-link-ol-export (link description format)
+  "Modified version of `denote-link-ol-export'.
+Replace html export with `my/denote-html-export'
+
+Original docstring below:
+Export a `denote:' link from Org files.
+The LINK, DESCRIPTION, and FORMAT are handled by the export
+backend."
+  (let* ((path-id (denote-link--ol-resolve-link-to-target link :path-id))
+         (path (file-relative-name (car path-id)))
+         (p (file-name-sans-extension path))
+         (id (cdr path-id))
+         (desc (or description (concat "denote:" id))))
+    (cond
+     ((eq format 'org) (format "[[denote:%s][%s]]" link desc))
+     ((eq format 'html) (my/denote-html-export link desc))
+     (t path))))
+
+(defun my/denote-html-export (link desc)
+  "把链接使用文件的 export-file-name 来替代"
+  (let ((path (denote-get-path-by-id link)))    
+    (if (not (string-match "_blog" path))
+        (format "%s" desc)
+      (if (string-match "_draft" path)
+          (format "%s" desc)
+        (format "&lt;a href=\"%s.html\"&gt;%s&lt;/a&gt;"
+                (my/get-denote-export-file-name path)
+                desc)))))
+
+(org-link-set-parameters "denote" :export #'my/denote-link-ol-export)
+</code></pre>
+</div>
+
+<p>
+这里我是改写了默认 <code>denote-link-ol-export</code> 的实现，当遇到 <code>[[denote:id]][xxx]]</code> 的链接时，把 html  的输出改写了，使用 <code>expot_file_name</code> 作为链接。这里还有一个处理，如果目标的 org 笔记没有 blog 标记，或带有 draft 笔记，则不生成链接，只是以纯文本的方式展示。这个实现也是参考自 <sup><a id="fnr.1.100" class="footref" href="#fn.1" role="doc-backlink">1</a></sup> 。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdcaf99d" class="outline-2">
+<h2 id="orgdcaf99d">处理图片资源</h2>
+<div class="outline-text-2" id="text-orgdcaf99d">
+<p>
+我自己的习惯，所有网站的图片资源都会放到 cdn 上以节省流量，git 不太适合管理太多的二进制文件，同时也是为了以后方便做数据迁移，毕竟远程资源只要一个链接就行了。使用 cdn 还有一个好处是，我可以利用 cdn 自动的图片剪裁和压缩能力，最佳化图片输出，给用户更好的加载体验。
+</p>
+
+<p>
+所以在生成 html 的最后一步，我会检查生成 html 里面包含的所有图片，并尝试上传到我的七牛云上，大致的过程如下：
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-lisp">(defun my/upload-to-cdn (file-path md5)
+  "上传文件到 qiniu 并返回CDN URL"
+  (let* ((ext (or (file-name-extension file-path) "bin"))
+         (cdn-key (concat my/qiniu-prefix md5 "." ext))
+         (cdn-url (format "%s/%s" my/cdn-domain cdn-key))
+         (cmd-args (list "fput" my/qiniu-bucket cdn-key file-path)))
+
+    (unless (eq 0 (apply 'call-process "qshell" nil nil nil cmd-args))
+      (error "[Qiniu] Upload failed for: %s" file-path))
+    cdn-url))
+
+(defun my/get-image-url (file-path)
+  "获取图片的CDN地址（自动上传未记录的文件）"
+  (interactive "fImage file: ")
+  (let* ((abs-path (expand-file-name file-path denote-note-home))
+         (md5 (my/file-md5 abs-path))
+         (image-map (my/read-image-map))
+         (existing-url (alist-get md5 image-map nil nil 'equal)))
+
+    (if existing-url
+        (progn
+          (message "CDN URL: %s" existing-url)
+          existing-url)
+      (let ((new-url (my/upload-to-cdn abs-path md5)))
+        (my/write-image-map (cons (cons md5 new-url) image-map))
+        (message "New CDN URL: %s" new-url)
+        new-url))))
+
+(defun my/replace-local-image-paths (html-file)
+  "Replace local image paths with remote image paths in the generated HTML file."
+  (message "replace-local-image-paths")
+  (let ((html-files (directory-files-recursively my/org-publish-path "\\.html$")))
+    (dolist (html-file html-files)      
+      (with-temp-buffer
+        (insert-file-contents html-file)
+        (goto-char (point-min))
+        (while (re-search-forward "img src=\"\\([^\"]+\\)\"" nil t)
+          (let ((local-path (match-string 1)))
+            (when (my/is-local-image-path local-path)
+              (let ((remote-path (my/get-image-url local-path)))
+                (replace-match (concat "img src=\"" remote-path "\"") t t)))))
+        (write-region (point-min) (point-max) html-file))
+      ))
+  )
+</code></pre>
+</div>
+
+<p>
+并把这个方法放到 <code>org-publish-project-alist</code> 中，作为 <code>:completion-function</code> 的参数：
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-lisp">(defun my/generate-org-publish-project-alist ()
+  "Generate `org-publish-project-alist` dynamically for org files with the `blog` tag."
+  (let* ((denote-directory denote-note-home)
+         (my-blog-files (denote-directory-files "_blog.*\\.org")))
+    `(("posts"
+       :base-directory ,denote-note-home
+       :base-extension "org"
+       :with-toc t
+       :with-tags t
+       :publishing-directory ,my/org-publish-path
+       :publishing-function org-html-publish-to-html
+       :completion-function my/replace-local-image-paths ;; 替换本地图片链接为远程 cdn 上的图片链接
+       :time-stamp-file nil
+       :exclude ".*"
+       :include ,my-blog-files
+       )
+      ;; ... other settings
+      ("blog" :components ("posts")))))
+</code></pre>
+</div>
+
+<p>
+这里我做了如下几个事情：
+</p>
+<ol class="org-ol">
+<li>使用一个本地 el 缓存文件，记录所有图片资源的 md5 值是否有对应的远程链接</li>
+<li>如果没有对应的链接，则使用 cdn 工具上传，拼得链接后，加入到本地的 el 缓存文件</li>
+<li>如果本地 el 缓存文件有现成的远程链接，则直接返回</li>
+<li>对输出的 html 做 src 替换，换成远程链接</li>
+</ol>
+
+<p>
+上述过程不但节省了上传用量，还因为使用的是 md5 所以本地资源不论移动文件夹，换文件名，修改内容（比如用工具做的流程图），或者是重复资源，都可以很好的处理。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc0e9ea0" class="outline-2">
+<h2 id="orgc0e9ea0">生成首页和 RSS</h2>
+<div class="outline-text-2" id="text-orgc0e9ea0">
+<p>
+利用 org-publish 的 sitemap 功能，自动输出所有文件列表的 <code>index.org</code> 文件。我再通过对这个列表做 org-publish 操作，让其生成首页。
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-lisp">(defun my/org-publish-sitemap-format-entry (entry style project)
+  "格式化站点地图中的每个条目，显示标题、日期和摘要。"
+  (let* ((title (or (my/org-publish-find-keyword entry "TITLE" project)
+                    (or (org-publish-find-title entry project)
+                        (file-name-base entry))))
+         (id (denote-retrieve-filename-identifier (file-name-base entry)))
+         (date (car (org-publish-find-property entry :date project)))
+         (summary (my/get-org-publish-summary entry project)))
+
+    (format "[[denote:%s][%s]]\n#+HTML:&lt;p class=\"pub-date\"&gt;发布时间：%s&lt;/p&gt;\n#+HTML:&lt;p class=\"pub-desc\"&gt;摘要：%s&lt;/p&gt;"
+            id
+            title
+            (if date (org-timestamp-format date "%Y-%m-%d")
+              "[无日期]")
+            summary)))
+</code></pre>
+</div>
+
+<p>
+使用 <code>my/org-publish-sitemap-format-entry</code> 函数，我给每一个连接使用的是 <code>[[denote:id]][xxx]]</code> 格式的链接，就是为了让他在输出时也能应用我上面的 <code>my/denote-html-export</code> 方法获得正确的链接文件名。同时我的项目输出中还增加了发布时间与摘要，这样让 index 列表格式看上去更丰富。
+</p>
+
+<p>
+增加到 <code>org-publish-project-alist</code> 中，并用另一个 component 来定义 index 的输出。
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-lisp">(defun my/generate-org-publish-project-alist ()
+  "Generate `org-publish-project-alist` dynamically for org files with the `blog` tag."
+  (let* ((denote-directory denote-note-home)
+         (my-blog-files (denote-directory-files "_blog.*\\.org")))
+    `(("posts"
+       :base-directory ,denote-note-home
+       :base-extension "org"
+       :section-numbers nil
+       :with-toc t
+       :with-tags t
+       :publishing-directory ,my/org-publish-path
+       :publishing-function org-html-publish-to-html
+       :completion-function my/replace-local-image-paths
+       :time-stamp-file nil
+       :exclude ".*"
+       :include ,my-blog-files
+       :auto-sitemap t
+       :sitemap-filename "index.org"
+       :sitemap-title "gsj987的博客"
+       :sitemap-format-entry my/org-publish-sitemap-format-entry ;; 设定生成 sitemap 的方法
+       :sitemap-sort-files anti-chronologically
+       )
+
+      ("pages"
+         :base-directory ,denote-note-home
+         :base-extension "org"
+         :publishing-directory ,my/org-publish-path
+         :publishing-function org-html-publish-to-html
+         :time-stamp-file nil
+         :include ("index.org", "about.org") ;; 把 sitemap 也导出成 html。这里我还增加了一个单独维护的 about.org 文件。
+         :exclude ".*"
+         :section-numbers nil
+         )
+
+      ("blog" :components ("posts" "pages")))))
+</code></pre>
+</div>
+
+<p>
+rss 的生成方法也是类似的，但我用了 <code>ox-rss</code> 的方法 <sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup> 并配合了单独的 feed-entry 函数来把 summary 放进 rss 的 detail 中。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org13ee782" class="outline-2">
+<h2 id="org13ee782">优化样式</h2>
+<div class="outline-text-2" id="text-org13ee782">
+<p>
+到此为止，大部分的工作都已经完成。关于样式我直接复制了 taxodiumn <sup><a id="fnr.3" class="footref" href="#fn.3" role="doc-backlink">3</a></sup> 的。再增加一些细节让博客变的更完美。
+</p>
+</div>
+
+<div id="outline-container-orge2ad251" class="outline-3">
+<h3 id="orge2ad251">增加导航和页尾</h3>
+<div class="outline-text-3" id="text-orge2ad251">
+<p>
+使用 html-preabmle 增加页头导航，用 html-postamble 增加页尾，也用于插入追踪脚本。
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-lisp">(defconst my/blog-html-preamble "
+ &lt;nav&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=\"/index.html\"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=\"/about.html\"&gt;About&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=\"/rss.xml\"&gt;RSS&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+"
+  "`:html-preamble' for `org-publish'." )
+
+(defconst my/blog-html-postamble "
+&lt;p class=\"author\"&gt;Author: gsj987&lt;/p&gt;
+&lt;p class=\"date\"&gt;Publish Date: %d&lt;/p&gt;
+&lt;p class=\"license\"&gt;License: &lt;a href=\"https://www.creativecommons.org/licenses/by-nc/4.0/deed.zh-hans\"&gt;CC BY-NC 4.0&lt;/a&gt;&lt;/p&gt;
+"
+  "`:html-postamble' for blog posts.")
+</code></pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3565625" class="outline-3">
+<h3 id="org3565625">代码高亮</h3>
+<div class="outline-text-3" id="text-org3565625">
+<p>
+代码高亮我直接使用 highlightjs ，直接从 unpkg 加载，把代码放在 postamble 里。如：
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-lisp">(defconst my/blog-html-postamble "
+&lt;p class=\"author\"&gt;Author: gsj987&lt;/p&gt;
+&lt;p class=\"date\"&gt;Publish Date: %d&lt;/p&gt;
+&lt;p class=\"license\"&gt;License: &lt;a href=\"https://www.creativecommons.org/licenses/by-nc/4.0/deed.zh-hans\"&gt;CC BY-NC 4.0&lt;/a&gt;&lt;/p&gt;
+
+&lt;script src=\"https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js\"&gt;&lt;/script&gt;
+&lt;script&gt;hljs.highlightAll();&lt;/script&gt;
+"
+  "`:html-postamble' for blog posts.")
+</code></pre>
+</div>
+
+<p>
+如果要增加对 lisp 的支持，默认 highlightjs 是不包含的，需要额外引入
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-html">&lt;script src=\"https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/lisp.min.js\"&gt;&lt;/script&gt;
+</code></pre>
+</div>
+
+<p>
+另外在全局样式中，我们也需要 import 相关的 css
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-css">@import url("https://unpkg.com/@highlightjs/cdn-assets@11.9.0/styles/default.min.css");
+</code></pre>
+</div>
+
+<p>
+另外，我们需要调整一下对 html 输出的方式，让 highlightjs 替代默认的 htmlize 工作 <sup><a id="fnr.4" class="footref" href="#fn.4" role="doc-backlink">4</a></sup>
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-lisp">(defun my/org-html-wrap-blocks-in-code (src backend info)
+  "Wrap a source block in &lt;pre&gt;&lt;code class=\"lang\"&gt;.&lt;/code&gt;&lt;/pre&gt;"
+  (when (org-export-derived-backend-p backend 'html)
+    (replace-regexp-in-string
+     "\\(&lt;/pre&gt;\\)" "&lt;/code&gt;\\1"
+     (replace-regexp-in-string "&lt;pre class=\"src src-\\([^\"]*?\\)\"&gt;"
+                               "&lt;pre&gt;\n&lt;code class=\"language-\\1\"&gt;" src))))
+
+
+(add-to-list 'org-export-filter-src-block-functions
+             'my/org-html-wrap-blocks-in-code)
+
+(setq org-babel-execute-src-block-p nil ;; 不执行 src block 加速编译
+      org-html-htmlize-output-type nil) ;; 不输出 htmlize 
+</code></pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfc0fb2e" class="outline-3">
+<h3 id="orgfc0fb2e">TOC 在多屏幕尺寸下的自适应样式</h3>
+<div class="outline-text-3" id="text-orgfc0fb2e">
+<p>
+在不同尺寸下，我希望 toc 能用不同方式展示：
+</p>
+<ul class="org-ul">
+<li>在宽屏幕下，应该是左右展示</li>
+<li>在窄屏幕，如手机屏幕下，为顺序展示，并且自动收拢，以避免 toc 过高，影响阅读体验</li>
+</ul>
+
+<p>
+这个很容易用 css 实现：
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-css">/* 手机或小屏幕 */
+@media screen and (max-width: 1300px) {
+  /* 默认情况 toc 是顺序排列，设一个 max-height 超出部分隐藏 */ 
+  #table-of-contents {
+    max-height: 360px;
+    overflow-y: hidden;
+    position: relative;
+  }
+
+  /* 设一个遮罩层，有一个渐隐效果，让读者知道下面还有内容被隐藏了 */
+  #table-of-contents:not(.show-all)::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(180deg, transparent, var(--color-bg));
+    background: linear-gradient(
+      180deg,
+      transparent,
+      light-dark(var(--color-bg), var(--dark-color-bg))
+    );
+    pointer-events: none;
+  }
+
+  /* 当用户点击 toggle 按钮时，用 js 增加一个 class 展开这个 toc */
+  #table-of-contents.show-all {
+    max-height: unset;
+  }
+}
+
+/* 宽屏 */
+@media screen and (min-width: 1300px) {
+  /* 有 toc 时， content 自动以 grid 形式展示 */ 
+  #content:has(#table-of-contents) {
+    max-width: 60rem;
+    display: grid;
+    grid-template-rows: 5em 1fr;
+    grid-template-columns: 16.5em calc(100% - 16.5em);
+  }
+
+  /* content 下除了 toc 之外，占第 2-3 列 */ 
+  #content:has(#table-of-contents) &gt; * {
+    grid-column: 2 / 3;
+  }
+
+  /* toc 占第 1 列，并设置显示方式为 fixed 这样滚动时也能被用户看到 */ 
+  #table-of-contents {
+    width: 20em;
+    grid-row: 2;
+    position: fixed;
+    z-index: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-size: 14px;
+    top: 10em;
+  }
+}
+</code></pre>
+</div>
+
+<p>
+而 toc 的 toggle 按钮以及跟随滚动高亮标题，都用 js 实现，比较简单就不赘述。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga89a499" class="outline-3">
+<h3 id="orga89a499">暗色模式</h3>
+<div class="outline-text-3" id="text-orga89a499">
+<p>
+直接利用 css 的 light-dark 方法实现，非常简单。但由于这个语法相对比较新，我们会增加一个默认属性，以确保大部分浏览器的兼容性。比如 body 的字体颜色：
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-css">body {
+  /* 确保兼容性 */ 
+  color: var(--color-text);
+  /* 暗色模式支持 */
+  color: light-dark(var(--color-text), var(--dark-color-text));
+}
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcc19cb3" class="outline-2">
+<h2 id="orgcc19cb3">发布博客</h2>
+<div class="outline-text-2" id="text-orgcc19cb3">
+<p>
+当所有方法都准备完毕后，我利用 simple-httpd 来本地预览我生成的博客内容：
+</p>
+<div class="org-src-container">
+<pre>
+<code class="language-lisp">(use-package simple-httpd
+  :init
+  (defun my/preview-blog ()
+    "Restart simple-httpd. If it is running, stop it first, then start a new instance."
+    (interactive)
+    ;; 编译 blog
+    (my/generate-blog)
+    ;; 检查 simple-httpd 是否正在运行
+    (if (and (boundp 'httpd-process) httpd-process (process-live-p httpd-process))
+        (progn
+          (message "Stopping existing simple-httpd process...")
+          (httpd-stop)  ;; 停止当前进程
+          (sleep-for 1) ;; 等待 1 秒，确保进程完全停止
+          (message "Existing simple-httpd process stopped."))
+      (message "No running simple-httpd process found."))
+
+    ;; 启动新的 simple-httpd 进程
+    (message "Starting a new simple-httpd process...")
+    (setq httpd-root my/org-publish-path)
+    (message httpd-root)
+    (httpd-start)
+    (message "New simple-httpd process started at localhost:8080."))
+  )
+</code></pre>
+</div>
+
+<p>
+这样每当我写完文档，我直接执行 <code>my/preview-blog</code> 就可以在 <code>http://localhost:8080/</code> 来预览我的博客了。随时有修改，随时再执行一遍这个函数，就能看到改动的结果。
+</p>
+
+<p>
+等一切都妥当，我执行函数 <code>my/publish-blog</code> 就通过 <code>git commit</code> 把博客发到 github pages 上。过程比较简单，这里也不再介绍。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge8f2bc5" class="outline-2">
+<h2 id="orge8f2bc5">后续思考</h2>
+<div class="outline-text-2" id="text-orge8f2bc5">
+</div>
+<div id="outline-container-org63a03c7" class="outline-3">
+<h3 id="org63a03c7">为什么不使用 denote 直接写 markdown 文档？</h3>
+<div class="outline-text-3" id="text-org63a03c7">
+<p>
+因为我比较熟悉 org-mode 的编写方式，日常我的工作流也会比较多依赖 org-mode 提供的 todo 功能，只是一种习惯。org-mode 定制能力也比较强，组织出各种工作流会比较容易。还有一个原因是目前 emacs 里没有什么 markdown 的好实现，比如 org-mode 是能做到 wysiwyg 的，观感上非常接近一个现代富文本编辑器，但 md 没有这样好的支持。
+</p>
+
+<p>
+一个好的文本编辑体验是鼓励输出的最好助力。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2bf747a" class="outline-3">
+<h3 id="org2bf747a">为什么不用 org-mode 导出成 markdown 然后使用 hugo 发布？</h3>
+<div class="outline-text-3" id="text-org2bf747a">
+<p>
+这是一个好方法，hugo也更强大，而且我原本就是用 hugo 的，工作流也很完整。但这次我想先把一切都简化下来，体验一下 org-publish，看看其扩展能力。说不定未来我会把工作流再重新与 hugo 整合。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org74b9abd" class="outline-3">
+<h3 id="org74b9abd">跨平台编辑内容怎么办？</h3>
+<div class="outline-text-3" id="text-org74b9abd">
+<p>
+目前 emacs 只有在桌面端有比较好的体验，移动端相关的工具都很少。我也在尝试使用 emacs on android 等方法，但目前没有什么好的成效。
+</p>
+
+<p>
+不过另一方面，我由衷觉得移动端还不是一个很好的内容创作平台。内容编写需要沉浸和舒适的文本编写体验，移动端目前还没有这么好的环境。也许等 linux on android 方案成熟后，我可以搞一个安卓折叠手机试一试。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0717936" class="outline-3">
+<h3 id="org0717936">接下来要做什么</h3>
+<div class="outline-text-3" id="text-org0717936">
+<p>
+增加评论或互动的功能，不过我这样的博客其实没什么人访问，这个不是什么紧急的功能需求。
+可能首先会专注内容，因为之前荒废了一段时间，其实可以写的事情已经积累一些了，接下来会先把这套工作流带来的输出欲给使用到位。
+</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+参考了 <a href="https://jiewawa.me/2024/03/blogging-with-denote-and-hugo/">https://jiewawa.me/2024/03/blogging-with-denote-and-hugo/</a> 中许多函数的实现，特别是利用 keywords 来标记需要发布内容的做法。
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+参考了 <a href="https://writepermission.com/org-blogging-rss-feed.html">https://writepermission.com/org-blogging-rss-feed.html</a> 的实现
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+本次 org-mode 生成博客的样式主要来自 <a href="https://taxodium.ink/org-publish-blog.html">https://taxodium.ink/org-publish-blog.html</a>  其中的实现给了许多启发
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4" role="doc-backlink">4</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+参考来自 <a href="http://emacs.stackexchange.com/a/9838">http://emacs.stackexchange.com/a/9838</a>  
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+
+
+<p class="author">Author: <a href="https://x.com/gsj987" target=_blank>gsj987</a></p>
+<p class="date">Publish Date: 2025-03-15 Sat 20:42</p>
+<p class="license">License: <a href="https://www.creativecommons.org/licenses/by-nc/4.0/deed.zh-hans">CC BY-NC 4.0</a></p>
+
+<script src="/assets/dynamic-toc.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/powershell.min.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/lisp.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C71VVP1YSV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C71VVP1YSV');
+</script>
+</div>
+</body>
+</html>

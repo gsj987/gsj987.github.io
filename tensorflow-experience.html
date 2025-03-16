@@ -260,7 +260,7 @@
 <li><a href="#org1bae6b3">执行训练</a></li>
 <li><a href="#orgfa80ae3">验证训练结果</a></li>
 <li><a href="#orgdded273">构建的时候遇到的问题</a></li>
-<li><a href="#org6f5402b">小结</a></li>
+<li><a href="#orge6f410a">小结</a></li>
 </ul>
 </li>
 <li><a href="#h:E744A8A0-B26D-4738-A114-E87BA98055B3">使用 Tensorflow 做逻辑回归</a>
@@ -275,7 +275,7 @@
 <li><a href="#org73edcad">迭代训练</a></li>
 <li><a href="#orgd1757f0">评估训练结果</a></li>
 <li><a href="#orgc600fa7">问题回顾</a></li>
-<li><a href="#org9cf8018">小结</a></li>
+<li><a href="#orgd6e3302">小结</a></li>
 </ul>
 </li>
 <li><a href="#org1be6475">全连接网络</a>
@@ -300,7 +300,7 @@
 </ul>
 </li>
 <li><a href="#org352c8fd">遇到的问题和解决</a></li>
-<li><a href="#org4f1aec7">小结</a></li>
+<li><a href="#org5f75b0e">小结</a></li>
 </ul>
 </li>
 <li><a href="#orgceeb2e1">卷积网络和图像分类</a>
@@ -333,7 +333,7 @@
 <li><a href="#orgb1fca18">用得到的模型来识别手写数字</a></li>
 </ul>
 </li>
-<li><a href="#orgfb0e2e1">小结</a></li>
+<li><a href="#org1766da7">小结</a></li>
 </ul>
 </li>
 </ul>
@@ -424,7 +424,7 @@ jupyter notebook
 然后就可以看到 jupyter 的交互式编程界面了。
 </p>
 
-<div id="org32daee1" class="figure">
+<div id="org4d86b93" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/blog/20190421/TaOBkRcRYIGm.png?imageslim" alt="TaOBkRcRYIGm.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 1: </span>jupyter-running</p>
@@ -494,7 +494,7 @@ line,=plt.plot(x_np,y_np,'bo')
 结果如图所示
 </p>
 
-<div id="org7bfb1e0" class="figure">
+<div id="orgc0fd86c" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/201904260013_105.png?imageslim" alt="201904260013_105.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 2: </span>生成的数据分布</p>
@@ -599,7 +599,7 @@ with tf.Session() as sess:
 8000步后，损失函数稳定值在3.59左右
 </p>
 
-<div id="org2817e52" class="figure">
+<div id="org86160ba" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/201904260942_663.png?imageslim" alt="201904260942_663.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 3: </span>迭代损失函数最终得到的值</p>
@@ -615,7 +615,7 @@ with tf.Session() as sess:
 </div>
 
 
-<div id="orgf1341df" class="figure">
+<div id="orgf0876da" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/201904260944_825.png?imageslim" alt="201904260944_825.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 4: </span>损失函数的下降图</p>
@@ -629,7 +629,7 @@ with tf.Session() as sess:
 另一张图是网络的执行图：
 </p>
 
-<div id="org34bec8c" class="figure">
+<div id="orge21c3ca" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/201904260946_334.png?imageslim" alt="201904260946_334.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 5: </span>网络训练可视化</p>
@@ -679,7 +679,7 @@ plt.scatter(y_np, y_pred_np)
 </div>
 
 
-<div id="org7eb974e" class="figure">
+<div id="org7939c2c" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/201904260949_219.png?imageslim" alt="201904260949_219.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 6: </span>预测值和真实值之间的关系</p>
@@ -711,7 +711,7 @@ plt.plot([x_left, x_right], [y_left, y_right], color='k')
 </div>
 
 
-<div id="orgbe5c21f" class="figure">
+<div id="org3475913" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/201904261359_944.png?imageslim" alt="201904261359_944.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 7: </span>线性公式图</p>
@@ -757,9 +757,9 @@ You must feed a value for placeholder tensor
 </div>
 </div>
 
-<div id="outline-container-org6f5402b" class="outline-3">
-<h3 id="org6f5402b">小结</h3>
-<div class="outline-text-3" id="text-org6f5402b">
+<div id="outline-container-orge6f410a" class="outline-3">
+<h3 id="orge6f410a">小结</h3>
+<div class="outline-text-3" id="text-orge6f410a">
 <p>
 本篇只是用一个简单的例子说明了线性回归的基本流程。但是基本上覆盖了机器学习的全部流程：定义模型，定义损失函数，定义调优函数，然后迭代运行，在执行方法上也涵盖了tf的大部分功能点。同时因为线性回归是基本上所有机器学习的基础，所以需要仔细体会。
 </p>
@@ -797,7 +797,7 @@ g(z) = \frac{1}{1+e^{-z}}
 通过绘制他的图形，可以看到其是个在坐标轴上的 S 型曲线，如图所示
 </p>
 
-<div id="orgc70710b" class="figure">
+<div id="org9f7a280" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/201905031053_435.png?imageslim" alt="201905031053_435.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 8: </span>sigmoid 函数图形</p>
@@ -919,7 +919,7 @@ plt.scatter([x[0] for x in x_ones], [x[1] for x in x_ones], c="red")
 </div>
 
 
-<div id="org9cb17b2" class="figure">
+<div id="orga6140ac" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/201905031252_551.png?imageslim" alt="201905031252_551.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 9: </span>数据分布图</p>
@@ -998,7 +998,7 @@ with tf.Session() as sess:
 得到训练结果
 </p>
 
-<div id="org84949bb" class="figure">
+<div id="org0c066a8" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/201905031307_610.png?imageslim" alt="201905031307_610.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 10: </span>训练结果</p>
@@ -1058,7 +1058,7 @@ plt.plot([x_left, x_right], [y_left, y_right], color='k')
 得到图像：
 </p>
 
-<div id="org567afca" class="figure">
+<div id="orgec13f32" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/201905031308_244.png?imageslim" alt="201905031308_244.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 11: </span>分类结果显示</p>
@@ -1078,7 +1078,7 @@ plt.plot([x_left, x_right], [y_left, y_right], color='k')
 得到图像：
 </p>
 
-<div id="org40392df" class="figure">
+<div id="org67e442b" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/201905031309_18.png?imageslim" alt="201905031309_18.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 12: </span>损失函数下降曲线</p>
@@ -1122,9 +1122,9 @@ TypeError: 'float' object cannot be interpreted as an integer
 </div>
 </div>
 
-<div id="outline-container-org9cf8018" class="outline-3">
-<h3 id="org9cf8018">小结</h3>
-<div class="outline-text-3" id="text-org9cf8018">
+<div id="outline-container-orgd6e3302" class="outline-3">
+<h3 id="orgd6e3302">小结</h3>
+<div class="outline-text-3" id="text-orgd6e3302">
 <p>
 本文学习了逻辑回归的基本概念，并用 tensorflow 实现了逻辑回归的基本操作。其基本操作也如线性回归一样，就是 定义模型，设定损失函数，迭代，评估。逻辑回归的公式虽然多，但是基本思路还是线性回归的思路，同时他也是机器学习的重要方法，特别是 sigmoid 函数，是最常见的激活函数之一，非常重要，我们在后续的学习中还会反复遇到他。
 </p>
@@ -1143,7 +1143,7 @@ TypeError: 'float' object cannot be interpreted as an integer
 全连接网络(fully connected network)是神经网络中非常重要的概念，他是由多层网络输入输出所组成的节点映射，每一层之间的节点都相互连接，对于一个 \(R^m->R^n\) 的全连接网络，输入(m 个节点） 和输出（n 个节点）之间可能会有多个隐藏层，如图所示：
 </p>
 
-<div id="org7b9fe9e" class="figure">
+<div id="orgec0346b" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/201910071139_769.jpg?imageslim" alt="201910071139_769.jpg?imageslim" />
 </p>
 <p><span class="figure-number">Figure 13: </span>一个含有 3 个隐藏层的全连接网络</p>
@@ -1201,7 +1201,7 @@ TypeError: 'float' object cannot be interpreted as an integer
 </p>
 
 
-<div id="org8187334" class="figure">
+<div id="orgaa38c48" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/201910071326_168.jpg?imageslim" alt="201910071326_168.jpg?imageslim" />
 </p>
 <p><span class="figure-number">Figure 14: </span>比较深度 sigmoid 函数和 ReLU</p>
@@ -1449,7 +1449,7 @@ print("Test Weighted Classfication Accuracy: %f" % test_weighted_score)
 执行脚本，得到训练结果：
 </p>
 
-<div id="orgcfa01b6" class="figure">
+<div id="orgee36fdf" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/201910071428_8.png?imageslim" alt="201910071428_8.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 15: </span>训练结果</p>
@@ -1477,7 +1477,7 @@ print("Test Weighted Classfication Accuracy: %f" % test_weighted_score)
 打开 tensorboard，查看训练过程。首先查看可视化的计算网络，可以看到训练过程中加入了一个隐藏网络 hidden layer。
 </p>
 
-<div id="orgadf02df" class="figure">
+<div id="org164e8ca" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/201910071433_685.png?imageslim" alt="201910071433_685.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 16: </span>可视化训练网络</p>
@@ -1487,7 +1487,7 @@ print("Test Weighted Classfication Accuracy: %f" % test_weighted_score)
 再点开隐藏层，可以看到其中的具体过程
 </p>
 
-<div id="org4722129" class="figure">
+<div id="org0f6205d" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/201910071435_699.png?imageslim" alt="201910071435_699.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 17: </span>隐藏层的具体计算过程</p>
@@ -1497,7 +1497,7 @@ print("Test Weighted Classfication Accuracy: %f" % test_weighted_score)
 而损失函数的下降可视化如图
 </p>
 
-<div id="org6622142" class="figure">
+<div id="orgcd82d88" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/201910071437_519.png?imageslim" alt="201910071437_519.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 18: </span>损失函数可视化</p>
@@ -1583,9 +1583,9 @@ and use the search bar at the top of the page.
 </div>
 </div>
 
-<div id="outline-container-org4f1aec7" class="outline-3">
-<h3 id="org4f1aec7">小结</h3>
-<div class="outline-text-3" id="text-org4f1aec7">
+<div id="outline-container-org5f75b0e" class="outline-3">
+<h3 id="org5f75b0e">小结</h3>
+<div class="outline-text-3" id="text-org5f75b0e">
 <p>
 全连接网络是神经网络和深度学习中的重要概念。可以说特别是在图像的分类问题上，最后都会加上一个全连接网络作为最后的分类器。现代深度学习最大的突破也是将全连接网络的可计算深度大大增加，从而带来了更多的抽象理解能力。后续的工作就是如何提升网络的准确性，加快收敛速度等角度，但基本原理都来自全连接网络，需要重点理解。
 </p>
@@ -1605,7 +1605,7 @@ and use the search bar at the top of the page.
 本文使用 CNN 来对 MNIST (<a href="http://yann.lecun.com/exdb/mnist/">http://yann.lecun.com/exdb/mnist/</a> ) 的手写数字图片集进行分类，预测出图片所对应的手写数字。
 </p>
 
-<div id="org33b78e3" class="figure">
+<div id="orgf99e4ef" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/202003092051_992.png?imageslim" alt="202003092051_992.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 19: </span>MNIST</p>
@@ -1623,7 +1623,7 @@ and use the search bar at the top of the page.
 感受野代表的是在一个图像特征的观察窗口，就像是人的每个神经元只能在一个有限的范围内感受外界，超出这个范围的外界就需要其他的感受野来接收。如下图中的 Layer 1 上的绿色区域， 代表这个感受野为 3x3 像素的区域。这样区域的输入图像，组成的一连串框像素（特征），构成神经元，组成全连接层，最后形成网络，这就是 CNN 的基础。这个过程和人眼的视觉细胞的观察过程是类似的。
 </p>
 
-<div id="org63ec831" class="figure">
+<div id="org81f5f1c" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/202003092059_227.png?imageslim" alt="202003092059_227.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 20: </span>Receptive Fields</p>
@@ -1638,7 +1638,7 @@ and use the search bar at the top of the page.
 每个感受野会在向下一层传递时，会应用一个非线性变换——卷积。机器视觉里的卷积和信号处理中的卷积有些类似，但更简单，只是单纯的将区域内的值相加。如上图中，Layer 1 到 Layer 2 的传递，就是将 Layer 1 中的特征相加，得到了 Layer 2 中的一个特征值。在一个特征感受野上应用的非现线性卷积变换，就是卷积核。卷积核上带有权重，会对感受野内的值进行加权计算，得到下一层的卷积特征。
 </p>
 
-<div id="orgb23f2fc" class="figure">
+<div id="orgd260fc3" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/202003092119_557.png?imageslim" alt="202003092119_557.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 21: </span>Convolutional Kernels</p>
@@ -1679,7 +1679,7 @@ and use the search bar at the top of the page.
 </p>
 
 
-<div id="org57388bf" class="figure">
+<div id="org8766a68" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/202003102118_46.png?imageslim" alt="202003102118_46.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 22: </span>padding</p>
@@ -1779,7 +1779,7 @@ mnist_dataframe.head()
 最后一个语句会打印一部分数据看看，如图
 </p>
 
-<div id="org201d099" class="figure">
+<div id="org33bb25c" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/202003112153_190.png?imageslim" alt="202003112153_190.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 23: </span>展示的数据</p>
@@ -1846,7 +1846,7 @@ ax.grid(False)
 得到结果
 </p>
 
-<div id="orge8f9886" class="figure">
+<div id="org32457ca" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/202003112204_160.png?imageslim" alt="202003112204_160.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 24: </span>一个展示数据的样子</p>
@@ -2208,7 +2208,7 @@ print("Model prediction:", predictions[i])
 结果如下图，可以说是相对准确的识别出了手写数字
 </p>
 
-<div id="orgd8b4f52" class="figure">
+<div id="org776545e" class="figure">
 <p><img src="http://cdn.qiniu.gsj987.cn/202003122235_699.png?imageslim" alt="202003122235_699.png?imageslim" />
 </p>
 <p><span class="figure-number">Figure 25: </span>预测结果</p>
@@ -2217,9 +2217,9 @@ print("Model prediction:", predictions[i])
 </div>
 </div>
 
-<div id="outline-container-orgfb0e2e1" class="outline-3">
-<h3 id="orgfb0e2e1">小结</h3>
-<div class="outline-text-3" id="text-orgfb0e2e1">
+<div id="outline-container-org1766da7" class="outline-3">
+<h3 id="org1766da7">小结</h3>
+<div class="outline-text-3" id="text-org1766da7">
 <p>
 本文学习了 CNN 的基本结构，卷积层的组成，卷积核的基本算法等。然后仿照 LeNet-5 的结构，用 Google Colaboratory 对 MNIST 手写数据进行训练和验证，得到了不错的结果，并用这个模型识别了测试数据，验证模型的可用性。
 </p>

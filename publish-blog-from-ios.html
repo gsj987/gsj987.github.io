@@ -295,7 +295,7 @@ jobs:
 Github rest API 中创建一个新文件的 api 是
 </p>
 
-<pre class="example" id="orgedc4396">
+<pre class="example" id="org7f833af">
 PUT https://api.github.com/repos/:user/:repo/contents/:path-to-file
 Authorization: Bearer [personal-access-token]
 Accept: application/vnd.github.v3+json
@@ -319,7 +319,7 @@ Content-Type: application/json
 而如果是更新已有文件，则再需要在上述参数中添加已有文件的 sha 值，获取 sha 值的方式则是使用  get 方法获取
 </p>
 
-<pre class="example" id="org25e04f4">
+<pre class="example" id="orge37392c">
 GET https://api.github.com/repos/:user/:repo/contents/:path-to-file
 Authorization: Bearer [personal-access-token]
 Accept: application/vnd.github.v3+json
@@ -330,7 +330,7 @@ Content-Type: application/json
 并在 PUT 请求时，加上当前文件的 sha 值
 </p>
 
-<pre class="example" id="orgd89e45b">
+<pre class="example" id="org3570d00">
 PUT https://api.github.com/repos/:user/:repo/contents/:path-to-file
 Authorization: Bearer [personal-access-token]
 Accept: application/vnd.github.v3+json
