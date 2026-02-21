@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0"
-	 xmlns:content="http://purl.org/rss/1.0/modules/content/"
-	 xmlns:wfw="http://wellformedweb.org/CommentAPI/"
-	 xmlns:dc="http://purl.org/dc/elements/1.1/"
-	 xmlns:atom="http://www.w3.org/2005/Atom"
-	 xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
-	 xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
-	 xmlns:georss="http://www.georss.org/georss"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+     xmlns:georss="http://www.georss.org/georss"
      xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
      xmlns:media="http://search.yahoo.com/mrss/"><channel>
   <title>gsj987的博客</title>
@@ -14,9 +14,9 @@
   <link>https://gsj987.github.io</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Sun, 16 Mar 2025 21:16:49 +0800</pubDate>
-  <lastBuildDate>Sun, 16 Mar 2025 21:16:49 +0800</lastBuildDate>
-  <generator>Emacs 29.1 Org-mode 9.6.6</generator>
+  <pubDate>Sat, 21 Feb 2026 18:41:09 +0800</pubDate>
+  <lastBuildDate>Sat, 21 Feb 2026 18:41:09 +0800</lastBuildDate>
+  <generator>Emacs 30.2 Org-mode 9.7.11</generator>
   <webMaster>gsj987@gmail.com (gsj987)</webMaster>
   <image>
     <url>https://orgmode.org/img/org-mode-unicorn-logo.png</url>
@@ -24,7 +24,18 @@
     <link>https://gsj987.github.io</link>
   </image>
 
+  <item>
+    <title>Org File as AI Skills System</title>
+    <link>https://gsj987.github.io/org-file-as-ai-skills-system.html</link>
+    <author>gsj987@gmail.com (gsj987)</author>
+    <guid isPermaLink="false">https://gsj987.github.io/org-file-as-ai-skills-system.html</guid>
+    <pubDate>Fri, 20 Feb 2026 00:00:00 +0800</pubDate>
 
+    <description><![CDATA[<p>
+    本文介绍了一种独特的实践思路：使用 Org Mode 文件作为 AI Skills 的载体，在 Emacs 环境中构建一个可控、可追溯、可自我优化的知识生产系统。文章详细阐述了Org Mode相比传统Markdown在作为AI技能系统方面具有的结构化优势，例如可编译的元数据、可执行的代码层以及可追溯的计划（通过Org Babel、TODO、CHECKLIST和LOGBOOK等）。作者通过具体的写作、决策和高维认知场景，展示了Org Skills系统的应用价值，并从技术实现角度探讨了如何在Emacs中构建Skill注册、编译和上下文注入机制。最终，文章提出了AI系统自我优化的概念，即系统能通过运行数据收集、改进提案生成和治理确认实现持续进化。文章强调，Org Mode的运用旨在构建以Emacs为核心、人机协作的知识生产体系，并预言未来AI应用将趋向于“一切文档化”。
+    </p>
+    ]]></description>
+  </item>
   <item>
     <title>使用 org-mode 写博客</title>
     <link>https://gsj987.github.io/use-org-mode-publish-blog.html</link>
@@ -38,7 +49,7 @@
     ]]></description>
   </item>
   <item>
-    <title>emacs + AI 折腾日志</title>
+    <title>Emacs + AI 折腾日志</title>
     <link>https://gsj987.github.io/emacs-ai-journal.html</link>
     <author>gsj987@gmail.com (gsj987)</author>
     <guid isPermaLink="false">https://gsj987.github.io/emacs-ai-journal.html</guid>
@@ -50,7 +61,7 @@
     ]]></description>
   </item>
   <item>
-    <title>build-homelab-log</title>
+    <title>Build Homelab Log</title>
     <link>https://gsj987.github.io/build-homelab-log.html</link>
     <author>gsj987@gmail.com (gsj987)</author>
     <guid isPermaLink="false">https://gsj987.github.io/build-homelab-log.html</guid>
@@ -74,7 +85,7 @@
     ]]></description>
   </item>
   <item>
-    <title>publish blog from ios</title>
+    <title>Publish Blog from iOS</title>
     <link>https://gsj987.github.io/publish-blog-from-ios.html</link>
     <author>gsj987@gmail.com (gsj987)</author>
     <guid isPermaLink="false">https://gsj987.github.io/publish-blog-from-ios.html</guid>
@@ -122,7 +133,7 @@
     ]]></description>
   </item>
   <item>
-    <title>save and paste image from clipboard in orgmode</title>
+    <title>在 OrgMode 中保存并粘贴剪切板中的图片</title>
     <link>https://gsj987.github.io/save-and-paste-image-from-clipboard-in-orgmode.html</link>
     <author>gsj987@gmail.com (gsj987)</author>
     <guid isPermaLink="false">https://gsj987.github.io/save-and-paste-image-from-clipboard-in-orgmode.html</guid>

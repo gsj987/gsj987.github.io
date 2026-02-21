@@ -1,0 +1,1323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Org File as AI Skills System</title>
+<meta name="author" content="gsj987" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+
+
+  <link rel="stylesheet" href="/assets/style.css" type="text/css"/>
+</head>
+<body>
+<div id="preamble" class="status">
+
+ <nav>
+  <ul>
+    <li><a href="/index.html">Home</a></li>
+    <li><a href="/about.html">About</a></li>
+    <li><a href="/rss.xml">RSS</a></li>
+    <li><a href="https://github.com/gsj987/">GitHub</a></li>
+  </ul>
+</nav>
+</div>
+<div id="content" class="content">
+<h1 class="title">Org File as AI Skills System</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org4088fd6">引言：从 CLI 到 Org，AI 工具的下一个形态</a></li>
+<li><a href="#orgfa567c8">什么是 Claude Code 语境下的 Skills</a>
+<ul>
+<li><a href="#orgaafac09">Skills 的基础结构</a></li>
+<li><a href="#orgaf47872">Progressive Disclosure：分层加载机制</a></li>
+<li><a href="#org30a5aaf">调度控制：触发与权限</a></li>
+</ul>
+</li>
+<li><a href="#org38ddb30">为什么 Org Mode 比 Markdown 更适合做 Skills</a>
+<ul>
+<li><a href="#org792f1ec">可编译的 Spec：Properties 与结构化元数据</a>
+<ul>
+<li><a href="#orga88a9f6">具体 Spec 示例</a></li>
+</ul>
+</li>
+<li><a href="#orgf2f11dd">可执行的代码层：Org Babel</a></li>
+<li><a href="#orgef8ab7c">可追踪的计划：Checklist / TODO / LOGBOOK</a></li>
+<li><a href="#org830f32a">需要注意的坑</a></li>
+</ul>
+</li>
+<li><a href="#org87de2ef">实际应用场景</a>
+<ul>
+<li><a href="#org745bf7e">场景一：个体知识生产（AI 协作写作）</a>
+<ul>
+<li><a href="#org80645c1">两种生成模式概览</a></li>
+<li><a href="#org99b4b9c">Planner 四阶段工作流详解</a></li>
+<li><a href="#org6f3474d">完整执行示例</a></li>
+<li><a href="#orgcf2a248">总结：工作流核心特征</a></li>
+</ul>
+</li>
+<li><a href="#orgf25e21b">场景二：个人战略操作系统</a></li>
+<li><a href="#org6baa094">场景三：高维认知工作流</a></li>
+</ul>
+</li>
+<li><a href="#org3a1de49">如何在 Emacs 中实现 Org Skills</a>
+<ul>
+<li><a href="#org9a977e4">Skill Registry：扫描与索引</a></li>
+<li><a href="#org0d1b055">Skill Compiler：Org → SKILL.md</a></li>
+<li><a href="#org039714f">Context Injector：模拟 Progressive Disclosure</a></li>
+</ul>
+</li>
+<li><a href="#orgbe11afc">Skill 自举：系统如何自我优化</a>
+<ul>
+<li><a href="#orgd8c34d8">运行数据收集</a></li>
+<li><a href="#orgf861b0a">改进提案生成</a></li>
+<li><a href="#org4a0a94f">治理与确认</a></li>
+</ul>
+</li>
+<li><a href="#org90e3964">总结与展望</a>
+<ul>
+<li><a href="#org16fedf3">核心优势回顾</a></li>
+<li><a href="#org4ae998f">未来方向</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+项目地址: <a href="https://github.com/gsj987/emacs-org-mode-ai-skills.git">https://github.com/gsj987/emacs-org-mode-ai-skills.git</a>
+</p>
+
+<blockquote>
+<p>
+注意：这是完全的 vibe coding 的 repo, 我本人没有 reivew 过任何一行代码，不建议直接用于生产环境。
+</p>
+
+<p>
+本文也完全由这套 org skills 所定义的工作流生成。
+</p>
+</blockquote>
+
+
+<p>
+在过去几年里，AI 工具从简单的对话界面逐步演化为具有复杂能力的「技能系统」。从 Claude Code 到 Cursor，从 LangChain 到各种 Agent 框架，一个清晰的趋势正在浮现：未来的 AI 应用不再是单一的对话窗口，而是可分发、可组合、可演化的「技能包」。本文介绍一种独特的实践思路——使用 Org Mode 文件作为 AI Skills 的载体，在 Emacs 环境中构建一套可控的、可追踪的、可自我优化的知识生产系统。这个系统不仅是一个技术实验，更是一种关于「人类如何在 AI 时代保持主导权」的思考实验。
+</p>
+<div id="outline-container-org4088fd6" class="outline-2">
+<h2 id="org4088fd6">引言：从 CLI 到 Org，AI 工具的下一个形态</h2>
+<div class="outline-text-2" id="text-org4088fd6">
+<p>
+过去一年 AI 工具的发展呈现出一种有趣的现象：几乎所有主流的 AI 编程助手都选择了 CLI（命令行接口）作为主要的交互入口。Claude Code 有 /slash commands，Cursor 有 Cmd+K，Windsurf 有 Flows。这并非偶然——CLI 的 stdin/stdout 提供了可预测、可捕获的通信管道，比图形界面更容易程序化处理。
+</p>
+
+<p>
+Emacs 用户应该意识到一点：Emacs 本身就是一个强大的 CLI，或者说，Emacs 是比终端更强大的 CLI。
+</p>
+
+<p>
+这种判断基于几个核心原因。首先，Emacs 拥有完整的文件与缓冲区操作 API。可以用 Lisp 代码精确控制任何一个字符的读写、替换、移动，这不是 shell 的管道能力可以比拟的。其次，Emacs 可以通过.elisp 完全扩展和修改宿主行为。可以写一个函数来拦截 AI 的每一次输出，可以在 AI 写入之前添加验证逻辑，可以根据上下文动态调整提示词的每一部分。这种深度定制能力是 Claude Code 等工具通过配置文件能做到的极限。
+</p>
+
+<p>
+第三点，也是最关键的一点：Org Mode 作为结构化数据格式，比纯文本保留了更多的用户意图和操作空间。一个 #+PROPERTY 行可以声明一个技能的元信息，一个 TODO 状态可以追踪执行进度，一个 CHECKLIST 可以表达步骤化的任务结构。这些不是「富文本装饰」，而是机器可解析、人类可阅读、可以参与推理过程的结构化语义。
+</p>
+
+<p>
+最后，Emacs 加 Org 的组合本质上是一种 Human-in-Loop 的 AI 交互实践。在纯 Chat 模式下，人类和 AI 是在两个隔离的会话空间中对话，AI 的输出直接覆盖在对话历史中。而在 Emacs 环境中，AI 的每一次输出都发生在真实的文件系统与缓冲区中——可以审查、修改、拒绝、或者让 AI 以「提案模式」而非「直接覆盖」的方式工作。这种对流程和结构的控制能力，是纯 Chat 模式难以企及的。
+</p>
+
+<p>
+本文沿着这个思路，系统地介绍如何使用 Org Mode 构建一个完整的 AI Skills 系统。首先了解 Claude Code 语境下 Skills 的工作机制，然后深入分析为什么 Org Mode 比 Markdown 更适合承载 Skills，最后展示这个系统在写作、决策、复杂推理等场景中的实际应用价值。
+</p>
+</div>
+</div>
+<div id="outline-container-orgfa567c8" class="outline-2">
+<h2 id="orgfa567c8">什么是 Claude Code 语境下的 Skills</h2>
+<div class="outline-text-2" id="text-orgfa567c8">
+<p>
+理解 Org Mode 作为 Skills 系统的价值，首先需要清楚 Claude Code 官方定义的 Skills 机制。这不是核心章节，但理解这个基础对于后续的对比分析至关重要。
+</p>
+</div>
+<div id="outline-container-orgaafac09" class="outline-3">
+<h3 id="orgaafac09">Skills 的基础结构</h3>
+<div class="outline-text-3" id="text-orgaafac09">
+<p>
+一个 Claude Code Skill 本质上是一个目录，核心文件是 SKILL.md。文件顶部是 YAML frontmatter，用于声明元信息——name 会变成 /slash-command，description 用于让模型判断何时应该自动加载这个技能。正文部分是人类可读的指令，描述这个技能做什么、怎么做。
+</p>
+
+<p>
+Claude Code 已经将「自定义斜杠命令」和「技能系统」合并。历史上 .claude/commands/review.md 和 .claude/skills/review/SKILL.md 都能生成 /review 命令，但现在两者统一为目录形式的 skills 结构。这种统一意味着，一个技能不再仅仅是一个被执行的命令，它是一个完整的、可复用的、可以携带资源的工作单元。
+</p>
+</div>
+</div>
+<div id="outline-container-orgaf47872" class="outline-3">
+<h3 id="orgaf47872">Progressive Disclosure：分层加载机制</h3>
+<div class="outline-text-3" id="text-orgaf47872">
+<p>
+Progressive Disclosure（渐进式披露）是理解 Skills 设计理念的关键。它解决了一个根本问题：如何在有限的上下文窗口中加载大量技能，同时不导致信息爆炸。
+</p>
+
+<p>
+Level 1 是元数据层，只在启动时加载 YAML 中的 name、description 等发现信息。这部分非常轻量，大约每个技能 100 tokens。这意味着可以安装几十甚至上百个技能，而不会把上下文撑爆。Level 1 的目的是让模型「知道」有哪些技能可用，但不加载它们的详细内容。
+</p>
+
+<p>
+Level 2 是指令层，只有当技能被触发时才加载 SKILL.md 的正文。官方建议将正文控制在 5000 tokens 以内，并把大段的参考文档移到独立文件中。这一层是技能的「执行逻辑」，只有需要时才被读取。
+</p>
+
+<p>
+Level 3 是资源和代码层。技能目录中的其他文件——更多的 Markdown、模板、脚本、Schema、示例——不会主动塞进上下文。模型需要时通过文件系统访问来使用它们。这相当于给技能配备了一个「几乎无限」的外部知识包，按需检索。
+</p>
+
+<p>
+这种三层设计就是 Skills 被称为「下一代应用分发形态」的原因。分发的不只是提示词，而是一套能被 Agent 逐步展开的工作台和工具箱。
+</p>
+</div>
+</div>
+<div id="outline-container-org30a5aaf" class="outline-3">
+<h3 id="org30a5aaf">调度控制：触发与权限</h3>
+<div class="outline-text-3" id="text-org30a5aaf">
+<p>
+Claude Code 在 frontmatter 中提供了精细的调度控制能力。disable-model-invocation: true 禁止模型自动触发技能，只允许用户手动触发。这适合有副作用的工作流，比如部署代码或提交 git。user-invocable: false 则相反，只允许模型触发，不允许用户手动调用——这更像是「背景知识包」，在特定场景下自动加载。allowed-tools 可以限制技能激活时能使用哪些工具，从而实现「只读模式」或「安全模式」。这些配置赋予了技能系统企业级的可控性。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org38ddb30" class="outline-2">
+<h2 id="org38ddb30">为什么 Org Mode 比 Markdown 更适合做 Skills</h2>
+<div class="outline-text-2" id="text-org38ddb30">
+<p>
+Org Mode 相比 Markdown，在构建 Skills 系统方面具有结构性优势。这些优势不是简单的「语法更丰富」，而是能够转化为实实在在的 Skills 能力——一个 Org 文件就可以完成能力声明、能力描述、函数调用编写、计划追踪等全部工作。
+</p>
+</div>
+<div id="outline-container-org792f1ec" class="outline-3">
+<h3 id="org792f1ec">可编译的 Spec：Properties 与结构化元数据</h3>
+<div class="outline-text-3" id="text-org792f1ec">
+<p>
+Claude Code 使用 YAML frontmatter 来声明元数据。Org Mode 提供了类似的机制，但更加强大——Properties drawer（属性抽屉）可以表达更复杂、更具层次的结构。
+</p>
+
+<p>
+可以在一个 Org heading 下定义任意数量的属性：:SKILL<sub>ID</sub>:、:EFFECT:、:INVOCATION:、:CONTEXT:、:DETERMINISM: 等等。这些属性可以被程序解析，也可以被 gptel 读取后插入到发送给模型的上下文中。更重要的是，Org 的 headline 层级天然适合将一个 Skill 拆分为「概览→流程→边界→例子→失败模式→检查清单」的结构，而不是在单个 Markdown 文件中写出一大坨内容。
+</p>
+
+<p>
+这意味着，Org 文件本身就是一个「可编译的 Spec」。可以写一个.elisp 函数，将 Org 属性转换为 YAML frontmatter，将 Org 结构编译成 SKILL.md，同时保留源文件作为「唯一的真相来源」。这就是「可编译」的含义——Spec 不是一次性写死的文档，而是一个可以机器解析、人机协作编辑的源代码。
+</p>
+</div>
+<div id="outline-container-orga88a9f6" class="outline-4">
+<h4 id="orga88a9f6">具体 Spec 示例</h4>
+<div class="outline-text-4" id="text-orga88a9f6">
+<p>
+从 org-ai-skills 项目中提取的最小有效 Skill 定义：
+</p>
+
+<pre class="example" id="orgc84d739">
+* Skill: Generate Structured Notes
+:PROPERTIES:
+:SKILL_ID: gen-notes
+:END:
+
+#+EFFECT: pure
+#+INVOCATION: suggest
+#+CONTEXT: project
+#+DETERMINISM: deterministic
+
+** Description
+Transform selected Org content into a concise, structured outline.
+
+** Contracts
+- output must be final Org artifact only
+- preserve the original language of the selected section
+- do not return headings-only output
+
+** Requirements
+- keep heading hierarchy valid and consistent with selected target level
+- avoid adding content unrelated to source subtree intent
+- preserve and expand the core points from source text with concrete detail
+
+** Function Calls
+#+BEGIN_SRC emacs-lisp
+;; Function: read-buffer
+;; Read content from current or named buffer
+(org-ai-skills-read-buffer &amp;key buffer_name start end)
+#+END_SRC
+
+** Function Definitions
+#+BEGIN_SRC emacs-lisp
+(defun org-ai-skills-read-buffer (&amp;key buffer-name start end)
+  "Skill function: read content from specified buffer range."
+  (let ((buf (or (and buffer-name (get-buffer buffer-name))
+                 (current-buffer))))
+    (if start
+        (buffer-substring-no-properties
+         (or (and start (1- (string-to-number start))) (point-min))
+         (or (and end (1- (string-to-number end))) (point-max)))
+      (buffer-string buf))))
+#+END_SRC
+</pre>
+
+<p>
+解析后的数据结构示例（org-ai-skills-parse-skill-file 返回的 plist）：
+</p>
+
+<div class="org-src-container">
+<pre>
+<code class="language-emacs-lisp">(:file "/path/to/org-ai-skills/skills/001-generate-structured-notes.org"
+ :title "Skill: Generate Structured Notes"
+ :skill-id "gen-notes"
+ :description "Transform selected Org content into a concise, structured outline."
+ :outputs nil
+ :contracts ["output must be final Org artifact only"
+            "preserve the original language of the selected section"
+            "do not return headings-only output"]
+ :requirements ["keep heading hierarchy valid and consistent with selected target level"
+               "avoid adding content unrelated to source subtree intent"
+               "preserve and expand the core points from source text with concrete detail"]
+ :function-calls ([(:name "read-buffer" :description "Read content from current or named buffer")])
+ :function-definitions ["(defun org-ai-skills-read-buffer ... )"]
+ :raw-sections (:description "..." :contracts "..." :requirements "...")
+ :tags (:effect "pure" :invocation "suggest" :context "project" :determinism "deterministic"))
+</code></pre>
+</div>
+
+<p>
+对比 Markdown 的 YAML frontmatter 写法：
+</p>
+
+<pre class="example" id="org775f959">
+---
+skill_id: gen-notes
+effect: pure
+invocation: suggest
+context: project
+determinism: deterministic
+---
+
+# Skill: Generate Structured Notes
+
+## Description
+Transform selected Org content into a concise, structured outline.
+
+## Contracts
+- output must be final Org artifact only
+- preserve the original language of the selected section
+...
+</pre>
+
+<p>
+Org 的优势在于：属性定义在 heading 的 property drawer 中，可以被 Emacs 的 org-entry-get 等 API 直接读取；而 Markdown 的 frontmatter 与内容的关联需要通过位置约定来维系。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf2f11dd" class="outline-3">
+<h3 id="orgf2f11dd">可执行的代码层：Org Babel</h3>
+<div class="outline-text-3" id="text-orgf2f11dd">
+<p>
+Claude Code 的 Level 3 强调「脚本应该是可执行的，并且不占用上下文」。Org Babel 完美地实现了这一点。
+</p>
+
+<p>
+在 Org 文件中，可以用 #+BEGIN<sub>SRC</sub> python、#+(shell)、#+(javascript) 等语法定义代码块。这些代码块在 Org 中是可阅读的——这是 literate programming 的精髓——但它们也可以被抽取为独立的脚本文件。一个 #+BEGIN<sub>SRC</sub> python 块可以变成 scripts/analyze.py，一个 #+BEGIN<sub>SRC</sub> shell 块可以变成 scripts/deploy.sh。
+</p>
+
+<p>
+这意味着 Org Skill 既保留了「文档的可读性」，又具备了「代码的执行性」。当模型需要运行一个脚本时，它不需要在上下文中读取脚本内容，而是通过文件系统访问来执行。这与 Claude Code 的 Level 3 设计完全对齐。
+</p>
+
+<p>
+定义在 Skill 文件中的函数调用与函数实现：
+</p>
+
+<pre class="example" id="org682973e">
+** Function Calls
+#+BEGIN_SRC emacs-lisp
+;; Function: search-web
+;; Search the web using Search1API
+;; @query: Search query string
+;; @language_hint: Optional language hint
+(org-ai-skills-search-web &amp;key query language_hint)
+#+END_SRC
+
+** Function Definitions
+#+BEGIN_SRC emacs-lisp
+(defun org-ai-skills-search-web (&amp;key query language_hint)
+  "Skill function: search the web using Search1API."
+  (let ((api-key (auth-source-pick-first-password :host "search1api")))
+    (unless api-key
+      (error "Search1API key not found in auth-source"))
+    (request "https://api.search1api.com/search"
+             :type "POST"
+             :headers (cons (cons "Authorization"
+                                  (format "Bearer %s" api-key))
+                            (cons "Content-Type" "application/json"))
+             :data (json-encode `(("query" . ,query)
+                                 ("language_hint" . ,language_hint)))
+             :parser 'json-read
+             :sync t
+             :error (cl-function
+                     (lambda (&amp;key error-thrown &amp;allow-other-keys)
+                       (signal 'org-ai-skills-function-call-error
+                               (list error-thrown)))))))
+#+END_SRC
+</pre>
+
+<p>
+Babel 代码块可以直接在 Org buffer 中执行（org-babel-execute-src-block），也可以导出为独立脚本文件。以下是一个完整的金融新闻 Skill 示例中的代码块定义：
+</p>
+
+<pre class="example" id="org893d889">
+* Skill: Daily Financial News Report
+:PROPERTIES:
+:SKILL_ID: daily-financial-news-report
+:END:
+
+#+EFFECT: external
+#+INVOCATION: auto
+#+CONTEXT: project
+#+DETERMINISM: heuristic
+
+** Function Definitions
+#+BEGIN_SRC emacs-lisp
+(defun org-ai-skills-search-financial-news (&amp;key date limit)
+  "Fetch financial news for given date using Search1API."
+  (let* ((api-key (auth-source-pick-first-password :host "search1api"))
+         (response (request "https://api.search1api.com/search"
+                            :type "POST"
+                            :headers (cons (cons "Authorization"
+                                                 (format "Bearer %s" api-key))
+                                          (cons "Content-Type" "application/json")))
+                            :data (json-encode `(("query" . "finance stock market")
+                                                ("date" . ,date)
+                                                ("limit" . ,limit)))
+                            :parser 'json-read
+                            :sync t)))
+    (cdadr (assoc 'results response))))
+#+END_SRC
+</pre>
+
+<p>
+导出后的脚本文件示例（scripts/search-financial-news.el）：
+</p>
+
+<div class="org-src-container">
+<pre>
+<code class="language-emacs-lisp">#!/usr/bin/emacs --script
+;;; scripts/search-financial-news.el --- Search financial news
+
+(add-to-list 'load-path "/path/to/org-ai-skills/elisp")
+(require 'org-ai-skills)
+
+(let* ((date (or (car argv) (format-time-string "%Y-%m-%d")))
+       (limit (string-to-number (or (cadr argv) "10"))))
+  (org-ai-skills-search-financial-news :date date :limit limit))
+</code></pre>
+</div>
+
+<p>
+对比 Claude Code 中需要将完整脚本塞入上下文的做法，Org Skill 的做法是：上下文中只传递函数签名的声明，函数实现通过 org-babel-load-library 动态加载，运行时通过文件系统执行脚本。这正是 Level 3 所倡导的「脚本外置」理念。
+</p>
+</div>
+</div>
+<div id="outline-container-orgef8ab7c" class="outline-3">
+<h3 id="orgef8ab7c">可追踪的计划：Checklist / TODO / LOGBOOK</h3>
+<div class="outline-text-3" id="text-orgef8ab7c">
+<p>
+Skills 不是一次性的提示词，而是可复用的工作流。这意味着它们需要被追踪、需要积累执行历史、需要能够被迭代改进。
+</p>
+
+<p>
+Org Mode 在这一方面拥有独一无二的原生能力。TODO 关键字可以标记任务的执行状态，CHECKLIST 可以表达步骤化的计划，LOGBOOK 可以记录执行过程中的关键事件和时间戳。这些不是外部插件，而是 Org Mode 与生俱来的数据结构。
+</p>
+
+<p>
+用 Org 定义一个 Skill 时，checklist 不是「写死的步骤列表」，而是可以被实例化为 Run Ticket 的模板。每一次执行都可以生成一个新的 Org 子树，记录输入参数、执行的步骤、输出的结果、以及用户的反馈。这种「执行实例与 Skill 定义分离」的设计，保证了 Skill Spec 的纯净性，同时让每一次执行都有迹可循。
+</p>
+
+<p>
+这也是 Org Skills 相对于 Claude Code Skills 的一个显著优势。Claude Code 的技能执行记录在外部文件中，而 Org Skills 的执行记录可以直接写在同一个 Org 文件中——或者更好，写在同一个目录结构下的 run/ 子目录中，保持 Spec 的纯粹性。
+</p>
+
+<p>
+Run Ticket 实例（每次执行生成的新子树）：
+</p>
+
+<pre class="example" id="org4ce96b0">
+* Run Ticket: gen-notes-2024-01-15-001
+:PROPERTIES:
+:RUN_ID: 20240115001
+:SKILL_ID: gen-notes
+:SOURCE_SUBTREE: "** 为什么 Org Mode 比 Markdown 更适合做 Skills"
+:TIMESTAMP: 2024-01-15T10:30:00Z
+:STATUS: completed
+:END:
+
+** Input Parameters
+- Target file: ~/Workspace/org-ai-skills/README.org
+- Target subtree: "** 为什么 Org Mode..."
+- Custom instruction: "添加具体的 spec 例子"
+
+** Execution Log
+:LOGBOOK:
+CLOCK: [2024-01-15T10:30:00]--[2024-01-15T10:35:00] = 5min
+- Skill loaded: gen-notes
+- Function calls activated: read-buffer
+- gptel request dispatched with role: execution
+CLOCK: [2024-01-15T10:35:00]--[2024-01-15T10:38:00] = 3min
+- Candidate generated and auto-applied
+:END:
+
+** Output
+:RESULTS:
+- Transformed subtree with code examples added
+- Tokens used: 8234
+- Model: claude-3-sonnet
+:END:
+
+** User Feedback
+- [ ] Approved
+- [ ] Needs revision
+- [ ] Discarded
+</pre>
+
+<p>
+Planner 生成的执行计划（自动实例化的 TODO 步骤）：
+</p>
+
+<pre class="example" id="org432132a">
+* Plan: Article Writing Workflow
+:PROPERTIES:
+:PLAN_ID: plan-001
+:TASK: "Write article on Org Mode vs Markdown"
+:STATUS: in-progress
+:END:
+
+** TODO Step 1: Outline from Source
+:PROPERTIES:
+:SKILL_ID: article-outline-from-source
+:STATUS: completed
+:END:
+
+** TODO Step 2: Compose from Outline
+:PROPERTIES:
+:SKILL_ID: article-compose-from-outline
+:STATUS: in-progress
+:END:
+
+** TODO Step 3: Repair Selected Subtree
+:PROPERTIES:
+:SKILL_ID: article-repair-subtree
+:STATUS: pending
+:END:
+
+** TODO Step 4: Editorial Polish
+:PROPERTIES:
+:SKILL_ID: article-polish-editorial
+:STATUS: pending
+:END:
+</pre>
+
+<p>
+与 Claude Code 的 skill tracking 对比：
+</p>
+
+<pre class="example" id="org38117bc">
+# Claude Code Skill Tracking (JSON)
+# ~/.claude/skills/tracking/gen-notes-runs.json
+[
+  {
+    "run_id": "20240115001",
+    "skill_id": "gen-notes",
+    "timestamp": "2024-01-15T10:30:00Z",
+    "status": "completed",
+    "input": {...},
+    "output": "..."
+  }
+]
+</pre>
+
+<p>
+Org 的优势在于：Planner 和 Run Ticket 本质上都是 Org heading，可以通过 org-agenda、org-gtd 等已有工具进行可视化和操作。执行历史（LOGBOOK）直接内嵌在子树中，可以通过 org-log-note 机制自动记录。而 Claude Code 的追踪完全依赖外部 JSON 文件，需要额外的解析逻辑。
+</p>
+</div>
+</div>
+<div id="outline-container-org830f32a" class="outline-3">
+<h3 id="org830f32a">需要注意的坑</h3>
+<div class="outline-text-3" id="text-org830f32a">
+<p>
+Org 太强大了，这既是优势也是陷阱。一个新手很容易把 Org Skill 写成「百科全书」——把所有相关知识都塞进一个文件，期待模型能理解并正确使用。这恰恰违背了 Progressive Disclosure 的初衷。
+</p>
+
+<p>
+一个设计良好的 Org Skill 应该遵循以下原则：元信息要轻，只包含发现和调度所需的最少信息；正文要短，控制在 5000 tokens 以内；大段的参考内容要外置到独立的文件中，作为 Level 3 资源。Org 的丰富功能应该用来增强结构的可解析性和执行的可追踪性，而不是用来替代 Markdown 的简洁性。
+</p>
+
+<p>
+此外，需要提前决定「可执行块的安全边界」。Babel 代码块导出后的脚本集合是什么？gptel 或其他 Agent 是否有权限自动执行这些脚本？这些问题对应着 Claude Code 中 disable-model-invocation 的理念，需要在设计阶段就明确。
+</p>
+
+<p>
+设计良好的轻量级 Skill 示例（遵循 Progressive Disclosure）：
+</p>
+
+<pre class="example" id="orgf3cbb90">
+* Skill: Generate Structured Notes
+:PROPERTIES:
+:SKILL_ID: gen-notes
+:END:
+
+#+EFFECT: pure
+#+INVOCATION: suggest
++CONTEXT: project
+#+DETERMINISM: deterministic
+
+** Description
+Transform selected Org content into a concise, structured outline.
+
+** Contracts
+- output must be final Org artifact only
+- preserve the original language of the selected section
+
+** Requirements
+- keep heading hierarchy valid and consistent with selected target level
+
+** See Also
+- [[file:skills/docs/gen-notes-detailed.org]] - Detailed specification (Level 3)
+- [[file:skills/examples/gen-notes-example-input.org]] - Example inputs
+</pre>
+
+<p>
+Level 3 资源外置示例（gen-notes-detailed.org）：
+</p>
+
+<pre class="example" id="orgecd3424">
+* Gen-Notes Detailed Specification
+
+This document contains the full technical specification for gen-notes skill.
+
+** Algorithm
+1. Parse source subtree content
+2. Identify key concepts and their relationships
+3. Generate hierarchical outline structure
+4. Expand each node with substantive content
+
+** Token Budget
+- Input budget: 20000 chars
+- Output budget: 5000 tokens
+
+** Failure Modes
+- Empty source: return error with "No content to transform"
+- Ambiguous structure: preserve original structure, add [?] markers
+...
+</pre>
+
+<p>
+安全边界配置示例（在 Skill 实现中声明）：
+</p>
+
+<pre class="example" id="org99fd0ab">
+** Security Configuration
+#+BEGIN_SRC emacs-lisp
+;; Security boundary: no automatic script execution
+;; Scripts must be exported and manually reviewed before running
+(setq org-ai-skills-auto-execute-scripts nil)
+
+;; Allowed script types for this skill
+(setq org-ai-skills-allowed-script-types '(read-buffer read-file))
+
+;; Read-only operations only (pure effect)
+(setq org-ai-skills-effect-type 'pure)
+#+END_SRC
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org87de2ef" class="outline-2">
+<h2 id="org87de2ef">实际应用场景</h2>
+<div class="outline-text-2" id="text-org87de2ef">
+<p>
+理论的价值在于指导实践。Org Skills 系统不是空中楼阁，它已经在具体的场景中产生了实际价值。以下三个场景展示了这一系统的不同维度。
+</p>
+</div>
+<div id="outline-container-org745bf7e" class="outline-3">
+<h3 id="org745bf7e">场景一：个体知识生产（AI 协作写作）</h3>
+<div class="outline-text-3" id="text-org745bf7e">
+<p>
+这个场景展示了如何用 Org Skills 构建写作工作流：研究 → 提纲 → 创作 → 优化。可以结合现有 skills 和本篇内容的生成过程，说明这个过程是如何运作的。本篇文章就是用这个流程生成的。
+</p>
+</div>
+<div id="outline-container-org80645c1" class="outline-4">
+<h4 id="org80645c1">两种生成模式概览</h4>
+<div class="outline-text-4" id="text-org80645c1">
+<div class="org-src-container">
+<pre>
+<code class="language-text">┌─────────────────────────────────────────────────────────────────────┐
+│                     文章生成模式选择                                  │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                      │
+│  手动模式                    │  Planner 自动化模式                   │
+│  ───────────                │  ──────────────────                    │
+│  M-x org-ai-skills-         │  M-x org-ai-skills-                    │
+│   org-rewrite-subtree        │   plan-run                             │
+│                              │                                       │
+│  ├─ 作用域选择             │  ├─ 四阶段自动编排                     │
+│  │   • 当前缓冲区           │  │   ① outline (提纲生成)              │
+│  │   • 当前子树             │  │   ② compose (逐段撰写)               │
+│  │   • 上级子树             │  │   ③ repair (修复子树)               │
+│  ├─ Skill 选择             │  │   ④ polish (终审润色)                │
+│  ├─ strict 模式约束        │  ├─ lazy loading 优化                  │
+│                              │  ├─ 预设任务意图支持                  │
+│                              │                                       │
+└─────────────────────────────────────────────────────────────────────┘
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org99b4b9c" class="outline-4">
+<h4 id="org99b4b9c">Planner 四阶段工作流详解</h4>
+<div class="outline-text-4" id="text-org99b4b9c">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">阶段</th>
+<th scope="col" class="org-left">Skill ID</th>
+<th scope="col" class="org-left">输入</th>
+<th scope="col" class="org-left">输出</th>
+<th scope="col" class="org-left">关键设计点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">outline</td>
+<td class="org-left">004-article-outline-from-source</td>
+<td class="org-left">源文件/素材</td>
+<td class="org-left">带 :PURPOSE: 属性的结构化提纲</td>
+<td class="org-left">Planner 分析语义映射为逻辑层级</td>
+</tr>
+
+<tr>
+<td class="org-left">compose</td>
+<td class="org-left">005-article-compose-from-outline</td>
+<td class="org-left">审核后的提纲</td>
+<td class="org-left">完整段落内容</td>
+<td class="org-left">保留 :PURPOSE: 与 :SOURCE<sub>FILE</sub><sub>PATH</sub>: 追溯</td>
+</tr>
+
+<tr>
+<td class="org-left">repair</td>
+<td class="org-left">(按需选择)</td>
+<td class="org-left">草稿子树</td>
+<td class="org-left">修复内容</td>
+<td class="org-left">针对特定问题的定向修复</td>
+</tr>
+
+<tr>
+<td class="org-left">polish</td>
+<td class="org-left">007-article-polish-editorial</td>
+<td class="org-left">完整初稿</td>
+<td class="org-left">终审稿</td>
+<td class="org-left">措辞/风格/一致性检查</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org6f3474d" class="outline-4">
+<h4 id="org6f3474d">完整执行示例</h4>
+<div class="outline-text-4" id="text-org6f3474d">
+<p>
+假设输入源文件 ~/Workspace/demo.org，内容如下：
+</p>
+
+<pre class="example" id="orgca33e03">
+*** 深入理解 org-ai-skills：架构设计与工作流
+</pre>
+</div>
+<ul class="org-ul">
+<li><a id="orgedc793e"></a>阶段一：提纲生成<br />
+<div class="outline-text-5" id="text-orgedc793e">
+<p>
+调用 Skill <code>skills/004-article-outline-from-source.org</code>
+</p>
+
+<p>
+输入参数：
+</p>
+<ul class="org-ul">
+<li>goal: 系统性展开 org-ai-skills 项目的核心架构与工作流设计</li>
+<li>source<sub>file</sub>: ~/Workspace/org-ai-skills/README.org</li>
+</ul>
+
+<p>
+预期产出：
+</p>
+<pre class="example" id="org6a258f6">
+*** 深入理解 org-ai-skills：架构设计与工作流
+
+**** 项目概述与设计理念
+
+**** 核心概念与系统架构
+
+***** ...
+
+**** Skill 机制详解
+</pre>
+</div>
+</li>
+<li><a id="org7e982b2"></a>阶段二：逐段创作<br />
+<div class="outline-text-5" id="text-org7e982b2">
+<p>
+调用 Skill <code>skills/005-article-compose-from-outline.org</code>
+</p>
+
+<p>
+针对第一阶段产出的每个提纲节点，逐一展开为完整段落：
+</p>
+
+<pre class="example" id="org3ba1e8a">
+**** 项目概述与设计理念
+
+org-ai-skills 定位为实验性 Emacs 认知运行时，其核心目标是通过 Org Mode 这一强大的结构化文档格式，将 AI Skill 定义为可规划、可执行、可审查、可演化的结构化认知过程。
+...
+</pre>
+</div>
+</li>
+<li><a id="org337c997"></a>阶段三：修复（按需）<br />
+<div class="outline-text-5" id="text-org337c997">
+<p>
+根据实际需要，可选调用以下 Skill 进行定向修复：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">场景</th>
+<th scope="col" class="org-left">Skill</th>
+<th scope="col" class="org-left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">结构调整</td>
+<td class="org-left">skills/006-article-structure-xxx.org</td>
+<td class="org-left">修正标题层级与逻辑流</td>
+</tr>
+
+<tr>
+<td class="org-left">内容补充</td>
+<td class="org-left">skills/xxx-outline-expansion.org</td>
+<td class="org-left">扩展要点</td>
+</tr>
+
+<tr>
+<td class="org-left">语言优化</td>
+<td class="org-left">skills/xxx-rewording.org</td>
+<td class="org-left">措辞优化</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+<li><a id="org1f061a8"></a>阶段四：终审润色<br />
+<div class="outline-text-5" id="text-org1f061a8">
+<p>
+调用 Skill <code>skills/007-article-polish-editorial.org</code>
+</p>
+
+<p>
+执行约束（contracts）：
+</p>
+<ul class="org-ul">
+<li>preserve original structure and key meaning</li>
+<li>normalize wording and tone consistency end-to-end</li>
+<li>avoid introducing unsupported new claims</li>
+<li>reduce redundancy and wording drift across sections</li>
+<li>keep transitions natural and voice consistent</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-orgcf2a248" class="outline-4">
+<h4 id="orgcf2a248">总结：工作流核心特征</h4>
+<div class="outline-text-4" id="text-orgcf2a248">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">特征</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">阶段化</td>
+<td class="org-left">四阶段各司其职产出明确</td>
+</tr>
+
+<tr>
+<td class="org-left">可追溯</td>
+<td class="org-left">:SOURCE<sub>FILE</sub><sub>PATH</sub>: / :PURPOSE: 贯穿全程</td>
+</tr>
+
+<tr>
+<td class="org-left">可审查</td>
+<td class="org-left">每阶段产出可人工审核后才进入下一阶段</td>
+</tr>
+
+<tr>
+<td class="org-left">可演化</td>
+<td class="org-left">可按需插入 repair 阶段定向修复</td>
+</tr>
+
+<tr>
+<td class="org-left">受控性</td>
+<td class="org-left">strict 模式约束、Governance Gate 保障质量</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf25e21b" class="outline-3">
+<h3 id="orgf25e21b">场景二：个人战略操作系统</h3>
+<div class="outline-text-3" id="text-orgf25e21b">
+<p>
+这是更具野心的应用方向。想象一个独立企业主或自由职业者，需要管理客户谈判、报价策略、风险评估、合同审核、项目拆解等一系列复杂的决策。这些决策不是一次性的，而是需要系统性地积累经验、优化策略。
+</p>
+
+<p>
+传统 SaaS 工具解决这个问题的方式是「割裂」——CRM 负责客户管理，财务工具负责报价，合同工具负责法务。但这些系统之间没有「跨系统的认知决策流」。无法让一个工具理解「这个客户的报价策略失败过，是因为当时现金流状态紧张」这样的上下文。
+</p>
+
+<p>
+用 Org Skills 构建个人战略操作系统的方式是：定义一组核心技能——《客户谈判策略 Skill》《报价优化 Skill》《合同风险扫描 Skill》《项目拆解 Skill》——每一个都是 Org 文件，包含完整的决策流程、评估维度、历史案例。每个项目或客户可以生成一个 Run Ticket，记录当次决策的背景、AI 的建议、最终采取的行动、以及结果反馈。
+</p>
+
+<p>
+这种系统的独特价值在于：随着 Run Ticket 的积累，系统可以分析「什么情况下报价策略容易失败」「哪种谈判风格对某类客户更有效」，并据此生成 Skill 改进提案。这不是传统工具能提供的——传统工具记录的是数据，而 Org Skills 记录的是「决策逻辑」本身。
+</p>
+</div>
+</div>
+<div id="outline-container-org6baa094" class="outline-3">
+<h3 id="org6baa094">场景三：高维认知工作流</h3>
+<div class="outline-text-3" id="text-org6baa094">
+<p>
+第三类场景面向更复杂的推理任务：科研中的文献分析、制度设计、博弈分析、战略规划。这类场景的特点是：问题是非结构化的、推理路径是多叉的、决策需要多轮反证。
+</p>
+
+<p>
+传统工具链——Word + Excel + 脑子——无法提供可执行的 Spec、多轮反证的结构化记录、决策演化的追踪。Org Skills 可以为每一种高维认知任务定义专门的 Skill：《制度模型构建 Skill》《博弈分析 Skill》《战略推演 Skill》。每个 Skill 包含目标定义、约束条件、历史对照、失败场景分析等模块。
+</p>
+
+<p>
+在执行层面，每一次推理都生成一个 Run Ticket，记录推理路径、否决的方案、以及最终的结论。当系统发现某个推理模块在多次运行中表现不稳定时，它可以生成改进提案，调整 Skill 的结构和提示词。
+</p>
+
+<p>
+这种「可推理、可追踪、可自举」的认知工作流，可能是 Org Skills 最具潜力的应用方向。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org3a1de49" class="outline-2">
+<h2 id="org3a1de49">如何在 Emacs 中实现 Org Skills</h2>
+<div class="outline-text-2" id="text-org3a1de49">
+<p>
+理论需要落地为实现。以下是技术实现的核心思路——如何让 gptel 识别和加载 Org Skills。
+</p>
+</div>
+<div id="outline-container-org9a977e4" class="outline-3">
+<h3 id="org9a977e4">Skill Registry：扫描与索引</h3>
+<div class="outline-text-3" id="text-org9a977e4">
+<p>
+系统需要一个「Skill Registry」来管理所有可用的 Skills。
+</p>
+
+<p>
+目录约定方面，全局 Skills 放在 ~/.emacs.d/skills/，项目级 Skills 放在 &lt;repo&gt;/.claude/skills/（与 Claude Code 保持兼容）。每个 Skill 目录包含一个 skill.org 源文件和编译产物（SKILL.md + resources/ + scripts/）。
+</p>
+
+<p>
+扫描策略方面，在 Emacs 启动或打开项目时，系统遍历 Skills 目录，解析 Org 文件中的 Properties 和顶层 headline，提取 Skill ID、name、description、触发关键词、权限配置等元信息。这些信息构成 Level 1 的轻量缓存，用于模型判断「当前上下文应该加载哪些 Skills」。
+</p>
+</div>
+</div>
+<div id="outline-container-org0d1b055" class="outline-3">
+<h3 id="org0d1b055">Skill Compiler：Org → SKILL.md</h3>
+<div class="outline-text-3" id="text-org0d1b055">
+<p>
+Skill Compiler 是整个系统的核心转换层。它的任务是将 Org 源文件编译为 Claude Code 兼容的 SKILL.md 格式。
+</p>
+
+<p>
+编译流程如下。从 Org Properties 生成 YAML frontmatter——:SKILL<sub>ID</sub>: 变成 name，:PURPOSE: 变成 description，:EFFECT:、:INVOCATION: 等映射为 Claude Code 支持的字段。从 Org 标题层级生成 SKILL.md 正文——只导出概览、步骤、示例等核心内容（大段参考外置到 Level 3）。从 Babel 代码块抽取脚本——将 #+BEGIN<sub>SRC</sub> 块输出为独立的脚本文件。
+</p>
+
+<p>
+这样，Org 文件作为「源代码」，SKILL.md 作为「编译产物」，既保持了 Claude Code 的兼容性，又保留了 Org 的可编辑性和结构化优势。
+</p>
+</div>
+</div>
+<div id="outline-container-org039714f" class="outline-3">
+<h3 id="org039714f">Context Injector：模拟 Progressive Disclosure</h3>
+<div class="outline-text-3" id="text-org039714f">
+<p>
+最后是上下文注入机制——如何在 gptel 中模拟 Claude Code 的 Progressive Disclosure。
+</p>
+
+<p>
+在 Level 1 层面，系统将 Registry 扫描得到的轻量元信息（Skill name + description + 关键词）注入到 gptel 的 system prompt 中，让模型知道有哪些 Skills 可用。
+</p>
+
+<p>
+在 Level 2 层面，当模型判断需要加载某个 Skill 时，Context Injector 将对应的 SKILL.md 正文插入到本次对话的临时上下文中。这不是常驻的，而是按需加载，与 Claude Code 的行为一致。
+</p>
+
+<p>
+手动触发层面，可以在 gptel buffer 中提供补全接口，让用户通过 /skill-name 命令显式调用 Skills，参数映射到 Skill 中定义的占位符。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbe11afc" class="outline-2">
+<h2 id="orgbe11afc">Skill 自举：系统如何自我优化</h2>
+<div class="outline-text-2" id="text-orgbe11afc">
+<p>
+这是最激动人心的部分——Org Skills 系统不仅仅是一个工具，它具备自我优化的能力。
+</p>
+
+<p>
+传统软件系统的优化依赖人工分析代码、编写补丁、部署上线。Org Skills 系统的独特之处在于：它可以观察自己的运行情况，生成改进提案，经过治理评估后自我更新。这不是无限递归——每一步都有 Human-in-the-Loop 的确认环节。
+</p>
+</div>
+<div id="outline-container-orgd8c34d8" class="outline-3">
+<h3 id="orgd8c34d8">运行数据收集</h3>
+<div class="outline-text-3" id="text-orgd8c34d8">
+<p>
+系统持续收集 Skills 的运行数据。每次 Skill 执行后，Run Ticket 中记录了执行时间、输入参数、输出结果、是否出错、是否被用户修改等信息。Skill-Analyzer（一个专门的元 Skill）定期扫描这些数据，生成分析报告。
+</p>
+
+<p>
+分析报告包含：常见的失败模式、冗余的步骤、较弱的提示词段落、缺失的验证步骤、潜在风险区域。关键在于：这个阶段只生成报告，不修改任何 Skill Spec。
+</p>
+</div>
+</div>
+<div id="outline-container-orgf861b0a" class="outline-3">
+<h3 id="orgf861b0a">改进提案生成</h3>
+<div class="outline-text-3" id="text-orgf861b0a">
+<p>
+当运行数据积累到一定程度——比如某个 Skill 失败率超过阈值，或者用户频繁修改某个 Skill 的输出——系统触发 Skill-Refactor 元 Skill。
+</p>
+
+<p>
+Skill-Refactor 读取 Skill Spec 和分析报告，生成改进提案。提案包括：建议的修改内容、结构化的 diff、风险分类、预期收益。提案以 Org 子树的形式存储在 proposals/ 目录下，包含 TARGET<sub>SKILL</sub>、RISK<sub>LEVEL</sub>、BASED<sub>ON</sub><sub>RUNS</sub> 等属性，以及详细的修改说明和 diff。
+</p>
+</div>
+</div>
+<div id="outline-container-org4a0a94f" class="outline-3">
+<h3 id="org4a0a94f">治理与确认</h3>
+<div class="outline-text-3" id="text-org4a0a94f">
+<p>
+提案生成后，进入治理评估阶段。Skill-Governance 元 Skill 根据软标签（EFFECT、RISK<sub>LEVEL</sub> 等）判断提案的风险级别。
+</p>
+
+<p>
+如果风险低（比如只是优化提示词表述），系统建议自动批准。如果风险中等（比如修改了调用权限或增加了新的副作用），系统提示人工确认。如果风险高（比如涉及不可逆的副作用或权限扩大），系统标记为必须人工审核。
+</p>
+
+<p>
+Human-in-the-Loop 体现在：每个提案都需要人点击 Approve/Reject/Edit。批准后，系统生成 patch 并应用到 Skill Spec，同时生成 changelog，记录修改来源和批准人。
+</p>
+
+<p>
+这种「观察→提案→治理→确认→提交」的自举循环，让 Org Skills 系统能够随着使用不断进化，同时通过治理关卡防止失控。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org90e3964" class="outline-2">
+<h2 id="org90e3964">总结与展望</h2>
+<div class="outline-text-2" id="text-org90e3964">
+<p>
+回到最初的问题：为什么选择 Org Mode 作为 AI Skills 的载体？
+</p>
+</div>
+<div id="outline-container-org16fedf3" class="outline-3">
+<h3 id="org16fedf3">核心优势回顾</h3>
+<div class="outline-text-3" id="text-org16fedf3">
+<p>
+Org Mode 的核心优势可以归结为三点。第一，可编译的 Spec——Properties 和结构化元数据让 Skill 定义既是人类可读的文档，也是机器可解析的代码。第二，可执行的代码层——Babel 让脚本外置但不丢失可读性，与 Claude Code 的 Level 3 设计对齐。第三，可追踪的计划——TODO、CHECKLIST、LOGBOOK 让 Skills 的执行历史和演化过程得以沉淀，这是 Markdown 无法提供的能力。
+</p>
+
+<p>
+但这些只是方法，不是目的。真正的目标是构建一个以 Emacs 为核心、流程可控的、Human-in-the-Loop 的知识生产体系。在这个体系中，AI 不是替代人类思考的工具，而是放大人类思考能力的协作伙伴。每一次 AI 输出都以提案的形式出现，每一份文档都有可追溯的创作轨迹，每一个 Skill 都在使用中不断进化。
+</p>
+</div>
+</div>
+<div id="outline-container-org4ae998f" class="outline-3">
+<h3 id="org4ae998f">未来方向</h3>
+<div class="outline-text-3" id="text-org4ae998f">
+<p>
+最后，抛出一个开放性问题：真正重要的到底是什么？
+</p>
+
+<p>
+很多人认为 AI 的未来是自动编程——让 AI 写出更好的代码。但 AI 的未来更可能是面向文档的。LLM 最擅长响应的是自然语言，是文本，是结构化的文档。代码只是一种形式化的内容，有表达的边界；而文本是思想的边界，是人类表达的极限。
+</p>
+
+<p>
+更进一步，AI 要实现真正的自举能力，需要通过文档自举而不是代码自举。一个 Skill 产生的输出——提案、决策记录、运行分析——本身就是可以被 AI 读取、学习、改进的知识资产。当把 Skill 的定义、执行、演化全部沉淀为 Org 文档时，实际上在构建一个「AI 知识资产的操作系统」。
+</p>
+
+<p>
+未来的 AI 应用，不会止步于「更好的代码补全」或「更快的任务执行」。它会是这样的形态：一个文档驱动的世界——所有的流程、知识、决策、演化都以结构化文档的形式存在，AI 和人类在同一个文档空间中协作、讨论、迭代。Emacs + Org，正是这个未来最早的践行者。
+</p>
+
+<p>
+拥抱一切都文档化的未来，不是趋势，而是必然。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+
+
+<p class="author">Author: <a href="https://x.com/gsj987" target=_blank>gsj987</a></p>
+<p class="date">Publish Date: 2026-02-20 Fri 20:53</p>
+<p class="license">License: <a href="https://www.creativecommons.org/licenses/by-nc/4.0/deed.zh-hans">CC BY-NC 4.0</a></p>
+
+<script src="/assets/dynamic-toc.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/powershell.min.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/lisp.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C71VVP1YSV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C71VVP1YSV');
+</script>
+</div>
+</body>
+</html>

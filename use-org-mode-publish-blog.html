@@ -8,7 +8,7 @@
 <title>使用 org-mode 写博客</title>
 <meta name="author" content="gsj987" />
 <meta name="generator" content="Org Mode" />
-<style>
+<style type="text/css">
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -214,26 +214,26 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org1032f72">基本架构</a></li>
+<li><a href="#orgb9d22a6">基本架构</a></li>
 <li><a href="#h:8B24FFF2-0773-4B86-8F88-954DE4321640">导出特定 keyword 的笔记</a></li>
-<li><a href="#org36c61a7">处理导出文件的链接</a></li>
-<li><a href="#orgdcaf99d">处理图片资源</a></li>
-<li><a href="#orgc0e9ea0">生成首页和 RSS</a></li>
-<li><a href="#org13ee782">优化样式</a>
+<li><a href="#orge6910b8">处理导出文件的链接</a></li>
+<li><a href="#orge2af1ff">处理图片资源</a></li>
+<li><a href="#org5aa8464">生成首页和 RSS</a></li>
+<li><a href="#orgc62cf2b">优化样式</a>
 <ul>
-<li><a href="#orge2ad251">增加导航和页尾</a></li>
-<li><a href="#org3565625">代码高亮</a></li>
-<li><a href="#orgfc0fb2e">TOC 在多屏幕尺寸下的自适应样式</a></li>
-<li><a href="#orga89a499">暗色模式</a></li>
+<li><a href="#org4e325ff">增加导航和页尾</a></li>
+<li><a href="#org5258555">代码高亮</a></li>
+<li><a href="#orgb5aa96c">TOC 在多屏幕尺寸下的自适应样式</a></li>
+<li><a href="#org8f85994">暗色模式</a></li>
 </ul>
 </li>
-<li><a href="#orgcc19cb3">发布博客</a></li>
-<li><a href="#orge8f2bc5">后续思考</a>
+<li><a href="#orge6b4d2b">发布博客</a></li>
+<li><a href="#orgd1d520d">后续思考</a>
 <ul>
-<li><a href="#org63a03c7">为什么不使用 denote 直接写 markdown 文档？</a></li>
-<li><a href="#org2bf747a">为什么不用 org-mode 导出成 markdown 然后使用 hugo 发布？</a></li>
-<li><a href="#org74b9abd">跨平台编辑内容怎么办？</a></li>
-<li><a href="#org0717936">接下来要做什么</a></li>
+<li><a href="#org4c9336d">为什么不使用 denote 直接写 markdown 文档？</a></li>
+<li><a href="#org3352880">为什么不用 org-mode 导出成 markdown 然后使用 hugo 发布？</a></li>
+<li><a href="#org7f78e64">跨平台编辑内容怎么办？</a></li>
+<li><a href="#orgedb801c">接下来要做什么</a></li>
 </ul>
 </li>
 </ul>
@@ -242,15 +242,14 @@
 <p>
 我现在基本所有的个人笔记都会选择使用 denote 来写和收集。原先工作流里会使用 hugo 构建博客，是使用 markdown 为基础的博客系统，与我的笔记系统还是有点割裂，于是我计划做一个整合。
 </p>
-
-<div id="outline-container-org1032f72" class="outline-2">
-<h2 id="org1032f72">基本架构</h2>
-<div class="outline-text-2" id="text-org1032f72">
+<div id="outline-container-orgb9d22a6" class="outline-2">
+<h2 id="orgb9d22a6">基本架构</h2>
+<div class="outline-text-2" id="text-orgb9d22a6">
 <p>
 整体的工作流程如图：
 </p>
 
-<div id="org1a99683" class="figure">
+<div id="org799029b" class="figure">
 <p><img src="https://cdn.qiniu.gsj987.cn/blog/f234b735801e54515cd9b53f2c78906f.jpg" alt="2025-03-16_17-06-25_blog-workflow.jpg" />
 </p>
 </div>
@@ -266,7 +265,6 @@
 </ol>
 </div>
 </div>
-
 <div id="outline-container-h:8B24FFF2-0773-4B86-8F88-954DE4321640" class="outline-2">
 <h2 id="h:8B24FFF2-0773-4B86-8F88-954DE4321640">导出特定 keyword 的笔记</h2>
 <div class="outline-text-2" id="text-h:8B24FFF2-0773-4B86-8F88-954DE4321640">
@@ -365,10 +363,9 @@
 </p>
 </div>
 </div>
-
-<div id="outline-container-org36c61a7" class="outline-2">
-<h2 id="org36c61a7">处理导出文件的链接</h2>
-<div class="outline-text-2" id="text-org36c61a7">
+<div id="outline-container-orge6910b8" class="outline-2">
+<h2 id="orge6910b8">处理导出文件的链接</h2>
+<div class="outline-text-2" id="text-orge6910b8">
 <p>
 由于我的笔记大都是用中文做 title ，按 denote 的命名规则 <code>DATE--TITLE__KEYWORDS.EXTENSION</code> ，他会把这样的中文 title 放在文件名上，并加上以当前时间戳组成的 id ，最后还有 keywords 。这样的文件格式默认输出的 html 也会是这样的格式。
 </p>
@@ -452,14 +449,13 @@ backend."
 </div>
 
 <p>
-这里我是改写了默认 <code>denote-link-ol-export</code> 的实现，当遇到 <code>[[denote:id]][xxx]]</code> 的链接时，把 html  的输出改写了，使用 <code>expot_file_name</code> 作为链接。这里还有一个处理，如果目标的 org 笔记没有 blog 标记，或带有 draft 笔记，则不生成链接，只是以纯文本的方式展示。这个实现也是参考自 <sup><a id="fnr.1.100" class="footref" href="#fn.1" role="doc-backlink">1</a></sup> 。
+这里我是改写了默认 <code>denote-link-ol-export</code> 的实现，当遇到 <code>[[denote:id]][xxx]]</code> 的链接时，把 html  的输出改写了，使用 <code>expot_file_name</code> 作为链接。这里还有一个处理，如果目标的 org 笔记没有 blog 标记，或带有 draft 笔记，则不生成链接，只是以纯文本的方式展示。这个实现也是参考自 <sup><a id="fnr.1.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup> 。
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgdcaf99d" class="outline-2">
-<h2 id="orgdcaf99d">处理图片资源</h2>
-<div class="outline-text-2" id="text-orgdcaf99d">
+<div id="outline-container-orge2af1ff" class="outline-2">
+<h2 id="orge2af1ff">处理图片资源</h2>
+<div class="outline-text-2" id="text-orge2af1ff">
 <p>
 我自己的习惯，所有网站的图片资源都会放到 cdn 上以节省流量，git 不太适合管理太多的二进制文件，同时也是为了以后方便做数据迁移，毕竟远程资源只要一个链接就行了。使用 cdn 还有一个好处是，我可以利用 cdn 自动的图片剪裁和压缩能力，最佳化图片输出，给用户更好的加载体验。
 </p>
@@ -557,10 +553,9 @@ backend."
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgc0e9ea0" class="outline-2">
-<h2 id="orgc0e9ea0">生成首页和 RSS</h2>
-<div class="outline-text-2" id="text-orgc0e9ea0">
+<div id="outline-container-org5aa8464" class="outline-2">
+<h2 id="org5aa8464">生成首页和 RSS</h2>
+<div class="outline-text-2" id="text-org5aa8464">
 <p>
 利用 org-publish 的 sitemap 功能，自动输出所有文件列表的 <code>index.org</code> 文件。我再通过对这个列表做 org-publish 操作，让其生成首页。
 </p>
@@ -636,18 +631,16 @@ rss 的生成方法也是类似的，但我用了 <code>ox-rss</code> 的方法 
 </p>
 </div>
 </div>
-
-<div id="outline-container-org13ee782" class="outline-2">
-<h2 id="org13ee782">优化样式</h2>
-<div class="outline-text-2" id="text-org13ee782">
+<div id="outline-container-orgc62cf2b" class="outline-2">
+<h2 id="orgc62cf2b">优化样式</h2>
+<div class="outline-text-2" id="text-orgc62cf2b">
 <p>
 到此为止，大部分的工作都已经完成。关于样式我直接复制了 taxodiumn <sup><a id="fnr.3" class="footref" href="#fn.3" role="doc-backlink">3</a></sup> 的。再增加一些细节让博客变的更完美。
 </p>
 </div>
-
-<div id="outline-container-orge2ad251" class="outline-3">
-<h3 id="orge2ad251">增加导航和页尾</h3>
-<div class="outline-text-3" id="text-orge2ad251">
+<div id="outline-container-org4e325ff" class="outline-3">
+<h3 id="org4e325ff">增加导航和页尾</h3>
+<div class="outline-text-3" id="text-org4e325ff">
 <p>
 使用 html-preabmle 增加页头导航，用 html-postamble 增加页尾，也用于插入追踪脚本。
 </p>
@@ -674,10 +667,9 @@ rss 的生成方法也是类似的，但我用了 <code>ox-rss</code> 的方法 
 </div>
 </div>
 </div>
-
-<div id="outline-container-org3565625" class="outline-3">
-<h3 id="org3565625">代码高亮</h3>
-<div class="outline-text-3" id="text-org3565625">
+<div id="outline-container-org5258555" class="outline-3">
+<h3 id="org5258555">代码高亮</h3>
+<div class="outline-text-3" id="text-org5258555">
 <p>
 代码高亮我直接使用 highlightjs ，直接从 unpkg 加载，把代码放在 postamble 里。如：
 </p>
@@ -736,10 +728,9 @@ rss 的生成方法也是类似的，但我用了 <code>ox-rss</code> 的方法 
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgfc0fb2e" class="outline-3">
-<h3 id="orgfc0fb2e">TOC 在多屏幕尺寸下的自适应样式</h3>
-<div class="outline-text-3" id="text-orgfc0fb2e">
+<div id="outline-container-orgb5aa96c" class="outline-3">
+<h3 id="orgb5aa96c">TOC 在多屏幕尺寸下的自适应样式</h3>
+<div class="outline-text-3" id="text-orgb5aa96c">
 <p>
 在不同尺寸下，我希望 toc 能用不同方式展示：
 </p>
@@ -819,10 +810,9 @@ rss 的生成方法也是类似的，但我用了 <code>ox-rss</code> 的方法 
 </p>
 </div>
 </div>
-
-<div id="outline-container-orga89a499" class="outline-3">
-<h3 id="orga89a499">暗色模式</h3>
-<div class="outline-text-3" id="text-orga89a499">
+<div id="outline-container-org8f85994" class="outline-3">
+<h3 id="org8f85994">暗色模式</h3>
+<div class="outline-text-3" id="text-org8f85994">
 <p>
 直接利用 css 的 light-dark 方法实现，非常简单。但由于这个语法相对比较新，我们会增加一个默认属性，以确保大部分浏览器的兼容性。比如 body 的字体颜色：
 </p>
@@ -839,10 +829,9 @@ rss 的生成方法也是类似的，但我用了 <code>ox-rss</code> 的方法 
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgcc19cb3" class="outline-2">
-<h2 id="orgcc19cb3">发布博客</h2>
-<div class="outline-text-2" id="text-orgcc19cb3">
+<div id="outline-container-orge6b4d2b" class="outline-2">
+<h2 id="orge6b4d2b">发布博客</h2>
+<div class="outline-text-2" id="text-orge6b4d2b">
 <p>
 当所有方法都准备完毕后，我利用 simple-httpd 来本地预览我生成的博客内容：
 </p>
@@ -883,14 +872,13 @@ rss 的生成方法也是类似的，但我用了 <code>ox-rss</code> 的方法 
 </p>
 </div>
 </div>
-
-<div id="outline-container-orge8f2bc5" class="outline-2">
-<h2 id="orge8f2bc5">后续思考</h2>
-<div class="outline-text-2" id="text-orge8f2bc5">
+<div id="outline-container-orgd1d520d" class="outline-2">
+<h2 id="orgd1d520d">后续思考</h2>
+<div class="outline-text-2" id="text-orgd1d520d">
 </div>
-<div id="outline-container-org63a03c7" class="outline-3">
-<h3 id="org63a03c7">为什么不使用 denote 直接写 markdown 文档？</h3>
-<div class="outline-text-3" id="text-org63a03c7">
+<div id="outline-container-org4c9336d" class="outline-3">
+<h3 id="org4c9336d">为什么不使用 denote 直接写 markdown 文档？</h3>
+<div class="outline-text-3" id="text-org4c9336d">
 <p>
 因为我比较熟悉 org-mode 的编写方式，日常我的工作流也会比较多依赖 org-mode 提供的 todo 功能，只是一种习惯。org-mode 定制能力也比较强，组织出各种工作流会比较容易。还有一个原因是目前 emacs 里没有什么 markdown 的好实现，比如 org-mode 是能做到 wysiwyg 的，观感上非常接近一个现代富文本编辑器，但 md 没有这样好的支持。
 </p>
@@ -900,19 +888,17 @@ rss 的生成方法也是类似的，但我用了 <code>ox-rss</code> 的方法 
 </p>
 </div>
 </div>
-
-<div id="outline-container-org2bf747a" class="outline-3">
-<h3 id="org2bf747a">为什么不用 org-mode 导出成 markdown 然后使用 hugo 发布？</h3>
-<div class="outline-text-3" id="text-org2bf747a">
+<div id="outline-container-org3352880" class="outline-3">
+<h3 id="org3352880">为什么不用 org-mode 导出成 markdown 然后使用 hugo 发布？</h3>
+<div class="outline-text-3" id="text-org3352880">
 <p>
 这是一个好方法，hugo也更强大，而且我原本就是用 hugo 的，工作流也很完整。但这次我想先把一切都简化下来，体验一下 org-publish，看看其扩展能力。说不定未来我会把工作流再重新与 hugo 整合。
 </p>
 </div>
 </div>
-
-<div id="outline-container-org74b9abd" class="outline-3">
-<h3 id="org74b9abd">跨平台编辑内容怎么办？</h3>
-<div class="outline-text-3" id="text-org74b9abd">
+<div id="outline-container-org7f78e64" class="outline-3">
+<h3 id="org7f78e64">跨平台编辑内容怎么办？</h3>
+<div class="outline-text-3" id="text-org7f78e64">
 <p>
 目前 emacs 只有在桌面端有比较好的体验，移动端相关的工具都很少。我也在尝试使用 emacs on android 等方法，但目前没有什么好的成效。
 </p>
@@ -922,10 +908,9 @@ rss 的生成方法也是类似的，但我用了 <code>ox-rss</code> 的方法 
 </p>
 </div>
 </div>
-
-<div id="outline-container-org0717936" class="outline-3">
-<h3 id="org0717936">接下来要做什么</h3>
-<div class="outline-text-3" id="text-org0717936">
+<div id="outline-container-orgedb801c" class="outline-3">
+<h3 id="orgedb801c">接下来要做什么</h3>
+<div class="outline-text-3" id="text-orgedb801c">
 <p>
 增加评论或互动的功能，不过我这样的博客其实没什么人访问，这个不是什么紧急的功能需求。
 可能首先会专注内容，因为之前荒废了一段时间，其实可以写的事情已经积累一些了，接下来会先把这套工作流带来的输出欲给使用到位。

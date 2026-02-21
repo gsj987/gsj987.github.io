@@ -8,7 +8,7 @@
 <title>Publish Blog from iOS</title>
 <meta name="author" content="gsj987" />
 <meta name="generator" content="Org Mode" />
-<style>
+<style type="text/css">
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -214,20 +214,19 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org3f998b5">用 github action 自动编译博文</a></li>
-<li><a href="#org15240a5">用 github api 新建文件或更新文件</a></li>
-<li><a href="#orgc0fdb70">使用 ios shortcuts 提交文件到 github 上</a></li>
-<li><a href="#orgcd217ed">后记</a></li>
+<li><a href="#orge17fb5c">用 github action 自动编译博文</a></li>
+<li><a href="#orgc297fd7">用 github api 新建文件或更新文件</a></li>
+<li><a href="#org934ae4c">使用 ios shortcuts 提交文件到 github 上</a></li>
+<li><a href="#orge08d04a">后记</a></li>
 </ul>
 </div>
 </div>
 <p>
 利用 iOS 的 shortcuts 功能和 GitHub 的 rest API 我们可以轻松的从手机上直接发布博客内容到GitHub pages 上。
 </p>
-
-<div id="outline-container-org3f998b5" class="outline-2">
-<h2 id="org3f998b5">用 github action 自动编译博文</h2>
-<div class="outline-text-2" id="text-org3f998b5">
+<div id="outline-container-orge17fb5c" class="outline-2">
+<h2 id="orge17fb5c">用 github action 自动编译博文</h2>
+<div class="outline-text-2" id="text-orge17fb5c">
 <p>
 在 github pages 上我们需要编译好的静态网站用于发布，所以除了博客站点外，我们还需要一个存放 markdown 的源码 repo，并由 github action 来触发编译。
 </p>
@@ -283,10 +282,9 @@ jobs:
 </p>
 </div>
 </div>
-
-<div id="outline-container-org15240a5" class="outline-2">
-<h2 id="org15240a5">用 github api 新建文件或更新文件</h2>
-<div class="outline-text-2" id="text-org15240a5">
+<div id="outline-container-orgc297fd7" class="outline-2">
+<h2 id="orgc297fd7">用 github api 新建文件或更新文件</h2>
+<div class="outline-text-2" id="text-orgc297fd7">
 <p>
 首先我们需要有 GitHub personal access token，可以在 github 的 settings → Developer Settings → Personal access token 中生成。
 </p>
@@ -295,7 +293,7 @@ jobs:
 Github rest API 中创建一个新文件的 api 是
 </p>
 
-<pre class="example" id="org7f833af">
+<pre class="example" id="org44c1d13">
 PUT https://api.github.com/repos/:user/:repo/contents/:path-to-file
 Authorization: Bearer [personal-access-token]
 Accept: application/vnd.github.v3+json
@@ -319,7 +317,7 @@ Content-Type: application/json
 而如果是更新已有文件，则再需要在上述参数中添加已有文件的 sha 值，获取 sha 值的方式则是使用  get 方法获取
 </p>
 
-<pre class="example" id="orge37392c">
+<pre class="example" id="orgee95df2">
 GET https://api.github.com/repos/:user/:repo/contents/:path-to-file
 Authorization: Bearer [personal-access-token]
 Accept: application/vnd.github.v3+json
@@ -330,7 +328,7 @@ Content-Type: application/json
 并在 PUT 请求时，加上当前文件的 sha 值
 </p>
 
-<pre class="example" id="org3570d00">
+<pre class="example" id="org59bc738">
 PUT https://api.github.com/repos/:user/:repo/contents/:path-to-file
 Authorization: Bearer [personal-access-token]
 Accept: application/vnd.github.v3+json
@@ -348,10 +346,9 @@ Content-Type: application/json
 </pre>
 </div>
 </div>
-
-<div id="outline-container-orgc0fdb70" class="outline-2">
-<h2 id="orgc0fdb70">使用 ios shortcuts 提交文件到 github 上</h2>
-<div class="outline-text-2" id="text-orgc0fdb70">
+<div id="outline-container-org934ae4c" class="outline-2">
+<h2 id="org934ae4c">使用 ios shortcuts 提交文件到 github 上</h2>
+<div class="outline-text-2" id="text-org934ae4c">
 <p>
 大致的思路是，从 markdown 编辑器中，通过 share menu 分享文件，由 shortcuts 接收，执行脚本，先请求远程看是否有 sha 文件存在，如果有则更新之，否则创建一个新的文件（区别就是请求时带不带 sha ）。
 </p>
@@ -384,10 +381,9 @@ Content-Type: application/json
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgcd217ed" class="outline-2">
-<h2 id="orgcd217ed">后记</h2>
-<div class="outline-text-2" id="text-orgcd217ed">
+<div id="outline-container-orge08d04a" class="outline-2">
+<h2 id="orge08d04a">后记</h2>
+<div class="outline-text-2" id="text-orge08d04a">
 <p>
 这个方法可以让所有的 markdown 编辑器支持发布博客文章，但有个缺点是必须要有文件名。中文博客的一个难题是不能像英文博客一样，直接拿 title 自动生成文件名（当然也不不行，但很难看也很难管理），所以许多的只支持档案而不是文件编辑的工具就不适合这套了。
 </p>

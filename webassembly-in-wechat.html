@@ -8,7 +8,7 @@
 <title>Webassembly in Wechat</title>
 <meta name="author" content="gsj987" />
 <meta name="generator" content="Org Mode" />
-<style>
+<style type="text/css">
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -214,30 +214,28 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org7b7320e">具体流程</a>
+<li><a href="#orgd75c939">具体流程</a>
 <ul>
-<li><a href="#orgb6e12d2">使用 WXWebAssembly 代替 WebAssembly</a></li>
-<li><a href="#org1adaa34">调整 wasm 文件的加载方式</a></li>
-<li><a href="#org88763ee">删除一些微信小程序不支持的方法</a></li>
-<li><a href="#org6825600">输出模块，更好调用</a></li>
+<li><a href="#org58b308c">使用 WXWebAssembly 代替 WebAssembly</a></li>
+<li><a href="#orga8c56f1">调整 wasm 文件的加载方式</a></li>
+<li><a href="#org166d125">删除一些微信小程序不支持的方法</a></li>
+<li><a href="#org1d96300">输出模块，更好调用</a></li>
 </ul>
 </li>
-<li><a href="#org7f041b7">使用时的事项</a></li>
+<li><a href="#org3257ac3">使用时的事项</a></li>
 </ul>
 </div>
 </div>
 <p>
 微信小程序中已经支持了 WebAssembly ，但他的文档语焉不详，也无法直接使用 opencv 编译出来的 js 胶水文件。我们需要一些简单的改动，让他可以工作。
 </p>
-
-
-<div id="outline-container-org7b7320e" class="outline-2">
-<h2 id="org7b7320e">具体流程</h2>
-<div class="outline-text-2" id="text-org7b7320e">
+<div id="outline-container-orgd75c939" class="outline-2">
+<h2 id="orgd75c939">具体流程</h2>
+<div class="outline-text-2" id="text-orgd75c939">
 </div>
-<div id="outline-container-orgb6e12d2" class="outline-3">
-<h3 id="orgb6e12d2">使用 WXWebAssembly 代替 WebAssembly</h3>
-<div class="outline-text-3" id="text-orgb6e12d2">
+<div id="outline-container-org58b308c" class="outline-3">
+<h3 id="org58b308c">使用 WXWebAssembly 代替 WebAssembly</h3>
+<div class="outline-text-3" id="text-org58b308c">
 <p>
 在微信小程序中，需要把所有的 <code>WebAssembly</code> 都替换成 <code>WXWebAssembly</code> 。我们可以直接 opencv 编译出的 js 胶水文件中的所有内容
 </p>
@@ -254,10 +252,9 @@
 </div>
 </div>
 </div>
-
-<div id="outline-container-org1adaa34" class="outline-3">
-<h3 id="org1adaa34">调整 wasm 文件的加载方式</h3>
-<div class="outline-text-3" id="text-org1adaa34">
+<div id="outline-container-orga8c56f1" class="outline-3">
+<h3 id="orga8c56f1">调整 wasm 文件的加载方式</h3>
+<div class="outline-text-3" id="text-orga8c56f1">
 <p>
 由于微信只支持使用本地的 wasm 文件加载方式，所以我们可以调整 js 文件中的异步加载的过程，简化代码，可以解决大部分问题
 </p>
@@ -306,10 +303,9 @@
 </div>
 </div>
 </div>
-
-<div id="outline-container-org88763ee" class="outline-3">
-<h3 id="org88763ee">删除一些微信小程序不支持的方法</h3>
-<div class="outline-text-3" id="text-org88763ee">
+<div id="outline-container-org166d125" class="outline-3">
+<h3 id="org166d125">删除一些微信小程序不支持的方法</h3>
+<div class="outline-text-3" id="text-org166d125">
 <p>
 微信中有许多不支持的 BOM 会被 WebAssembly 的胶水代码引用，我们都要改成替代方法，如
 </p>
@@ -381,10 +377,9 @@ if (scriptDirectory.indexOf("blob:") !== 0) {
 </div>
 </div>
 </div>
-
-<div id="outline-container-org6825600" class="outline-3">
-<h3 id="org6825600">输出模块，更好调用</h3>
-<div class="outline-text-3" id="text-org6825600">
+<div id="outline-container-org1d96300" class="outline-3">
+<h3 id="org1d96300">输出模块，更好调用</h3>
+<div class="outline-text-3" id="text-org1d96300">
 <p>
 删除文件底部的 run 函数，并 export default Module
 </p>
@@ -412,10 +407,9 @@ wasm.run(); // start loading
 </div>
 </div>
 </div>
-
-<div id="outline-container-org7f041b7" class="outline-2">
-<h2 id="org7f041b7">使用时的事项</h2>
-<div class="outline-text-2" id="text-org7f041b7">
+<div id="outline-container-org3257ac3" class="outline-2">
+<h2 id="org3257ac3">使用时的事项</h2>
+<div class="outline-text-2" id="text-org3257ac3">
 <p>
 微信上 onCameraFrame 的方法返回的 frame.data 是一个 ArrayBuffer ，是一个 RGBA 的数据，我们在实际使用中经常会通过 `Worker.postMessage` 传递给 Worker 运算来提升效率。
 </p>
@@ -441,7 +435,7 @@ wasm._free(buffer);
 <p>
 另外，在实际使用时，由于真机的运行内存比 PC 少太多，所以我们要打开内存增涨 flag 以防止 OOM 
 </p>
-<pre class="example" id="org6c60d78">
+<pre class="example" id="org58aaf20">
 -sALLOW_MEMORY_GROWTH=1
 </pre>
 </div>
