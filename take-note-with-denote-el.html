@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Take Notes with Denote.el</title>
+<title>用 Denote.el 记笔记</title>
 <meta name="author" content="gsj987" />
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
@@ -209,24 +209,24 @@
 </nav>
 </div>
 <div id="content" class="content">
-<h1 class="title">Take Notes with Denote.el</h1>
+<h1 class="title">用 Denote.el 记笔记</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org8e54841">特点</a></li>
-<li><a href="#org2fd48a2">我的使用场景</a></li>
-<li><a href="#org6e276d2">我的配置方式</a>
+<li><a href="#org274a1da">特点</a></li>
+<li><a href="#orga53ba31">我的使用场景</a></li>
+<li><a href="#orgc42c9c2">我的配置方式</a>
 <ul>
-<li><a href="#org0a36b21">引入 denote</a></li>
-<li><a href="#org3ac7e3a">创建 Journal</a></li>
-<li><a href="#org301de65">创建 note</a></li>
-<li><a href="#org478d76b">创建连接</a></li>
-<li><a href="#orge8cc5d6">搜索内容</a></li>
+<li><a href="#orgf580c60">引入 denote</a></li>
+<li><a href="#org1496b8b">创建 Journal</a></li>
+<li><a href="#org60db4a3">创建 note</a></li>
+<li><a href="#orgb96f027">创建连接</a></li>
+<li><a href="#org1da272d">搜索内容</a></li>
 </ul>
 </li>
-<li><a href="#org891deea">效果</a></li>
-<li><a href="#org61d8253">后续思考</a></li>
+<li><a href="#org3182f9d">效果</a></li>
+<li><a href="#orgd062426">后续思考</a></li>
 </ul>
 </div>
 </div>
@@ -237,9 +237,9 @@
 <p>
 denote 是 Protesilaos 推出的一个笔记工具，地址在  <a href="https://protesilaos.com/emacs/denote">denote</a> 
 </p>
-<div id="outline-container-org8e54841" class="outline-2">
-<h2 id="org8e54841">特点</h2>
-<div class="outline-text-2" id="text-org8e54841">
+<div id="outline-container-org274a1da" class="outline-2">
+<h2 id="org274a1da">特点</h2>
+<div class="outline-text-2" id="text-org274a1da">
 <p>
 这个工具的最大特点是不预设用户会用什么样的工作流进行日常工作，所以在介绍时放了大量的篇幅用来介绍如何用各种 api 创建文档。也不像现在的许多现有的工具，都实现假定用户一定是用 org-mode 作为格式。
 </p>
@@ -266,9 +266,9 @@ denote 支持 org-mode, txt, markdown 三种格式，并用一套文件名生成
 </ul>
 </div>
 </div>
-<div id="outline-container-org2fd48a2" class="outline-2">
-<h2 id="org2fd48a2">我的使用场景</h2>
-<div class="outline-text-2" id="text-org2fd48a2">
+<div id="outline-container-orga53ba31" class="outline-2">
+<h2 id="orga53ba31">我的使用场景</h2>
+<div class="outline-text-2" id="text-orga53ba31">
 <p>
 我的日常使用场景分3个大块:
 </p>
@@ -308,13 +308,13 @@ denote 支持 org-mode, txt, markdown 三种格式，并用一套文件名生成
 </p>
 </div>
 </div>
-<div id="outline-container-org6e276d2" class="outline-2">
-<h2 id="org6e276d2">我的配置方式</h2>
-<div class="outline-text-2" id="text-org6e276d2">
+<div id="outline-container-orgc42c9c2" class="outline-2">
+<h2 id="orgc42c9c2">我的配置方式</h2>
+<div class="outline-text-2" id="text-orgc42c9c2">
 </div>
-<div id="outline-container-org0a36b21" class="outline-3">
-<h3 id="org0a36b21">引入 denote</h3>
-<div class="outline-text-3" id="text-org0a36b21">
+<div id="outline-container-orgf580c60" class="outline-3">
+<h3 id="orgf580c60">引入 denote</h3>
+<div class="outline-text-3" id="text-orgf580c60">
 <div class="org-src-container">
 <pre>
 <code class="language-lisp">(use-package denote
@@ -334,9 +334,9 @@ denote 支持 org-mode, txt, markdown 三种格式，并用一套文件名生成
 </div>
 </div>
 </div>
-<div id="outline-container-org3ac7e3a" class="outline-3">
-<h3 id="org3ac7e3a">创建 Journal</h3>
-<div class="outline-text-3" id="text-org3ac7e3a">
+<div id="outline-container-org1496b8b" class="outline-3">
+<h3 id="org1496b8b">创建 Journal</h3>
+<div class="outline-text-3" id="text-org1496b8b">
 <div class="org-src-container">
 <pre>
 <code class="language-lisp">;;; 根据日期创建或打开一篇 journal
@@ -390,9 +390,9 @@ denote 支持 org-mode, txt, markdown 三种格式，并用一套文件名生成
 </div>
 </div>
 </div>
-<div id="outline-container-org301de65" class="outline-3">
-<h3 id="org301de65">创建 note</h3>
-<div class="outline-text-3" id="text-org301de65">
+<div id="outline-container-org60db4a3" class="outline-3">
+<h3 id="org60db4a3">创建 note</h3>
+<div class="outline-text-3" id="text-org60db4a3">
 <div class="org-src-container">
 <pre>
 <code class="language-lisp">(defun my-denote-note ()
@@ -469,9 +469,9 @@ denote 支持 org-mode, txt, markdown 三种格式，并用一套文件名生成
 </p>
 </div>
 </div>
-<div id="outline-container-org478d76b" class="outline-3">
-<h3 id="org478d76b">创建连接</h3>
-<div class="outline-text-3" id="text-org478d76b">
+<div id="outline-container-orgb96f027" class="outline-3">
+<h3 id="orgb96f027">创建连接</h3>
+<div class="outline-text-3" id="text-orgb96f027">
 <p>
 我会需要在记某个笔记时，去插入一个已有笔记的链接，如果这个笔记不存在，我们先创建一个笔记，并再连接。
 </p>
@@ -487,9 +487,9 @@ denote 支持 org-mode, txt, markdown 三种格式，并用一套文件名生成
 </div>
 </div>
 </div>
-<div id="outline-container-orge8cc5d6" class="outline-3">
-<h3 id="orge8cc5d6">搜索内容</h3>
-<div class="outline-text-3" id="text-orge8cc5d6">
+<div id="outline-container-org1da272d" class="outline-3">
+<h3 id="org1da272d">搜索内容</h3>
+<div class="outline-text-3" id="text-org1da272d">
 <p>
 denote 没有提供搜索的功能，我直接复用 counsel-rg 的方法来实现内容搜索，还能方便的应用 counsel 的扩展能力。
 </p>
@@ -508,20 +508,20 @@ denote 没有提供搜索的功能，我直接复用 counsel-rg 的方法来实�
 </div>
 </div>
 </div>
-<div id="outline-container-org891deea" class="outline-2">
-<h2 id="org891deea">效果</h2>
-<div class="outline-text-2" id="text-org891deea">
+<div id="outline-container-org3182f9d" class="outline-2">
+<h2 id="org3182f9d">效果</h2>
+<div class="outline-text-2" id="text-org3182f9d">
 
-<div id="org908a82c" class="figure">
+<div id="org6b5f6d2" class="figure">
 <p><img src="https://cdn.qiniu.gsj987.cn/blog/20221022/iShot_2022-10-22_20.31.52.png" alt="iShot_2022-10-22_20.31.52.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Orgmode with denote</p>
 </div>
 </div>
 </div>
-<div id="outline-container-org61d8253" class="outline-2">
-<h2 id="org61d8253">后续思考</h2>
-<div class="outline-text-2" id="text-org61d8253">
+<div id="outline-container-orgd062426" class="outline-2">
+<h2 id="orgd062426">后续思考</h2>
+<div class="outline-text-2" id="text-orgd062426">
 <p>
 目前的形式已经集过程了 org agenda 但由于考虑性能问题，笔记中的 todo 项目无法被集成进来。同时机于 emacs 的笔记方案都无法像现代笔记工具一样用多项目连接，或网络图的方式显示多个笔记之间的联系（可以通过外挂 web 的方式实现，但不方便），在大量笔记阅读的时候会是一个麻烦的体验。所以后续可以结合 org-ql 这个库，创建多个笔记，话题，关键词之间的联系，放在同一个视图上下文中，可能会是一个不错的方案。可能的场景有：
 </p>

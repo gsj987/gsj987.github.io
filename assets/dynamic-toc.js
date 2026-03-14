@@ -1,5 +1,5 @@
 const tocId = "table-of-contents";
-const actualContentId = "content";
+const contentSelector = "#content";
 let showAll = false;
 let currentActiveLinkId = null;
 let elemsToHide = [];
@@ -8,9 +8,40 @@ let toggleBtn = null;
 
 let headerObserver = null;
 
+function localizedCopy() {
+  const lang = document.documentElement.lang || "";
+  if (lang.startsWith("zh")) {
+    return {
+      open: "显示目录",
+      close: "隐藏目录",
+      toggleLabel: "切换目录显示",
+    };
+  }
+  return {
+    open: "Show contents",
+    close: "Hide contents",
+    toggleLabel: "Toggle the table of contents",
+  };
+}
+
 function observeHeadings() {
+  const tocElem = document.getElementById(tocId);
+  if (!tocElem) {
+    return;
+  }
+
+  linksById = {};
+  elemsToHide = [];
+  currentActiveLinkId = null;
+
   const links = document.querySelectorAll(`#${tocId} a`);
-  const headings = document.querySelectorAll(`${actualContentId} h1,h2,h3,h4`);
+  const headings = document.querySelectorAll(
+    `${contentSelector} h1, ${contentSelector} h2, ${contentSelector} h3, ${contentSelector} h4`,
+  );
+
+  if (!links.length || !headings.length) {
+    return;
+  }
 
   for (const link of links) {
     linksById[link.getAttribute("href")] = link;
@@ -42,7 +73,8 @@ function observeHeadings() {
     },
     {
       threshold: 0.1,
-      root: document.querySelector(`${actualContentId}`),
+      root: null,
+      rootMargin: "0px 0px -55% 0px",
     },
   );
 
@@ -113,23 +145,38 @@ function setUpObserver() {
 }
 
 function toggleTocVisibity() {
-  const tocElem = document.querySelector(`#${tocId}`);
+  const tocElem = document.getElementById(tocId);
+  if (!tocElem || !toggleBtn) {
+    return;
+  }
+
   if (tocElem.classList.contains("show-all")) {
     tocElem.classList.remove("show-all");
-    toggleBtn.textContent = "▼ open";
+    toggleBtn.textContent = localizedCopy().open;
+    toggleBtn.setAttribute("aria-expanded", "false");
   } else {
     tocElem.classList.add("show-all");
-    toggleBtn.textContent = "▲ close";
+    toggleBtn.textContent = localizedCopy().close;
+    toggleBtn.setAttribute("aria-expanded", "true");
   }
 }
 
 function setUpTocToggleBtn() {
+  const tocElem = document.getElementById(tocId);
+  if (!tocElem) {
+    return;
+  }
+
   if (!toggleBtn) {
-    toggleBtn = document.createElement("div");
+    const copy = localizedCopy();
+    toggleBtn = document.createElement("button");
+    toggleBtn.type = "button";
     toggleBtn.className = "toc-toggle-btn";
-    toggleBtn.textContent = "▼ open";
-    toggleBtn.onclick = toggleTocVisibity;
-    const tocElem = document.querySelector(`#${tocId}`);
+    toggleBtn.textContent = copy.open;
+    toggleBtn.setAttribute("aria-controls", tocId);
+    toggleBtn.setAttribute("aria-expanded", "false");
+    toggleBtn.setAttribute("aria-label", copy.toggleLabel);
+    toggleBtn.addEventListener("click", toggleTocVisibity);
     tocElem.append(toggleBtn);
   }
   toggleBtn.hidden = false;
@@ -141,13 +188,15 @@ function hideToggleBtn() {
   }
 }
 
-window.addEventListener("load", (event) => {
+window.addEventListener("load", () => {
   if ("IntersectionObserver" in window) {
     setUpObserver();
     window.addEventListener("resize", setUpObserver);
   }
 });
 
-window.addEventListener("unload", (event) => {
-  headerObserver.disconnect();
+window.addEventListener("unload", () => {
+  if (headerObserver) {
+    headerObserver.disconnect();
+  }
 });

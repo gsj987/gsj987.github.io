@@ -14,8 +14,8 @@
   <link>https://gsj987.github.io</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Sat, 21 Feb 2026 19:15:14 +0800</pubDate>
-  <lastBuildDate>Sat, 21 Feb 2026 19:15:14 +0800</lastBuildDate>
+  <pubDate>Sat, 14 Mar 2026 15:29:05 +0800</pubDate>
+  <lastBuildDate>Sat, 14 Mar 2026 15:29:05 +0800</lastBuildDate>
   <generator>Emacs 30.2 Org-mode 9.7.11</generator>
   <webMaster>gsj987@gmail.com (gsj987)</webMaster>
   <image>
@@ -32,7 +32,7 @@
     <pubDate>Fri, 20 Feb 2026 00:00:00 +0800</pubDate>
 
     <description><![CDATA[<p>
-    本文介绍了一种独特的实践思路：使用 Org Mode 文件作为 AI Skills 的载体，在 Emacs 环境中构建一个可控、可追溯、可自我优化的知识生产系统。文章详细阐述了Org Mode相比传统Markdown在作为AI技能系统方面具有的结构化优势，例如可编译的元数据、可执行的代码层以及可追溯的计划（通过Org Babel、TODO、CHECKLIST和LOGBOOK等）。作者通过具体的写作、决策和高维认知场景，展示了Org Skills系统的应用价值，并从技术实现角度探讨了如何在Emacs中构建Skill注册、编译和上下文注入机制。最终，文章提出了AI系统自我优化的概念，即系统能通过运行数据收集、改进提案生成和治理确认实现持续进化。文章强调，Org Mode的运用旨在构建以Emacs为核心、人机协作的知识生产体系，并预言未来AI应用将趋向于“一切文档化”。
+    用 Org Mode 文件承载 AI Skills，在 Emacs 里搭建一套可控、可追踪、可持续优化的知识生产系统。这篇文章介绍了它为什么成立，以及我实际怎么用。
     </p>
     ]]></description>
   </item>
@@ -44,7 +44,7 @@
     <pubDate>Sat, 15 Mar 2025 00:00:00 +0800</pubDate>
 
     <description><![CDATA[<p>
-    这篇文章介绍了我近期使用 org-mode、denote 和 org-publish 搭建个人博客的工作流程。
+    记录我如何用 Org Mode、Denote 和 org-publish 搭建并维护个人博客，以及这套写作发布工作流为什么适合长期使用。
     </p>
     ]]></description>
   </item>
@@ -56,7 +56,7 @@
     <pubDate>Tue, 04 Feb 2025 00:00:00 +0800</pubDate>
 
     <description><![CDATA[<p>
-    Emacs 中使用 gptel 和 AI 工具增强编辑和开发体验的个人折腾日志。主要介绍了 gptel 插件的基本使用、在 org-mode 中的集成、代码解释、Embark 集成,以及使用 AI 辅助编程和自动生成 commit 信息等实践。
+    记录我在 Emacs 里接入 gptel 和各类 AI 工具的实际折腾过程，包括聊天、编辑、代码解释和辅助编程这些高频用法。
     </p>
     ]]></description>
   </item>
@@ -68,7 +68,7 @@
     <pubDate>Wed, 25 Jan 2023 00:00:00 +0800</pubDate>
 
     <description><![CDATA[<p>
-    我的 2023 homelab 构建日志。
+    记录我在 2023 年整理家庭网络、升级设备和重新搭建 homelab 的过程。
     </p>
     ]]></description>
   </item>
@@ -80,7 +80,7 @@
     <pubDate>Sun, 16 Oct 2022 00:00:00 +0800</pubDate>
 
     <description><![CDATA[<p>
-    Denote.el是一个简单灵活的Emacs笔记工具，支持多种文件格式，以文件名作为唯一标识。我通过自定义函数实现了日记、笔记创建、链接和搜索，构建了一个高效的个人知识管理工作流。
+    介绍我如何用 Denote.el 重构 Emacs 记笔记工作流，包括日记、笔记创建、链接和搜索这些高频场景。
     </p>
     ]]></description>
   </item>
@@ -92,7 +92,7 @@
     <pubDate>Thu, 24 Mar 2022 00:00:00 +0800</pubDate>
 
     <description><![CDATA[<p>
-    通过 Shortcuts 和 GitHub REST API 实现了从 iOS 手机直接发布博客到GitHub Pages。
+    记录我如何用 Shortcuts 和 GitHub REST API，从 iPhone 直接把博客内容发布到 GitHub Pages。
     </p>
     ]]></description>
   </item>
@@ -104,7 +104,7 @@
     <pubDate>Sun, 20 Mar 2022 00:00:00 +0800</pubDate>
 
     <description><![CDATA[<p>
-    研究在微信小程序中使用 WebAssembly，并运行 OpenCV 程序。
+    记录我在微信小程序里接入 WebAssembly 和 OpenCV 的实验过程，以及需要做的兼容性调整。
     </p>
     ]]></description>
   </item>
@@ -116,7 +116,7 @@
     <pubDate>Sun, 09 Aug 2020 00:00:00 +0800</pubDate>
 
     <description><![CDATA[<p>
-    我的《How to Take Smart Notes》读书笔记。
+    围绕《How to Take Smart Notes》整理的一组读书笔记，记录 slip-box 方法的核心思路，以及我对长期写作和知识积累的理解。
     </p>
     ]]></description>
   </item>
@@ -128,7 +128,7 @@
     <pubDate>Sun, 18 Aug 2019 00:00:00 +0800</pubDate>
 
     <description><![CDATA[<p>
-    利用libhybris技术，通过兼容层将Android的Bionic libc库移植到树莓派Linux系统。本文详细介绍了在树莓派上编译和使用Android的JPEG库的过程，包括准备环境、编译libhybris、适配库文件等关键步骤。
+    记录我如何借助 libhybris，在树莓派的 Linux 环境里调用 Android 库，并以移植 JPEG 库为例梳理具体步骤。
     </p>
     ]]></description>
   </item>
@@ -140,7 +140,7 @@
     <pubDate>Tue, 13 Aug 2019 00:00:00 +0800</pubDate>
 
     <description><![CDATA[<p>
-    在Emacs的OrgMode中，通过编写Elisp函数实现了从剪贴板直接保存并插入图片的功能。利用Powershell读取剪贴板图像，结合Projectile和f.el库，可以自动生成时间戳文件名并插入相对路径的图片链接。
+    介绍我如何在 Emacs 的 Org Mode 里，把剪贴板图片一键保存到项目目录，并自动插入对应的相对路径链接。
     </p>
     ]]></description>
   </item>
@@ -152,7 +152,7 @@
     <pubDate>Mon, 29 Apr 2019 00:00:00 +0800</pubDate>
 
     <description><![CDATA[<p>
-    prisma.io 是一个用 Scala写的 ORM-like 的服务层，可以方便的作为多种数据库的连接层，是微服务环境下的 ORM 替代品和快速 graphql 建设脚手夹。
+    Prisma.io 是一个用 Scala 编写的 ORM-like 服务层，可以作为多种数据库的连接层，是微服务环境下 ORM 的替代方案，也能快速搭建 GraphQL 服务。
     </p>
     ]]></description>
   </item>
