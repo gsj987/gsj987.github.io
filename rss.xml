@@ -14,8 +14,8 @@
   <link>https://gsj987.github.io</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Sat, 14 Mar 2026 15:29:05 +0800</pubDate>
-  <lastBuildDate>Sat, 14 Mar 2026 15:29:05 +0800</lastBuildDate>
+  <pubDate>Sat, 14 Mar 2026 16:29:33 +0800</pubDate>
+  <lastBuildDate>Sat, 14 Mar 2026 16:29:33 +0800</lastBuildDate>
   <generator>Emacs 30.2 Org-mode 9.7.11</generator>
   <webMaster>gsj987@gmail.com (gsj987)</webMaster>
   <image>
@@ -24,6 +24,18 @@
     <link>https://gsj987.github.io</link>
   </image>
 
+  <item>
+    <title>和 Codex 一起重构博客</title>
+    <link>https://gsj987.github.io/rebuild-blog-with-codex.html</link>
+    <author>gsj987@gmail.com (gsj987)</author>
+    <guid isPermaLink="false">https://gsj987.github.io/rebuild-blog-with-codex.html</guid>
+    <pubDate>Sat, 14 Mar 2026 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    记录我如何和 Codex 一起重构这套 Org Mode 博客，使用了 Impeccable 这套 skill ，包括审计结果、导出链调整、样式系统收敛，以及这次协作中验证有效的方法。
+    </p>
+    ]]></description>
+  </item>
   <item>
     <title>Org File as AI Skills System</title>
     <link>https://gsj987.github.io/org-file-as-ai-skills-system.html</link>

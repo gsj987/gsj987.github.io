@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>和 Codex 一起重构博客</title>
+<meta name="author" content="gsj987" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+
+
+  <link rel="stylesheet" href="/assets/style.css" type="text/css"/>
+</head>
+<body>
+<div id="preamble" class="status">
+
+ <nav>
+  <ul>
+    <li><a href="/index.html">Home</a></li>
+    <li><a href="/about.html">About</a></li>
+    <li><a href="/rss.xml">RSS</a></li>
+    <li><a href="https://github.com/gsj987/">GitHub</a></li>
+  </ul>
+</nav>
+</div>
+<div id="content" class="content">
+<h1 class="title">和 Codex 一起重构博客</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orga511e83">Impeccable 项目</a></li>
+<li><a href="#org9342d08">博客样式优化流程</a>
+<ul>
+<li><a href="#orged0865a">起点：先让它做一次足够严格的审计</a></li>
+<li><a href="#org6e07cee">先把上下文钉死：引导 AI 正确理解项目构建方式</a></li>
+<li><a href="#org8d12a09">第一阶段：先做 harden，把共享层的硬问题处理掉</a></li>
+<li><a href="#org432c130">第二阶段：normalize 和 optimize，把“系统感”补起来</a></li>
+<li><a href="#org3461c88">第三阶段：extract，把导出器从“能跑”整理成“能维护”</a></li>
+<li><a href="#org318e26b">第四阶段：polish，不是改花，而是把不顺的地方收平</a></li>
+<li><a href="#org7285784">第五阶段：clarify，把入口内容的完成度拉齐</a></li>
+</ul>
+</li>
+<li><a href="#org5c7e497">这次协作真正让我满意的，不是页面本身</a></li>
+<li><a href="#orgb25f6f3">正确的与 Codex 做交互</a></li>
+<li><a href="#orgff0cbc4">结语</a></li>
+</ul>
+</div>
+</div>
+<p>
+起因是看到了项目 <a href="https://github.com/pbakaus/impeccable">impeccable</a>，一个面向网页设计优化的 skills 集。我想验证这套能力在自己的博客上能推进到什么程度，于是以现有站点为对象做了一次完整重构。
+</p>
+
+<blockquote>
+<p>
+注意：本文大部分是 codex 自己生成的，我只是简单做了校订。
+</p>
+</blockquote>
+
+<p>
+这次工作持续了2小时<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>，范围从界面审计逐步扩展到发布链、样式系统和入口内容统一。最终结果不是单点修补，而是一次沿着“审计 -&gt; 修复 -&gt; 抽象 -&gt; 打磨 -&gt; 回收内容层问题”推进的系统性整理。
+</p>
+<div id="outline-container-orga511e83" class="outline-2">
+<h2 id="orga511e83">Impeccable 项目</h2>
+<div class="outline-text-2" id="text-orga511e83">
+<p>
+这是一个专业的网页设计优化 skill 集，支持多种 agent 工具，他提供以下几个有用的 commands，也是我这次项目中使用的
+</p>
+<ul class="org-ul">
+<li><code>audit</code> 审计，能对现在的设计做全面的设计审计，给出问题报告，包括评分和建议，往往是所有过程的开始</li>
+<li><code>critique</code> 批评，从用户体验角度做质量评估，提供可用反馈</li>
+<li><code>harden</code> 硬化，优化错误处理，文本信息，边界条件处理等，提供健壮性</li>
+<li><code>normalize</code> 规范化设计，让各页面的设计保持统一</li>
+<li><code>optimize</code> 优化性能，减少图片、字体等加载延迟</li>
+<li><code>adapt</code> 多尺寸设备支持</li>
+<li><code>clarify</code> 改进文案，标签和 thumbnail ，让界面更可理解</li>
+<li><code>animate</code> 提供更好的交互动画</li>
+<li><code>colorize</code> 提供更好的颜色，优化可读性</li>
+<li><code>extract</code> 提取可复用组件，让系统更好维护</li>
+</ul>
+
+<p>
+可以看到，这整套 skills 是符合设计流程和工程流程的，一站式解决了开发者”随手写的样式很难看“，但抄样式又抄不出统一性的问题。
+</p>
+</div>
+</div>
+<div id="outline-container-org9342d08" class="outline-2">
+<h2 id="org9342d08">博客样式优化流程</h2>
+<div class="outline-text-2" id="text-org9342d08">
+</div>
+<div id="outline-container-orged0865a" class="outline-3">
+<h3 id="orged0865a">起点：先让它做一次足够严格的审计</h3>
+<div class="outline-text-3" id="text-orged0865a">
+<p>
+起点不是直接改样式，而是先做一次比较完整的 audit。这样可以先建立问题列表，再决定修改顺序，而不是围绕模糊的审美直觉来回试错。
+</p>
+
+<p>
+第一轮结论大体准确：站点并不属于典型的 AI 模板风格，但存在一批长期维护项目常见的问题，包括共享 CSS/JS 的历史遗留缺陷、导出器责任混杂、页面级内容完成度不一致，以及首页和文章页层级不够稳定。更重要的是，这一轮已经把问题按层拆开：共享资源、导出链、内容源、视觉细节。后续协作基本都沿着这条分层继续推进。
+</p>
+</div>
+</div>
+<div id="outline-container-org6e07cee" class="outline-3">
+<h3 id="org6e07cee">先把上下文钉死：引导 AI 正确理解项目构建方式</h3>
+<div class="outline-text-3" id="text-org6e07cee">
+<p>
+在开始修改之前，我先把项目的真实边界补充完整，我的项目是使用 <a href="use-org-mode-publish-blog.html">使用 org-mode 写博客</a> ，所以工程化方式很特殊：
+</p>
+
+<ul class="org-ul">
+<li><code>assets/</code> 目录是静态的，可以直接改。</li>
+<li>其他 HTML 页面都由 <code>~/.emacs.d/site-lisp/ox-publish-blog.el</code> 生成。</li>
+<li>平时我在 Emacs 里用 <code>M-x my/preview-blog</code> 预览，站点跑在 <code>localhost:8080</code> 。</li>
+<li>只要全套环境加载完整，也可以 batch 执行发布。</li>
+</ul>
+
+<p>
+这些信息后来都写进了本地的 <code>AGENTS.md</code> 。这样做的直接作用，是把“哪些文件可直接修改、哪些必须回源头”的规则固定下来，避免后续把时间浪费在错误层面。
+</p>
+</div>
+</div>
+<div id="outline-container-org8d12a09" class="outline-3">
+<h3 id="org8d12a09">第一阶段：先做 harden，把共享层的硬问题处理掉</h3>
+<div class="outline-text-3" id="text-org8d12a09">
+<p>
+明确生成链路之后，最先推进的是 harden，而不是样式打磨。共享层不稳，后续的 visual polish 很容易变成返工。
+</p>
+
+<p>
+这一阶段主要处理了三类问题：
+</p>
+
+<ol class="org-ol">
+<li>修共享前端资源里的问题</li>
+</ol>
+
+<p>
+桌面端 TOC 观察逻辑原来有选择器错误，移动端 TOC 开关也不是一个真正可访问的按钮。修正之后，目录才真正成为稳定的导航系统。
+</p>
+
+<ol class="org-ol">
+<li>修共享样式和主题 token</li>
+</ol>
+
+<p>
+dark token、对比度、触控尺寸、长文本溢出等基础问题也做了一轮修补。这些修改不显眼，但决定了站点的整体完成度。
+</p>
+
+<ol class="org-ol">
+<li>把修复放回导出链，而不是手改生成页</li>
+</ol>
+
+<p>
+skip link、外链 <code>noopener noreferrer</code> 、CDN 图片统一升级到 HTTPS、图片 alt 和 lazy/decode、页面语言标记等处理，都回收到了 <code>ox-publish-blog.el</code> 的后处理逻辑里。目标不是修当前输出，而是保证后续发布默认就是正确的。
+</p>
+</div>
+</div>
+<div id="outline-container-org432c130" class="outline-3">
+<h3 id="org432c130">第二阶段：normalize 和 optimize，把“系统感”补起来</h3>
+<div class="outline-text-3" id="text-org432c130">
+<p>
+共享层基本稳定后，继续推进的是 normalize 和 optimize。
+</p>
+
+<p>
+normalize 的核心不是换皮，而是把零散数值收成一套稳定 token，包括颜色、阴影、圆角、间距、字体角色和明暗主题规则。到这一步后，共享样式才真正具备统一性。
+</p>
+
+<p>
+optimize 更偏工程层。最大的收益是移除了每个 HTML 页面重复注入的 Org 默认内联样式，统一改成依赖共享样式文件。这一步也暴露出一个事实：页面其实仍然依赖其中一批 Org 基础规则。后续又补回了标题、对齐、tag、timestamp、postamble 等基础样式，才使这次优化真正闭环。
+</p>
+</div>
+</div>
+<div id="outline-container-org3461c88" class="outline-3">
+<h3 id="org3461c88">第三阶段：extract，把导出器从“能跑”整理成“能维护”</h3>
+<div class="outline-text-3" id="text-org3461c88">
+<p>
+这次协作里，工程价值最高的一段其实是 extract。
+</p>
+
+<p>
+原来的 <code>ox-publish-blog.el</code> 能完成发布，但更像长期演化出来的工作脚本，而不是边界清晰的发布系统。随着修复逐步增多，如果继续往里堆逻辑，维护成本会很快上升。
+</p>
+
+<p>
+因此后来连续做了几轮 extract：
+</p>
+
+<ul class="org-ul">
+<li>把 shared publish config 抽出来</li>
+<li>把 HTML 后处理流水线拆成明确步骤</li>
+<li>把 sitemap 里的 HTML 片段模板化</li>
+<li>把 postamble、analytics、license、元信息行拆成可复用片段</li>
+<li>最后把 <code>org-publish-project-alist</code> 也改成统一 builder 生成</li>
+</ul>
+
+<p>
+这部分完成之后，最明显的改进不在页面，而在维护性。导出器的职责边界更清楚，后续继续扩展时不必再依赖历史记忆。
+</p>
+</div>
+</div>
+<div id="outline-container-org318e26b" class="outline-3">
+<h3 id="org318e26b">第四阶段：polish，不是改花，而是把不顺的地方收平</h3>
+<div class="outline-text-3" id="text-org318e26b">
+<p>
+进入 polish 阶段后，重点不是添加更多视觉元素，而是消除那些影响阅读节奏和版面一致性的细小问题。
+</p>
+
+<p>
+这一阶段最有效的调整包括：
+</p>
+
+<ul class="org-ul">
+<li>首页不再是所有文章权重一样的长列表，而是有主推和次级层级</li>
+<li>文章页的 TOC 被明确降级成辅助导航，不再抢标题区的注意力</li>
+<li>中英混排的字体气质重新统一，避免英文像一套设计、中文像另一套设计</li>
+<li>首页首卡逐渐减轻“组件感”，更像编辑导语区</li>
+<li>导航、文章标题链接、目录链接的 hover 和 active 状态变得更自然</li>
+<li>有 TOC 的文章页里，首段和正文列宽重新统一，不再突然窄一截</li>
+</ul>
+
+<p>
+其中一个很典型的问题，是带 TOC 的文章页里首段和正文宽度不一致。最后定位到的根因并不是容器宽度，而是一条专门作用于 <code>p:first-of-type</code> 和 <code>blockquote + p</code> 的 <code>max-width: 58ch</code> 规则。删除这条规则之后，版面立即恢复一致。这个例子说明，AI 在这类工作里最有效的作用往往不是“自动生成更好的 CSS”，而是帮助更快定位真正生效的那一层规则。
+</p>
+</div>
+</div>
+<div id="outline-container-org7285784" class="outline-3">
+<h3 id="org7285784">第五阶段：clarify，把入口内容的完成度拉齐</h3>
+<div class="outline-text-3" id="text-org7285784">
+<p>
+样式和结构稳定之后，内容层的不一致开始变得显眼。于是又做了几轮 clarify，把高曝光入口页的标题和摘要重新整理了一遍，例如 <code>About</code> 改成 =关于=，旧文章标题统一成更稳定的中文展示名，首页前几篇摘要也改成更适合扫读的形式。
+</p>
+
+<p>
+这一步再次说明，视觉系统稳定之后，内容质量会被更清楚地暴露出来。设计系统不能替代内容整理，但它能把内容层的问题显式化。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org5c7e497" class="outline-2">
+<h2 id="org5c7e497">这次协作真正让我满意的，不是页面本身</h2>
+<div class="outline-text-2" id="text-org5c7e497">
+<p>
+如果只看结果，这次得到的成果包括：
+</p>
+
+<ul class="org-ul">
+<li>共享样式和共享脚本更稳了</li>
+<li>发布链可以在 batch 环境里完整跑通</li>
+<li>站点生成逻辑更清楚了</li>
+<li>首页、文章页、移动端的阅读体验都更顺了</li>
+<li>入口内容的标题和摘要也更统一了</li>
+</ul>
+
+<p>
+更重要的是，这次协作逐渐形成了一套明确的工作方式<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>：
+</p>
+
+<ul class="org-ul">
+<li>先审计，再分层</li>
+<li>把项目边界讲清楚</li>
+<li>共享问题回到 shared asset</li>
+<li>生成问题回到导出器</li>
+<li>内容问题回到 Org 源</li>
+<li>每一轮都只解决一类问题</li>
+</ul>
+
+<p>
+和单次把页面“改完”相比，这种分层处理方式更适合长期维护。
+</p>
+</div>
+</div>
+<div id="outline-container-orgb25f6f3" class="outline-2">
+<h2 id="orgb25f6f3">正确的与 Codex 做交互</h2>
+<div class="outline-text-2" id="text-orgb25f6f3">
+<blockquote>
+<p>
+本段是人写的
+</p>
+</blockquote>
+
+<p>
+Codex 已经很聪明，但因为我目前还没让他连接 browser ，他看不到真正的 UI ，我会在预览结果后，通过截图和标注告诉 Codex 有问题的地方，让他优化。多数时候，我只是问他：你觉得你接下来要做什么？
+</p>
+
+<p>
+他会告诉我，我们现在有 1/2/3 多个项目，但收益更大的是应该先做 1 。这是一种良好的判断。
+</p>
+
+<p>
+或者我问：我们是不是到这里差不多了，但我有一个另外的需求。Codex 多数时候也答应。总的来说，通过这套 skill 来做样式重构还是非常简单的。
+</p>
+</div>
+</div>
+<div id="outline-container-orgff0cbc4" class="outline-2">
+<h2 id="orgff0cbc4">结语</h2>
+<div class="outline-text-2" id="text-orgff0cbc4">
+<p>
+这次重构之后，我更确定了一点：AI 更适合作为可纳入工作流的工程伙伴，而不是脱离上下文的万能生成器。它适合参与审计、定位、重构和复盘；前提是项目结构足够清楚，修改边界足够明确。
+</p>
+
+<p>
+这次工作的最终价值，不只在于页面本身变得更稳、更统一，也在于博客的维护方式被进一步显式化。对于长期维护的个人站点来说，这比单次视觉优化更重要。
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+codex 生成这一段时说他用了两天，典型的 ai 幻觉。 
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+其实我觉得最大的收获是我不需要自己写任何东西，把需求告诉 codex 就行了，包括这篇文章
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+
+
+<p class="author">Author: <a href="https://x.com/gsj987" target=_blank>gsj987</a></p>
+<p class="date">Publish Date: 2026-03-14 Sat 15:42</p>
+<p class="license">License: <a href="https://www.creativecommons.org/licenses/by-nc/4.0/deed.zh-hans">CC BY-NC 4.0</a></p>
+
+<script src="/assets/dynamic-toc.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/powershell.min.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/lisp.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C71VVP1YSV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C71VVP1YSV');
+</script>
+</div>
+</body>
+</html>
