@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI Coding 实践之路</title>
+<meta name="author" content="gsj987" />
+<meta name="generator" content="Org Mode" />
+
+
+  <link rel="stylesheet" href="/assets/style.css" type="text/css"/>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class="ally-nav">
+  <a href="#content">跳到主要内容</a>
+</div>
+ <nav>
+  <ul>
+    <li><a aria-current="page" href="/index.html">首页</a></li>
+    <li><a href="/reading-notes/index.html">阅读笔记</a></li>
+    <li><a href="/about.html">关于</a></li>
+    <li><a href="/rss.xml">订阅 RSS</a></li>
+    <li><a href="https://github.com/gsj987/">GitHub</a></li>
+  </ul>
+</nav>
+</div>
+<div id="content" class="content">
+<h1 class="title">AI Coding 实践之路</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>目录</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org29cacdd">前言</a>
+<ul>
+<li><a href="#orgd8a6ee9">小型项目：Emacs 配置</a>
+<ul>
+<li><a href="#orgb7bb82d">案例一：sis-input 自动启动</a></li>
+<li><a href="#org1ebe477">案例二：Linux 下 sdcv 字典查找失败</a></li>
+</ul>
+</li>
+<li><a href="#orgf8460e0">中型项目：笔记与 Blog 发布系统</a></li>
+<li><a href="#orgb6da592">大型项目：Org Runbook</a></li>
+</ul>
+</li>
+<li><a href="#org9f9b261">架构迁移的困境</a></li>
+<li><a href="#orgc4433ed">解决方案：结构化的 Gap 驱动模式</a>
+<ul>
+<li><a href="#orgb68ac7d">架构文档体系</a></li>
+<li><a href="#orgfaeae2c">迭代流程</a></li>
+<li><a href="#org5419723">流程稳定性：SubAgent 与角色分工</a></li>
+<li><a href="#org6ece8ed">门禁幻觉问题</a></li>
+</ul>
+</li>
+<li><a href="#orgdb410c0">经验总结</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org29cacdd" class="outline-2">
+<h2 id="org29cacdd">前言</h2>
+<div class="outline-text-2" id="text-org29cacdd">
+<p>
+本文介绍我如何使用 AI Coder 从零开始构建一套相对可用的工作流。经验来自两个月实践，涵盖三种不同规模的项目。
+</p>
+</div>
+<div id="outline-container-orgd8a6ee9" class="outline-3">
+<h3 id="orgd8a6ee9">小型项目：Emacs 配置</h3>
+<div class="outline-text-3" id="text-orgd8a6ee9">
+<p>
+Emacs 配置这类小型项目，我直接交给 Codex 处理。由于我对每个功能模块已有良好分层，只需引用文件并说明需求——新增某个包、增加某个功能，或修复某个异常（附上错误日志）——基本能一次搞定。
+</p>
+</div>
+<div id="outline-container-orgb7bb82d" class="outline-4">
+<h4 id="orgb7bb82d">案例一：sis-input 自动启动</h4>
+<div class="outline-text-4" id="text-orgb7bb82d">
+<p>
+困扰多年的问题是 sis-input 无法自动启动，我一直靠手动执行 <code>(sis-get)</code> 来解决。既然是个人配置，随手处理就行，也没太在意。后来把这个 case 交给 Codex，他直接在 <code>use-package</code> 下加了 <code>:demand t</code> 就解决了。
+</p>
+</div>
+</div>
+<div id="outline-container-org1ebe477" class="outline-4">
+<h4 id="org1ebe477">案例二：Linux 下 sdcv 字典查找失败</h4>
+<div class="outline-text-4" id="text-org1ebe477">
+<p>
+另一个长期未解的问题是 Linux 下 sdcv 始终找不到字典。奇怪的是，macOS 上完全正常，Linux Shell 里直接调用 sdcv CLI 也没问题，所有路径配置都检查过了，就是找不到原因。
+</p>
+
+<p>
+让 Codex 尝试后，他多次尝试不同方案、修改配置、增加调试日志让我确认。最后我改烦了，让他直接用 <code>emacs -Q -l</code> 加载脚本自行测试。最终发现是 sdcv 没有采用 UTF-8 编码。Codex 写了一个函数帮我解决：
+</p>
+
+<pre class="example" id="orgb40acf5">
+(setq sdcv-env-lang (or (getenv "LANG") "C.UTF-8"))
+(defun my/sdcv-call-process-utf8 (orig &amp;rest args)
+  "Force UTF-8 for sdcv JSON IO and arguments."
+  (let ((coding-system-for-read 'utf-8)
+        (coding-system-for-write 'utf-8)
+        (coding-system-for-argument 'utf-8)
+        (default-process-coding-system '(utf-8 . utf-8)))
+    (apply orig args)))
+(advice-add 'sdcv-call-process :around #'my/sdcv-call-process-utf8)
+</pre>
+
+<p>
+Emacs 的优势在于 elisp 能端到端控制所有行为，所以 Codex 只需修改 elisp 就能完成功能调试。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf8460e0" class="outline-3">
+<h3 id="orgf8460e0">中型项目：笔记与 Blog 发布系统</h3>
+<div class="outline-text-3" id="text-orgf8460e0">
+<p>
+这类项目涉及 UI 改造，详细过程在 <a href="rebuild-blog-with-codex.html">和 Codex 一起重构博客</a> 一文中介绍。
+</p>
+
+<p>
+我的做法是一边向 Codex 描述我的想法，一边通过截图告诉他哪里改坏了、哪里不符合预期。由于博客系统本身比较简单，他几下就改好了。
+</p>
+
+<p>
+有趣的是，Codex 的调整冲动不限于代码，还会主动修改我的文章，甚至自己写了一篇博文（就是上文，我只是做了校对）。
+</p>
+</div>
+</div>
+<div id="outline-container-orgb6da592" class="outline-3">
+<h3 id="orgb6da592">大型项目：Org Runbook</h3>
+<div class="outline-text-3" id="text-orgb6da592">
+<p>
+最复杂的例子是我正在构建的 Org Runbook 项目。出发点来自 <a href="org-file-as-ai-skills-system.html">Org File as AI Skills System</a>，目标是构建一套围绕 Emacs 的 Harness 工具链。
+</p>
+
+<p>
+这个项目本身就是用 AI coding 开发的，沿用原文所说的「围绕 PRD 文件的 Plan-Code-Review 模式」。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org9f9b261" class="outline-2">
+<h2 id="org9f9b261">架构迁移的困境</h2>
+<div class="outline-text-2" id="text-org9f9b261">
+<p>
+随着项目复杂度提升和定位转变，我的架构需要大幅调整。起初我继续用旧模式，但 Codex 已力不从心：
+</p>
+
+<ul class="org-ul">
+<li>每当我让他对比新老架构差异，形成一篇 PRD，然后让 Codex Code 和 Review。一开始还行，但逐渐进度原地踏步——多轮迭代后，当前架构与目标架构的差距始终停留在「过渡阶段」，无法进一步推进。</li>
+<li>我改让 Codex 先出研究型 PRD，深入分析架构，再出一套「破坏-重建-整理」系列 PRD，通常 3-5 个 Coding 任务：破坏旧架构、删除旧测试、重建新架构、补充整理。但多次迭代后，进度仍然停滞。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc4433ed" class="outline-2">
+<h2 id="orgc4433ed">解决方案：结构化的 Gap 驱动模式</h2>
+<div class="outline-text-2" id="text-orgc4433ed">
+<p>
+与 GPT 讨论后，我采用了新的架构：
+</p>
+</div>
+<div id="outline-container-orgb68ac7d" class="outline-3">
+<h3 id="orgb68ac7d">架构文档体系</h3>
+<div class="outline-text-3" id="text-orgb68ac7d">
+<p>
+让 AI 总结出「当前架构」(<code>CURRENT-ARCH.org</code>) 和「目标架构」(<code>TARGET-ARCH.org</code>)，再比较差异生成 <code>ARCH-GAP.org</code> 和 =MIGRATION-PLAN.org=。关键改变是：不再是泛泛地谈架构差异，而是通过编号逐一列举。
+</p>
+
+<pre class="example" id="org9172a67">
+** Gap ID: G-008
+- Target rule: "architecture docs are executable governance artifacts"
+- Current reality: docs/workflow/architecture-iteration-workflow.org 已创建，PRD 模板和 GAP 模板已就位
+- Impact: 每轮改造方法不稳定，审计口径漂移
+- Required change: 固化 workflow + 审计表 + gap 模板 + PRD 模板
+- Acceptance check:
+  - docs 中存在固定流程文件
+  - 新 PRD 可直接引用流程文件落地
+- Status: **partial** (architecture-iteration-workflow.org 已创建，本轮正在验证)
+- Evidence: docs/workflow/architecture-iteration-workflow.org, prd/000-template.org, docs/iterations/000-template.org
+- Next minimal fix: 完成首轮 iteration workflow 验证并更新文档
+</pre>
+</div>
+</div>
+<div id="outline-container-orgfaeae2c" class="outline-3">
+<h3 id="orgfaeae2c">迭代流程</h3>
+<div class="outline-text-3" id="text-orgfaeae2c">
+<p>
+每轮采用固定步骤：
+</p>
+
+<ol class="org-ol">
+<li>从 Plan 中选取一个 Blocker，生成 PRD 文件，开始编码执行</li>
+<li>完成后进行 Review，把结果与 Plan 合并</li>
+<li>审查是否满足 Plan 中的 Blocker 检查</li>
+<li>按照模板生成 Iteration Review 文件，列举所有检查项并打钩确认，提供相应证据</li>
+</ol>
+
+<pre class="example" id="org4b198be">
+** 1) Acceptance validation
+- Gates checked:
+  - bootstrap 不依赖固定 role 字符串 ✅
+  - 新增 profile 可在不改 host 代码下接入 dispatch lane ✅
+  - ERT 测试验证 capability-first 函数存在 ✅ (7/7 PASS)
+
+** 2) Evidence validation
+- Test/grep/trace reproducibility: G-006 ERT 7/7 PASS, full suite 274/275
+- Cross-doc consistency: MIGRATION-PLAN G-006 `in_review` → `partial`
+
+** 3) Gap impact review
+- Closed: 无
+- Reduced: G-006 (Phase 1-2 bootstrap audit done) ✅
+- Unchanged: G-001-G-005 (partial), G-007-G-010 (not_started)
+
+** 4) Plan consistency review
+- Plan changed? yes
+- Changes: MIGRATION-PLAN G-006 status + Phase label; ARCH-GAPS Phase label
+
+** 5) Final decision
+- close + rationale: G-006 Phase 1-2 完成，所有验收门通过
+</pre>
+
+<ol class="org-ol">
+<li>所有项目勾选后，回写 PRD 并标记完成，更新 =CURRENT-ARCH.org=。本轮迭代完成。</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org5419723" class="outline-3">
+<h3 id="org5419723">流程稳定性：SubAgent 与角色分工</h3>
+<div class="outline-text-3" id="text-org5419723">
+<p>
+为了让每轮输出足够稳定，我让 Codex 为每种文件输出 Spec，确保架构描述、Plan 或 Review 文件都按我的设计执行。这没花多少时间——主要是表达「我想要这样一套流程」，告诉 Codex 后让他生成，我检查后觉得哪里不好就让他迭代几轮。
+</p>
+
+<p>
+为了让流程能自动运行，我把说明写到了 <code>workflow.org</code> 文件中，每次引用即可开始迭代。
+</p>
+
+
+<div id="orga028792" class="figure">
+<p><img src="https://cdn.qiniu.gsj987.cn/blog/37e3ebaa1b3a27868fe38f19f3c5c00f.png" alt="screenshot"  loading="lazy" decoding="async"/>
+</p>
+</div>
+
+
+<p>
+迭代过程中，我发现 Agent 容易产生幻觉：自以为完成了某个 Gate 检查，实际并没有；或在 Worklog 里引用不存在的文件。于是我引入 SubAgent，在 Workflow 开头声明多个角色及其职责、必读输入、必须遵从的输出 Spec，并在每个 Step 中指明由哪个角色的 SubAgent 负责。
+</p>
+
+<p>
+在 Codex 建议下，我分了三个角色：
+</p>
+
+<ul class="org-ul">
+<li><b>Architect</b> ：负责架构文档</li>
+<li><b>Builder</b> ：负责代码和测试</li>
+<li><b>GateKeeper</b> ：负责独立验证</li>
+</ul>
+
+<pre class="example" id="orgcaad9cb">
+* Multi-Agent Execution Contract (Default)
+:PROPERTIES:
+:ID:       3c420a52-5880-4509-bafe-73cbbc30af69
+:END:
+
+Role ownership:
+- Builder:
+  - Tool: =scripts/pi-subagent-supervisor.sh --role builder ...=
+  - Model pin: =--provider minimax --model MiniMax-M2.7=
+  - Write scope: =elisp/=, =tests/=, =prd/&lt;id&gt;.org=
+  - Must not edit architecture docs.
+- Architect:
+  - Tool: =scripts/pi-subagent-supervisor.sh --role architect ...=
+  - Write scope: =docs/CURRENT-ARCH.org=, =docs/ARCH-GAPS.org=, =docs/MIGRATION-PLAN.org=
+  - Must not edit runtime code/tests.
+- Gatekeeper:
+  - Tool: =scripts/pi-subagent-supervisor.sh --role gatekeeper ...=
+  - Default read-only review; only allowed write target is =docs/iterations/&lt;yyyymmdd&gt;-&lt;prd-id&gt;-review.org=
+  - Must independently rerun key verification commands before close decision.
+</pre>
+</div>
+</div>
+<div id="outline-container-org6ece8ed" class="outline-3">
+<h3 id="org6ece8ed">门禁幻觉问题</h3>
+<div class="outline-text-3" id="text-org6ece8ed">
+<p>
+几轮下来发现 GateKeeper 经常出现幻觉，对不应该放行的门禁直接放行了。向 Codex 反馈后，他的建议是：用门禁脚本而不是 Agent 自我判断。于是 Codex 创建了 <code>iteration-gate-check.sh</code> 脚本，对已知问题进行收集，无法通过门的都设为 Rework 状态，需要重跑 Workflow。
+</p>
+
+<p>
+每跑完一轮，我会让一个独立的 Codex 评审这轮运行状态：文档是否齐全、门禁检查是否完整、证据是否提供充分。如果不能通过，就问 Codex 应该如何改进——是优化 Workflow，还是增加 Gate Check 项目。
+</p>
+
+
+<div id="org15ac668" class="figure">
+<p><img src="https://cdn.qiniu.gsj987.cn/blog/2e4cfd12f5a880d52121d7e6bedb9009.png" alt="screenshot"  loading="lazy" decoding="async"/>
+</p>
+</div>
+
+
+<p>
+经过多轮调优后，Agent 基本能稳定跑完整个 Workflow。在完整流程控制下，Code Agent 能轻松打爆 MiniMax 的 Code Plan。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgdb410c0" class="outline-2">
+<h2 id="orgdb410c0">经验总结</h2>
+<div class="outline-text-2" id="text-orgdb410c0">
+<p>
+两个月实践下来，我有几点心得：
+</p>
+
+<p>
+<b>现状观察</b>: 网上工具和实践方案层出不穷，每天都有读不完的分享，AI 焦虑浓度很高。但从我的实践来看，大家的做法其实大同小异：不断增加工作流程、增加门禁和校验、固化标准步骤、增加可观测性和自动化测试。
+</p>
+
+<p>
+<b>实践为王</b>: 最重要的是动手实践。把流程加到日常使用中，不断思考如何提高自动化水平、如何提高流程稳定性。实践一两个月，自然就都会了。
+</p>
+
+<p>
+<b>AI 时代最重要的是品味</b>: 实现能力已不那么重要，关键是怎么从现有实现中发现坏味道。想到什么问题就问 AI——躺床上问、出门走路问、吃饭问、上厕所也问。有新想法后马上投入实践，不论改架构还是加新工作流，Codex / Claude Code 都能帮你搞定。
+</p>
+
+<p>
+<b>完全依赖 AI 的意外收获</b>: Org Runbook 这个项目是我最大的收获。根本原因是我完全不会 elisp，只能完全依靠 AI 写代码——这反而是成长最快的。
+</p>
+
+<p>
+<b>码农的转型</b>:  不要害怕丢工作，而是充分利用自己结构化思维的优势，去打通产品和架构，把原来技术做不到的事情变得做得到。想象力和控制力才是 AI 时代的主旋律。
+</p>
+
+<p>
+<b>克制前行</b>: 一步步来。克制，有用的实践比随机无序的实践更有价值。可以着手做的第一件事：把你的 Code Plan 打爆。
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+
+
+<p class="author">作者：<a href="https://x.com/gsj987" target="_blank" rel="noopener noreferrer">gsj987</a></p>
+<p class="date">发布时间：2026-03-21 Sat 18:07</p>
+<p class="license">许可协议：<a href="https://www.creativecommons.org/licenses/by-nc/4.0/deed.zh-hans">CC BY-NC 4.0</a></p>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/styles/default.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/styles/dark.min.css" media="(prefers-color-scheme: dark)" />
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/powershell.min.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/lisp.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C71VVP1YSV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C71VVP1YSV');
+</script>
+</div>
+<script src="/assets/dynamic-toc.js" defer></script>
+</body>
+</html>

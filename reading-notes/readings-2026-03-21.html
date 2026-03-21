@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>阅读笔记 - 2026-03-21</title>
+<meta name="author" content="gsj987" />
+<meta name="generator" content="Org Mode" />
+
+
+  <link rel="stylesheet" href="/assets/style.css" type="text/css"/>
+</head>
+<body class="page-reading-notes-detail">
+<div id="preamble" class="status">
+
+<div class="ally-nav">
+  <a href="#content">跳到主要内容</a>
+</div>
+ <nav>
+  <ul>
+    <li><a href="/index.html">首页</a></li>
+    <li><a aria-current="page" href="/reading-notes/index.html">阅读笔记</a></li>
+    <li><a href="/about.html">关于</a></li>
+    <li><a href="/rss.xml">订阅 RSS</a></li>
+    <li><a href="https://github.com/gsj987/">GitHub</a></li>
+  </ul>
+</nav>
+</div>
+<section id="content" class="content">
+<h1 class="title">阅读笔记 - 2026-03-21</h1>
+<div id="outline-container-org79cc541" class="outline-2">
+<h2 id="org79cc541"><span id="read-item-1" class="read-anchor" aria-hidden="true"></span> 马东锡 NLP：如果要为这周的 AI 发展一个关键词，那就是自主进化。 从 Meta-Evolution、AutoHarness、SkillNet、SkillCraft MiniMax-M2…</h2>
+<div class="outline-text-2" id="text-org79cc541">
+<p class="read-link"><a href="https://x.com/dongxi_nlp/status/2034762982572327347" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-org45bc1b3" class="outline-3">
+<h3 id="org45bc1b3">要点</h3>
+<div class="outline-text-3" id="text-org45bc1b3">
+<ul class="org-ul">
+<li>skill craft 可以观察 agent 的调用过程，通过对 agent 调用 tool 的习惯，提取可 reuse 的 skill，这样下次执行这个任务时， agent 会优先调用 skill ，从而减少探索时间</li>
+<li>我们不需要很多 skill ，而是应该从自己的工作流里面提取</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgcbc3728" class="outline-3">
+<h3 id="orgcbc3728">方法</h3>
+<div class="outline-text-3" id="text-orgcbc3728">
+<ul class="org-ul">
+<li>skill craft 可以观察、提取、重用</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc6b2546" class="outline-3">
+<h3 id="orgc6b2546">我的观点</h3>
+<div class="outline-text-3" id="text-orgc6b2546">
+<ul class="org-ul">
+<li>价值：有一个视频很好的介绍了 skill craft ，这个过程也很有价值。他是面向 agent 的 skill ，帮助 agent 更好的提炼过程。适合那种更复杂，步骤多的流程。其实不适合编程。</li>
+<li>适用条件：复杂流程的 skill 化优化。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org8ab9ec2" class="outline-2">
+<h2 id="org8ab9ec2"><span id="read-item-2" class="read-anchor" aria-hidden="true"></span> garrytan/gstack: Use Garry Tan's exact Claude Code setup: 15 opinionated tools that serve as CE…</h2>
+<div class="outline-text-2" id="text-org8ab9ec2">
+<p class="read-link"><a href="https://github.com/garrytan/gstack" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：github.com">原文（github.com）</a></p>
+</div>
+<div id="outline-container-orgac6b527" class="outline-3">
+<h3 id="orgac6b527">要点</h3>
+<div class="outline-text-3" id="text-orgac6b527">
+<ul class="org-ul">
+<li>yc ceo 的工具集，其实就是把 cc 拆分多个角色，执行不同任务</li>
+<li>从结构上分有：
+<ul class="org-ul">
+<li>think: yc 式产品发现，6个必要的方法论提问</li>
+<li>plan: ceo评审、技术架构评审、设计计划评审（0-10分）</li>
+<li>design：系统架构设计，输出 design.md</li>
+<li>build：基于设计文档使用 cc 编码</li>
+<li>review: 正常 review ，自动修复+标记问题， codex review ，交叉评审， investigate 根因调试，深挖问题源头</li>
+<li>test: qa浏览器调试+修bug， qa-only 只汇报不修改，design-review 真机的设计评审+修复</li>
+<li>ship：ship：跑ci测试，推代码，开 pr ， document-release 自动更新文档</li>
+<li>reflect： retro 周报统计，拆开细的维度</li>
+<li>工具层： careful， freeze, guard, browse</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd4cd10d" class="outline-3">
+<h3 id="orgd4cd10d">我的观点</h3>
+<div class="outline-text-3" id="text-orgd4cd10d">
+<ul class="org-ul">
+<li>价值：其实就是一套很正常但全面的 ai 工具集，里面的一些提问方式可以学习过来</li>
+<li>适用条件：没必要全抄，但是一套有价值的 agent 实践</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org528bb4b" class="outline-2">
+<h2 id="org528bb4b"><span id="read-item-3" class="read-anchor" aria-hidden="true"></span> 实践哥MinLi：你搭的 Claude Skills，还能提升10倍效果——使用Karpathy 的 autoresearch 方法 【译】</h2>
+<div class="outline-text-2" id="text-org528bb4b">
+<p class="read-link"><a href="https://x.com/MinLiBuilds/status/2034533228162187444" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-org98e0119" class="outline-3">
+<h3 id="org98e0119">要点</h3>
+<div class="outline-text-3" id="text-org98e0119">
+<ul class="org-ul">
+<li>作者发现自己的 skills 没有一个客观评价标准，交付客户后质量不行，需要有客观的评价体系和优化体系</li>
+<li>作者使用 autoresearch 来做这个事情，能达到不错的效果</li>
+<li>这个体系还可以用来优化那些模糊评价的交付物，如设计、性能指标、市场文案等。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org872b2f9" class="outline-3">
+<h3 id="org872b2f9">方法</h3>
+<div class="outline-text-3" id="text-org872b2f9">
+<ul class="org-ul">
+<li>使用 autoresearch ，给他一个 skills 和多个对质量评价的 checklist ， autoresearch 会自动尝试优化（5-6个问题最好，多了以后会过拟合）</li>
+<li>保存下 changelog ，下次有更好的模型出来后，可以用更好的模型来优化他</li>
+<li>这个方法也可以用于其他的，比如网站性能，网站设计优化，或者宣传内容生成器</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgb1e86a5" class="outline-3">
+<h3 id="orgb1e86a5">我的观点</h3>
+<div class="outline-text-3" id="text-orgb1e86a5">
+<ul class="org-ul">
+<li>价值：一套实践方法论，其实就是人因工学的那套，通过某种客观标准，然后利用 ai 对其进行演化。 autoresearch 可能是这个体系的核心，但我认为也不是必然的。他更多的是分享了一种观点：很多主观的东西都可以用客观标准+自我演化的方式进行调优。</li>
+<li>风险：其实 agent 在初始时自动问的问题的质量对后续演化的可能性的影响最重要。 autoresearch 能否做到高质量提问？这才是最核心的问题。其次这个作者的交付物是 skills ，其实是一个相对简单的交付物，如果是复杂一点的东西，如研究报告或工作流，是否还能有这样好的交付效果呢？</li>
+<li>适用条件：有客观评价 checklist 的体系，可以做人因工学的研究方向，适合这个工具</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orge83ad82" class="outline-2">
+<h2 id="orge83ad82"><span id="read-item-4" class="read-anchor" aria-hidden="true"></span> Tw93：你不知道的 Agent：原理、架构与工程实践</h2>
+<div class="outline-text-2" id="text-orge83ad82">
+<p class="read-link"><a href="https://x.com/HiTw93/status/2034627967926825175" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-orgdb1a9ab" class="outline-3">
+<h3 id="orgdb1a9ab">要点</h3>
+<div class="outline-text-3" id="text-orgdb1a9ab">
+<ul class="org-ul">
+<li>一篇长文，手把手的教你如何构建一个 agent ，不是 workflow 那种固定流程的，而是由 llm 自主决策工具调用的 agent 模式。手把手的教你如何优化工具调用，评估执行结果，保持记忆，用 openclaw 的例子教你怎么做大型的 agent 应用</li>
+<li>agent loop 就是4个流程的循环：感知、决策、行动、反馈，而 workflow 只是一个固定的调用路径的模式，一趄路径都是显式的， agent 是自动产生循环，而人也可以在任意环节介入以改变循环。但模式上两者其实是类似的</li>
+<li>基本的控制流程就5种：提示链、路由、并行、编排、评估-优化模式，可以视具体情况不同组合</li>
+<li>harness 设计比模型重要，包含验收基线、执行边界、反馈信号和回退手段，这是系统能否稳定运行的关键</li>
+<li>openai 的做法：
+<ul class="org-ul">
+<li>所有知识都在代码库本身，但 agent.md 只保留索引</li>
+<li>多使用 lint / ci checker 的机制代替文档约束</li>
+<li>agent要完成端到端的工作，有问题改善工作流而不是让人介入</li>
+<li>最小化合并阻力，遇到失败主动重跑，而不是让人来修复</li>
+<li>不断提高可见性，所有的日志、指标、追踪都向量化，提供查询接口，让 agent 自主推理</li>
+</ul></li>
+<li>harness 最适合可以被标准化验证，有明确索引的创造。而比如发明新架构，或依赖人类决策的事情，不是他的强项</li>
+<li>上下文管理是能否让 agent 稳定完成工作的最重要实践，合理分层能让他保持清醒不丢任务，常见的分发：常驻层、按需加载层（skill/spec/rules）、运行时注入、记忆层、系统层。常见的压缩方式：滑窗、摘要、工具结果替换。</li>
+<li>固定的内容会触发 kv cache ，所以稳定的内容放在 prompt 前面，动态的内容放 prompt 后面，可以优化调用速度</li>
+<li>skills 是一种能力索引的技术，但索引也是每次都全量加载的，所以索引本身也要够短够明确</li>
+<li>压缩方法也可以写在 agents.md 里，避免 agent 把我们认为关键的东西压缩掉了，特别是 uuid 或 commit id 之类的索引信息，不然压缩就白压缩了</li>
+<li>用文件输出而不是直接输出到对话上下文中也能明显优化上下文，比如工具调用输出到 json ，再用 grep 等工具读结果</li>
+<li>好的工具设计对 agent 也很重要，其发展历史也从普通的 api 调用封装（tool call），到 tool search 这类的先索引再调用的模式。用 zod schema 这类实践，能把定义和实现放一起，有效优化调用。</li>
+<li>记忆系统是 agent 能否跨 session 持续工作的重要工具，通过使用 token usage 的评估，对旧记忆有计划的遗忘，能有效提高效率。</li>
+<li>对于长 session 任务，如架构迁移，就应该分多角色，最简单的是 Initializer Agent 和 Coding Agent 角色，然后把状态显式的写出来，同一时间只有一个 in progress ，让 agent 有上下文的锚点</li>
+<li>多 agent 组织常用统筹者模式，就是一个 agent 分配任务，其他 agent 分工，最后审查产出。子 agent 可以自由探索，只返回结果给主 agent ，让主 agent 在任务上保持专注。</li>
+<li>多 agent 下，幻觉会被放大，所以必须要有协议和门禁来控制。子 agent 要避免有孙 agent ，并且限制他的能力，避免称为另一个主 agent 而迷失</li>
+<li>agent效果的评价目前还是靠人来打标，使用 pass@k 来做能力判断，pass<sup>k</sup> 来做回归测试</li>
+<li>评价体系的搭建可以从20-50个真实的失败案例开始。测试用例要正面案例少，反面案例多。然后再逐渐的增加人工打标和模型评分器。另外很多 agent 的评分下降并不是模型导致的，而是评测系统本身的问题</li>
+<li>可观测性是 agent 搭建的重要工作。对其评估也是首先人工标注，然后 llm 自动评估。对在线用户的不满反馈，需要 100% 进队列，高成本对话高概率进对列。其他可以随机采样。</li>
+<li>最后介绍了 openclaw 的一些实践，包括 cron ，系统分层，会话恢复。</li>
+<li>最后总结一些常见的问题：系统提示不能当知识库、工具数量要控制、验证必须闭环、多 agent 之间必须隔离有边界、需要有评测、不要过早引入多 agent 、约束期望必须依靠机制。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org666f9df" class="outline-3">
+<h3 id="org666f9df">我的观点</h3>
+<div class="outline-text-3" id="text-org666f9df">
+<ul class="org-ul">
+<li>价值：一篇总览式的 agent 搭建文章，可以快速入门。里面的经验大多是我也已经了解的，但如此全面的总结出来，很适合当成一篇宣传文，帮助其他人快速入门。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org42500f0" class="outline-2">
+<h2 id="org42500f0"><span id="read-item-5" class="read-anchor" aria-hidden="true"></span> 我对 Spec Driven Development 的看法 - Zhiqiang's backyard</h2>
+<div class="outline-text-2" id="text-org42500f0">
+<p class="read-link"><a href="https://strrl.dev/post/2026/my-thought-about-spec/" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：strrl.dev">原文（strrl.dev）</a></p>
+</div>
+<div id="outline-container-orgf3ea2f6" class="outline-3">
+<h3 id="orgf3ea2f6">要点</h3>
+<div class="outline-text-3" id="text-orgf3ea2f6">
+<ul class="org-ul">
+<li>spec 驱动开发并不是银弹，因为文档和实现之间的差距是巨大的， cc 之类的用 plan 模式也无法解决这个问题，能写出好的 prd/spec/plan 不等于能写出好代码，不被 spec 覆盖到的地方就是 ai 实现很糟糕的地方</li>
+<li>软件工程师很清楚，可维护性是软件生命周期的最重要的价值，而不是迭代速度。但产品和运营不知道，他们只认为 ai coder 输出代码很快，以至于很多工程师现在也无法坚持自己的观点，随波逐流</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org1808d29" class="outline-3">
+<h3 id="org1808d29">我的观点</h3>
+<div class="outline-text-3" id="text-org1808d29">
+<ul class="org-ul">
+<li>价值：一家之言，但确实这个问题是存在的。只有 prd 存在的情况下，代码实现就是不可靠，我自己的经验也是这样的。所以我们需要增加更多顶层设计，更多额外流程和门禁来封堵。软件工程师的未来一定是 agent 控制师。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgeccceed" class="outline-2">
+<h2 id="orgeccceed"><span id="read-item-6" class="read-anchor" aria-hidden="true"></span> 宝玉：AI 发展太快跟不上？一张四象限图帮你做减法</h2>
+<div class="outline-text-2" id="text-orgeccceed">
+<p class="read-link"><a href="https://x.com/dotey/status/2035015960537485507" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-orgc9d59be" class="outline-3">
+<h3 id="orgc9d59be">要点</h3>
+<div class="outline-text-3" id="text-orgc9d59be">
+<ul class="org-ul">
+<li>4象限法，确定是否要在这个领域投入 ai 学习的精力
+<ul class="org-ul">
+<li>离生产力远､保鲜度也短的： ai 套壳、模型排名、各种产业新闻和八卦，应当当即放弃</li>
+<li>离生产力远、保鲜度长的：比如 rag 原理，CoT，多模态能力等，了解一下就好，不需要特别深入</li>
+<li>靠近生产力近、保鲜度短的：比如 ai 生图，ai做 ppt ，可以花点时间，能用就行，不用深纠，多用用，好用就用，不好用就放弃</li>
+<li>靠近生产力，保鲜度也长的，比如 cc 的各类技巧， skills ，上下文工程，应该花大量精力，彻底搞懂，并加入到日常工作中</li>
+</ul></li>
+<li>这个地图也是会飘移的，需要定期回顾，关键信号是：谁在用（越普通人用说明这个领域越靠近生产力，越保鲜），背后投入（有多少公司花很大精力和财力在这个事情上），是否收敛（是不是有最佳实践跑出来了）</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org5eade5b" class="outline-3">
+<h3 id="org5eade5b">我的观点</h3>
+<div class="outline-text-3" id="text-org5eade5b">
+<ul class="org-ul">
+<li>价值：很好的面对 ai 焦虑的文章，也是可以帮助大家判断一个 ai 方向是否有价值的方法论</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org1b52d85" class="outline-2">
+<h2 id="org1b52d85"><span id="read-item-7" class="read-anchor" aria-hidden="true"></span> yan5xu：最近一些 Agent 认知：OS 与 Agent-native 应用</h2>
+<div class="outline-text-2" id="text-org1b52d85">
+<p class="read-link"><a href="https://x.com/yan5xu/status/2033721014413402303" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-orga523e85" class="outline-3">
+<h3 id="orga523e85">要点</h3>
+<div class="outline-text-3" id="text-orga523e85">
+<ul class="org-ul">
+<li>垂类应用不应该做 agent ，因为这是基础能力问题，类似 os ，而也不能做 skills ，因为无法解决被 copy 的问题</li>
+<li>垂类应用应该抓住3个层面：
+<ul class="org-ul">
+<li>领域上下文，比如法律服务记住案件进度和判例引用，投资服务记住持仓逻辑和调仓理由</li>
+<li>基础设施成本，比如领域小模型的投入，法律案卷，和实时数据管线</li>
+<li>规模成本，由客户量带来的成本摊薄等</li>
+</ul></li>
+<li>垂类应用能成功的根本性的突破点：
+<ul class="org-ul">
+<li>能力解锁，以前因为 agent 的上下文或带宽限制做不到的事情，现在做到了</li>
+<li>认知卸载，以前很费力的事情，把 agent 本身做的事情放到外部，减少噪音，一次性就能把任务做准</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge502fd6" class="outline-3">
+<h3 id="orge502fd6">我的观点</h3>
+<div class="outline-text-3" id="text-orge502fd6">
+<ul class="org-ul">
+<li>价值：一套有价值的实践思考分享，对 agent 应用开发者的一个提醒，原文写的很发散，但想法上就是垂类 agent 开发者首先要解决垂类本身的问题，再利用 agent 实现规模化，可能才是重点。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org9bbc927" class="outline-2">
+<h2 id="org9bbc927"><span id="read-item-8" class="read-anchor" aria-hidden="true"></span> 数字游民Jarod：什么是品味（taste）？- 以及如何获得品味</h2>
+<div class="outline-text-2" id="text-org9bbc927">
+<p class="read-link"><a href="https://x.com/jarodise/status/2024055647709569160" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-org300eaef" class="outline-3">
+<h3 id="org300eaef">要点</h3>
+<div class="outline-text-3" id="text-org300eaef">
+<ul class="org-ul">
+<li>ai 天然是产出最平庸而普遍的东西，此时品味就变的很重要</li>
+<li>品味不是个人偏好，因为你在宣称某个东西是好的时，也在宣称别人也应该认为他是好的；品味不是阶级属性，他是一种从平常中找到有价值的点的能力；品味不是要会技术，而是一种回答”什么值得做“的能力</li>
+<li>如何获得品味：敏锐感知力、精细的情感、通过实践提升、通过比较完善、清除所有偏见，其中最难的是清除偏见，因为这意味着你需要去接触你不喜欢的东西，而放弃自己喜欢的东西。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orga0ed862" class="outline-3">
+<h3 id="orga0ed862">我的观点</h3>
+<div class="outline-text-3" id="text-orga0ed862">
+<ul class="org-ul">
+<li>价值：ai时代最重要的是洞察力，因为怎么做已经不重要了。这篇文章是一个引子，但始终有一点，实践和反思始终是培养品味最重要的方法，多做多想没错的。</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<div id="postamble" class="status">
+<p class="copyright">© [2019-2026] [<a href="https://x.com/gsj987" target="_blank" rel="noopener noreferrer">gsj987</a>]</p>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C71VVP1YSV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C71VVP1YSV');
+</script>
+</div>
+</body>
+</html>

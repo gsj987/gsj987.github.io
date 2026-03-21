@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>阅读笔记 - 2026-03-14</title>
+<meta name="author" content="gsj987" />
+<meta name="generator" content="Org Mode" />
+
+
+  <link rel="stylesheet" href="/assets/style.css" type="text/css"/>
+</head>
+<body class="page-reading-notes-detail">
+<div id="preamble" class="status">
+
+<div class="ally-nav">
+  <a href="#content">跳到主要内容</a>
+</div>
+ <nav>
+  <ul>
+    <li><a href="/index.html">首页</a></li>
+    <li><a aria-current="page" href="/reading-notes/index.html">阅读笔记</a></li>
+    <li><a href="/about.html">关于</a></li>
+    <li><a href="/rss.xml">订阅 RSS</a></li>
+    <li><a href="https://github.com/gsj987/">GitHub</a></li>
+  </ul>
+</nav>
+</div>
+<section id="content" class="content">
+<h1 class="title">阅读笔记 - 2026-03-14</h1>
+<div id="outline-container-org2b3823a" class="outline-2">
+<h2 id="org2b3823a"><span id="read-item-1" class="read-anchor" aria-hidden="true"></span> AlexZ 🦀：智能体软件工程 #4 ｜ 当 Agent 写完代码，谁来说「可以合并」？</h2>
+<div class="outline-text-2" id="text-org2b3823a">
+<p class="read-link"><a href="https://x.com/blackanger/status/2030396470554395015" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-org670af38" class="outline-3">
+<h3 id="org670af38">要点</h3>
+<div class="outline-text-3" id="text-org670af38">
+<ul class="org-ul">
+<li>介绍了使用 agent-spec 的做 ai 编程的验证方式，认为 ai 写代码，人 review 的方式已经完全跟不上了，人的主要职责就是写 contract ，ai 根据 contract 来编写和自我验证，给人的是验证完成后的结构化审计报告</li>
+<li>人花 60% 的时间写 contract ，编码和验证都是 ai ，最后花 30% 的时间读报告，然后 approve 花10% 的时间就够了</li>
+<li>最重要的是 Task Contract，有4个关键信息：
+<ul class="org-ul">
+<li>要说明任务意图（ intent ）</li>
+<li>已经完成的决策 ( decisions )</li>
+<li>任务边界，什么是我要的，什么是我不要的</li>
+<li>完成条件，可以是一系列对 bdd 测试的引用，而且需要负面用例比正面用例多，以限制 ai 的自我发挥</li>
+</ul></li>
+<li>7个步骤：人写 contract ， ai 对 contract 质量做评估， agent 读 contract 编码，多次 lifecycle 循环验证，并记录是几次最终通过了 gate ，对所有门禁要有结构化的输出，可以有通过/失败/跳过/无法验证 4 种状态，然后让 ai 输出对结果的 explain （可能需要人来对一些结果做决策），人类审批通过后， stamp 归档</li>
+<li>ai verifier 有4个等级，两种模式：
+<ul class="org-ul">
+<li>l1: 结构化校验，用语法检查器完成</li>
+<li>l2: 可访问边界校验，自动化的验证器完成，也不需要 token</li>
+<li>l3: 测试用例校验，可以是 ut , 也可以是 bdd ，最终产出是回答：能否满足 contract 定义的边界</li>
+<li>l4: ai分析前3者未能覆盖的场景，有 stub 模式和 caller 模式，他的输出是 uncertian ，不是 pass / failed ，结果需要由人来判断
+<ul class="org-ul">
+<li>stub 是让编排系统来认证， caller 是让 ai coder 比如 cc 来验证</li>
+</ul></li>
+</ul></li>
+<li>可以有 org.spec, project.spec, task.spec 3层，依次覆盖，实现团队管理</li>
+<li>这套方案不能解决所有问题，但确实是更 agentic 的 code review 方案</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org362a31f" class="outline-3">
+<h3 id="org362a31f">方法</h3>
+<div class="outline-text-3" id="text-org362a31f">
+<ul class="org-ul">
+<li>他也提供了 skills 来帮助人类写 contract ，以及提供工作流更好的完成 7 步循环</li>
+<li>他也能和 jj 合作，使用 commit 为核心的最小改动模式，实现滚动更新</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org46be0d0" class="outline-3">
+<h3 id="org46be0d0">我的观点</h3>
+<div class="outline-text-3" id="text-org46be0d0">
+<ul class="org-ul">
+<li>价值：很有价值的 code review 实践，但目前他的所有设施都是专注在 rust 生态上，其他的项目使用， l1-l3 的设施还需要自己构建，但也是很好的实践导论。提供的 skills 可以用来编写 ert 协议</li>
+<li>适用条件：需要人来参与的编码过程，减少 code review 的负担</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org0b92d8f" class="outline-3">
+<h3 id="org0b92d8f"><span class="todo TODO">TODO</span> 把 agent-spec skills 加入到我现在的 workflow 中</h3>
+</div>
+</div>
+<div id="outline-container-org306bc8f" class="outline-2">
+<h2 id="org306bc8f"><span id="read-item-2" class="read-anchor" aria-hidden="true"></span> Leo：用 markdown 文件树做 AI 记忆系统，跑了两个多月，聊聊真实体感。 漂移是真实痛点。源文件和摘要之间会悄悄分裂，靠写入规范约束本质是靠纪律，纪律迟早松。 但「需要 join…</h2>
+<div class="outline-text-2" id="text-org306bc8f">
+<p class="read-link"><a href="https://x.com/runes_leo/status/2032385174831599961" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-org72c12d8" class="outline-3">
+<h3 id="org72c12d8">要点</h3>
+<div class="outline-text-3" id="text-org72c12d8">
+<ul class="org-ul">
+<li>个人记忆系统不需要高复杂的 join 和 index ，使用 mardown 文件 + chromadb + bm25 召回就够用了</li>
+<li>个人系统和公司知识库是两套不同的实践</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgb5c21de" class="outline-3">
+<h3 id="orgb5c21de">我的观点</h3>
+<div class="outline-text-3" id="text-orgb5c21de">
+<ul class="org-ul">
+<li>价值：经验之谈，可以参考</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd27660d" class="outline-2">
+<h2 id="orgd27660d"><span id="read-item-3" class="read-anchor" aria-hidden="true"></span> Tw93：你不知道的 Claude Code：架构、治理与工程实践</h2>
+<div class="outline-text-2" id="text-orgd27660d">
+<p class="read-link"><a href="https://x.com/HiTw93/status/2032091246588518683" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-org8617162" class="outline-3">
+<h3 id="org8617162">要点</h3>
+<div class="outline-text-3" id="text-org8617162">
+<ul class="org-ul">
+<li>快速上手 cc 的技巧经验之谈，从如何开始，到如何优化流程，到如何成为系统设计者（产生质变）</li>
+<li>利用好 cc 的各种功能，其实是在设计流程的各个环节：
+<ol class="org-ol">
+<li>claud.md / rules / memory 是告诉 cc 这个项目是什么</li>
+<li>tools / mcp 是提供各种能力，能做什么</li>
+<li>skills 是方法论和流程控制，或者领域知识</li>
+<li>hooks 自动化验证器，用于轻量的，确定性的工作</li>
+<li>subagents 能有更专注的工作分工，或者节省 token 开支，加快独立任务速度</li>
+<li>verifiers 验证在自动化编程中很重要</li>
+</ol></li>
+<li>cc的上下文很有限，需要让 claud.md 尽可能短（不超过2.5k），大型参考文档放到 skills 的 supporting files 中，长期会话主动用 /context 观察消耗，主动做压缩</li>
+<li>skills 很重要，可以做门禁检查，标准流程控制和领域专家控制（出问题时按专家思路收集证据并校验）
+<ul class="org-ul">
+<li>对于非常常用的 skill ，可以 auto-invoke ，低频的手动 invoke 就行，极低的可以移除，放到文档目录里手动引用</li>
+<li>skill 不能太短，也不能过长，也不要让他覆盖开发流程的每一件事（这种流程控制应该是 claud.md 做的），而且也不应有副作用</li>
+</ul></li>
+<li>为 cc 设计工具，应该明确名称，调用参数，有单一目标，输出可控可截断，有修正建议而不是简单的 error code</li>
+<li>自动化构建还是很重要的，不要总是让 cc 自己做所有事情</li>
+<li>同一任务就不要切 subagent 了，反而无法利用 kv ，节省不了缓存</li>
+<li>claud.md 很重要，要写怎么跑，怎么测，项目边界，环境因素，压缩时必须要保留的东西。让 cc 自己维护 claud.md 也很不错，比如：“你总结一下这次的问题，放到 claud.md 里，避免下次再犯”</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgb2daea7" class="outline-3">
+<h3 id="orgb2daea7">我的观点</h3>
+<div class="outline-text-3" id="text-orgb2daea7">
+<ul class="org-ul">
+<li>价值：很有价值的经验之谈，特别是需要主动压缩，主动管理上下文，是很好的思路。另外对 skill 如何在 cc 中发挥自己的作用，也有许多启发。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org85a1e07" class="outline-2">
+<h2 id="org85a1e07"><span id="read-item-4" class="read-anchor" aria-hidden="true"></span> elie：this is a very nice feature, some example asking opus on claude web interface to explain M…</h2>
+<div class="outline-text-2" id="text-org85a1e07">
+<p class="read-link"><a href="https://x.com/eliebakouch/status/2032146159104405851" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-org7dcea82" class="outline-3">
+<h3 id="org7dcea82">要点</h3>
+<div class="outline-text-3" id="text-org7dcea82">
+<ul class="org-ul">
+<li>claude 提供了全新的可交互 ui ，让他解释一个问题，他能生成可交互的图示，这个就是使用前端代码的自动生成能力做的。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org77d8e04" class="outline-2">
+<h2 id="org77d8e04"><span id="read-item-5" class="read-anchor" aria-hidden="true"></span> Lyric🌀：编程从来不属于程序员</h2>
+<div class="outline-text-2" id="text-org77d8e04">
+<p class="read-link"><a href="https://x.com/lyricwai/status/2031927384086323351" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-org24c8640" class="outline-3">
+<h3 id="org24c8640">要点</h3>
+<div class="outline-text-3" id="text-org24c8640">
+<ul class="org-ul">
+<li>现在的编程从原来只有程序员建模再完成的问题域，变成了所有人描述的问题域，跨度很大，从复杂精密的天气预测系统到奶茶店老板的排班工具，但其复杂度的跨度很大</li>
+<li>现在我们需要的是新的工具来管理这种不断扩大的熵增</li>
+<li>真正的风险是，给错误的问题用错误的工具，对复杂问题的精确预测，变成 ai 觉得问题已经解决，但没人知道底下到底有没有解决</li>
+<li>未来对编程的控制力和理解力变成稀缺资源</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org0871007" class="outline-2">
+<h2 id="org0871007"><span id="read-item-6" class="read-anchor" aria-hidden="true"></span> kepano/defuddle: Get the main content of any page as Markdown.</h2>
+<div class="outline-text-2" id="text-org0871007">
+<p class="read-link"><a href="https://github.com/kepano/defuddle" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：github.com">原文（github.com）</a></p>
+</div>
+<div id="outline-container-org35139e7" class="outline-3">
+<h3 id="org35139e7">要点</h3>
+<div class="outline-text-3" id="text-org35139e7">
+<ul class="org-ul">
+<li>obsidian 作者做的工具，能比 readability 更好的从网页上提取可读干净的 markdown</li>
+<li>现在支持了解析 youtube 链接，不需要 api 就能拿干净的 youtube 字幕</li>
+<li>能通过 obsidian web clipper 使用</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgfc517bb" class="outline-3">
+<h3 id="orgfc517bb">方法</h3>
+<div class="outline-text-3" id="text-orgfc517bb">
+<ul class="org-ul">
+<li>提供了快速的 npx 命令，可以一键尝试</li>
+</ul>
+
+<div class="org-src-container">
+<pre>
+<code class="language-bash">npx defuddle parse https://x.com/chenchengpro/status/2032648998851674300
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org9c3c5ab" class="outline-3">
+<h3 id="org9c3c5ab">我的观点</h3>
+<div class="outline-text-3" id="text-org9c3c5ab">
+<ul class="org-ul">
+<li>价值：很有价值，甚至还能直接读 x 文章，而且一键就试出来了</li>
+<li>适用条件：适合假如到 tool call 中，替代那些复杂的 jina 工具</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org6a2ef8b" class="outline-2">
+<h2 id="org6a2ef8b"><span id="read-item-7" class="read-anchor" aria-hidden="true"></span> meng shao：重读 OpenClaw 背后的 Agent 框架「pi」，作者 @badlogicgames 对主流 Coding Agent 的反思还是太超前了，pi 的极简设计即使现…</h2>
+<div class="outline-text-2" id="text-org6a2ef8b">
+<p class="read-link"><a href="https://x.com/shao__meng/status/2032253333747220690" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-orgc469094" class="outline-3">
+<h3 id="orgc469094">要点</h3>
+<div class="outline-text-3" id="text-orgc469094">
+<ul class="org-ul">
+<li>openclaw 是基于 pi 构建的，是一个开源的 cc 或 codex 实现</li>
+<li>pi追求简洁，但也支持所有厂商的模型和 api 方便切换</li>
+<li>核心 coding-agent 体量很小，只有4个核心工具： read, write, edit, bash，支持 agents.md</li>
+<li>默认 yolo , 不做 todo （因为无法跨会话，不如用外部文件维护），不做 plan （也用外部文件维护），不支持 mcp （体量太大，使用工具按需加载），没有后台 bash ，没有 sub agents</li>
+<li>注重可观察性，分层做的很优秀</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org777b4b1" class="outline-3">
+<h3 id="org777b4b1">我的观点</h3>
+<div class="outline-text-3" id="text-org777b4b1">
+<ul class="org-ul">
+<li>价值：值得学习，作者因为不慢厂商的 coding 工具自己做一套，在现在这个时代是完全可能的。可以研究一下，是否能替代掉我的 codex ，或者成为 Emacs as Agent Runbook 的一部分</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org544d898" class="outline-2">
+<h2 id="org544d898"><span id="read-item-8" class="read-anchor" aria-hidden="true"></span> 宝玉：编程 Agent 如何重塑工程、产品和设计【译】</h2>
+<div class="outline-text-2" id="text-org544d898">
+<p class="read-link"><a href="https://x.com/dotey/status/2031841027112517742" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-org4288785" class="outline-3">
+<h3 id="org4288785">要点</h3>
+<div class="outline-text-3" id="text-org4288785">
+<ul class="org-ul">
+<li>ai coding 让产品从想法到原型变的简单，但是评审的工作还是存在的</li>
+<li>程序员能有时间思考产品，产品有时间写代码，两者的角色其实是融合了</li>
+<li>现在有价值的角色应该是，能有产品思考，有设计能力和品味，能快速产出原型（甚至正式代码）的角色，以及有系统思考，能确认某一个原型想法是否符合整体构建思路的角色</li>
+<li>程序员的出路，要么打磨自己的产品思维，要么打磨自己的系统构建思维</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3f13ae4" class="outline-3">
+<h3 id="org3f13ae4">我的观点</h3>
+<div class="outline-text-3" id="text-org3f13ae4">
+<ul class="org-ul">
+<li>价值：值得阅读的一篇文章，但如何打磨这些思维，没有很好的定论。品味也是需要大量实践磨炼出来的。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfb5385e" class="outline-2">
+<h2 id="orgfb5385e"><span id="read-item-9" class="read-anchor" aria-hidden="true"></span> karpathy/autoresearch: AI agents running research on single-GPU nanochat training automatically</h2>
+<div class="outline-text-2" id="text-orgfb5385e">
+<p class="read-link"><a href="https://github.com/karpathy/autoresearch" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：github.com">原文（github.com）</a></p>
+</div>
+<div id="outline-container-org33d1a2f" class="outline-3">
+<h3 id="org33d1a2f">要点</h3>
+<div class="outline-text-3" id="text-org33d1a2f">
+<ul class="org-ul">
+<li>给 ai 一个小的 llm 模型想法，他自动会在一个单机上开始研究 llm 的原理，并跑一系列实验，最终形成研究报告</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org962ccf1" class="outline-3">
+<h3 id="org962ccf1">我的观点</h3>
+<div class="outline-text-3" id="text-org962ccf1">
+<ul class="org-ul">
+<li>价值：快速入门 llm 研究的很好的工具，适合学生</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<div id="postamble" class="status">
+<p class="copyright">© [2019-2026] [<a href="https://x.com/gsj987" target="_blank" rel="noopener noreferrer">gsj987</a>]</p>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C71VVP1YSV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C71VVP1YSV');
+</script>
+</div>
+</body>
+</html>

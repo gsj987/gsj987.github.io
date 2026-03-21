@@ -14,8 +14,8 @@
   <link>https://gsj987.github.io</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Sat, 14 Mar 2026 16:29:33 +0800</pubDate>
-  <lastBuildDate>Sat, 14 Mar 2026 16:29:33 +0800</lastBuildDate>
+  <pubDate>Sat, 21 Mar 2026 21:22:03 +0800</pubDate>
+  <lastBuildDate>Sat, 21 Mar 2026 21:22:03 +0800</lastBuildDate>
   <generator>Emacs 30.2 Org-mode 9.7.11</generator>
   <webMaster>gsj987@gmail.com (gsj987)</webMaster>
   <image>
@@ -24,6 +24,18 @@
     <link>https://gsj987.github.io</link>
   </image>
 
+  <item>
+    <title>AI Coding 实践之路</title>
+    <link>https://gsj987.github.io/ai-coding-in-practice.html</link>
+    <author>gsj987@gmail.com (gsj987)</author>
+    <guid isPermaLink="false">https://gsj987.github.io/ai-coding-in-practice.html</guid>
+    <pubDate>Sat, 21 Mar 2026 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    通过三个项目的实践，总结 AI Coding 工作流构建方法：小型项目直接交给 AI，中型项目结合 UI 截图协作，大型项目采用 Gap 驱动模式和多 Agent 角色分工。
+    </p>
+    ]]></description>
+  </item>
   <item>
     <title>和 Codex 一起重构博客</title>
     <link>https://gsj987.github.io/rebuild-blog-with-codex.html</link>

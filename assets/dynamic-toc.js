@@ -7,6 +7,7 @@ let linksById = {};
 let toggleBtn = null;
 
 let headerObserver = null;
+let resizeTimer = null;
 
 function localizedCopy() {
   const lang = document.documentElement.lang || "";
@@ -191,12 +192,18 @@ function hideToggleBtn() {
 window.addEventListener("load", () => {
   if ("IntersectionObserver" in window) {
     setUpObserver();
-    window.addEventListener("resize", setUpObserver);
+    window.addEventListener("resize", () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(setUpObserver, 120);
+    });
   }
 });
 
 window.addEventListener("unload", () => {
   if (headerObserver) {
     headerObserver.disconnect();
+  }
+  if (resizeTimer) {
+    window.clearTimeout(resizeTimer);
   }
 });

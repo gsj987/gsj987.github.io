@@ -1,7 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&display=swap");
-@import url("https://unpkg.com/@highlightjs/cdn-assets@11.9.0/styles/default.min.css");
-@import url("https://unpkg.com/@highlightjs/cdn-assets@11.9.0/styles/dark.min.css")
-  screen and (prefers-color-scheme: dark);
 
 :root {
   color-scheme: light dark;
@@ -45,6 +42,9 @@
   --color-border-table: #72675c;
   --color-bg-table: #e6e0d5;
   --color-box-shadow: rgba(48, 39, 28, 0.18);
+  --color-inline-code-bg: color-mix(in srgb, var(--color-border), transparent 25%);
+  --color-code-block-bg: var(--color-bg-src-block);
+  --color-code-block-border: color-mix(in srgb, var(--color-border), transparent 8%);
 
   --dark-color-bg: #161514;
   --dark-color-bg-secondary: rgba(33, 31, 29, 0.9);
@@ -58,6 +58,13 @@
   --dark-color-border-table: #9f9487;
   --dark-color-bg-table: #24211d;
   --dark-color-box-shadow: rgba(0, 0, 0, 0.35);
+  --dark-color-inline-code-bg: color-mix(in srgb, var(--dark-color-border), transparent 22%);
+  --dark-color-code-block-bg: var(--dark-color-bg-src-block);
+  --dark-color-code-block-border: color-mix(
+    in srgb,
+    var(--dark-color-border),
+    transparent 10%
+  );
 
   --table-border: 2px solid var(--color-text);
   --table-cell-border: 1px solid var(--color-border);
@@ -206,6 +213,168 @@ h6 {
   margin-block: var(--space-sm) 0.45em;
 }
 
+body.page-reading-notes-index .title {
+  font-size: clamp(1.55rem, 1.35rem + 0.9vw, 2.1rem);
+  letter-spacing: -0.008em;
+  margin-block: 0 0.4em;
+}
+
+body.page-reading-notes-index #content > p:first-of-type {
+  margin-top: 0;
+  margin-bottom: var(--space-sm);
+  font-size: 0.96rem;
+  color: var(--color-text-secondary);
+  color: light-dark(var(--color-text-secondary), var(--dark-color-text-secondary));
+}
+
+body.page-reading-notes-index section#content > .org-ul > li {
+  margin-bottom: var(--space-sm);
+}
+
+body.page-reading-notes-index section#content > .org-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+body.page-reading-notes-index section#content > .org-ul > li,
+body.page-reading-notes-index section#content > .org-ul > li:first-child {
+  margin: 0 0 var(--space-xs);
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+body.page-reading-notes-index section#content > .org-ul > li:first-child::before {
+  content: none;
+}
+
+body.page-reading-notes-index .read-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  min-height: 44px;
+  padding: 0.55rem var(--space-sm);
+  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in srgb, var(--color-border), transparent 28%);
+  border: 1px solid
+    light-dark(
+      color-mix(in srgb, var(--color-border), transparent 28%),
+      color-mix(in srgb, var(--dark-color-border), transparent 25%)
+    );
+  text-decoration: none;
+}
+
+body.page-reading-notes-index .read-row:hover,
+body.page-reading-notes-index .read-row:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.14em;
+}
+
+body.page-reading-notes-index .read-date {
+  font-family: var(--font-family-ui);
+  font-weight: 600;
+}
+
+body.page-reading-notes-index .read-count {
+  margin-inline-start: 0;
+  font-size: 0.82em;
+  color: var(--color-text-secondary);
+  color: light-dark(var(--color-text-secondary), var(--dark-color-text-secondary));
+  white-space: nowrap;
+}
+
+.read-link {
+  margin: var(--space-2xs) 0 var(--space-sm);
+  font-size: 0.86rem;
+}
+
+.read-link a {
+  color: var(--color-text-secondary);
+  color: light-dark(var(--color-text-secondary), var(--dark-color-text-secondary));
+  text-decoration-thickness: 0.05em;
+}
+
+.read-anchor {
+  display: block;
+  position: relative;
+  top: -0.2rem;
+}
+
+.read-quick-nav {
+  margin: 0 0 var(--space-md);
+  padding: var(--space-2xs) var(--space-sm);
+  border: 1px solid color-mix(in srgb, var(--color-border), transparent 35%);
+  border: 1px solid
+    light-dark(
+      color-mix(in srgb, var(--color-border), transparent 35%),
+      color-mix(in srgb, var(--dark-color-border), transparent 32%)
+    );
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-bg-secondary), transparent 22%);
+  background: light-dark(var(--color-bg-secondary), var(--dark-color-bg-secondary));
+}
+
+.read-quick-nav > summary {
+  cursor: pointer;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  font-family: var(--font-family-ui);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--color-text-secondary);
+  color: light-dark(var(--color-text-secondary), var(--dark-color-text-secondary));
+}
+
+.read-quick-nav ul {
+  margin: var(--space-2xs) 0 0;
+  padding: 0;
+  list-style: none;
+  max-height: min(46vh, 24rem);
+  overflow: auto;
+}
+
+.read-quick-nav li {
+  margin: 0 0 0.125rem;
+}
+
+.read-quick-nav a {
+  display: block;
+  min-height: 40px;
+  padding: 0.3rem 0.45rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+}
+
+.read-quick-nav a:hover,
+.read-quick-nav a:focus-visible {
+  text-decoration: none;
+  background: color-mix(in srgb, var(--color-bg-secondary), white 6%);
+  background: light-dark(
+    color-mix(in srgb, var(--color-bg-secondary), white 6%),
+    color-mix(in srgb, var(--dark-color-bg-secondary), black 4%)
+  );
+}
+
+.read-nav-label {
+  display: block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--font-family-ui);
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+  color: light-dark(var(--color-text-secondary), var(--dark-color-text-secondary));
+  opacity: 0.95;
+}
+
 .subtitle {
   text-align: center;
   font-family: var(--font-family-ui);
@@ -250,14 +419,17 @@ h6 {
 
 .todo {
   color: #a43b1f;
+  color: light-dark(#a43b1f, #ffb39f);
 }
 
 .done {
   color: #2b6b3d;
+  color: light-dark(#2b6b3d, #9adfb0);
 }
 
 .priority {
   color: #9a5d00;
+  color: light-dark(#9a5d00, #f3c274);
 }
 
 .tag {
@@ -416,9 +588,9 @@ img.inline-image {
   border: 1px dashed light-dark(var(--color-border), var(--dark-color-border));
 }
 
-code {
+:where(p, li, td, th, blockquote, figcaption) > code {
   background-color: var(--color-border);
-  background-color: light-dark(var(--color-border), var(--dark-color-border));
+  background-color: light-dark(var(--color-inline-code-bg), var(--dark-color-inline-code-bg));
   border-radius: var(--radius-sm);
   padding: 0.15em 0.25em;
   white-space: break-spaces;
@@ -450,15 +622,21 @@ pre.example {
   white-space: pre-wrap;
   word-break: break-word;
   font-family: var(--font-family-mono);
+  font-size: 0.94rem;
+  line-height: 1.6;
   color: var(--color-text);
   color: light-dark(var(--color-text), var(--dark-color-text));
-  border-color: var(--color-border);
-  border-color: light-dark(var(--color-border), var(--dark-color-border));
-  background-color: var(--color-bg-src-block);
+  border: 1px solid var(--color-code-block-border);
+  border: 1px solid
+    light-dark(var(--color-code-block-border), var(--dark-color-code-block-border));
+  border-radius: var(--radius-md);
+  background-color: var(--color-code-block-bg);
   background-color: light-dark(
-    var(--color-bg-src-block),
-    var(--dark-color-bg-src-block)
+    var(--color-code-block-bg),
+    var(--dark-color-code-block-bg)
   );
+  padding: var(--space-sm) var(--space-md);
+  margin-block: var(--space-sm) var(--space-md);
 }
 
 pre,
@@ -470,33 +648,48 @@ pre:has(code) {
 }
 
 pre:has(code) {
-  border: unset;
-  background: unset;
-  margin: 0;
+  border: 1px solid var(--color-code-block-border);
+  border: 1px solid
+    light-dark(var(--color-code-block-border), var(--dark-color-code-block-border));
+  border-radius: var(--radius-md);
+  background: var(--color-code-block-bg);
+  background: light-dark(var(--color-code-block-bg), var(--dark-color-code-block-bg));
+  padding: var(--space-sm) var(--space-md);
+  margin-block: var(--space-sm) var(--space-md);
 }
 
 pre code {
   white-space: inherit;
   overflow-wrap: normal;
   word-break: normal;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+}
+
+/* Harden code blocks: stable fallback colors even when highlight.js fails. */
+:is(.org-src-container pre code, pre code[class^="language-"], pre code[class*=" language-"]) {
+  display: block;
+  font-family: var(--font-family-mono);
+  font-size: 0.94rem;
+  line-height: 1.62;
+  color: light-dark(var(--color-text), var(--dark-color-text));
+}
+
+/* Preserve container styling and prevent theme CSS from adding nested backgrounds. */
+pre code.hljs {
+  background: transparent;
+  padding: 0;
 }
 
 pre.src::before {
-  font-size: 0.8em;
+  font-size: 0.76rem;
+  font-family: var(--font-family-ui);
+  letter-spacing: 0.02em;
   color: light-dark(var(--color-text), var(--dark-color-text));
+  opacity: 0.75;
   background-color: transparent;
-}
-
-@media (prefers-color-scheme: dark) {
-  pre.src > *,
-  pre.example > * {
-    filter: invert(20%) brightness(200%);
-  }
-}
-
-html:has(meta[name="color-scheme"][content="dark"]) pre.src > *,
-html:has(meta[name="color-scheme"][content="dark"]) pre.example > * {
-  filter: invert(20%) brightness(200%);
 }
 
 .ally-nav {
@@ -940,6 +1133,7 @@ section#content > .org-ul > li:first-child .pub-desc {
     z-index: 1;
     overflow-x: hidden;
     overflow-y: auto;
+    max-height: calc(100vh - 10rem);
     font-size: 14px;
     top: 8.5rem;
     padding: var(--space-md) var(--space-md) var(--space-lg);
