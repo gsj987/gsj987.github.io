@@ -129,16 +129,22 @@ function showHeadings() {
 }
 
 function setUpObserver() {
+  const hasIntersectionObserver = "IntersectionObserver" in window;
   if (document.documentElement.clientWidth >= 1300) {
-    if (headerObserver === null) {
+    if (hasIntersectionObserver && headerObserver === null) {
       observeHeadings();
       // observeButtons();
     }
+    if (!hasIntersectionObserver) {
+      showHeadings();
+    }
     hideToggleBtn();
   } else {
-    if (headerObserver !== null) {
+    if (hasIntersectionObserver && headerObserver !== null) {
       headerObserver.disconnect();
       headerObserver = null;
+      showHeadings();
+    } else if (!hasIntersectionObserver) {
       showHeadings();
     }
     setUpTocToggleBtn();
@@ -190,13 +196,11 @@ function hideToggleBtn() {
 }
 
 window.addEventListener("load", () => {
-  if ("IntersectionObserver" in window) {
-    setUpObserver();
-    window.addEventListener("resize", () => {
-      window.clearTimeout(resizeTimer);
-      resizeTimer = window.setTimeout(setUpObserver, 120);
-    });
-  }
+  setUpObserver();
+  window.addEventListener("resize", () => {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(setUpObserver, 120);
+  });
 });
 
 window.addEventListener("unload", () => {
