@@ -8,6 +8,12 @@ let toggleBtn = null;
 
 let headerObserver = null;
 let resizeTimer = null;
+let mermaidInitialized = false;
+
+const mermaidScriptUrl =
+  "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js";
+const panzoomScriptUrl =
+  "https://cdn.jsdelivr.net/npm/panzoom@9.4.3/dist/panzoom.min.js";
 
 function localizedCopy() {
   const lang = document.documentElement.lang || "";
@@ -195,8 +201,110 @@ function hideToggleBtn() {
   }
 }
 
+function loadScriptOnce(src) {
+  return new Promise((resolve, reject) => {
+    const selector = `script[data-load-src="${src}"]`;
+    const existing = document.querySelector(selector);
+    if (existing) {
+      if (existing.getAttribute("data-loaded") === "true") {
+        resolve();
+        return;
+      }
+      existing.addEventListener("load", () => resolve(), { once: true });
+      existing.addEventListener("error", () => reject(new Error(src)), {
+        once: true,
+      });
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = src;
+    script.defer = true;
+    script.setAttribute("data-load-src", src);
+    script.addEventListener(
+      "load",
+      () => {
+        script.setAttribute("data-loaded", "true");
+        resolve();
+      },
+      { once: true },
+    );
+    script.addEventListener("error", () => reject(new Error(src)), {
+      once: true,
+    });
+    document.head.append(script);
+  });
+}
+
+function initializePanzoomForMermaid() {
+  if (typeof window.panzoom !== "function") {
+    return;
+  }
+  const svgs = document.querySelectorAll(".mermaid svg");
+  for (const svg of svgs) {
+    const container = svg.parentElement;
+    if (!container || !container.classList.contains("mermaid")) {
+      continue;
+    }
+    if (svg.dataset.panzoomReady === "true") {
+      continue;
+    }
+    try {
+      window.panzoom(svg, {
+        maxZoom: 2,
+        minZoom: 0.3,
+        bounds: true,
+        boundsPadding: 0.1,
+        smoothScroll: false,
+      });
+      svg.dataset.panzoomReady = "true";
+    } catch (_) {
+      // Keep render path resilient if panzoom fails on a specific SVG.
+    }
+  }
+}
+
+function initMermaidIfNeeded() {
+  if (mermaidInitialized) {
+    return;
+  }
+  if (!document.querySelector(".mermaid")) {
+    return;
+  }
+  mermaidInitialized = true;
+
+  loadScriptOnce(mermaidScriptUrl)
+    .then(() => loadScriptOnce(panzoomScriptUrl))
+    .then(() => {
+      if (!window.mermaid) {
+        return;
+      }
+      window.mermaid.initialize({
+        startOnLoad: false,
+        theme: "default",
+        securityLevel: "loose",
+        flowchart: { curve: "basis", htmlLabels: true },
+      });
+      if (typeof window.mermaid.run === "function") {
+        return window.mermaid.run({ querySelector: ".mermaid" });
+      }
+      if (typeof window.mermaid.init === "function") {
+        const nodes = document.querySelectorAll(".mermaid");
+        window.mermaid.init(undefined, nodes);
+      }
+      return Promise.resolve();
+    })
+    .then(() => {
+      window.setTimeout(initializePanzoomForMermaid, 120);
+    })
+    .catch(() => {
+      mermaidInitialized = false;
+    });
+}
+
 window.addEventListener("load", () => {
   setUpObserver();
+  initMermaidIfNeeded();
   window.addEventListener("resize", () => {
     window.clearTimeout(resizeTimer);
     resizeTimer = window.setTimeout(setUpObserver, 120);

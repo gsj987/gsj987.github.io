@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Org Runbook：一组简单的多 Agent 协作 Skills</title>
+<meta name="author" content="gsj987" />
+<meta name="generator" content="Org Mode" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&display=swap"/>
+  <link rel="stylesheet" href="/assets/style.css" type="text/css"/>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class="ally-nav">
+  <a href="#content">跳到主要内容</a>
+</div>
+ <nav>
+  <ul>
+    <li><a href="/index.html">首页</a></li>
+    <li><a href="/reading-notes/index.html">阅读笔记</a></li>
+    <li><a href="/about.html">关于</a></li>
+    <li><a href="/rss.xml">订阅 RSS</a></li>
+    <li><a href="https://github.com/gsj987/">GitHub</a></li>
+  </ul>
+</nav>
+</div>
+<div id="content" class="content">
+<h1 class="title">Org Runbook：一组简单的多 Agent 协作 Skills</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>目录</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgfeec876">背景与问题</a></li>
+<li><a href="#org676e44f">两种解决方案</a>
+<ul>
+<li><a href="#org1be6b85">方案一：外部脚本控制</a></li>
+<li><a href="#orge50893d">方案二：主控 Agent 管理（我的选择）</a></li>
+</ul>
+</li>
+<li><a href="#org3d669de">Org Runbook 工作法</a>
+<ul>
+<li><a href="#orgf376ea2">为什么选择 Org Mode</a></li>
+</ul>
+</li>
+<li><a href="#orgc29c32b">Skill 套件详解</a>
+<ul>
+<li><a href="#orgac405f2">Skill 1：runbook-org（基础层）</a></li>
+<li><a href="#orgd47043a">Skill 2：runbook-multiagent（协调层）</a></li>
+<li><a href="#org099768c">Skill 3：runbook-brainstorm（任务层）</a></li>
+<li><a href="#org40e8eca">小结</a></li>
+</ul>
+</li>
+<li><a href="#org815aa61">实践案例</a>
+<ul>
+<li><a href="#org837c891">案例一：BTC 行情研究</a></li>
+<li><a href="#orgdd7a2d8">案例二：量化项目重构</a></li>
+</ul>
+</li>
+<li><a href="#org9d88af6">总结与展望</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgfeec876" class="outline-2">
+<h2 id="orgfeec876">背景与问题</h2>
+<div class="outline-text-2" id="text-orgfeec876">
+<p>
+现在的 AI 实践面临一个重要课题：如何让 AI 在尽量少的提示下，稳定地、长时间地执行复杂任务，并最终收敛到设定目标？
+</p>
+
+<p>
+我的实践经验是，上下文工程是最重要的。不论是 subagent、skills，还是 tool call，本质上都是让每个执行环节能够聚焦，并提供充分的可复用外部上下文，从而让执行流程稳定、可控。
+</p>
+
+<p>
+举例来说：一次执行一个编码任务，现在的 coding agent 已经能轻松应对。但如果让 coding agent 同时做 review、单测、本地集测、CI、staging 测试、发布等一系列流程，你就需要一份文档来辅助说明——每个环节都有大量细节：环境怎么配置、CI 有什么要求、单测覆盖率要多少、怎样才算 staging 测试完成。
+</p>
+
+<p>
+如果用单一文件描述所有过程，AI 会在大量工作中迷失：长时间编码解决 bug 之后忘了进行集测，或者集测发现问题后忘了步骤流程应该回到编码，而是自己直接尝试修复，然后忘了后续步骤。
+</p>
+</div>
+</div>
+<div id="outline-container-org676e44f" class="outline-2">
+<h2 id="org676e44f">两种解决方案</h2>
+<div class="outline-text-2" id="text-org676e44f">
+<p>
+此时有两种做法：
+</p>
+</div>
+<div id="outline-container-org1be6b85" class="outline-3">
+<h3 id="org1be6b85">方案一：外部脚本控制</h3>
+<div class="outline-text-3" id="text-org1be6b85">
+<p>
+用一个外部脚本来控制每个执行环节，每次只做一件事，用脚本把它们串联起来。
+</p>
+</div>
+</div>
+<div id="outline-container-orge50893d" class="outline-3">
+<h3 id="orge50893d">方案二：主控 Agent 管理（我的选择）</h3>
+<div class="outline-text-3" id="text-orge50893d">
+<p>
+由一个主控 agent 来管理整个流程。它读的文档只包含流程控制，而具体到子任务时会分离出独立的文档，开启一个 subagent 来执行，并把结果回报给主 agent。这也是一种上下文工程的做法。
+</p>
+
+<p>
+比如，编码 agent 只读编码相关的文档：代码规范、目录结构、数据库连接方式、lint 配置在哪里；而测试 agent 只读测试文档：UT 目录在哪里、怎么提错误工单、门禁检查有哪些项目，并强调不允许它改任何代码。所有流程由主控 agent 来完成，由它来决定是推进步骤，还是回到前面的某个步骤。
+</p>
+
+<div class="mermaid">
+
+flowchart TD
+    User([用户]) --&gt; MainAgent[主控 Agent]
+    
+    MainAgent --&gt;|&amp;quot;分配编码文档&amp;quot;| CodeAgent[编码 Agent]
+    MainAgent --&gt;|&amp;quot;分配测试文档&amp;quot;| TestAgent[测试 Agent]
+    MainAgent --&gt;|&amp;quot;分配 Review 文档&amp;quot;| ReviewAgent[Review Agent]
+    
+    CodeAgent --&gt;|执行中| CodeTask1[任务 1: 编码]
+    TestAgent --&gt;|执行中| TestTask1[任务 2: 单测]
+    ReviewAgent --&gt;|执行中| ReviewTask1[任务 3: Review]
+    
+    CodeTask1 --&gt;|完成| MainAgent
+    TestTask1 --&gt;|完成| MainAgent
+    ReviewTask1 --&gt;|完成| MainAgent
+    
+    MainAgent --&gt;|评估状态| Decision{下一步?}
+    
+    Decision --&gt;|回到编码| CodeTask2[任务 N: 修复 Bug]
+    Decision --&gt;|推进测试| TestTask2[任务 N+1: 集测]
+    Decision --&gt;|推进发布| DeployTask[任务: 发布]
+    Decision --&gt;|完成| Done([任务完成])
+    
+    style MainAgent fill:#e1f5fe,stroke:#01579b
+    style CodeAgent fill:#fff3e0,stroke:#e65100
+    style TestAgent fill:#e8f5e9,stroke:#2e7d32
+    style ReviewAgent fill:#fce4ec,stroke:#c2185b
+    style Done fill:#f3e5f5,stroke:#7b1fa2
+
+</div><p>
+这个方案的好处是：如果工作流程多变——有些任务是完整端到端的编码过程，有些只是 UI 优化，有些是文档梳理不动代码，有些是研究课题是开放性结果——都可以使用这个流程，而不需要为每种流程都写一个脚本。模糊的语言描述就能让 agent 理解怎么合理组织每个 subagent，编排多样的流程，应对复杂的任务组合。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org3d669de" class="outline-2">
+<h2 id="org3d669de">Org Runbook 工作法</h2>
+<div class="outline-text-2" id="text-org3d669de">
+<p>
+为此，我总结了一套 skill，以 org mode 为核心，让主流程 agent 可以根据任务自己思考并组织一套工作流。在工作流里分配不同角色的 subagent，让他们加载各自的文档或技能，开始独立工作，并更新到 org mode 文件中向主控 agent 汇报进度，再由主控 agent 评估当前执行状态，决定任务的推进方向。我称这套工作方法叫 <code>org runbook</code> 。
+</p>
+
+<p>
+项目地址：<a href="https://github.com/gsj987/org-runbook-skills">https://github.com/gsj987/org-runbook-skills</a>
+</p>
+</div>
+<div id="outline-container-orgf376ea2" class="outline-3">
+<h3 id="orgf376ea2">为什么选择 Org Mode</h3>
+<div class="outline-text-3" id="text-orgf376ea2">
+<p>
+Org mode 有几个关键优势：
+</p>
+
+<ul class="org-ul">
+<li><b>纯文本格式</b> ：方便 Git 管理和 agent 读取</li>
+<li><b>自带任务原语</b> ：agent 对它有天然的格式知识</li>
+<li><b>丰富的任务操作原语</b> ：
+<ul class="org-ul">
+<li>TODO keyword 表示任务状态</li>
+<li>Subtree &amp; headline 表示任务和子任务的层叠关系</li>
+<li>Task list 可作为独立角色的子任务，也可作为门禁检查的依据</li>
+<li>Logbook 可作为 worklog 记录</li>
+<li>Property drawer 可记录必要属性：分配角色、加载的技能</li>
+<li>Org link 可连接必要文档和输出产物，作为其他 subagent 的参考资料</li>
+</ul></li>
+</ul>
+
+<p>
+另外也有大量工具（如 <a href="https://mahmoodsh.com/cltpt.html">cltpt</a>）可以直接操作和读取这些元素，让大规模任务追踪变得简单。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc29c32b" class="outline-2">
+<h2 id="orgc29c32b">Skill 套件详解</h2>
+<div class="outline-text-2" id="text-orgc29c32b">
+<p>
+这套 skills 分成四部分。
+</p>
+</div>
+<div id="outline-container-orgac405f2" class="outline-3">
+<h3 id="orgac405f2">Skill 1：runbook-org（基础层）</h3>
+<div class="outline-text-3" id="text-orgac405f2">
+<p>
+在每次执行具体任务时被激活，规定每个 subagent 都应遵循一套工作模式：以 org runbook 文件为唯一事实源。
+</p>
+
+<p>
+它介绍了如何读取和填写 runbook，让每个 agent 明白执行任务的必要规范：
+</p>
+<ul class="org-ul">
+<li>每个任务的 owner、目标、上下文必须齐全，执行者需要提供 findings 和 evidence，并勾选检查点</li>
+<li>Evidence 是第一公民，没有外部链接上 runbook 的不会被认为是事实</li>
+<li>必须完成规定的检查点，也就是门禁，避免漏步骤</li>
+<li>禁止删别人的 headline，只专注在自己的工作上</li>
+</ul>
+
+<p>
+skill 里也规定了一系列可行的操作和禁止的操作，避免 agent 主动改 runbook 里的内容，必须通过受限的动作完成内容改动，避免发生任务处理越界的问题。
+</p>
+
+<pre class="example" id="org4c0bf24">
+*** DONE UI-AUDIT-001: 第一轮 UI/UX 全面审计
+:PROPERTIES:
+:ID: UI-AUDIT-001
+:OWNER: worker-1
+:STATUS: done
+:END:
+
+- Goal :: 对 Qbot Web 项目进行全面的 UI 质量审计，识别可访问性、性能、主题、响应式设计和 AI 反模式问题
+- Context ::
+  - 项目类型：移动端优先的 AI 量化投研 Web 应用
+  - 技术栈：React + TypeScript + TailwindCSS + antd-mobile
+  - 参考文档：docs/PRDs/PRD1_UI.md
+- Findings ::
+  - [2026-03-28 10:00] 🔒 开始审计，策略：调用 /audit 技能进行全面审计
+  - [2026-03-28 10:35] 📋 审计完成：Critical 2, High 5, Medium 8, Low 12
+- Evidence ::
+  - [2026-03-28 10:35] file: /home/gsj987/Workspace/Qbot/qbot_web/web/src/pages/Home.tsx  # reliability: ★★★
+  - [2026-03-28 10:35] file: /home/gsj987/Workspace/Qbot/qbot_web/web/src/components/SignalCard.tsx  # reliability: ★★★
+  - [2026-03-28 10:35] file: /home/gsj987/Workspace/Qbot/qbot_web/web/src/components/PositionCard.tsx  # reliability: ★★★
+  - [2026-03-28 10:35] file: /home/gsj987/Workspace/Qbot/qbot_web/web/src/pages/Backtest.tsx  # reliability: ★★★
+  - [2026-03-28 10:35] file: /home/gsj987/Workspace/Qbot/qbot_web/web/src/styles/global.css  # reliability: ★★★
+- Next Actions ::
+  - [x] 调用 /audit 技能执行全面审计
+  - [x] 记录所有发现的问题（按严重性分类）
+  - [x] 输出详细的审计报告
+</pre>
+
+<p>
+这里就是大型任务的多角色协作场域，让多角色在大型任务的长期迭代中保持专注成为可能。
+</p>
+</div>
+</div>
+<div id="outline-container-orgd47043a" class="outline-3">
+<h3 id="orgd47043a">Skill 2：runbook-multiagent（协调层）</h3>
+<div class="outline-text-3" id="text-orgd47043a">
+<p>
+这是对多 agent 工作流程的描述，定义了主 agent 和多个子 agent 的协作方式，告诉主 agent 它自己应该如何工作：
+</p>
+<ul class="org-ul">
+<li>准备工作：确认是否需要多 agent，并按要求准备 runbook</li>
+<li>分配工作：为每个子 agent 分配工作并创建 prompt</li>
+<li>执行流程：调用子 agent 并等待执行结果</li>
+<li>合并所有执行结果，写回 runbook</li>
+<li>判断流程是否结束、是否达到用户目标；如果没有，再创建任务、分配并执行</li>
+<li>错误处理：当 subagent 超时、写错文件或一直不完成时，对 runbook 进行状态纠正，然后重跑</li>
+</ul>
+
+<p>
+这是一套非常通用的主控 agent 控制子 agent 进行迭代的过程，并不针对某一类具体任务。所以当用户输入他的意图想法时，主控 agent 可以自动安排合适的流程以达到用户目标。这个过程比使用固定流程脚本来做流程控制灵活得多。
+</p>
+</div>
+</div>
+<div id="outline-container-org099768c" class="outline-3">
+<h3 id="org099768c">Skill 3：runbook-brainstorm（任务层）</h3>
+<div class="outline-text-3" id="text-org099768c">
+<p>
+这个 skill 更多是关于问题的问法，怎么把用户简单的问题变成一个相对全面的问题集，以启动 runbook 拆分任务执行。
+</p>
+
+<p>
+这一部分更偏应用层，介绍切入一个话题时应该考虑哪些角度。比如一个产品研究型课题，需要考虑用户需求、功能范围、时间安排，也要考虑面向设备、设计风格和技术可行性。而如果是一个金融行情研究型课题，则会考虑技术指标、新闻消息或社区情绪等维度。
+</p>
+
+<p>
+好在现在大部分 agent 只要提到「脑爆」这个关键词，在大部分主流课题下都能有不错的思考意识，覆盖面已经比大部分人更全面了。而且在做这方面提问时，我们还能组合其他 skills，扩大思考范围。
+</p>
+</div>
+</div>
+<div id="outline-container-org40e8eca" class="outline-3">
+<h3 id="org40e8eca">小结</h3>
+<div class="outline-text-3" id="text-org40e8eca">
+<p>
+上面 3 个 skills 加起来，已经有一套相对完整且有足够自适应能力的工作流。在我的 clawbot 上工作良好：对一个常见的研究课题，跑半小时得出一份相对专业的分析报告；或者拆解一个技术实现，做深入的架构研究和再实现计划，都能做得非常深入，而不需要过多介入。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org815aa61" class="outline-2">
+<h2 id="org815aa61">实践案例</h2>
+<div class="outline-text-2" id="text-org815aa61">
+</div>
+<div id="outline-container-org837c891" class="outline-3">
+<h3 id="org837c891">案例一：BTC 行情研究</h3>
+<div class="outline-text-3" id="text-org837c891">
+<p>
+我让 claw 研究昨天 BTC 的行情，只输入了这样一句话：
+</p>
+
+<blockquote>
+<p>
+跑一个 runbook 任务，分析一下昨天晚上 BTC 价格走势和相关原因分析，以及对短期走势的看法。
+</p>
+</blockquote>
+
+<p>
+claw 加载对应 skills 以后，开始脑爆，问了我几个问题：
+</p>
+
+<blockquote>
+<p>
+✅ brainstorm skill 激活
+</p>
+
+<p>
+按 skill 规范，第一步不是立即研究——是先问清楚：
+</p>
+
+<p>
+在开始之前，我需要确认几件事：
+</p>
+
+<ol class="org-ol">
+<li>时间范围</li>
+</ol>
+<p>
+"昨天晚上"是指哪一天的晚上？（北京时间 / UTC）BTC 在哪个交易所？（Binance / OKX / CoinMarketCap）
+</p>
+
+<ol class="org-ol">
+<li>分析方向</li>
+</ol>
+<p>
+你最关心哪个维度？
+</p>
+<ul class="org-ul">
+<li>技术面：K线形态、MACD/RSI、布林带、成交量&#x2026;</li>
+<li>宏观面：美元指数、美联储表态、美股大盘&#x2026;</li>
+<li>消息面：哪些新闻/事件在那晚发生&#x2026;</li>
+<li>链上数据：持仓地址变化、交易所流入流出&#x2026;</li>
+</ul>
+
+<ol class="org-ol">
+<li>交付形式</li>
+</ol>
+<p>
+你想要什么形式的产出？
+</p>
+<ul class="org-ul">
+<li>聊天里的分析结论（快）？</li>
+<li>一份可以存着的分析报告（Markdown）？</li>
+<li>附 K 线截图的完整复盘？</li>
+</ul>
+
+<ol class="org-ol">
+<li>你的背景</li>
+</ol>
+<p>
+你对加密货币了解多少？（这样我决定用不用专业术语）
+</p>
+
+<p>
+同时我想先告诉你：我能拿到什么数据
+BTC 价格数据我可以通过：
+</p>
+<ul class="org-ul">
+<li>实时搜索（近期走势）</li>
+<li>抓取 Binance / CoinMarketCap 页面</li>
+</ul>
+
+<p>
+但我没有真实时间的 WebSocket 行情接口——数据会有几分钟到几小时的延迟。
+</p>
+</blockquote>
+
+<p>
+我对他的问题做了简单回答后，他就开始研究：
+</p>
+
+<blockquote>
+<p>
+3 个 Round-1 研究 agent 已并行启动 ✅
+</p>
+
+<p>
+当前工作状态：
+btc-tech-agent   🔄 技术面分析（K线/均线/MACD/RSI/成交量）
+btc-macro-agent 🔄 宏观+消息面（全球市场/新闻事件/资金情绪）
+btc-chain-agent 🔄 链上数据（交易所流量/大额转账/活跃地址/MVRV）
+</p>
+
+<p>
+skill 流程执行情况：
+</p>
+
+<p>
+步骤	状态
+① 前置提问	✅ 已问，已确认（时间/维度/形式/背景）
+② 建立 org	✅ 已建（btc-analysis.org）
+③ 并行派发 3 agent	✅ 已启动
+④ 收集完成通知	⏳ 等待中
+⑤ 合并 Round-1	⏳
+⑥ Round-2 深化	⏳
+⑦ Round-3 输出报告	⏳
+</p>
+</blockquote>
+
+<p>
+所有任务完成后（大概耗时 20 分钟不到），给我输出了一份 9 页的 PDF 报告。完成度相当高——期间它加载了 CMC 的市场行情走势计算技术指标，搜索了新闻，并搜索了社交媒体上的讨论。大致结论如下：
+</p>
+
+<blockquote>
+<p>
+核心结论速览
+2026-03-27 晚 BTC 走势：当日跌约 6%，从 $71,335 → $65,914
+</p>
+
+<p>
+三方信号对比：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">技术面</th>
+<th scope="col" class="org-left">宏观面</th>
+<th scope="col" class="org-left">链上</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">MA空排 + MACD负扩 + RSI偏弱</td>
+<td class="org-left">美股跌 + 伊朗不明朗 + ETF流出$171M</td>
+<td class="org-left">OI高企 + $3亿多头被清算</td>
+</tr>
+
+<tr>
+<td class="org-left">Eagle 超卖信号</td>
+<td class="org-left">黄金暴涨$4,492 + 巨鲸吸$23B + 恐惧指数触底</td>
+<td class="org-left">交易所净流出 + LTH积累 + MVRV中性</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+结论：空头主导，但非牛市顶部。更接近震荡筑底。
+</p>
+
+<p>
+关键位：$65,000 守住 → 底部区域；失守 → $63,000~$64,500。
+</p>
+
+<p>
+最大不可预测风险：伊朗战争（随时 5-10% 级波动）。
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-orgdd7a2d8" class="outline-3">
+<h3 id="orgdd7a2d8">案例二：量化项目重构</h3>
+<div class="outline-text-3" id="text-orgdd7a2d8">
+<p>
+我使用 runbook 对一个 Python 量化项目做分析，让它把项目转成 Web 项目，从技术实现、技术方案、产品设计、部署和发布几个角度先做审计，然后输出 PRD。
+</p>
+
+<p>
+再在这一组 PRD 结果上做细化，输出多轮迭代 plan。所有资料准备好之后（过程如上），我开启一个项目，让 coding agent 根据这些 plan 使用 runbook 的方式分配任务并执行：
+</p>
+
+<blockquote>
+<p>
+按 runbook 的方式，读取 docs/plan/ 下所有文件，创建 org/runbook.org，以主控的身份创建开发任务，分配给合适的实现 subagent，并通过 subagent 完成测试和 UI 审计。目标是多轮测试和审计后没有高优项目遗留。
+</p>
+</blockquote>
+
+<p>
+打完这段 prompt 后去睡觉，第二天起来已经有一套可以直接跑的成果了。（本来还担心 coding plan 会被打爆，看来没有）
+</p>
+
+
+
+<div id="org4d7b76b" class="figure">
+<p><img src="https://cdn.qiniu.gsj987.cn/blog/6692e920ee10c1b9e4d54fac1b726411.png" alt="screenshot"  loading="lazy" decoding="async" fetchpriority="low"/>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org9d88af6" class="outline-2">
+<h2 id="org9d88af6">总结与展望</h2>
+<div class="outline-text-2" id="text-org9d88af6">
+<p>
+这套方案其实是大型 org-runbook 的最快速实现方案。我原本有一套更全面的实现方案计划，但操作原语过多，还包含 UI 等，整体还在进展中（vibe coding 中）。
+</p>
+
+<p>
+我把里面最基础、最原理性的流程简化出来放在 skills 里执行，配合 claw 等带记忆和工具链全面的设施，也能达到相当好的效果。实践中也遇到过操作漂移、agent 乱填 runbook 的情况（因为这里没有做操作限制），但大多不是严重问题，增加一轮 review 也能解决。
+</p>
+
+<p>
+后续我会再看看是走 agentic skills 的路线，还是先把全面的 runbook 方案实现。但能在 claw 里使用这种 runbook 思路运行大型研究，也是很舒服的——毕竟谁不想睡前提一个想法，醒来后就有一份研究报告呢。
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+
+
+<p class="author">作者：<a href="https://x.com/gsj987" target="_blank" rel="noopener noreferrer">gsj987</a></p>
+<p class="date">发布时间：2026-03-28 Sat 12:13</p>
+<p class="license">许可协议：<a href="https://www.creativecommons.org/licenses/by-nc/4.0/deed.zh-hans">CC BY-NC 4.0</a></p>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/styles/default.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/styles/dark.min.css" media="(prefers-color-scheme: dark)" />
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/powershell.min.js"></script>
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/lisp.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C71VVP1YSV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C71VVP1YSV');
+</script>
+</div>
+<script src="/assets/dynamic-toc.js" defer></script>
+</body>
+</html>

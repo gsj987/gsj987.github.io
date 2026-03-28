@@ -14,8 +14,8 @@
   <link>https://gsj987.github.io</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Sun, 22 Mar 2026 20:37:14 +0800</pubDate>
-  <lastBuildDate>Sun, 22 Mar 2026 20:37:14 +0800</lastBuildDate>
+  <pubDate>Sat, 28 Mar 2026 18:33:05 +0800</pubDate>
+  <lastBuildDate>Sat, 28 Mar 2026 18:33:05 +0800</lastBuildDate>
   <generator>Emacs 30.2 Org-mode 9.7.11</generator>
   <webMaster>gsj987@gmail.com (gsj987)</webMaster>
   <image>
@@ -24,6 +24,18 @@
     <link>https://gsj987.github.io</link>
   </image>
 
+  <item>
+    <title>Org Runbook：一组简单的多 Agent 协作 Skills</title>
+    <link>https://gsj987.github.io/org-runbook-a-set-of-multiagent-skills.html</link>
+    <author>gsj987@gmail.com (gsj987)</author>
+    <guid isPermaLink="false">https://gsj987.github.io/org-runbook-a-set-of-multiagent-skills.html</guid>
+    <pubDate>Sat, 28 Mar 2026 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    介绍一种基于Org Mode的多Agent协作框架，通过主控Agent管理子Agent分工协作，实现复杂任务的稳定执行。
+    </p>
+    ]]></description>
+  </item>
   <item>
     <title>AI Coding 实践之路</title>
     <link>https://gsj987.github.io/ai-coding-in-practice.html</link>
@@ -85,7 +97,7 @@
     ]]></description>
   </item>
   <item>
-    <title>Build Homelab Log</title>
+    <title>2023 Homelab 搭建日志</title>
     <link>https://gsj987.github.io/build-homelab-log.html</link>
     <author>gsj987@gmail.com (gsj987)</author>
     <guid isPermaLink="false">https://gsj987.github.io/build-homelab-log.html</guid>
@@ -97,7 +109,7 @@
     ]]></description>
   </item>
   <item>
-    <title>Take Notes with Denote.el</title>
+    <title>用 Denote.el 记笔记</title>
     <link>https://gsj987.github.io/take-note-with-denote-el.html</link>
     <author>gsj987@gmail.com (gsj987)</author>
     <guid isPermaLink="false">https://gsj987.github.io/take-note-with-denote-el.html</guid>
@@ -109,7 +121,7 @@
     ]]></description>
   </item>
   <item>
-    <title>Publish Blog from iOS</title>
+    <title>从 iOS 发布博客</title>
     <link>https://gsj987.github.io/publish-blog-from-ios.html</link>
     <author>gsj987@gmail.com (gsj987)</author>
     <guid isPermaLink="false">https://gsj987.github.io/publish-blog-from-ios.html</guid>
@@ -121,7 +133,7 @@
     ]]></description>
   </item>
   <item>
-    <title>Webassembly in Wechat</title>
+    <title>微信小程序中的 WebAssembly 实验</title>
     <link>https://gsj987.github.io/webassembly-in-wechat.html</link>
     <author>gsj987@gmail.com (gsj987)</author>
     <guid isPermaLink="false">https://gsj987.github.io/webassembly-in-wechat.html</guid>
@@ -133,7 +145,7 @@
     ]]></description>
   </item>
   <item>
-    <title>How to Take Smart Notes</title>
+    <title>《How to Take Smart Notes》读书笔记</title>
     <link>https://gsj987.github.io/how-to-take-smart-notes.html</link>
     <author>gsj987@gmail.com (gsj987)</author>
     <guid isPermaLink="false">https://gsj987.github.io/how-to-take-smart-notes.html</guid>
@@ -157,7 +169,7 @@
     ]]></description>
   </item>
   <item>
-    <title>在 OrgMode 中保存并粘贴剪切板中的图片</title>
+    <title>在 Org Mode 中保存并粘贴剪贴板中的图片</title>
     <link>https://gsj987.github.io/save-and-paste-image-from-clipboard-in-orgmode.html</link>
     <author>gsj987@gmail.com (gsj987)</author>
     <guid isPermaLink="false">https://gsj987.github.io/save-and-paste-image-from-clipboard-in-orgmode.html</guid>
@@ -169,7 +181,7 @@
     ]]></description>
   </item>
   <item>
-    <title>Pisma.io 可以用来做什么？</title>
+    <title>Prisma.io 可以用来做什么？</title>
     <link>https://gsj987.github.io/what-can-prisma-io-do.html</link>
     <author>gsj987@gmail.com (gsj987)</author>
     <guid isPermaLink="false">https://gsj987.github.io/what-can-prisma-io-do.html</guid>
@@ -181,7 +193,7 @@
     ]]></description>
   </item>
   <item>
-    <title>Tensorflow Experience</title>
+    <title>TensorFlow 体验笔记</title>
     <link>https://gsj987.github.io/tensorflow-experience.html</link>
     <author>gsj987@gmail.com (gsj987)</author>
     <guid isPermaLink="false">https://gsj987.github.io/tensorflow-experience.html</guid>

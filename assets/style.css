@@ -1328,3 +1328,22 @@ section#content > .org-ul > li:first-child .pub-desc {
       );
   }
 }
+
+/* Mermaid diagrams mobile optimization */
+.mermaid {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  background: transparent;
+  /* Smooth scroll on mobile */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Scale down slightly on small screens */
+@media screen and (max-width: 640px) {
+  .mermaid svg {
+    transform: scale(0.9);
+    transform-origin: left center;
+    min-width: 90%;
+  }
+}
