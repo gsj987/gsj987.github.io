@@ -60,9 +60,10 @@
 <ul>
 <li><a href="#org837c891">案例一：BTC 行情研究</a></li>
 <li><a href="#orgdd7a2d8">案例二：量化项目重构</a></li>
+<li><a href="#orge2ee9a7">案例三：优化我的 runbook skill 本身</a></li>
 </ul>
 </li>
-<li><a href="#org9d88af6">总结与展望</a></li>
+<li><a href="#orge7737a8">总结与展望</a></li>
 </ul>
 </div>
 </div>
@@ -500,10 +501,156 @@ skill 流程执行情况：
 </div>
 </div>
 </div>
+<div id="outline-container-orge2ee9a7" class="outline-3">
+<h3 id="orge2ee9a7">案例三：优化我的 runbook skill 本身</h3>
+<div class="outline-text-3" id="text-orge2ee9a7">
+<p>
+我完成第一版 skill 后，把 repo 交给 gpt ，让他帮我提提意见。由于我已经之前和 gpt 聊过这个话题， gpt 指出了几段长文，包括如何优化协议，应该增加 example 等建议。
+</p>
+
+<p>
+我把 gpt 的内容复制下来，交给我的 runbook skill ，让他根据 gpt 的反馈，输出可行的具体的优化方案，并安排 subagent 落地。我是这样说的：
+</p>
+
+<blockquote>
+<p>
+使用 runbook-brainstrom 技能，阅读一下 <code>../roam/pages/20260329T092903--runbook-skill-backlogs__me_workflow.org</code> 中 <code>* TODO （与GPT讨论）对当前 skill 的优化的建议</code> 一节，生成一个 runbook.org 文件放在目录下，并使用 runbook-multiagent 技能分配合适的 subagent
+</p>
+</blockquote>
+
+<p>
+于是 agent 加载 skill ，给到我如下反馈：
+</p>
+<blockquote>
+<p>
+根据 runbook-brainstorm 技能的指导，我需要先确认研究目标，然后设计任务树并 spawn sub-agents。
+</p>
+
+<p>
+让我先确认一下研究方向：
+</p>
+
+<p>
+研究目标确认
+</p>
+
+<p>
+根据 org 文件中的讨论，主要涉及三个大的优化方向：
+</p>
+
+<ol class="org-ol">
+<li>Skill 协议层优化 (runbook-org / runbook-multiagent / runbook-brainstorm)</li>
+<li>Orchestrator 主控流程强化 (增加异常处理、阶段机、禁止执行规则)</li>
+<li>Pi Agent 硬围栏设计 (进程隔离、工具级围栏、事件拦截)</li>
+</ol>
+
+<p>
+请确认以下问题：
+</p>
+
+<ol class="org-ol">
+<li>研究目标类型：这是 Output-oriented（需要产出具体优化方案）</li>
+<li>交付格式：生成优化后的 SKILL 文件 + README 更新？还是先产出分析报告？</li>
+<li>范围边界：
+<ul class="org-ul">
+<li>是先只做 Skill 协议层优化（6个点）？</li>
+<li>还是包含 Orchestrator 增强（15个点）？</li>
+<li>还是包含 Pi 围栏设计（3种方案）？</li>
+</ul></li>
+
+<li>是否需要 examples/ 目录下的完整示例项目（文档中建议补的 SCHEMA.md + workflow 示例）？</li>
+</ol>
+
+<p>
+请回复你的选择，比如：全部做 / 只做 Skill 协议层 / Skill + Orchestrator 等。
+</p>
+</blockquote>
+
+<p>
+我做完答复后， agent 生成 runbook 并输出完整任务，并在两轮实现后完成所有开发。
+</p>
+
+<pre class="example" id="org271f7cf">
+
+* Project: 优化 org-runbook-skills 协议体系
+:PROPERTIES:
+:STATUS: in-progress
+:CREATED: 2026-03-29
+:END:
+
+** Context
+基于 GPT 讨论，需要对现有 skill 体系进行两大部分优化：
+1. Skill 协议层优化：把 runbook-org 从"文本约定"升级为"状态原语规约"
+2. Orchestrator 增强：增加异常处理、阶段机、禁止执行规则
+
+** Goals
+1. 把 runbook-org 升级为真正的状态原语规约
+2. 把 runbook-multiagent 的运行时假设抽离到 adapter 层
+3. 新增 orchestrator-skill 和 exception-routing 文档
+4. 更新 README 的触发词和角色交付契约
+5. 评测新方案是否能解答原问题
+
+** References
+- 原讨论: [[denote:20260329T092903][runbook-skill-backlogs__me_workflow]]
+
+** Task Queue
+
+*** TODO A. Skill 协议层优化
+:PROPERTIES:
+:ID: task-a
+:OWNER: protocol-agent
+:STATUS: in-progress
+:PHASE: design
+:END:
+- Goal :: 优化 runbook-org / runbook-multiagent / README
+- Context :: 原问题指出协议层偏文本约定，需升级为状态原语
+- Findings ::
+- Evidence ::
+- Next Actions ::
+  - [ ] A1: 升级 runbook-org 为状态原语规约
+  - [ ] A2: 抽离 runbook-multiagent 的运行时假设
+  - [ ] A3: 明确 runbook-brainstorm 为 workflow template
+  - [ ] A4: 更新 README 触发词 + 交付契约
+
+*** TODO B. Orchestrator 增强
+:PROPERTIES:
+:ID: task-b
+:OWNER: orchestrator-agent
+:STATUS: in-progress
+:PHASE: design
+:END:
+- Goal :: 新增 orchestrator-skill 和 exception-routing
+- Context :: 原问题指出主控 agent 失焦，需要增加禁止执行规则和异常回流
+- Findings ::
+- Evidence ::
+- Next Actions ::
+  - [ ] B1: 创建 orchestrator-skill (主控只做 orchestration)
+  - [ ] B2: 创建 exception-routing.md (异常分类和路由)
+  - [ ] B3: 更新 runbook-multiagent 增加禁止执行规则
+
+*** TODO C. 合并与评测
+:PROPERTIES:
+:ID: task-c
+:OWNER: main-agent
+:STATUS: in-progress
+:PHASE: merge
+:END:
+- Goal :: 生成最终文件并评测
+- Context ::
+- Findings ::
+- Evidence ::
+- Next Actions ::
+  - [ ] C1: 合并所有输出
+  - [ ] C2: 生成 EVALUATION.md 评测新方案
+  - [ ] C3: 更新 README.md
+  - [ ] C4: 验证是否解答原问题
+</pre>
 </div>
-<div id="outline-container-org9d88af6" class="outline-2">
-<h2 id="org9d88af6">总结与展望</h2>
-<div class="outline-text-2" id="text-org9d88af6">
+</div>
+</div>
+<div id="outline-container-orge7737a8" class="outline-2">
+<h2 id="orge7737a8">总结与展望</h2>
+<div class="outline-text-2" id="text-orge7737a8">
 <p>
 这套方案其实是大型 org-runbook 的最快速实现方案。我原本有一套更全面的实现方案计划，但操作原语过多，还包含 UI 等，整体还在进展中（vibe coding 中）。
 </p>
