@@ -209,6 +209,9 @@ h6 {
   font-weight: 700;
   letter-spacing: -0.012em;
   margin-block: var(--space-sm) 0.45em;
+  overflow-wrap: break-word;
+  word-break: keep-all;
+  line-break: strict;
 }
 
 body.page-reading-notes-index .title {
@@ -852,6 +855,13 @@ details {
 .content :is(h1, h2, h3, h4, h5, h6, p, li, blockquote, figcaption, td, th) {
   overflow-wrap: anywhere;
   word-break: normal;
+}
+
+/* Keep CJK post titles from breaking between characters (e.g., "什-么"). */
+#content > .title {
+  overflow-wrap: break-word;
+  word-break: keep-all;
+  line-break: strict;
 }
 
 section#content > .org-ul > li {
