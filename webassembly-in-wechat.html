@@ -40,11 +40,11 @@
 <ul>
 <li><a href="#org287aeff">使用 WXWebAssembly 代替 WebAssembly</a></li>
 <li><a href="#org8167a96">调整 wasm 文件的加载方式</a></li>
-<li><a href="#org485b4e9">删除一些微信小程序不支持的方法</a></li>
-<li><a href="#org3caac61">输出模块，更好调用</a></li>
+<li><a href="#orgaaafab5">删除一些微信小程序不支持的方法</a></li>
+<li><a href="#orgc1cf11a">输出模块，更好调用</a></li>
 </ul>
 </li>
-<li><a href="#orgdb1d19c">使用时的事项</a></li>
+<li><a href="#orgb2c62fd">使用时的事项</a></li>
 </ul>
 </div>
 </div>
@@ -125,9 +125,9 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org485b4e9" class="outline-3">
-<h3 id="org485b4e9">删除一些微信小程序不支持的方法</h3>
-<div class="outline-text-3" id="text-org485b4e9">
+<div id="outline-container-orgaaafab5" class="outline-3">
+<h3 id="orgaaafab5">删除一些微信小程序不支持的方法</h3>
+<div class="outline-text-3" id="text-orgaaafab5">
 <p>
 微信中有许多不支持的 BOM 会被 WebAssembly 的胶水代码引用，我们都要改成替代方法，如
 </p>
@@ -199,9 +199,9 @@ if (scriptDirectory.indexOf("blob:") !== 0) {
 </div>
 </div>
 </div>
-<div id="outline-container-org3caac61" class="outline-3">
-<h3 id="org3caac61">输出模块，更好调用</h3>
-<div class="outline-text-3" id="text-org3caac61">
+<div id="outline-container-orgc1cf11a" class="outline-3">
+<h3 id="orgc1cf11a">输出模块，更好调用</h3>
+<div class="outline-text-3" id="text-orgc1cf11a">
 <p>
 删除文件底部的 run 函数，并 export default Module
 </p>
@@ -229,9 +229,9 @@ wasm.run(); // start loading
 </div>
 </div>
 </div>
-<div id="outline-container-orgdb1d19c" class="outline-2">
-<h2 id="orgdb1d19c">使用时的事项</h2>
-<div class="outline-text-2" id="text-orgdb1d19c">
+<div id="outline-container-orgb2c62fd" class="outline-2">
+<h2 id="orgb2c62fd">使用时的事项</h2>
+<div class="outline-text-2" id="text-orgb2c62fd">
 <p>
 微信上 onCameraFrame 的方法返回的 frame.data 是一个 ArrayBuffer ，是一个 RGBA 的数据，我们在实际使用中经常会通过 `Worker.postMessage` 传递给 Worker 运算来提升效率。
 </p>
@@ -257,7 +257,7 @@ wasm._free(buffer);
 <p>
 另外，在实际使用时，由于真机的运行内存比 PC 少太多，所以我们要打开内存增涨 flag 以防止 OOM 
 </p>
-<pre class="example" id="org2de4f65">
+<pre class="example" id="orgc7c057d">
 -sALLOW_MEMORY_GROWTH=1
 </pre>
 </div>

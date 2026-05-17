@@ -14,8 +14,8 @@
   <link>https://gsj987.github.io</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Sun, 29 Mar 2026 15:06:28 +0800</pubDate>
-  <lastBuildDate>Sun, 29 Mar 2026 15:06:28 +0800</lastBuildDate>
+  <pubDate>Sun, 17 May 2026 16:52:20 +0800</pubDate>
+  <lastBuildDate>Sun, 17 May 2026 16:52:20 +0800</lastBuildDate>
   <generator>Emacs 30.2 Org-mode 9.7.11</generator>
   <webMaster>gsj987@gmail.com (gsj987)</webMaster>
   <image>
@@ -24,6 +24,18 @@
     <link>https://gsj987.github.io</link>
   </image>
 
+  <item>
+    <title>AI 能写代码，为什么不能"维护系统"</title>
+    <link>https://gsj987.github.io/ai-can-write-code-but-why-cannot-it-maintain-systems.html</link>
+    <author>gsj987@gmail.com (gsj987)</author>
+    <guid isPermaLink="false">https://gsj987.github.io/ai-can-write-code-but-why-cannot-it-maintain-systems.html</guid>
+    <pubDate>Sat, 16 May 2026 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    软件工程不存在银弹，AI无法消除本质复杂性。软件工程应学习工厂自动化流水线，通过模块化、功能特化和控制漂移速度来管理复杂度，这可能是超大型软件开发和应对复杂需求变化的必要妥协。
+    </p>
+    ]]></description>
+  </item>
   <item>
     <title>Org Runbook：一组简单的多 Agent 协作 Skills</title>
     <link>https://gsj987.github.io/org-runbook-a-set-of-multiagent-skills.html</link>

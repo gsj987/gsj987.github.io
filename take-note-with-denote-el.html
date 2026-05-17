@@ -42,13 +42,13 @@
 <ul>
 <li><a href="#orgf580c60">引入 denote</a></li>
 <li><a href="#org1496b8b">创建 Journal</a></li>
-<li><a href="#org60db4a3">创建 note</a></li>
-<li><a href="#orgb96f027">创建连接</a></li>
-<li><a href="#org1da272d">搜索内容</a></li>
+<li><a href="#org71263d2">创建 note</a></li>
+<li><a href="#org1494f30">创建连接</a></li>
+<li><a href="#orgfe962f9">搜索内容</a></li>
 </ul>
 </li>
-<li><a href="#org3182f9d">效果</a></li>
-<li><a href="#orgd062426">后续思考</a></li>
+<li><a href="#orgaaf5b99">效果</a></li>
+<li><a href="#org036a9f3">后续思考</a></li>
 </ul>
 </div>
 </div>
@@ -167,18 +167,18 @@ denote 支持 org-mode, txt, markdown 三种格式，并用一套文件名生成
   ;;; 如果没传日期，则使用日历选择一个日期创建
   (interactive (list (denote-date-prompt)))
   (let* ((formatted-date (format-time-string "%Y-%m-%d" (denote--valid-date date)))
-                 (entry-of-date-regex (concat "^[^\\.].*" formatted-date))
-                 (entry-of-date (car (directory-files denote-journal-home nil entry-of-date-regex)))
-                 )
+		 (entry-of-date-regex (concat "^[^\\.].*" formatted-date))
+		 (entry-of-date (car (directory-files denote-journal-home nil entry-of-date-regex)))
+		 )
 
-        (if entry-of-date
-                (find-file (expand-file-name entry-of-date denote-journal-home))
-          (denote
-           formatted-date
-           '("journal")
-           nil
-           denote-journal-home)
-          )))
+	(if entry-of-date
+		(find-file (expand-file-name entry-of-date denote-journal-home))
+	  (denote
+	   formatted-date
+	   '("journal")
+	   nil
+	   denote-journal-home)
+	  )))
 
 ;;; 创建或打开今天的 journal 
 (defun my-denote-journal-for-today ()
@@ -212,9 +212,9 @@ denote 支持 org-mode, txt, markdown 三种格式，并用一套文件名生成
 </div>
 </div>
 </div>
-<div id="outline-container-org60db4a3" class="outline-3">
-<h3 id="org60db4a3">创建 note</h3>
-<div class="outline-text-3" id="text-org60db4a3">
+<div id="outline-container-org71263d2" class="outline-3">
+<h3 id="org71263d2">创建 note</h3>
+<div class="outline-text-3" id="text-org71263d2">
 <div class="org-src-container">
 <pre>
 <code class="language-lisp">(defun my-denote-note ()
@@ -291,9 +291,9 @@ denote 支持 org-mode, txt, markdown 三种格式，并用一套文件名生成
 </p>
 </div>
 </div>
-<div id="outline-container-orgb96f027" class="outline-3">
-<h3 id="orgb96f027">创建连接</h3>
-<div class="outline-text-3" id="text-orgb96f027">
+<div id="outline-container-org1494f30" class="outline-3">
+<h3 id="org1494f30">创建连接</h3>
+<div class="outline-text-3" id="text-org1494f30">
 <p>
 我会需要在记某个笔记时，去插入一个已有笔记的链接，如果这个笔记不存在，我们先创建一个笔记，并再连接。
 </p>
@@ -309,9 +309,9 @@ denote 支持 org-mode, txt, markdown 三种格式，并用一套文件名生成
 </div>
 </div>
 </div>
-<div id="outline-container-org1da272d" class="outline-3">
-<h3 id="org1da272d">搜索内容</h3>
-<div class="outline-text-3" id="text-org1da272d">
+<div id="outline-container-orgfe962f9" class="outline-3">
+<h3 id="orgfe962f9">搜索内容</h3>
+<div class="outline-text-3" id="text-orgfe962f9">
 <p>
 denote 没有提供搜索的功能，我直接复用 counsel-rg 的方法来实现内容搜索，还能方便的应用 counsel 的扩展能力。
 </p>
@@ -330,20 +330,20 @@ denote 没有提供搜索的功能，我直接复用 counsel-rg 的方法来实�
 </div>
 </div>
 </div>
-<div id="outline-container-org3182f9d" class="outline-2">
-<h2 id="org3182f9d">效果</h2>
-<div class="outline-text-2" id="text-org3182f9d">
+<div id="outline-container-orgaaf5b99" class="outline-2">
+<h2 id="orgaaf5b99">效果</h2>
+<div class="outline-text-2" id="text-orgaaf5b99">
 
-<div id="org6b5f6d2" class="figure">
+<div id="org5c6390f" class="figure">
 <p><img src="https://cdn.qiniu.gsj987.cn/blog/20221022/iShot_2022-10-22_20.31.52.png" alt="Orgmode with denote"  loading="lazy" decoding="async" fetchpriority="low"/>
 </p>
 <p><span class="figure-number">Figure 1: </span>Orgmode with denote</p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgd062426" class="outline-2">
-<h2 id="orgd062426">后续思考</h2>
-<div class="outline-text-2" id="text-orgd062426">
+<div id="outline-container-org036a9f3" class="outline-2">
+<h2 id="org036a9f3">后续思考</h2>
+<div class="outline-text-2" id="text-org036a9f3">
 <p>
 目前的形式已经集过程了 org agenda 但由于考虑性能问题，笔记中的 todo 项目无法被集成进来。同时机于 emacs 的笔记方案都无法像现代笔记工具一样用多项目连接，或网络图的方式显示多个笔记之间的联系（可以通过外挂 web 的方式实现，但不方便），在大量笔记阅读的时候会是一个麻烦的体验。所以后续可以结合 org-ql 这个库，创建多个笔记，话题，关键词之间的联系，放在同一个视图上下文中，可能会是一个不错的方案。可能的场景有：
 </p>
