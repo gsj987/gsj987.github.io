@@ -41,10 +41,10 @@
 <li><a href="#org77a9d8d">用 review / reflection / memory 来做约束可以吗？</a></li>
 <li><a href="#org5a4fb87">软件工程的银弹</a></li>
 <li><a href="#org2806840">向工厂的自动化流水线学习</a></li>
-<li><a href="#org1e6b485">自指的符号系统和解释性剩余</a></li>
-<li><a href="#org2747324">Harness 时代的多层抽象必须是通过资源垄断的</a></li>
-<li><a href="#org578a1ae">跨技能工程师和专业职能团队</a></li>
-<li><a href="#org236b406">Harness 的未来是现代性的</a></li>
+<li><a href="#org83f0351">自指的符号系统和解释性剩余</a></li>
+<li><a href="#orgd472e5e">Harness 时代的多层抽象必须是通过资源垄断的</a></li>
+<li><a href="#org9f92399">跨技能工程师和专业职能团队</a></li>
+<li><a href="#orgfbcd038">Harness 的未来是现代性的</a></li>
 </ul>
 </div>
 </div>
@@ -334,6 +334,9 @@ LLM 在单次执行过程中只能保证语义上的概率最大化，这种语�
 所有的自动化流水线上的模块都是这样的：工业摄像头需要标定他的视场角，fps， 光圈大小和感光指数，还有色彩还原曲线和工作温度。没有这些指标，自动化工程师们没办法把他们放到自动化环节中。而一旦有了这些指标，即使比工况要求还有距离，我们可以通过增加足够冗余和额外环节来提高通过率。
 </p>
 
+<p>
+同时模块化能限制一次 mutation 可见的复杂度切面，这样把复杂度转移到模块内部，能让整个流程变的复杂度可控。
+</p>
 
 
 <p>
@@ -341,9 +344,9 @@ LLM 在单次执行过程中只能保证语义上的概率最大化，这种语�
 </p>
 </div>
 </div>
-<div id="outline-container-org1e6b485" class="outline-2">
-<h2 id="org1e6b485">自指的符号系统和解释性剩余</h2>
-<div class="outline-text-2" id="text-org1e6b485">
+<div id="outline-container-org83f0351" class="outline-2">
+<h2 id="org83f0351">自指的符号系统和解释性剩余</h2>
+<div class="outline-text-2" id="text-org83f0351">
 <p>
 我们希望的是在 harness 这条流水线上，每一次输入需求和当前代码，他输出的产物是在语义上收敛到一个完美架构上的，这种完美性表现在语义的一致性，也就是说从输入的需求、代码的历史结构和代码的未来结构上去叙述这个功能，他们呈现出统一性。不论从项目的哪一个出发点去解释这个系统，他的表达都是连贯且一致的，符合所有的输入要求：架构要求、业务需求、安全性要求、可维护性要求、可见性要求、易用性和稳定性、还有性能等。
 </p>
@@ -379,7 +382,7 @@ LLM 在单次执行过程中只能保证语义上的概率最大化，这种语�
 
 
 
-<div id="orga6e2c80" class="figure">
+<div id="orgfc187f8" class="figure">
 <p><img src="https://cdn.qiniu.gsj987.cn/blog/d59c7a37dca7912a780bdde0f0db42d2.png" alt="b87b21ec bebb 476d 880d 78a459e0d83c"  loading="lazy" decoding="async" fetchpriority="low"/>
 </p>
 </div>
@@ -412,9 +415,9 @@ Todo 本身的完成状态的语义，和 Todo 在 UI 上是否可展现的语�
 </p>
 </div>
 </div>
-<div id="outline-container-org2747324" class="outline-2">
-<h2 id="org2747324">Harness 时代的多层抽象必须是通过资源垄断的</h2>
-<div class="outline-text-2" id="text-org2747324">
+<div id="outline-container-orgd472e5e" class="outline-2">
+<h2 id="orgd472e5e">Harness 时代的多层抽象必须是通过资源垄断的</h2>
+<div class="outline-text-2" id="text-orgd472e5e">
 <p>
 我们前面提到的语义约束和代码分层，在全功能 AI 面前其实是无力的，AI 可以轻松的语义逃逸：
 </p>
@@ -449,9 +452,9 @@ UI 的基础组件库则是对渲染层的完全垄断实现的，应用层 harn
 </p>
 </div>
 </div>
-<div id="outline-container-org578a1ae" class="outline-2">
-<h2 id="org578a1ae">跨技能工程师和专业职能团队</h2>
-<div class="outline-text-2" id="text-org578a1ae">
+<div id="outline-container-org9f92399" class="outline-2">
+<h2 id="org9f92399">跨技能工程师和专业职能团队</h2>
+<div class="outline-text-2" id="text-org9f92399">
 <p>
 各公司在引入 harness 实践时都希望能解决工程师的端到端交付能力。传统的技术公司一个很大的难题不是工程师不够多，而是工程师的能力结构不能适应现在的市场需求，现在移动端需求大但我公司的后端人更多，或者有很多数据型的需求但我现在的工程师全是十年的 web dev。裁员和招聘同时发生是不可避免的。
 </p>
@@ -485,9 +488,9 @@ UI 的基础组件库则是对渲染层的完全垄断实现的，应用层 harn
 </p>
 </div>
 </div>
-<div id="outline-container-org236b406" class="outline-2">
-<h2 id="org236b406">Harness 的未来是现代性的</h2>
-<div class="outline-text-2" id="text-org236b406">
+<div id="outline-container-orgfbcd038" class="outline-2">
+<h2 id="orgfbcd038">Harness 的未来是现代性的</h2>
+<div class="outline-text-2" id="text-orgfbcd038">
 <p>
 传统软件开发我们总以为系统应该先完全一致，然后才能运行。但真实世界的大型系统，比如国家、法律、市场、城市从来都是在局部矛盾与持续修补中运行的。
 </p>
@@ -501,7 +504,7 @@ UI 的基础组件库则是对渲染层的完全垄断实现的，应用层 harn
 </p>
 
 <p>
-这可能是我们转向到超大型软件开发的必要妥协，应对服务超复杂需求变化的实际需要而快速扩张的代价。
+这可能是我们转向到超大型软件开发的必要妥协，应对服务超复杂需求变化的实际需要而快速扩张的代价，这种动态受控不一致性的认识论转变。
 </p>
 
 <p>

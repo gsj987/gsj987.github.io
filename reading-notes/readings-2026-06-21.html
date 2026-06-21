@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>阅读笔记 - 2026-06-21</title>
+<meta name="author" content="gsj987" />
+<meta name="generator" content="Org Mode" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&display=swap"/>
+  <link rel="stylesheet" href="/assets/style.css" type="text/css"/>
+</head>
+<body class="page-reading-notes-detail">
+<div id="preamble" class="status">
+
+<div class="ally-nav">
+  <a href="#content">跳到主要内容</a>
+</div>
+ <nav>
+  <ul>
+    <li><a href="/index.html">首页</a></li>
+    <li><a aria-current="page" href="/reading-notes/index.html">阅读笔记</a></li>
+    <li><a href="/about.html">关于</a></li>
+    <li><a href="/rss.xml">订阅 RSS</a></li>
+    <li><a href="https://github.com/gsj987/">GitHub</a></li>
+  </ul>
+</nav>
+</div>
+<section id="content" class="content">
+<h1 class="title">阅读笔记 - 2026-06-21</h1>
+<div id="outline-container-orgafe57be" class="outline-2">
+<h2 id="orgafe57be"><span id="read-item-1" class="read-anchor" aria-hidden="true"></span> Cell 细胞：[译] Loop Engineering</h2>
+<div class="outline-text-2" id="text-orgafe57be">
+<p class="read-link"><a href="https://x.com/cellinlab/status/2064144608242679822" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-org22c1423" class="outline-3">
+<h3 id="org22c1423">要点</h3>
+<div class="outline-text-3" id="text-org22c1423">
+<ul class="org-ul">
+<li>旧的用户输入 prompt 让 agent 去工作的模式已经过时了，现在利用 harness 把发现工作、分发工作、检查工作、记录完成情况、决定下一步的事情，打包了起来。而 loop engineering 是在 harness 之上，再形成循环，生成 helper 自己喂养自己。</li>
+<li>一个 loop 需要5个东西：
+<ul class="org-ul">
+<li>automations ，按计划自动触发，自己 discovery 和 triage</li>
+<li>worktrees 能在多 agent 之间并行开发</li>
+<li>skills 记录项目知识</li>
+<li>plugins / connectors 接入工具</li>
+<li>sub agents 分工执行</li>
+<li>还有可能可以接 memory ，可以是外部的记录系统，比如 linear</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org7e3b79d" class="outline-3">
+<h3 id="org7e3b79d">方法</h3>
+<div class="outline-text-3" id="text-org7e3b79d">
+<ul class="org-ul">
+<li>codex app 里可以创建 automations , 定义运行环境，时机，还有某个 worktree， openai 内部会自动处理很多事情，都是天然的工程方法的总结，可以 scheduling 或 hooks 执行</li>
+<li>利用 <code>/loop</code> 反复执行 cadence</li>
+<li>利用 <code>/goal</code> 一直执行，直到我写下的条件成真，会由多角色独立判断完成情况</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org2d81ec4" class="outline-3">
+<h3 id="org2d81ec4">我的观点</h3>
+<div class="outline-text-3" id="text-org2d81ec4">
+<ul class="org-ul">
+<li>价值：一个对 loop engineering 的快速介绍，其实也是我们在日常使用中的工作模式的总结，总的来说最大的收获是， codex 现在能自己去判断边界达成，或自动构建更灵活的 loop 了，而不需要像我们以前一样手动构建。</li>
+<li>风险：对现有工作流是否能替换，替换后是否各项指标会下降</li>
+<li>适用条件：适合在新项目或新流程中尝试</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgefd3125" class="outline-2">
+<h2 id="orgefd3125"><span id="read-item-2" class="read-anchor" aria-hidden="true"></span> Kyrie：如何快速提升阅历？把老一辈口中烦人的“经验”拆解为可执行步骤</h2>
+<div class="outline-text-2" id="text-orgefd3125">
+<p class="read-link"><a href="https://x.com/KyrieCheungYep/status/2063820526175592818" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-orgd4dfc5f" class="outline-3">
+<h3 id="orgd4dfc5f">要点</h3>
+<div class="outline-text-3" id="text-orgd4dfc5f">
+<ul class="org-ul">
+<li>在谈判时，要先看清项目约束，用压力状态等到他压力显露，再用品任职这遇到结构性阻力</li>
+<li>要判断对方对项目理解的模型，看执行者的思考模式，帮他理顺问题结构，还是处理他的情绪问题</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orga915909" class="outline-2">
+<h2 id="orga915909"><span id="read-item-3" class="read-anchor" aria-hidden="true"></span> 实践哥MinLi：Claude Code 动态工作流： 每个任务都可以有自己的 Harness【译】</h2>
+<div class="outline-text-2" id="text-orga915909">
+<p class="read-link"><a href="https://x.com/MinLiBuilds/status/2062068646902689895" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-org4122668" class="outline-3">
+<h3 id="org4122668">要点</h3>
+<div class="outline-text-3" id="text-org4122668">
+<ul class="org-ul">
+<li>cc 提供了 dynamic workflow 功能，自动的编排脚本，执行 harness 。默认的 cc 写代码不错，但做研究或代码审查等，还不是很合适。这篇文章将如何定制 workflow 达到更好的效果</li>
+<li>workflow 能解决 agent 自动停止、结论的偏好偏差，和目标漂移，通过独立 context + subagent 来做</li>
+<li>dynamic workflow 是 cc 自己根据具体场景量身定制 harness</li>
+<li>自带 6 种组合模式：分类执行、 fanout 并综合、对抗验证、生成并筛选、锦标赛、循环到完成</li>
+<li>使用场景：迁移重构、深度研究、深度验证、排序、记忆提取和规则遵守、大规模分类处理、探索、评估、智能路由</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org0a76def" class="outline-3">
+<h3 id="org0a76def">方法</h3>
+<div class="outline-text-3" id="text-org0a76def">
+<ul class="org-ul">
+<li>使用提示词技巧</li>
+<li>结合 goal 和 loop ，给 workflow 定目标</li>
+<li>设置 token 预算</li>
+<li>保存和分享 workflow</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgbbe3a49" class="outline-3">
+<h3 id="orgbbe3a49">我的观点</h3>
+<div class="outline-text-3" id="text-orgbbe3a49">
+<ul class="org-ul">
+<li>价值：一个快速的对 dynamic workflow 的介绍，确实能自动化很多过去需要手动编排的模式，能极大的提升效率</li>
+<li>风险：可能与静态的 workflow 的效果有冲突。另外调优 workflow 的成本也不低，对于重复性项目有价值，但实际工作中重复性项目其实也不算主流，所以需要多实践多沉淀。</li>
+<li>适用条件：新项目，快速构建临时性的项目的 workflow 。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org7dc3953" class="outline-2">
+<h2 id="org7dc3953"><span id="read-item-4" class="read-anchor" aria-hidden="true"></span> 九原客：都在讲 Harness Engineer， 甚至说模型以外都是 Harness ，最近和客户/学员沟通，他们刚半知半解上下文工程，又来这个，而且没有实感，理解很混乱😵‍💫。 我说下我…</h2>
+<div class="outline-text-2" id="text-org7dc3953">
+<p class="read-link"><a href="https://x.com/9hills/status/2053708571817513159" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-org768816b" class="outline-3">
+<h3 id="org768816b">要点</h3>
+<div class="outline-text-3" id="text-org768816b">
+<ul class="org-ul">
+<li>harness 是两件事： workflow 关注工作流，比如 autoresearch ，是方法论。另一个是 harness infra ，包含沙盒和 skills 等</li>
+<li>两件事情分开看会更清晰</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge1c5fa8" class="outline-3">
+<h3 id="orge1c5fa8">我的观点</h3>
+<div class="outline-text-3" id="text-orge1c5fa8">
+<ul class="org-ul">
+<li>价值：清晰的判断，我们工作中确实也遇到了 "harness 团队" 到底是做什么工作的问题，业务团队利用开源 harness infra 也能做 workflow ，那么 harness infra 团队的工作到底是帮业务团队做 workflow 还是做工具呢？还是说应该两者结合？我的认为应该是从实际的不可标准化的部分里生长出 infra 来，其他的都可以用开源构建。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org6f8b02b" class="outline-2">
+<h2 id="org6f8b02b"><span id="read-item-5" class="read-anchor" aria-hidden="true"></span> 0x<sub>Miko</sub>：Hermes + Polymarket：如何搭建一个能自学习的 BTC 交易代理，从 100 美元小资金开始跑自动化策略</h2>
+<div class="outline-text-2" id="text-org6f8b02b">
+<p class="read-link"><a href="https://x.com/Mikocrypto11/status/2058857976786764062" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-org3b38bd6" class="outline-3">
+<h3 id="org3b38bd6">要点</h3>
+<div class="outline-text-3" id="text-org3b38bd6">
+<ul class="org-ul">
+<li>文章讲了如何利用 hermes 和 polymarket 的 btc 赌涨跌盘套利，基本原理都是马尔可夫链对下一个交易机会的 gap 判断，从而决定是否入场和下注概率</li>
+<li>概率过滤、状态持续性过滤、 gap 过滤、利用 kelly sizing 控制仓位</li>
+<li>利用 agent 的自学习循环，反复调整各项参数，更新策略</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgde31fcb" class="outline-3">
+<h3 id="orgde31fcb">方法</h3>
+<div class="outline-text-3" id="text-orgde31fcb">
+<ul class="org-ul">
+<li>进场公式： Δ⁽ʷ⁾ = p̂⁽ʷ⁾ − q⁽ʷ⁾ ≥ ε → ENTER , 其中：p̂ = 模型概率  q = 市场价格  ε = 最小 gap</li>
+<li>Markov persistence threshold: p(j*,j*) ≥ 0.87 ，需要某个状态保持超过 87% 以上才动手</li>
+<li>仓位管理公式： Kelly f* = p − (1−p)/b ，不让 bot 无脑重仓</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org2bafaae" class="outline-3">
+<h3 id="org2bafaae">我的观点</h3>
+<div class="outline-text-3" id="text-org2bafaae">
+<ul class="org-ul">
+<li>价值：在交易市场中此类胜率是需要对比市场中其他人的策略而得到的，如果胜率不好的情况下，很可能活力都没手续费高。更多是一种方法分享，但是否能用于实践，还是要自己尝试。并不这个行当的，无法评论。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc0b8970" class="outline-2">
+<h2 id="orgc0b8970"><span id="read-item-6" class="read-anchor" aria-hidden="true"></span> GitHub - yaojingang/yao-meta-skill: YAO = Yielding AI Outcomes. A rigorous engineering, evaluat…</h2>
+<div class="outline-text-2" id="text-orgc0b8970">
+<p class="read-link"><a href="https://github.com/yaojingang/yao-meta-skill" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：github.com">原文（github.com）</a></p>
+</div>
+<div id="outline-container-orgb9318b4" class="outline-3">
+<h3 id="orgb9318b4">要点</h3>
+<div class="outline-text-3" id="text-orgb9318b4">
+<ul class="org-ul">
+<li>skills 生成技能，能从开发过程中提取，识别这是一个重复 workflow ，并记录可能的输入输出，生成 skill ，并能进行评测和发布</li>
+<li>可用于：内容工作流技能、团队审核技能、外部分发技能等</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org0824b4b" class="outline-3">
+<h3 id="org0824b4b">我的观点</h3>
+<div class="outline-text-3" id="text-org0824b4b">
+<ul class="org-ul">
+<li>价值：现在的 ai 工具一大问题，文档又臭又长，黑话又多，又没有重点，光首页的文档就“优势”这个话题反反复复说了好几章，真正重要的如何使用只有一点点内容。本身这个工具值得尝试，前提是调优的代价不高。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf39dacf" class="outline-2">
+<h2 id="orgf39dacf"><span id="read-item-7" class="read-anchor" aria-hidden="true"></span> Kafka：OpenAI、Anthropic 都开始押注 FDE，FDE 才是 Agent 时代的 PMF 范式？</h2>
+<div class="outline-text-2" id="text-orgf39dacf">
+<p class="read-link"><a href="https://x.com/kfk_ai/status/2056660897381425590" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-orgb06d901" class="outline-3">
+<h3 id="orgb06d901">要点</h3>
+<div class="outline-text-3" id="text-orgb06d901">
+<ul class="org-ul">
+<li>FDE 就是 ai 驻场工程师，帮客户在现场识别模式，应用 ai ，并交付 ai 能力</li>
+<li>对 ai 厂商来说，是识别场景，发现问题，从而优化自己的产品，这和传统的 saas 有相似但又不同，因为客户的 ai 能力越强， ai 厂商的 token 才能卖的越多，而不是通过 fde 的一次性销售完成的收入</li>
+<li>对客户厂商来说，通过这个过程获得 ai 能力，从而扩大自己的产能，或优化自己的工作流程，其实也是完成了一次咨询。能力转移后这样的模式就可以结束，和传统的外包 fde 也有点不同</li>
+<li>"如果一个问题能被需求文档解决，那它早就被解决了。"</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org523923e" class="outline-3">
+<h3 id="org523923e">我的观点</h3>
+<div class="outline-text-3" id="text-org523923e">
+<ul class="org-ul">
+<li>价值：也是一种对公司内 ai 团队困境的一种良好解答， ai 团队通过入住业务团队实现赋能。但这也要分团队，比如一个技术团队往往自己也有工程能力，谁的方案比谁的更好，其实很难说。对 ai 厂商来说是一种商业模式，但对 ai 团队来说到底如何，很难讲。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org290e48d" class="outline-2">
+<h2 id="org290e48d"><span id="read-item-8" class="read-anchor" aria-hidden="true"></span> ginobefun：阿里这篇关于 AI Native 时代组织研发的思考非常值得一读。它在思路一个非常重要的底层问题：过去两千年的组织形态，都是围绕人的局限建立起来的。 <a href="https://t">https://t</a>.…</h2>
+<div class="outline-text-2" id="text-org290e48d">
+<p class="read-link"><a href="https://x.com/hongming731/status/2053314677237846060" target="_blank" rel="noopener noreferrer" aria-label="打开原文（新窗口）：x.com">原文（x.com）</a></p>
+</div>
+<div id="outline-container-org3993f3b" class="outline-3">
+<h3 id="org3993f3b">要点</h3>
+<div class="outline-text-3" id="text-org3993f3b">
+<ul class="org-ul">
+<li>ai可以替代很多组织功能，但人和人之间隐性的运转模式段时间内无法被 ai 弥补，比如很多口头约定，隐性修补，经验猜测等，在人类组织中都是可接受的复杂度，对 ai 来说就不友好。 ai native 转型的瓶颈，是组织信息形态太旧</li>
+<li>所以资深工程师和架构师就更重要，可以用更高的杠杆来自定义系统如何解决问题。</li>
+<li>人的管理会更多变成激励、辅导、冲突处理、身份安顿、文化建设等</li>
+<li>这样的工作环境会把所有工作都推向透明，但创新工作也需要很多的保护空间，过早暴露很难被长期执行和优化</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org872ab66" class="outline-3">
+<h3 id="org872ab66">我的观点</h3>
+<div class="outline-text-3" id="text-org872ab66">
+<ul class="org-ul">
+<li>价值：有一定道理，但这个是公司战略层面的思考，以及这里其实有很多的理想化的内容，认为 ai 是一种独立设施，或者 ai 能在垂直领域中贯通所有人的边界问题。但其实实际情况是， ai 只能是思维的延申，人会忽略的问题，遗漏的文档或 case 边界， ai 一样也会遗漏， ai 对执行判断的结果也是不融惯的， ai 也会形成一个个小的执行团体。我认为部分价值有道理，但整体还过于理想化。</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<div id="postamble" class="status">
+<p class="copyright">© [2019-2026] [<a href="https://x.com/gsj987" target="_blank" rel="noopener noreferrer">gsj987</a>]</p>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C71VVP1YSV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C71VVP1YSV');
+</script>
+</div>
+</body>
+</html>
